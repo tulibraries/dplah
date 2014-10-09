@@ -1,0 +1,149 @@
+commit c364c0fbd455fa7a6d751ca0c80ff1ae148604e6
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Wed Oct 8 14:47:39 2014 -0400
+
+    Added example DPLA config file
+
+commit 1cde9a86eb3bfd88d6782a9bb7248f63aa981b1e
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Wed Oct 8 12:07:48 2014 -0400
+
+    Added partner and contributing institution metadata to schema
+
+commit 938c4994c9945eb9d62c96aa790d5ab6abdd436e
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Wed Oct 8 11:47:47 2014 -0400
+
+    pre-scaffolding
+
+commit 3a381e74ebdbe360dee97a3499822155c45556e0
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Wed Oct 8 11:01:45 2014 -0400
+
+    Finally *finally* fixed relative path issue, started using dpla-centric config
+
+commit 4fb92558920a06d85e5a73f8cf9884721df7a77c
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Mon Oct 6 16:00:41 2014 -0400
+
+    Added dpla.yml to ignore
+
+commit 10bf7670baad22da995c387f04f260182c1f579b
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Fri Sep 26 16:33:03 2014 -0400
+
+    Added multiples for XSLT fields
+
+commit d4d586a9d969939aefab2b05b244df848a461942
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Fri Sep 26 16:10:04 2014 -0400
+
+    Ugh
+
+commit 2e05dce4644dc4525bb7c7f981e6c92018062a62
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Fri Sep 26 16:06:41 2014 -0400
+
+    yet more XSLT additions for cleanup
+
+commit 4dbd85b3ba433f5ea5d55aca07da019bd6efb1cd
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Thu Sep 25 13:47:59 2014 -0400
+
+    Fixed
+
+commit e9d1bd12a44cceaac3a7ee49ebcb4c68a7d8b2f0
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Thu Sep 25 13:37:50 2014 -0400
+
+    Separating multiple fields
+
+commit 81dba606bf4392ff6fded2a9d05e39750222028d
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Thu Sep 25 13:28:29 2014 -0400
+
+    Fixed lack-of-sets case and added capitalization and space normalizing to XSLT
+
+commit 5e84ee536d80add04fc174d3fc2678b9fe388e07
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Fri Sep 19 15:41:06 2014 -0400
+
+    Finally fixed that sloppy path in XSL stylesheet
+
+commit c8a18beded165758427af5a9a908048a847192b4
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Fri Sep 19 15:38:24 2014 -0400
+
+    Neatened resumption token code, added clickability to subject facets in search
+
+commit b32e10075794ad9b8228447ad830753843d1b5a3
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Fri Sep 19 15:36:53 2014 -0400
+
+    Fixed up oai cleanup tasks, refactored templates
+
+commit 0bb836c811f7df1d7fa97a04a645b7966e0befa9
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Thu Sep 18 10:24:48 2014 -0400
+
+    Corrected some harvesting resumption token issues, added dplapa namespace
+
+commit fd8451e23bb46b85d115569d7956fa95ad9d7033
+Author: Katherine Lynch <katherine.lynch@temple.edu>
+Date:   Mon Sep 15 15:16:28 2014 +0000
+
+    Spruced up front-end for transit
+
+commit fd01c5e4d3ea476fb880f0cf0ede584dc3015787
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Thu Sep 11 11:16:19 2014 -0400
+
+    Attempted improvements on language control
+
+commit e18fe0a4ecb6d28476871356111093795b784fe0
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Wed Sep 10 12:26:10 2014 -0400
+
+    Prettified front end, fixed up ingest/index, added field linking
+
+commit ea1481ec1c5a0df36cd2ed2277457c76944cc540
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Mon Sep 8 16:47:19 2014 -0400
+
+    It's about to get scaffoldy in here
+
+commit c0efa8bd4b06975f0d0048d576cea3fba364080b
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Mon Sep 8 16:16:42 2014 -0400
+
+    Got harvest and convert tasks working
+
+commit bcd9fc90d56e359c976ae1eacf98eef78d504ee0
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Mon Sep 8 16:16:15 2014 -0400
+
+    Blocking samples from git repo
+
+commit 2248a099313ebef5afac40317ecff190ce3f7245
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Fri Sep 5 11:55:32 2014 -0400
+
+    Functioning except the oai gem is busted
+
+commit c968d695273ad5f002511cab326e93dd28a6b473
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Thu Sep 4 10:40:41 2014 -0400
+
+    Ran Hydra dependencies/generators
+
+commit 053bbb9afcf02bef3183c38ee9348b3c46f7eac7
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Thu Sep 4 10:40:30 2014 -0400
+
+    Added gitignore
+
+commit 1cce41ef8456be9cd5dddb2bb5b4132a10843923
+Author: Katherine Lynch <kat3drx@gmail.com>
+Date:   Thu Sep 4 10:37:08 2014 -0400
+
+    Initial commit

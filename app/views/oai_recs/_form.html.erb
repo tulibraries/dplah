@@ -1,0 +1,77 @@
+<%= form_for(@oai_rec) do |f| %>
+  <% if @oai_rec.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@oai_rec.errors.count, "error") %> prohibited this oai_rec from being saved:</h2>
+
+      <ul>
+      <% @oai_rec.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :creator %><br>
+    <%= f.text_field :creator %>
+  </div>
+  <div class="field">
+    <%= f.label :subject %><br>
+    <%= f.text_field :subject %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :publisher %><br>
+    <%= f.text_field :publisher %>
+  </div>
+  <div class="field">
+    <%= f.label :contributor %><br>
+    <%= f.text_field :contributor %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br>
+    <%= f.text_field :date %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :format %><br>
+    <%= f.text_field :format %>
+  </div>
+  <div class="field">
+    <%= f.label :identifier %><br>
+    <%= f.text_field :identifier %>
+  </div>
+  <div class="field">
+    <%= f.label :source %><br>
+    <%= f.text_field :source %>
+  </div>
+  <div class="field">
+    <%= f.label :language %><br>
+    <%= f.text_field :language %>
+  </div>
+  <div class="field">
+    <%= f.label :relation %><br>
+    <%= f.text_field :relation %>
+  </div>
+  <div class="field">
+    <%= f.label :coverage %><br>
+    <%= f.text_field :coverage %>
+  </div>
+  <div class="field">
+    <%= f.label :rights %><br>
+    <%= f.text_field :rights %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

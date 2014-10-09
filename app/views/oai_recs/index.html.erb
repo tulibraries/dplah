@@ -1,0 +1,53 @@
+<h1>Listing oai_recs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Creator</th>
+      <th>Subject</th>
+      <th>Description</th>
+      <th>Publisher</th>
+      <th>Contributor</th>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Format</th>
+      <th>Identifier</th>
+      <th>Source</th>
+      <th>Language</th>
+      <th>Relation</th>
+      <th>Coverage</th>
+      <th>Rights</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @oai_recs.each do |oai_rec| %>
+      <tr>
+        <td><%= oai_rec.title %></td>
+        <td><%= oai_rec.creator %></td>
+        <td><%= oai_rec.subject %></td>
+        <td><%= oai_rec.description %></td>
+        <td><%= oai_rec.publisher %></td>
+        <td><%= oai_rec.contributor %></td>
+        <td><%= oai_rec.date %></td>
+        <td><%= oai_rec.type %></td>
+        <td><%= oai_rec.format %></td>
+        <td><%= oai_rec.identifier %></td>
+        <td><%= oai_rec.source %></td>
+        <td><%= oai_rec.language %></td>
+        <td><%= oai_rec.relation %></td>
+        <td><%= oai_rec.coverage %></td>
+        <td><%= oai_rec.rights %></td>
+        <td><%= link_to 'Show', oai_rec %></td>
+        <td><%= link_to 'Edit', edit_oai_rec_path(oai_rec) %></td>
+        <td><%= link_to 'Destroy', oai_rec, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Oai rec', new_oai_rec_path %>

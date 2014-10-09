@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @oai_rec.title %>
+</p>
+
+<p>
+  <strong>Creator:</strong>
+  <%= @oai_rec.creator %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @oai_rec.subject %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @oai_rec.description %>
+</p>
+
+<p>
+  <strong>Publisher:</strong>
+  <%= @oai_rec.publisher %>
+</p>
+
+<p>
+  <strong>Contributor:</strong>
+  <%= @oai_rec.contributor %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @oai_rec.date %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @oai_rec.type %>
+</p>
+
+<p>
+  <strong>Format:</strong>
+  <%= @oai_rec.format %>
+</p>
+
+<p>
+  <strong>Identifier:</strong>
+  <%= @oai_rec.identifier %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @oai_rec.source %>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @oai_rec.language %>
+</p>
+
+<p>
+  <strong>Relation:</strong>
+  <%= @oai_rec.relation %>
+</p>
+
+<p>
+  <strong>Coverage:</strong>
+  <%= @oai_rec.coverage %>
+</p>
+
+<p>
+  <strong>Rights:</strong>
+  <%= @oai_rec.rights %>
+</p>
+
+<%= link_to 'Edit', edit_oai_rec_path(@oai_rec) %> |
+<%= link_to 'Back', oai_recs_path %>

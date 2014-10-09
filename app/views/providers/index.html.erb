@@ -1,0 +1,34 @@
+<h1>Listing providers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Endpoint url</th>
+      <th>Metadata prefix</th>
+      <th>Set</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @providers.each do |provider| %>
+      <tr>
+        <td><%= provider.name %></td>
+        <td><%= provider.description %></td>
+        <td><%= provider.endpoint_url %></td>
+        <td><%= provider.metadata_prefix %></td>
+        <td><%= provider.set %></td>
+        <td><%= provider.contributing_institution %></td>
+        <td><%= link_to 'Show', provider %></td>
+        <td><%= link_to 'Edit', edit_provider_path(provider) %></td>
+        <td><%= link_to 'Destroy', provider, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Provider', new_provider_path %>

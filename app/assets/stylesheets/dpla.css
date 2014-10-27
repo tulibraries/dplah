@@ -29,3 +29,6 @@ div#header-title h1 a:hover {
   display: none;
 }
 
+.pull-right a:hover {
+  color: #ffffff;
+}

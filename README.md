@@ -18,19 +18,32 @@ pid_prefix: "changeme"
 partner: "Name of hub"
 ```
 
+##Start up locally
+
+To start up locally, be sure you have jetty installed and configured, and all tables are migrated (can use the following commands if needed):
+
+```
+rake db:migrate
+rails g hydra:jetty
+rake jetty:config
+rake jetty:start
+
+```
+
+
 Substitute your own values as follows for the YML fields:
 
 * **harvest_data_directory**
-  *Value of the absolute location on your filesystem where you want the application to store harvested, unprocessed metadata from providers
+  Value of the absolute location on your filesystem where you want the application to store harvested, unprocessed metadata from providers
 * **converted_foxml_directory**
-  *Value of the absolute location on your filesystem where you want the application to store converted FOXML files generated from the harvested metadata, for ingestion into Fedora
+  Value of the absolute location on your filesystem where you want the application to store converted FOXML files generated from the harvested metadata, for ingestion into Fedora
 * **pid_prefix**
-  *The namespace for your Fedora objects
+  The namespace for your Fedora objects
 * **partner**
-  *The name of the DPLA Partner hub
+  The name of the DPLA Partner hub
 
 ##Credit
-Some code in this project (and much research) is based on the talented Chris Beer's work in the following repos:
+Some code in this project (and much research) is based on the talented Chris Beer's work in the following invaluable repos:
 * [Blacklight OAI Provider](https://github.com/cbeer/blacklight_oai_provider)
 * [Blacklight OAI Harvester Demo](https://github.com/cbeer/blacklight_oai_harvester_demo)
 

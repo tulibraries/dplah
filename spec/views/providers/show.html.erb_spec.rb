@@ -5,7 +5,7 @@ RSpec.describe "providers/show", :type => :view do
     @provider = assign(:provider, Provider.create!(
       :name => "Name",
       :description => "MyText",
-      :endpoint_url => "Endpoint Url",
+      :endpoint_url => "http://example.com",
       :metadata_prefix => "Metadata Prefix",
       :set => "Set"
     ))
@@ -15,7 +15,7 @@ RSpec.describe "providers/show", :type => :view do
     render
     expect(rendered).to match(/Name/)
     expect(rendered).to match(/MyText/)
-    expect(rendered).to match(/Endpoint Url/)
+    expect(rendered).to match(/http:\/\/example.com/)
     expect(rendered).to match(/Metadata Prefix/)
     expect(rendered).to match(/Set/)
   end

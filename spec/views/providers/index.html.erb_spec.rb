@@ -6,14 +6,14 @@ RSpec.describe "providers/index", :type => :view do
       Provider.create!(
         :name => "Name",
         :description => "MyText",
-        :endpoint_url => "Endpoint Url",
+        :endpoint_url => "http://example.com",
         :metadata_prefix => "Metadata Prefix",
         :set => "Set"
       ),
       Provider.create!(
         :name => "Name",
         :description => "MyText",
-        :endpoint_url => "Endpoint Url",
+        :endpoint_url => "http://example.com",
         :metadata_prefix => "Metadata Prefix",
         :set => "Set"
       )
@@ -24,7 +24,7 @@ RSpec.describe "providers/index", :type => :view do
     render
     assert_select "tr>td", :text => "Name".to_s, :count => 2
     assert_select "tr>td", :text => "MyText".to_s, :count => 2
-    assert_select "tr>td", :text => "Endpoint Url".to_s, :count => 2
+    assert_select "tr>td", :text => "http://example.com".to_s, :count => 2
     assert_select "tr>td", :text => "Metadata Prefix".to_s, :count => 2
     assert_select "tr>td", :text => "Set".to_s, :count => 2
   end

@@ -5,7 +5,7 @@ RSpec.describe "providers/edit", :type => :view do
     @provider = assign(:provider, Provider.create!(
       :name => "MyString",
       :description => "MyText",
-      :endpoint_url => "MyString",
+      :endpoint_url => "http://example.com",
       :metadata_prefix => "MyString",
       :set => "MyString"
     ))

@@ -48,13 +48,10 @@ gem "devise"
 gem "devise-guests", "~> 0.3"
 
 group :development do
-  gem "pry-rails"
 end
 
 group :development, :test do
   gem "rspec-rails"
   gem "jettywrapper"
-end
-
-group :development, :test do
+  gem "pry-rails"
 end

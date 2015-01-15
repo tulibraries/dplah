@@ -19,12 +19,15 @@ namespace :oai do
                                 puts record.metadata
                                 full_records += record.metadata.to_s
                         end
-                        token = response.resumption_token
-                        response = client.list_records :resumption_token => token if token
-                        response.each do |record|
-                                puts record.metadata
-                                full_records += record.metadata.to_s
-                        end
+
+                        while(response.resumption_token and not response.resumption_token.empty?)
+	                        token = response.resumption_token
+	                        response = client.list_records :resumption_token => token if token
+	                        response.each do |record|
+	                          puts record.metadata
+	                          full_records += record.metadata.to_s
+	                        end
+	                    end
                         f_name = provider.name.gsub(/\s+/, "") +  (set ? set : "") + "_" + Time.now.to_i.to_s + ".xml"
 			            f_name_full = Rails.root + @harvest_path + f_name
                         FileUtils::mkdir_p @harvest_path

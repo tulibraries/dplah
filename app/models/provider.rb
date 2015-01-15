@@ -72,6 +72,10 @@ class Provider < ActiveRecord::Base
 		read_attribute(:consumed_at) || Time.at(1)
 	end
 
+	def interval
+		(read_attribute(:interval) || 1.day).seconds
+	end
+
 	def record_class
 		str = read_attribute(:record_class) || default_record_class_name
 		str.camelcase.constantize

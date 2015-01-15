@@ -21,6 +21,7 @@ class OaiRec < ActiveFedora::Base
 
 	#DPLA-specific fields
 	has_attributes :contributing_institution, datastream: 'descMetadata', multiple: false
+	has_attributes :collection_name, datastream: 'descMetadata', multiple: false
 	has_attributes :partner, datastream: 'descMetadata', multiple: false
 
 end

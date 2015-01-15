@@ -21,3 +21,6 @@
 /samples
 
 /config/dpla.yml
+
+/db/migrate
+

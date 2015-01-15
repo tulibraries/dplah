@@ -21,6 +21,7 @@ describe "OaiRecMetadata" do
     it { is_expected.to have_term(:coverage) }
     it { is_expected.to have_term(:rights) }
     it { is_expected.to have_term(:contributing_institution) }
+    it { is_expected.to have_term(:collection_name) }
     it { is_expected.to have_term(:partner) }
   end
 

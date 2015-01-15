@@ -60,16 +60,16 @@ class Provider < ActiveRecord::Base
 		read_attribute(:contributing_institution) || ''
 	end
 
+	def collection_name
+		read_attribute(:collection_name) || ''
+	end
+
 	def next_harvest_at
 		consumed_at + interval
 	end
 
 	def consumed_at
 		read_attribute(:consumed_at) || Time.at(1)
-	end
-
-	def interval
-		(read_attribute(:interval) || 1.day).seconds
 	end
 
 	def record_class

@@ -1,40 +1,40 @@
 namespace :oai do
-		config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
-        @harvest_path = config['harvest_data_directory'] 
-        @converted_path = config['converted_foxml_directory']
-        @pid_prefix = config['pid_prefix'] 
-        @partner = config['partner'] 
-        
-        desc "Harvest records from all OAI providers in repository"
-        task :harvest => :environment do
-                require 'oai'
+	config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
+	@harvest_path = config['harvest_data_directory'] 
+	@converted_path = config['converted_foxml_directory']
+	@pid_prefix = config['pid_prefix'] 
+	@partner = config['partner'] 
 
-                Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
-                        full_records = ''
-                        client = OAI::Client.new provider.endpoint_url
-                        response = client.list_records
-                        set = provider.set if provider.set
-                        response = client.list_records :set => set if set
-                        response.each do |record|
-                                puts record.metadata
-                                full_records += record.metadata.to_s
-                        end
+	desc "Harvest records from all OAI providers in repository"
+	task :harvest => :environment do
+		require 'oai'
 
-                        while(response.resumption_token and not response.resumption_token.empty?)
-	                        token = response.resumption_token
-	                        response = client.list_records :resumption_token => token if token
-	                        response.each do |record|
-	                          puts record.metadata
-	                          full_records += record.metadata.to_s
-	                        end
-	                    end
-                        f_name = provider.name.gsub(/\s+/, "") +  (set ? set : "") + "_" + Time.now.to_i.to_s + ".xml"
-			            f_name_full = Rails.root + @harvest_path + f_name
-                        FileUtils::mkdir_p @harvest_path
-			            File.open(f_name_full, "w") { |file| file.puts full_records }
-			            add_xml_formatting(f_name_full, provider.contributing_institution)
-                end
-        end
+		Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
+			full_records = ''
+			client = OAI::Client.new provider.endpoint_url
+			response = client.list_records
+			set = provider.set if provider.set
+			response = client.list_records :set => set if set
+			response.each do |record|
+				puts record.metadata
+				full_records += record.metadata.to_s
+			end
+
+			while(response.resumption_token and not response.resumption_token.empty?)
+				token = response.resumption_token
+				response = client.list_records :resumption_token => token if token
+				response.each do |record|
+					puts record.metadata
+					full_records += record.metadata.to_s
+				end
+			end
+			f_name = provider.name.gsub(/\s+/, "") +  (set ? set : "") + "_" + Time.now.to_i.to_s + ".xml"
+			f_name_full = Rails.root + @harvest_path + f_name
+			FileUtils::mkdir_p @harvest_path
+			File.open(f_name_full, "w") { |file| file.puts full_records }
+			add_xml_formatting(f_name_full, provider.contributing_institution)
+		end
+	end
 
 	desc "Convert OAI-PMH metadata to MODS-friendly DC metadata"
 	task :convert => :environment do

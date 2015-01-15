@@ -18,6 +18,7 @@ class OaiRecMetadata < ActiveFedora::OmDatastream
     t.coverage(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
     t.rights(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
     t.contributing_institution(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
+    t.collection_name(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
     t.partner(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
   end
 

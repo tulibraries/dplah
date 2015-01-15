@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :oai_recs
 
-  resources :providers
+  resources :providers do
+    member do
+      post :harvest
+    end
+  end
 
   root :to => "catalog#index"
   blacklight_for :catalog

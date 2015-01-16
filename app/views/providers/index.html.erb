@@ -21,9 +21,11 @@
         <td><%= provider.metadata_prefix %></td>
         <td><%= provider.set %></td>
         <td><%= provider.contributing_institution %></td>
-        <td><%= link_to 'Show', provider %></td>
-        <td><%= link_to 'Edit', edit_provider_path(provider) %></td>
-        <td><%= link_to 'Destroy', provider, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td> | <%= link_to 'Show', provider %> | </td>
+        <td> | <%= link_to 'Edit', edit_provider_path(provider) %> | </td>
+        <td> | <%= link_to 'Harvest', harvest_provider_path(provider) %> | </td>
+        <td> | <%= link_to 'Dump Index', dump_and_reindex_provider_path(provider), method: :post, data: { confirm: 'Are you sure?' } %> | </td>
+        <td> | <%= link_to 'Destroy', provider, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

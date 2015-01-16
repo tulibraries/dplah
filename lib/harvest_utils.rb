@@ -75,9 +75,8 @@ module HarvestUtils
 
   def cleanout_and_reindex(provider)
 
-    OaiRec.find_each({}, :rows=>1000) do |o|
-      binding.pry()
-      o.delete
+    ActiveFedora::Base.find_each({}, :rows=>1000) do |o|
+      o.delete if o.pid.starts_with?("changeme" + ':')
     end
     #harvest_action(provider)
   end

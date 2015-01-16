@@ -36,7 +36,7 @@ namespace :oai do
 		end
 	end
 
-	desc "Convert OAI-PMH metadata to MODS-friendly DC metadata"
+	desc "Convert OAI-PMH metadata to FOXML with DC crosswalk"
 	task :convert => :environment do
 		xslt_path = Rails.root.join("lib", "tasks", "oai_to_foxml.xsl")
 		u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
@@ -51,20 +51,30 @@ namespace :oai do
 
 	desc "Load fixtures from spec/fixtures/fedora, use DIR=path/to/directory to specify other location"
 	task :ingest => :environment do
-		contents = ENV['DIR'] ? Dir.glob(File.join(ENV['DIR'], "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
-		contents.each do |file|
-			puts file
-			print "Loading #{File.basename(file)} ... "
-			pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
-			puts "PID: "
-			puts pid
-			ActiveFedora::FixtureLoader.index(pid)
-			obj = OaiRec.find(pid)
-			obj.to_solr
-			obj.update_index
-			puts "done."
-			File.delete(file)
-		end
+		# contents = ENV['DIR'] ? Dir.glob(File.join(ENV['DIR'], "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
+		# contents.each do |file|
+		# 	puts file
+		# 	print "Loading #{File.basename(file)} ... "
+		# 	pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
+		# 	puts "PID: "
+		# 	puts pid
+		# 	ActiveFedora::FixtureLoader.index(pid)
+		# 	obj = OaiRec.find(pid)
+		# 	obj.to_solr
+		# 	obj.update_index
+		# 	puts "done."
+		# 	File.delete(file)
+		# end
+		contents = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
+	    contents.each do |file|
+	      puts file
+	      pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
+	      ActiveFedora::FixtureLoader.index(pid)
+	      obj = OaiRec.find(pid)
+	      obj.to_solr
+	      obj.update_index
+	      File.delete(file)
+	    end
 	end
 
 	desc 'Index all DPLA objects in Fedora repo.'

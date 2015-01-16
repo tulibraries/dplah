@@ -1,6 +1,6 @@
 class OaiRec < ActiveFedora::Base
 
-	has_metadata 'descMetadata', type: OaiRecMetadata
+	has_metadata 'descMetadata', type: Datastreams::OaiRecMetadata
 	
 	# Just your basic DC OAI-PMH
 	has_attributes :title, datastream: 'descMetadata', multiple: false

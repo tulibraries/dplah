@@ -1,14 +1,14 @@
-<h1>Listing providers</h1>
+<h1>Listing OAI seeds</h1>
 
-<table>
+<table class="oai-seeds">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
-      <th>Endpoint url</th>
-      <th>Metadata prefix</th>
+      <th>Base url</th>
       <th>Set</th>
-      <th colspan="3"></th>
+      <th>Collection Name</th>
+      <th>Contribution Institution</th>
+      <th colspan="5">Actions</th>
     </tr>
   </thead>
 
@@ -16,16 +16,15 @@
     <% @providers.each do |provider| %>
       <tr>
         <td><%= provider.name %></td>
-        <td><%= provider.description %></td>
-        <td><%= provider.endpoint_url %></td>
-        <td><%= provider.metadata_prefix %></td>
+        <td><%= auto_link(provider.endpoint_url) %></td>
         <td><%= provider.set %></td>
+        <td><%= provider.collection_name %></td>
         <td><%= provider.contributing_institution %></td>
-        <td> | <%= link_to 'Show', provider %> | </td>
-        <td> | <%= link_to 'Edit', edit_provider_path(provider) %> | </td>
-        <td> | <%= link_to 'Harvest', harvest_provider_path(provider) %> | </td>
-        <td> | <%= link_to 'Dump Index', dump_and_reindex_provider_path(provider), method: :post, data: { confirm: 'Are you sure?' } %> | </td>
-        <td> | <%= link_to 'Destroy', provider, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', provider %></td>
+        <td><%= link_to 'Edit', edit_provider_path(provider) %></td>
+        <td><%= link_to 'Harvest', harvest_provider_path(provider), method: :post, data: { confirm: 'This may take a while for very large sets.  Are you sure?' } %></td>
+        <td><%= link_to 'Dump Index', dump_and_reindex_provider_path(provider), method: :post, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', provider, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -33,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Provider', new_provider_path %>
+<%= link_to 'New OAI seed', new_provider_path %>

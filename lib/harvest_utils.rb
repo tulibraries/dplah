@@ -42,15 +42,14 @@ module HarvestUtils
     f_name_full = Rails.root + @harvest_path + f_name
     FileUtils::mkdir_p @harvest_path
     File.open(f_name_full, "w") { |file| file.puts full_records }
-    add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :collection_name => provider.collection_name)
+    add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name)
   end
-  module_function :harvest # :nodoc:
+  module_function :harvest 
 
   def convert()
       xslt_path = Rails.root.join("lib", "tasks", "oai_to_foxml.xsl")
       u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
       puts "#{u_files.length} #{"provider".pluralize(u_files.length)} detected"
-
       u_files.length.times do |i|
         puts "Contents of #{u_files[i]} transformed"
         `xsltproc #{Rails.root}/lib/tasks/oai_to_foxml.xsl #{u_files[i]}`
@@ -84,7 +83,8 @@ module HarvestUtils
 
   def self.add_xml_formatting(xml_file, options = {})
       contributing_institution = options[:contributing_institution] || ''
-          collection_name = options[:collection_name] || ''
+      set_spec = options[:set_spec] || ''
+      collection_name = options[:collection_name] || ''
       new_file = "/tmp/xml_hold_file.xml"
       xml_heading = '<?xml version="1.0" encoding="UTF-8"?>'
       unless File.open(xml_file).each_line.any?{|line| line.include?(xml_heading)}
@@ -92,7 +92,7 @@ module HarvestUtils
         xml_file_contents = fopen.read
         xml_open = "<records>"
         xml_close = "</records>"
-        xml_manifest = get_xml_manifest(contributing_institution, collection_name)
+        xml_manifest = get_xml_manifest(contributing_institution, set_spec, collection_name)
         fopen.close
         File.open(new_file, 'w') do |f|  
           f.puts xml_heading
@@ -107,11 +107,11 @@ module HarvestUtils
 
     end
 
-    def self.get_xml_manifest(contributing_institution, collection_name)
+    def self.get_xml_manifest(contributing_institution, set_spec, collection_name)
       harvest_s = @harvest_path.to_s
       converted_s = @converted_path.to_s
       partner_s = @partner.to_s
-      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><collection_name>#{collection_name}</collection_name><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
+      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
       return xml_manifest
     end
 end

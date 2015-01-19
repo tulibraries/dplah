@@ -5,7 +5,8 @@
   xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:exsl="http://exslt.org/common"
-  extension-element-prefixes="exsl">
+  xmlns:ex="http://exslt.org/dates-and-times"
+  extension-element-prefixes="exsl ex">
 
   <xsl:variable name="converted_path">
     <xsl:value-of select="records/manifest/converted_foxml_directory" />
@@ -23,10 +24,20 @@
     <xsl:value-of select="records/manifest/partner" />
   </xsl:variable>
 
+  <xsl:variable name="type">
+    <xsl:value-of select="OaiRec" />
+  </xsl:variable>
+
   <xsl:output method="xml" indent="yes"/>
-      <xsl:template match="records/metadata/oai_dc:dc">
-        <xsl:copy>
+    <xsl:template match="records/metadata/oai_dc:dc">
+      <xsl:copy>
+
+      <xsl:variable name="current_time">
+        <xsl:value-of select="ex:date-time()"/>
+      </xsl:variable>
+
       <xsl:variable name="apos">'</xsl:variable>
+
       <xsl:variable name="pid_raw">
         <xsl:value-of select="dc:identifier" />
       </xsl:variable>
@@ -46,24 +57,16 @@
           <xsl:attribute name="VERSION">
             <xsl:value-of select="1.1"/>
           </xsl:attribute>
+          
           <xsl:attribute name="xsi:schemaLocation">info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd</xsl:attribute>
           <foxml:objectProperties>
-            <foxml:property
-              NAME="info:fedora/fedora-system:def/model#state"
-              VALUE="Active"/>
-            <foxml:property
-              NAME="info:fedora/fedora-system:def/model#label"
-              VALUE="FOXML Reference Example"/>
-            <foxml:property
-              NAME="info:fedora/fedora-system:def/model#ownerId"
-              VALUE=""/>
-            <foxml:property
-              NAME="info:fedora/fedora-system:def/model#createdDate"
-              VALUE="2013-11-06T21:24:13.236Z"/>
-            <foxml:property
-              NAME="info:fedora/fedora-system:def/view#lastModifiedDate"
-              VALUE="2013-11-06T21:24:13.236Z"/>
-          </foxml:objectProperties>
+          <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+          <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="FOXML OAI-PMH"/>
+          <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE=""/>
+          <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="{$current_time}"/>
+          <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE=""/>
+        </foxml:objectProperties>                                        
+
           <foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X"
             VERSIONABLE="true">
             <foxml:datastreamVersion ID="DC.0"

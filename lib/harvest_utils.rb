@@ -47,14 +47,6 @@ module HarvestUtils
   end
   module_function :harvest 
 
-  def harvest_all
-    Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
-      harvest_action(provider)
-    end
-  end
-  module_function :harvest_all
-
-
   def convert()
       xslt_path = Rails.root.join("lib", "tasks", "oai_to_foxml.xsl")
       u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
@@ -85,12 +77,23 @@ module HarvestUtils
   def cleanout_and_reindex(provider)
     rec_count = 0
     ActiveFedora::Base.find_each({'contributing_institution_si'=>provider.contributing_institution}) do |o|
-      o.delete if o.pid.starts_with?(@pid_prefix + ':')
+      delete_from_aggregator(o)
       rec_count += 1
     end
     rec_count
   end
   module_function :cleanout_and_reindex
+
+  def delete_all
+    ActiveFedora::Base.find_each() do |o|
+      delete_from_aggregator(o)
+    end
+  end
+  module_function :delete_all
+
+  def self.delete_from_aggregator(o)
+    o.delete if o.pid.starts_with?(@pid_prefix + ':')
+  end
 
   def self.add_xml_formatting(xml_file, options = {})
       contributing_institution = options[:contributing_institution] || ''

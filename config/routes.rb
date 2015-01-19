@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   resources :providers do
     member do
       post :harvest
-      post :harvest_all
       post :dump_and_reindex
     end
   end
+
+  post "harvest_all_providers"=>"application#harvest_all_providers"
+  post "dump_whole_index"=>"application#dump_whole_index"
 
   root :to => "catalog#index"
   blacklight_for :catalog

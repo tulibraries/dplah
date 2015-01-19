@@ -20,8 +20,8 @@
         <td><%= provider.set %></td>
         <td><%= provider.collection_name %></td>
         <td><%= provider.contributing_institution %></td>
-        <td class="oai-actions"><%= link_to 'Harvest from OAI Source', harvest_provider_path(provider), method: :post, data: { confirm: 'This may take a while for very large sets.  Are you sure?' } %></td>
-        <td class="oai-actions"><%= link_to 'Remove from Aggregator Index', dump_and_reindex_provider_path(provider), method: :post, data: { confirm: 'Are you sure?' } %></td>
+        <td class="oai-actions"><%= link_to 'Harvest from OAI Source', harvest_provider_path(provider), method: :post, class: :hiddenHarvestField, data: { confirm: 'This may take a while for very large sets.  Are you sure?' } %></td>
+        <td class="oai-actions"><%= link_to 'Remove from Aggregator Index', dump_and_reindex_provider_path(provider), method: :post, class: :hiddenDiscardField, data: { confirm: 'Are you sure?' } %></td>
         <td class="oai-actions"><%= link_to 'Show Seed', provider %></td>
         <td class="oai-actions"><%= link_to 'Edit Seed', edit_provider_path(provider) %></td>
         <td class="oai-actions"><%= link_to 'Delete Seed', provider, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -31,5 +31,12 @@
 </table>
 
 <br>
-
-<%= link_to 'New OAI seed', new_provider_path %>
+<div class="loading hide">
+Please wait...
+</div>
+<h2>Other Actions</h2>
+<ul>
+  <li><%= link_to 'Create new OAI seed', new_provider_path%></li>
+  <li><%= link_to 'Harvest all OAI seeds', harvest_all_providers_path, method: :post  %></li>
+  <li><%= link_to 'Remove all from Aggregator Index', dump_whole_index_path, method: :post  %></li>
+</ul>

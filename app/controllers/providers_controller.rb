@@ -7,12 +7,6 @@ class ProvidersController < ApplicationController
     @providers = Provider.all
   end
 
-  def harvest_all
-    @providers = Provider.all
-    HarvestUtils.harvest_all()
-    redirect_to providers_url, notice: "All OAI seeds harvested and indexed"
-  end
-
   # GET /providers/1
   # GET /providers/1.json
   def show

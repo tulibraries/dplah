@@ -15,3 +15,12 @@ table.oai-seeds, .oai-seeds td, .oai-seeds th {
 	font-style: italic;
 	font-size: 11px;
 }
+
+.loading{
+  background: url('/assets/ajax-loader.gif') no-repeat scroll center bottom transparent;
+  width: 100px;
+  height: 60px;
+  text-align: center;
+  font-size: 16px;
+  margin: 20px 0px;
+}

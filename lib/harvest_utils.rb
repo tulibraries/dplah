@@ -16,7 +16,8 @@ module HarvestUtils
   def harvest_action(provider)
     harvest(provider)
     convert()
-    ingest()
+    rec_count = ingest()
+    rec_count
   end
   module_function :harvest_action
 
@@ -46,6 +47,14 @@ module HarvestUtils
   end
   module_function :harvest 
 
+  def harvest_all
+    Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
+      harvest_action(provider)
+    end
+  end
+  module_function :harvest_all
+
+
   def convert()
       xslt_path = Rails.root.join("lib", "tasks", "oai_to_foxml.xsl")
       u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
@@ -69,15 +78,17 @@ module HarvestUtils
       obj.update_index
       File.delete(file)
     end
+    contents.size
   end
   module_function :ingest
 
   def cleanout_and_reindex(provider)
-
-    ActiveFedora::Base.find_each({}, :rows=>1000) do |o|
-      o.delete if o.pid.starts_with?("changeme" + ':')
+    rec_count = 0
+    ActiveFedora::Base.find_each({'contributing_institution_si'=>provider.contributing_institution}) do |o|
+      o.delete if o.pid.starts_with?(@pid_prefix + ':')
+      rec_count += 1
     end
-    #harvest_action(provider)
+    rec_count
   end
   module_function :cleanout_and_reindex
 

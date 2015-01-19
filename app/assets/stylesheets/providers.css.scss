@@ -7,6 +7,11 @@ table.oai-seeds, .oai-seeds td, .oai-seeds th {
     padding: 10px;
 }
 
-.oai-seeds th {
+.oai-seeds th, td.oai-actions {
     text-align: center;
+}
+
+.field .field-tip {
+	font-style: italic;
+	font-size: 11px;
 }

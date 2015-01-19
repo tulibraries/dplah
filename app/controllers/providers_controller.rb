@@ -1,4 +1,5 @@
 class ProvidersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :dump_and_reindex]
 
   # GET /providers

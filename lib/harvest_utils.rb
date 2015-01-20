@@ -76,7 +76,7 @@ module HarvestUtils
 
   def cleanout_and_reindex(provider)
     rec_count = 0
-    ActiveFedora::Base.find_each({'contributing_institution_si'=>provider.contributing_institution}) do |o|
+    ActiveFedora::Base.find_each({'contributing_institution_si'=>provider.contributing_institution}, :batch_size => 5000) do |o|
       delete_from_aggregator(o)
       rec_count += 1
     end
@@ -85,7 +85,7 @@ module HarvestUtils
   module_function :cleanout_and_reindex
 
   def delete_all
-    ActiveFedora::Base.find_each() do |o|
+    ActiveFedora::Base.find_each({}, :batch_size => 5000) do |o|
       delete_from_aggregator(o)
     end
   end

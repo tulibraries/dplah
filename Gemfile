@@ -52,6 +52,14 @@ end
 
 group :development, :test do
   gem "rspec-rails"
+  gem "factory_girl_rails", "~> 4.4.1"
   gem "jettywrapper"
   gem "pry-rails"
+end
+
+group :test do
+  gem 'vcr'
+  gem 'webmock'
+  gem 'database_cleaner'
+  gem 'launchy'
 end

@@ -26,4 +26,107 @@ RSpec.describe OaiRec, :type => :model do
 	  it { is_expected.to respond_to(:contributing_institution) }
 	  it { is_expected.to respond_to(:partner) }
   end
+
+  context 'OaiRec Object' do
+
+    before(:context) do
+      @o = FactoryGirl.build(:oai_rec)
+      oaiRec = OaiRec.create(title: @o.title,
+                             creator: @o.creator,
+                             subject: @o.subject,
+                             description: @o.description,
+                             publisher: @o.publisher,
+                             contributor: @o.contributor,
+                             date: @o.date,
+                             type: @o.type,
+                             format: @o.format,
+                             identifier: @o.identifier,
+                             source: @o.source,
+                             language: @o.language,
+                             relation: @o.relation,
+                             coverage: @o.coverage,
+                             rights: @o.rights,
+                             contributing_institution: @o.contributing_institution,
+                             partner: @o.partner)
+      oaiRec.update_index
+      @object = ActiveFedora::Base.where(identifier_tesim: @o.identifier).to_a.first
+    end
+
+    after(:context) do
+      OaiRec.delete_all
+    end
+
+    it "should find the object" do
+      expect(@object.identifier).to eq(@o.identifier)
+    end
+
+    it "should match the title" do
+      expect(@object.title).to eq(@o.title)
+    end
+
+    it "should match the creator" do
+      expect(@object.creator).to eq(@o.creator)
+    end
+
+    it "should match the subject" do
+      expect(@object.subject).to eq(@o.subject)
+    end
+
+    it "should match the description" do
+      expect(@object.description).to eq(@o.description)
+    end
+
+    it "should match the publisher" do
+      expect(@object.publisher).to eq(@o.publisher)
+    end
+
+    it "should match the contributor" do
+      expect(@object.contributor).to eq(@o.contributor)
+    end
+
+    it "should match the date" do
+      expect(@object.date).to eq(@o.date)
+    end
+
+    it "should match the type" do
+      expect(@object.type).to eq(@o.type)
+    end
+
+    it "should match the format" do
+      expect(@object.format).to eq(@o.format)
+    end
+
+    it "should match the identifier" do
+      expect(@object.identifier).to eq(@o.identifier)
+    end
+
+    it "should match the source" do
+      expect(@object.source).to eq(@o.source)
+    end
+
+    it "should match the language" do
+      expect(@object.language).to eq(@o.language)
+    end
+
+    it "should match the relation" do
+      expect(@object.relation).to eq(@o.relation)
+    end
+
+    it "should match the coverage" do
+      expect(@object.coverage).to eq(@o.coverage)
+    end
+
+    it "should match the rights" do
+      expect(@object.rights).to eq(@o.rights)
+    end
+
+    it "should match the contributing institution" do
+      expect(@object.contributing_institution).to eq(@o.contributing_institution)
+    end
+
+    it "should match the partner" do
+      expect(@object.partner).to eq(@o.partner)
+    end
+  end
+
 end

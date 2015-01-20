@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$(".modal-dialog .confirm").click(function(){
+	$(".triggerWaiting").click(function(){
       $(".loading").removeClass("hide");
 	});
 });

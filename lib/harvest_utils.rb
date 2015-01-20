@@ -14,6 +14,11 @@ module HarvestUtils
   @partner = config['partner'] 
 
   def harvest_action(provider)
+
+    #make sure there are no excess harvest or conversion fixture files before restarting the tasks
+    FileUtils.rm_rf(Dir.glob('#{@harvest_path}/*'))
+    FileUtils.rm_rf(Dir.glob('#{@converted_path}/*'))
+    
     harvest(provider)
     convert()
     rec_count = ingest()
@@ -48,6 +53,7 @@ module HarvestUtils
   module_function :harvest 
 
   def convert()
+
       xslt_path = Rails.root.join("lib", "tasks", "oai_to_foxml.xsl")
       u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
       puts "#{u_files.length} #{"provider".pluralize(u_files.length)} detected"
@@ -76,7 +82,7 @@ module HarvestUtils
 
   def cleanout_and_reindex(provider)
     rec_count = 0
-    ActiveFedora::Base.find_each({'contributing_institution_si'=>provider.contributing_institution}, :batch_size => 5000) do |o|
+    ActiveFedora::Base.find_each({'contributing_institution_si'=>provider.contributing_institution}, batch_size: 2000) do |o|
       delete_from_aggregator(o)
       rec_count += 1
     end
@@ -85,7 +91,7 @@ module HarvestUtils
   module_function :cleanout_and_reindex
 
   def delete_all
-    ActiveFedora::Base.find_each({}, :batch_size => 5000) do |o|
+    ActiveFedora::Base.find_each({},batch_size: 2000) do |o|
       delete_from_aggregator(o)
     end
   end

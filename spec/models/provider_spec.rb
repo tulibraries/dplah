@@ -20,41 +20,37 @@ RSpec.describe Provider, :type => :model do
 
   context "initialized attributes" do
   
-    let(:a_name) { "MyName" }
-    let(:a_description) { "MyDescription" }
-    let(:a_prefix) { "my-prefix" }
-    let(:a_set) { "MySet" }
-    let(:an_institution) { "MyInstitution" }
-
+    let(:p) { FactoryGirl.build(:provider) }
     let!(:provider) {
       Provider.new(
-        name: a_name,
-        description: a_description,
-        endpoint_url: valid_url,
-        metadata_prefix: a_prefix,
-        set: a_set,
-        contributing_institution: an_institution
+        name: p.name,
+        description: p.description,
+        endpoint_url: p.endpoint_url,
+        metadata_prefix: p.metadata_prefix,
+        set: p.set,
+        contributing_institution: p.contributing_institution
       ) 
     }
 
+
     it "specifies the name" do
-      expect(provider.name).to eq(a_name)
+      expect(provider.name).to eq(p.name)
     end
 
     it "specifies the description" do
-      expect(provider.description).to eq(a_description)
+      expect(provider.description).to eq(p.description)
     end
 
     it "specifies the metadata_prefix" do
-      expect(provider.metadata_prefix).to eq(a_prefix)
+      expect(provider.metadata_prefix).to eq(p.metadata_prefix)
     end
 
     it "specifies the set" do
-      expect(provider.set).to eq(a_set)
+      expect(provider.set).to eq(p.set)
     end
 
     it "specifies the contributing_institution" do
-      expect(provider.contributing_institution).to eq(an_institution)
+      expect(provider.contributing_institution).to eq(p.contributing_institution)
     end
   end
 
@@ -84,8 +80,7 @@ RSpec.describe Provider, :type => :model do
   end
 
   describe "client method" do
-    let(:provider) { Provider.new(endpoint_url: valid_url) }
-    let(:client) { Provider.new(endpoint_url: valid_url).client }
+    let(:client) { FactoryGirl.build(:provider).client }
 
     it "gets a client object" do
       expect(client.class.to_s).to eq("OAI::Client")
@@ -117,13 +112,13 @@ RSpec.describe Provider, :type => :model do
   describe "record_class" do
     it "returns the default record class name" do
       pending "As implemented, returns nil value. TBD: Verify desired behavior"
-      provider = Provider.new(endpoint_url: valid_url)
+      provider = FactoryGirl.build(:provider)
       expect(provider.record_class).to eq("#{default_metadata_prefix}_document")
     end
   end
 
 	it "default_record_class_name" do
-    provider = Provider.new(endpoint_url: valid_url)
+    provider = FactoryGirl.build(:provider)
     expect(provider.default_record_class_name).to eq("#{default_metadata_prefix}_document")
 	end
 

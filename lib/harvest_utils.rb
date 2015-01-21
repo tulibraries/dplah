@@ -269,7 +269,7 @@ ALL OAI RECORDS HARVESTED, CONVERTED, AND NORMALIZED, BEGINNING INGEST at #{Time
       records_num += 1
       File.open(@log_file, "a+") do |f|
         f << "================
-        #{records_num} #{"record".pluralize(rec_count)} deleted from aggregator
+        #{records_num} #{"record".pluralize(records_num)} deleted from aggregator
         ================
 
         "

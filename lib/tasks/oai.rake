@@ -16,6 +16,7 @@ namespace :oai do
 	desc "Harvest records from all OAI providers and ingest into in repository"
 	task :harvest_all => :environment do
 		Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
+		    HarvestUtils.create_log_file(provider.name)
 			HarvestUtils.harvest(provider)
 		end
 	end

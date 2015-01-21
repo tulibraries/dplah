@@ -1,6 +1,6 @@
 class ProvidersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :dump_and_reindex]
+  before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
 
   # GET /providers
   # GET /providers.json
@@ -70,8 +70,13 @@ class ProvidersController < ApplicationController
     redirect_to providers_url, notice: "#{rec_count} records harvested from OAI seed"
   end
 
-  def dump_and_reindex
-    rec_count = HarvestUtils.cleanout_and_reindex(@provider)
+  def dump_and_reindex_by_institution
+    rec_count = HarvestUtils.cleanout_and_reindex(@provider,  :reindex_by => "institution")
+    redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
+  end
+
+  def dump_and_reindex_by_set
+    rec_count = HarvestUtils.cleanout_and_reindex(@provider, :reindex_by => "set")
     redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
   end
 

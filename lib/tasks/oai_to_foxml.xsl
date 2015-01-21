@@ -20,6 +20,10 @@
     <xsl:value-of select="records/manifest/collection_name" />
   </xsl:variable>
 
+  <xsl:variable name="set_spec">
+    <xsl:value-of select="records/manifest/set_spec" />
+  </xsl:variable>
+
   <xsl:variable name="partner">
     <xsl:value-of select="records/manifest/partner" />
   </xsl:variable>
@@ -242,6 +246,10 @@
 
                   <xsl:element name="contributing_institution">
                     <xsl:value-of select="$contributing_institution" />
+                  </xsl:element>
+
+                  <xsl:element name="set_spec">
+                    <xsl:value-of select="$set_spec" />
                   </xsl:element>
 
                   <xsl:element name="collection_name">

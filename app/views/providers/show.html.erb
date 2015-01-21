@@ -25,6 +25,11 @@
   <%= @provider.contributing_institution %>
 </p>
 
+<p>
+  <strong>In production?:</strong>
+  <%= @provider.in_production %>
+</p>
+
 <%= link_to 'Edit', edit_provider_path(@provider) %> |
 <%= link_to 'Back', providers_path %>
 <div class="loading hide">

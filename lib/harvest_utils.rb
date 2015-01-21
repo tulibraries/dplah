@@ -19,8 +19,9 @@ module HarvestUtils
     #make sure there are no excess harvest or conversion fixture files before restarting the tasks
     FileUtils.rm_rf(Dir.glob('#{@harvest_path}/*'))
     FileUtils.rm_rf(Dir.glob('#{@converted_path}/*'))
-    @log_file = "#{@human_log_path}/#{provider.name}.#{Time.now.to_i}.txt"
-    FileUtils.touch(@log_file)
+
+    create_log_file(provider.name)
+
     harvest(provider)
     convert(provider)
     cleanup()
@@ -195,25 +196,102 @@ ALL OAI RECORDS HARVESTED, CONVERTED, AND NORMALIZED, BEGINNING INGEST at #{Time
   end
   module_function :ingest
 
-  def cleanout_and_reindex(provider)
+  def cleanout_and_reindex(provider, options = {})
+    reindex_by = options[:reindex_by] || ''
+    create_log_file("delete_#{reindex_by}_")
     rec_count = 0
-    ActiveFedora::Base.find_each({'contributing_institution_si'=>provider.contributing_institution}, batch_size: 2000) do |o|
-      delete_from_aggregator(o)
-      rec_count += 1
+    File.open(@log_file, "a+") do |f|
+    f << "================
+    INITIATING DELETE OF RECORDS BY #{reindex_by} FROM AGGREGATOR at #{Time.now} 
+    ================
+
+    "
+    end
+    if reindex_by == "institution"
+      ActiveFedora::Base.find_each({'contributing_institution_si'=>provider.contributing_institution}, batch_size: 2000) do |o|
+        delete_from_aggregator(o)
+        File.open(@log_file, "a+") do |f|
+            f << "================
+            #{rec_count} #{"record".pluralize(rec_count)} deleted from aggregator
+            ================
+
+            "
+            rec_count += 1
+        end
+      end
+      File.open(@log_file, "a+") do |f|
+        f << "================
+        #{rec_count} RECORDS CONTRIBUTED BY #{provider.contributing_institution} DELETED FROM AGGREGATOR at #{Time.now} 
+        ================
+
+        "
+      end
+    elsif reindex_by == "set"
+      ActiveFedora::Base.find_each({'set_spec_si'=>provider.set}, batch_size: 2000) do |o|
+        delete_from_aggregator(o)
+        File.open(@log_file, "a+") do |f|
+          f << "================
+          #{rec_count} #{"record".pluralize(rec_count)} deleted from aggregator
+          ================
+
+          "
+          rec_count += 1
+        end
+      end
+      File.open(@log_file, "a+") do |f|
+        f << "================
+        #{rec_count} RECORDS CONTRIBUTED BY #{provider.set} DELETED FROM AGGREGATOR at #{Time.now} 
+        ================
+
+        "
+      end
+    else
+      File.open(@log_file, "a+") do |f|
+        f << "ERROR: No reindexing option specified."
+      end
     end
     rec_count
   end
   module_function :cleanout_and_reindex
 
   def delete_all
+    create_log_file("delete_all")
+    File.open(@log_file, "a+") do |f|
+      f << "================
+      INITIATING DELETE OF ALL RECORDS FROM AGGREGATOR at #{Time.now} 
+      ================
+
+      "
+    end
+    records_num = 0
     ActiveFedora::Base.find_each({},batch_size: 2000) do |o|
       delete_from_aggregator(o)
+      records_num += 1
+      File.open(@log_file, "a+") do |f|
+        f << "================
+        #{records_num} #{"record".pluralize(rec_count)} deleted from aggregator
+        ================
+
+        "
+      end
+    end
+    File.open(@log_file, "a+") do |f|
+      f << "================
+      ALL OAI RECORDS DELETED FROM AGGREGATOR at #{Time.now} 
+      ================
+
+      "
     end
   end
   module_function :delete_all
 
   def self.delete_from_aggregator(o)
     o.delete if o.pid.starts_with?(@pid_prefix + ':')
+  end
+
+  def self.create_log_file(log_name)
+    @log_file = "#{@human_log_path}/#{log_name}.#{Time.now.to_i}.txt"
+    FileUtils.touch(@log_file)
   end
 
   def self.add_xml_formatting(xml_file, options = {})

@@ -36,6 +36,6 @@ Please wait...
 <h2>Other Actions</h2>
 <ul>
   <li><%= link_to 'Create new OAI seed', new_provider_path%></li>
-  <li><%= link_to 'Harvest all OAI seeds', harvest_all_providers_path, method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while if there are many OAI seeds.  Are you sure?' }   %></li>
-  <li><%= link_to 'Delete all from Aggregator Index', dump_whole_index_path, method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure you want to delete the entire contents of the Aggregator Index?' } %></li>
+  <li><%= link_to 'Harvest all OAI seeds (this will take a while)', harvest_all_providers_path, method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while if there are many OAI seeds.  Are you sure?' }   %></li>
+  <li><%= link_to 'Delete all from Aggregator Index (this will take a while)', dump_whole_index_path, method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure you want to delete the entire contents of the Aggregator Index?' } %></li>
 </ul>

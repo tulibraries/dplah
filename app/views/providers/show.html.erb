@@ -26,8 +26,6 @@
 </p>
 
 <%= link_to 'Edit', edit_provider_path(@provider) %> |
-<%= link_to 'Harvest', harvest_provider_path(@provider), method: :post, class: :hiddenHarvestField %> | 
-<%= link_to 'Remove from Aggregator Index', dump_and_reindex_provider_path(@provider), method: :post, class: :hiddenDiscardField %> | 
 <%= link_to 'Back', providers_path %>
 <div class="loading hide">
 Please wait...

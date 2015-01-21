@@ -12,21 +12,41 @@ module HarvestUtils
   @converted_path = config['converted_foxml_directory']
   @pid_prefix = config['pid_prefix'] 
   @partner = config['partner'] 
+  @human_log_path = config['human_log_path'] 
 
   def harvest_action(provider)
 
     #make sure there are no excess harvest or conversion fixture files before restarting the tasks
     FileUtils.rm_rf(Dir.glob('#{@harvest_path}/*'))
     FileUtils.rm_rf(Dir.glob('#{@converted_path}/*'))
-    
+    @log_file = "#{@human_log_path}/#{provider.name}.#{Time.now.to_i}.txt"
+    FileUtils.touch(@log_file)
     harvest(provider)
-    convert()
-    rec_count = ingest()
+    convert(provider)
+    cleanup()
+    rec_count = ingest(provider)
+    File.open(@log_file, "a+") do |f|
+        f << "================
+        HARVEST AND INGEST COMPLETE FOR #{provider.name} OAI SEED at #{Time.now}.
+        #{rec_count} OAI records were processed
+        ================
+        
+        "
+      end
     rec_count
   end
   module_function :harvest_action
 
   def harvest(provider)
+    File.open(@log_file, "a+") do |f|
+        f << "================
+        BEGINNING HARVEST FOR #{provider.name} OAI SEED at #{Time.now} 
+        This log will update throughout this process.
+        ================
+        
+        "
+      end
+    num_files = 1
     full_records = ''
     client = OAI::Client.new provider.endpoint_url
     response = client.list_records
@@ -35,13 +55,32 @@ module HarvestUtils
     response.each do |record|
       puts record.metadata
       full_records += record.metadata.to_s
+      File.open(@log_file, "a+") do |f|
+        f << "#{num_files} #{"OAI record".pluralize(num_files)} harvest from seed
+        "
+      end
+      num_files += 1
     end
     while(response.resumption_token and not response.resumption_token.empty?)
+      File.open(@log_file, "a+") do |f|
+        f << "
+
+        ==============
+        Resumption token detected 
+        ==============
+
+        "
+      end
       token = response.resumption_token
       response = client.list_records :resumption_token => token if token
       response.each do |record|
         puts record.metadata
         full_records += record.metadata.to_s
+        num_files += 1
+        File.open(@log_file, "a+") do |f|
+          f << "#{num_files} #{"OAI record".pluralize(num_files)} harvested from seed
+          " #if !record.header.status.to_s == "deleted"
+        end
       end
     end
     f_name = provider.name.gsub(/\s+/, "") +  (set ? set : "") + "_" + Time.now.to_i.to_s + ".xml"
@@ -52,11 +91,20 @@ module HarvestUtils
   end
   module_function :harvest 
 
-  def convert()
-
+  def convert(provider)
+      File.open(@log_file, "a+") do |f|
+        f << "================
+        ALL OAI RECORDS HARVESTED, NOW CONVERTING
+        ================
+        
+        "
+      end
       xslt_path = Rails.root.join("lib", "tasks", "oai_to_foxml.xsl")
       u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
-      puts "#{u_files.length} #{"provider".pluralize(u_files.length)} detected"
+      File.open(@log_file, "a+") do |f|
+        f << "#{u_files.length} #{"OAI seed".pluralize(u_files.length)} detected
+        "
+      end
       u_files.length.times do |i|
         puts "Contents of #{u_files[i]} transformed"
         `xsltproc #{Rails.root}/lib/tasks/oai_to_foxml.xsl #{u_files[i]}`
@@ -65,16 +113,68 @@ module HarvestUtils
   end
   module_function :convert
 
-  def ingest()
+  def cleanup()
+    File.open(@log_file, "a+") do |f|
+        f << "================
+        ALL OAI RECORDS HARVESTED AND CONVERTED, NOW NORMALIZING
+        ================
+
+        "
+      end
+    new_file = "/tmp/xml_hold_file.xml"
+    xml_files = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
+    xml_files.each do |xml_file|
+      # xml = Nokogiri::XML(open(xml_file))
+      # values = xml.xpath("/records/metadata//dc/text()")
+      # values = xml.at('subject').text
+      # values.gsub(/[\,;.]$/, '')
+      #text()")
+      xml_content = File.read(xml_file)
+      doc = Nokogiri::XML(xml_content)
+      node_update = doc.search("//subject")
+      node_update.each do |node_value|
+        #do all metadata normalizing for subjects here
+        node_value.inner_html = node_value.inner_html.gsub(/[\,;.]$/, '')
+      end
+
+      node_update = doc.search("//type")
+      node_update.each do |node_value|
+        #do all metadata normalizing for types here
+        node_value.inner_html = node_value.inner_html.gsub(/[\,;.]$/, '')
+      end
+
+      File.open(new_file, 'w') do |f|  
+          f.print(doc.to_xml)
+          File.rename(new_file, xml_file)
+          f.close
+      end
+    end
+
+  end
+  module_function :cleanup
+
+  def ingest(provider)
+    File.open(@log_file, "a+") do |f|
+        f << "================
+        ALL OAI RECORDS HARVESTED, CONVERTED, AND NORMALIZED, NOW INGESTING
+        ================
+
+        "
+      end
+    num_files = 1
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
     contents.each do |file|
-      puts file
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
       ActiveFedora::FixtureLoader.index(pid)
       obj = OaiRec.find(pid)
       obj.to_solr
       obj.update_index
       File.delete(file)
+      File.open(@log_file, "a+") do |f|
+        f << "#{num_files} #{"OAI record".pluralize(num_files)} ingested
+        "
+      end
+      num_files += 1
     end
     contents.size
   end

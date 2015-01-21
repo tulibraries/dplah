@@ -13,6 +13,20 @@ namespace :oai do
 		end
 	end
 
+	desc "Harvest records from all OAI providers and ingest into in repository"
+	task :harvest_all => :environment do
+		Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
+			HarvestUtils.harvest(provider)
+		end
+	end
+
+	desc "Harvest records from all OAI providers and ingest into in repository"
+	task :convert_all => :environment do
+		  HarvestUtils.convert
+	end
+
+
+
 	desc "Delete all OAI objects from the repository"
 	task :delete_all => :environment do
 		HarvestUtils.delete_all

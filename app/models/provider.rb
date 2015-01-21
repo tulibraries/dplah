@@ -72,20 +72,21 @@ class Provider < ActiveRecord::Base
 		(read_attribute(:interval) || 1.day).seconds
 	end
 
-	def record_class
-		str = read_attribute(:record_class) || default_record_class_name
-		str.camelcase.constantize
-		rescue
-		nil
-	end
-
-	def default_record_class_name
-		"#{metadata_prefix}_document"
-	end
-
-	def record_class= klass
-		self[:record_class] = klass.to_s
-	end
+# [TODO] Candidate for deprecation
+#	def record_class
+#		str = read_attribute(:record_class) || default_record_class_name
+#		str.camelcase.constantize
+#		rescue
+#		nil
+#	end
+#
+#	def default_record_class_name
+#		"#{metadata_prefix}_document"
+#	end
+#
+#	def record_class= klass
+#		self[:record_class] = klass.to_s
+#	end
 	
 	protected
 	

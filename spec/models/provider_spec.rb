@@ -109,20 +109,21 @@ RSpec.describe Provider, :type => :model do
     it "is a pending example"
   end
 
-  describe "record_class" do
-    it "returns the default record class name" do
-      pending "As implemented, returns nil value. TBD: Verify desired behavior"
-      provider = FactoryGirl.build(:provider)
-      expect(provider.record_class).to eq("#{default_metadata_prefix}_document")
-    end
-  end
-
-	it "default_record_class_name" do
-    provider = FactoryGirl.build(:provider)
-    expect(provider.default_record_class_name).to eq("#{default_metadata_prefix}_document")
-	end
-
-	describe "record_class=" do
-		it "is a pending example"
-	end
+# [TODO] Candidate for deprecation
+#  describe "record_class" do
+#    it "returns the default record class name" do
+#      pending "As implemented, returns nil value. TBD: Verify desired behavior"
+#      provider = FactoryGirl.build(:provider)
+#      expect(provider.record_class).to eq("#{default_metadata_prefix}_document")
+#    end
+#  end
+#
+#	it "default_record_class_name" do
+#    provider = FactoryGirl.build(:provider)
+#    expect(provider.default_record_class_name).to eq("#{default_metadata_prefix}_document")
+#	end
+#
+#	describe "record_class=" do
+#		it "is a pending example"
+#	end
 end

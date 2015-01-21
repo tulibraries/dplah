@@ -27,11 +27,11 @@ module HarvestUtils
     rec_count = ingest(provider)
     File.open(@log_file, "a+") do |f|
         f << "================
-        HARVEST AND INGEST COMPLETE FOR #{provider.name} OAI SEED at #{Time.now}.
-        #{rec_count} OAI records were processed
-        ================
-        
-        "
+HARVEST AND INGEST COMPLETE FOR #{provider.name} OAI SEED at #{Time.now}.
+#{rec_count} OAI records were processed
+================
+         
+"
       end
     rec_count
   end
@@ -40,13 +40,14 @@ module HarvestUtils
   def harvest(provider)
     File.open(@log_file, "a+") do |f|
         f << "================
-        BEGINNING HARVEST FOR #{provider.name} OAI SEED at #{Time.now} 
-        This log will update throughout this process.
-        ================
+BEGINNING HARVEST FOR #{provider.name} OAI SEED at #{Time.now} 
+This log will update throughout this process.
+================
         
-        "
+"
       end
     num_files = 1
+    transient_records = 1
     full_records = ''
     client = OAI::Client.new provider.endpoint_url
     response = client.list_records
@@ -56,8 +57,11 @@ module HarvestUtils
       puts record.metadata
       full_records += record.metadata.to_s
       File.open(@log_file, "a+") do |f|
-        f << "#{num_files} #{"OAI record".pluralize(num_files)} harvest from seed
+        f << "Transient record detected -- " if record.header.status.to_s == "deleted"
+        transient_records += 1 if record.header.status.to_s == "deleted"
+        f << "#{num_files} #{"OAI record".pluralize(num_files)} detected from seed
         "
+
       end
       num_files += 1
     end
@@ -65,11 +69,11 @@ module HarvestUtils
       File.open(@log_file, "a+") do |f|
         f << "
 
-        ==============
-        Resumption token detected 
-        ==============
+==============
+Resumption token detected at #{Time.now} 
+==============
 
-        "
+"
       end
       token = response.resumption_token
       response = client.list_records :resumption_token => token if token
@@ -78,8 +82,11 @@ module HarvestUtils
         full_records += record.metadata.to_s
         num_files += 1
         File.open(@log_file, "a+") do |f|
-          f << "#{num_files} #{"OAI record".pluralize(num_files)} harvested from seed
-          " #if !record.header.status.to_s == "deleted"
+          f << "Transient record detected -- " if record.header.status.to_s == "deleted"
+          transient_records += 1 if record.header.status.to_s == "deleted"
+          f << "#{num_files} #{"OAI record".pluralize(num_files)} detected from seed
+          "
+
         end
       end
     end
@@ -88,16 +95,24 @@ module HarvestUtils
     FileUtils::mkdir_p @harvest_path
     File.open(f_name_full, "w") { |file| file.puts full_records }
     add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name)
-  end
+      File.open(@log_file, "a+") do |f|
+        f << "================
+HARVEST COMPLETE FOR #{provider.name} OAI SEED at #{Time.now}.
+#{num_files} OAI records were detected, #{transient_records} of which were transient
+================
+            
+"
+      end
+    end
   module_function :harvest 
 
   def convert(provider)
       File.open(@log_file, "a+") do |f|
         f << "================
-        ALL OAI RECORDS HARVESTED, NOW CONVERTING
-        ================
+ALL OAI RECORDS HARVESTED, BEGINNING CONVERSION at #{Time.now}
+================
         
-        "
+"
       end
       xslt_path = Rails.root.join("lib", "tasks", "oai_to_foxml.xsl")
       u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
@@ -115,11 +130,11 @@ module HarvestUtils
 
   def cleanup()
     File.open(@log_file, "a+") do |f|
-        f << "================
-        ALL OAI RECORDS HARVESTED AND CONVERTED, NOW NORMALIZING
-        ================
+              f << "================
+ALL OAI RECORDS HARVESTED AND CONVERTED, BEGINNING NORMALIZING at #{Time.now} 
+================
 
-        "
+"
       end
     new_file = "/tmp/xml_hold_file.xml"
     xml_files = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
@@ -156,10 +171,10 @@ module HarvestUtils
   def ingest(provider)
     File.open(@log_file, "a+") do |f|
         f << "================
-        ALL OAI RECORDS HARVESTED, CONVERTED, AND NORMALIZED, NOW INGESTING
-        ================
+ALL OAI RECORDS HARVESTED, CONVERTED, AND NORMALIZED, BEGINNING INGEST at #{Time.now} 
+================
 
-        "
+"
       end
     num_files = 1
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")

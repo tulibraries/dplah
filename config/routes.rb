@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post "dump_whole_index"=>"application#dump_whole_index"
 
   root :to => "catalog#index"
+  
   blacklight_for :catalog
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

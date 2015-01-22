@@ -64,6 +64,10 @@ class Provider < ActiveRecord::Base
 		read_attribute(:collection_name) || ''
 	end
 
+	def in_production
+		read_attribute(:in_production) || ''
+	end
+
 	def next_harvest_at
 		consumed_at + interval
 	end
@@ -107,5 +111,6 @@ class Provider < ActiveRecord::Base
 			record.update_index
 			record
 		end
+
 
 end

@@ -1,6 +1,10 @@
 class OaiRec < ActiveFedora::Base
 
-	has_metadata 'descMetadata', type: OaiRecMetadata
+	# def self.to_class_uri
+ #      'info:fedora/afmodel:OaiRec'
+ #    end
+
+	has_metadata 'descMetadata', type: Datastreams::OaiRecMetadata
 	
 	# Just your basic DC OAI-PMH
 	has_attributes :title, datastream: 'descMetadata', multiple: false
@@ -23,5 +27,10 @@ class OaiRec < ActiveFedora::Base
 	has_attributes :contributing_institution, datastream: 'descMetadata', multiple: false
 	has_attributes :collection_name, datastream: 'descMetadata', multiple: false
 	has_attributes :partner, datastream: 'descMetadata', multiple: false
+    
+    #specifically to allow dump/reindex by set
+	has_attributes :set_spec, datastream: 'descMetadata', multiple: false
+
+	#has_model :oai_rec
 
 end

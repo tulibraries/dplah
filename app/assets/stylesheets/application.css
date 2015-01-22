@@ -14,3 +14,11 @@
  *= require_self
  *= require dpla
  */
+
+ .show{
+ 	display: block;
+ }
+
+ .hide{
+ 	display: none;
+ }

@@ -1,14 +1,16 @@
-<h1>Listing providers</h1>
-
-<table>
+<%=
+  %>
+  <h1>Listing OAI seeds</h1>
+<table class="oai-seeds">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
-      <th>Endpoint url</th>
-      <th>Metadata prefix</th>
+      <th>Base url</th>
       <th>Set</th>
-      <th colspan="3"></th>
+      <th>Collection Name</th>
+      <th>Contribution Institution</th>
+      <th>In production?</th>
+      <th colspan="7">Actions</th>
     </tr>
   </thead>
 
@@ -16,19 +18,30 @@
     <% @providers.each do |provider| %>
       <tr>
         <td><%= provider.name %></td>
-        <td><%= provider.description %></td>
-        <td><%= provider.endpoint_url %></td>
-        <td><%= provider.metadata_prefix %></td>
+        <td><%= auto_link(provider.endpoint_url) %></td>
         <td><%= provider.set %></td>
+        <td><%= provider.collection_name %></td>
         <td><%= provider.contributing_institution %></td>
-        <td><%= link_to 'Show', provider %></td>
-        <td><%= link_to 'Edit', edit_provider_path(provider) %></td>
-        <td><%= link_to 'Destroy', provider, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= provider.in_production %></td>
+        <td class="oai-actions"><%= link_to 'Harvest from OAI Source', harvest_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while for OAI seeds with many items.  Are you sure?' } %></td>
+        <td class="oai-actions"><%= link_to 'Remove this Insitution from Aggregator Index', dump_and_reindex_by_institution_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure?' } %></td>
+        <td class="oai-actions"><%= link_to 'Remove this Collection from Aggregator Index', dump_and_reindex_by_set_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure?' } %></td>
+        <td class="oai-actions"><%= link_to 'Show Seed', provider %></td>
+        <td class="oai-actions"><%= link_to 'Edit Seed', edit_provider_path(provider) %></td>
+        <td class="oai-actions"><%= link_to 'Delete Seed', provider, method: :delete, data: { confirm: 'Are you sure you want to delete this OAI seed?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Provider', new_provider_path %>
+<div class="loading hide">
+Please wait...
+</div>
+<h2>Other Actions</h2>
+<ul>
+  <li><%= link_to 'Create new OAI seed', new_provider_path%></li>
+  <li><%= link_to 'Harvest all OAI seeds (this will take a while)', harvest_all_providers_path, method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while if there are many OAI seeds.  Are you sure?' }   %></li>
+  <li><%= link_to 'Delete all from Aggregator Index (this will take a while)', dump_whole_index_path, method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure you want to delete the entire contents of the Aggregator Index?' } %></li>
+  <li><%= link_to "Check harvesting logs", human_logs_url, :target => '_blank'%>
+</ul>

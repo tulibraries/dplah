@@ -5,113 +5,32 @@ namespace :oai do
 	@pid_prefix = config['pid_prefix'] 
 	@partner = config['partner'] 
 
-	desc "Harvest records from all OAI providers in repository"
-	task :harvest => :environment do
-		require 'oai'
-
+	desc "Harvest records from all OAI providers and ingest into in repository"
+	task :harvest_ingest_all => :environment do
 		Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
-			full_records = ''
-			client = OAI::Client.new provider.endpoint_url
-			response = client.list_records
-			set = provider.set if provider.set
-			response = client.list_records :set => set if set
-			response.each do |record|
-				puts record.metadata
-				full_records += record.metadata.to_s
-			end
-
-			while(response.resumption_token and not response.resumption_token.empty?)
-				token = response.resumption_token
-				response = client.list_records :resumption_token => token if token
-				response.each do |record|
-					puts record.metadata
-					full_records += record.metadata.to_s
-				end
-			end
-			f_name = provider.name.gsub(/\s+/, "") +  (set ? set : "") + "_" + Time.now.to_i.to_s + ".xml"
-			f_name_full = Rails.root + @harvest_path + f_name
-			FileUtils::mkdir_p @harvest_path
-			File.open(f_name_full, "w") { |file| file.puts full_records }
-			add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :collection_name => provider.collection_name)
+			rec_count = HarvestUtils.harvest_action(provider)
+			puts "#{rec_count} records harvested and ingested"
 		end
 	end
 
-	desc "Convert OAI-PMH metadata to MODS-friendly DC metadata"
-	task :convert => :environment do
-		xslt_path = Rails.root.join("lib", "tasks", "oai_to_foxml.xsl")
-		u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
-		puts "#{u_files.length} #{"provider".pluralize(u_files.length)} detected"
-
-		u_files.length.times do |i|
-			puts "Contents of #{u_files[i]} transformed"
-			`xsltproc #{Rails.root}/lib/tasks/oai_to_foxml.xsl #{u_files[i]}`
-			File.delete(u_files[i])
+	desc "Harvest records from all OAI providers and ingest into in repository"
+	task :harvest_all => :environment do
+		Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
+		    HarvestUtils.create_log_file(provider.name)
+			HarvestUtils.harvest(provider)
 		end
 	end
 
-	desc "Load fixtures from spec/fixtures/fedora, use DIR=path/to/directory to specify other location"
-	task :ingest => :environment do
-		contents = ENV['DIR'] ? Dir.glob(File.join(ENV['DIR'], "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
-		contents.each do |file|
-			puts file
-			print "Loading #{File.basename(file)} ... "
-			pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
-			puts "PID: "
-			puts pid
-			ActiveFedora::FixtureLoader.index(pid)
-			obj = OaiRec.find(pid)
-			obj.to_solr
-			obj.update_index
-			puts "done."
-			File.delete(file)
-		end
-	end
-
-	desc 'Index all DPLA objects in Fedora repo.'
-	task :index => :environment do
-		ActiveFedora::Base.connection_for_pid('changeme:1') #Fake obj for Rubydora
-		ActiveFedora::Base.fedora_connection[0].connection.search(nil) do |object|
-			if object.pid.starts_with?('#{@pid_prefix}:')
-				obj = OaiRec.find(object.pid)
-				obj.to_solr
-				obj.update_index
-				puts "#{obj} indexed."
-			end
-		end
+	desc "Harvest records from all OAI providers and ingest into in repository"
+	task :convert_all => :environment do
+		  HarvestUtils.convert
 	end
 
 
-	def add_xml_formatting(xml_file, options = {})
-		contributing_institution = options[:contributing_institution] || ''
-        collection_name = options[:collection_name] || ''
-		new_file = "/tmp/xml_hold_file.xml"
-		xml_heading = '<?xml version="1.0" encoding="UTF-8"?>'
-		unless File.open(xml_file).each_line.any?{|line| line.include?(xml_heading)}
-			fopen = File.open(xml_file)
-			xml_file_contents = fopen.read
-			xml_open = "<records>"
-			xml_close = "</records>"
-			xml_manifest = get_xml_manifest(contributing_institution, collection_name)
-			fopen.close
-			File.open(new_file, 'w') do |f|  
-				f.puts xml_heading
-				f.puts xml_open
-				f.puts xml_manifest
-				f.puts xml_file_contents
-				f.puts xml_close
-				File.rename(new_file, xml_file)
-				f.close
-			end
-		end
 
-	end
-
-	def get_xml_manifest(contributing_institution, collection_name)
-		harvest_s = @harvest_path.to_s
-		converted_s = @converted_path.to_s
-		partner_s = @partner.to_s
-		xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><collection_name>#{collection_name}</collection_name><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
-		return xml_manifest
+	desc "Delete all OAI objects from the repository"
+	task :delete_all => :environment do
+		HarvestUtils.delete_all
 	end
 end
 

@@ -2,6 +2,8 @@ class Provider < ActiveRecord::Base
 	
 	validates :endpoint_url, :presence => true, :format => { :with => /^https?/, :message => "must be an http/https url", :multiline => true}
 	
+	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq}
+
 	before_save do
 		self.name = nil if self.name.blank?
 		self.set = nil if self.set.blank?

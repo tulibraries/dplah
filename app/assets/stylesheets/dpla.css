@@ -4,6 +4,34 @@
 *
 ******/
 
+/* Just for differentiating hubs -- this is for test */
+
+body{
+  background-color: #ddeffe;
+}
+
+.panel{
+  background-color: #fcfcfe;
+}
+
+.alert-info{
+  border-color: #165663;
+}
+
+a {
+  color: #265986;
+}
+
+.dl-invert dt{
+  color: #494949;
+}
+
+#sortAndPerPage, #previousNextDocument, #documents .document{
+  border-color: #494949;
+}
+
+/* End of hub differentiation */
+
 
 #header-navbar .navbar-brand {
     /* background: url('/assets/dpla-logo.png') no-repeat scroll left top transparent;*/
@@ -43,4 +71,35 @@ a.facet_select {
   -moz-hyphens: none;
   hyphens: none;
   word-break: keep-all;
+}
+
+
+#footer{
+  background: #222222;
+  width: 100%;
+  height: 100px;
+  color: #ffffff;
+  padding: 20px 50px;
+}
+
+#footer a {
+  color: #ffffff;
+}
+
+.footer-left{
+  float: left;
+}
+
+.footer-right{
+  clear: none;
+  float: right;
+}
+
+.glyphicon-lock{
+  font-size: 34px;
+  font-weight: bold;
+}
+
+.glyphicon-lock:before {
+  content: "\e034";
 }

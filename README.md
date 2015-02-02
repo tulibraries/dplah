@@ -85,13 +85,13 @@ rake oai:convert_all
 ```
 You should see a message displaying the absolute path to your harvested XML, stating that it was "converted." If you see errors, make sure you have xsltproc installed on your system.  If you do and you still see errors, the XML may be invalid or contain problematic characters.
 
-*In the terminal, run the following:
+* In the terminal, run the following:
 ```
 rake oai:harvest_ingest_all 
 ```
 This will harvest, convert, normalize, and ingest all OAI-PMH records from all OAI seeds in the Hydra head into the repository.
 
-*In the terminal, run the following:
+* In the terminal, run the following:
 ```
 rake oai:delete_all 
 ```

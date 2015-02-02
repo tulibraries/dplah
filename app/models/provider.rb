@@ -8,7 +8,7 @@ class Provider < ActiveRecord::Base
 		self.name = nil if self.name.blank?
 		self.set = nil if self.set.blank?
 		self.metadata_prefix = nil if self.metadata_prefix.blank?
-		self.contributing_institution = nil if self.contributing_institution.blank?
+		self.contributing_institution = self.new_contributing_institution if self.contributing_institution.blank?
 	end
 
 	def client
@@ -60,6 +60,10 @@ class Provider < ActiveRecord::Base
 
 	def contributing_institution
 		read_attribute(:contributing_institution) || ''
+	end
+
+	def new_contributing_institution
+		read_attribute(:new_contributing_institution) || ''
 	end
 
 	def collection_name

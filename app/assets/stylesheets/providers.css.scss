@@ -11,16 +11,55 @@ table.oai-seeds, .oai-seeds td, .oai-seeds th {
     text-align: center;
 }
 
+.oai-note{
+  font-size: 11px;
+  font-weight: bold;
+}
+
 .field .field-tip {
 	font-style: italic;
 	font-size: 11px;
 }
 
 .loading{
-  background: url('/assets/ajax-loader.gif') no-repeat scroll center bottom transparent;
+  background: url('/assets/ajax-load.gif') no-repeat scroll center bottom transparent;
   width: 100px;
   height: 60px;
   text-align: center;
   font-size: 16px;
-  margin: 20px 0px;
+  width: 300px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  background-size: 50px 50px;
+  line-height: 70px;
+  background-position: 130px 45px;
 }
+
+.new_provider .field, .edit_provider .field{
+  padding: 10px;
+}
+
+.btn-provider a {
+  background-color:#458bc7;
+  -moz-border-radius:28px;
+  -webkit-border-radius:28px;
+  border-radius:28px;
+  border:1px solid #0c3f8a;
+  display:inline-block;
+  color:#ffffff;
+  font-size: 12px;
+  padding:16px 31px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #283466;
+  cursor:pointer;
+}
+.btn-provider:hover {
+  background-color:#1838ba;
+}
+
+.btn-provider:active {
+  position:relative;
+  top:1px;
+}
+        

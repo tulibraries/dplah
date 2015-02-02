@@ -1,3 +1,5 @@
+@import "base/mixins.scss";
+
 /******
 *
 * Overriding Blacklight styles as needed
@@ -100,6 +102,23 @@ a.facet_select {
   font-weight: bold;
 }
 
-.glyphicon-lock:before {
-  content: "\e034";
+
+/* Footer */
+
+@include sticky-footer(100px);
+
+html,body,#wrapper,#main-wrapper,#footer {
+  width:100%;
+}
+
+#footer{
+  background-color: #222222;
+  min-height: 70px;
+  margin-top: 100px;
+}
+
+#footer-runner{
+  background-color: #222222;
+  color: #ffffff;
+  padding: 10px;
 }

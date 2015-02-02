@@ -41,19 +41,28 @@
     
   <div class="field">
     <%= f.label :contributing_institution %><br>
-    <%= f.text_field :contributing_institution %>
+    <%= f.collection_select :contributing_institution, Provider.unique_by_contributing_institution, :contributing_institution, :contributing_institution, :prompt => "Please select one from this list or enter below" %>
     <div class="field-tip">
       Note: For end user display
     </div>
   </div>
+
+  <div class="field">
+    <%= f.label :new_contributing_institution %><br>
+    <%= f.text_field :new_contributing_institution %>
+    <div class="field-tip">
+      If not in the list above
+    </div>
+  </div>
+
   <div class="field">
     <%= f.label :in_production %><br>
-    <%= f.text_field :in_production %>
+    <%= f.select :in_production, [['No', 'No'], ['Yes', 'Yes']] %>
     <div class="field-tip">
       Note: Is this seed featured in the production aggregator?
     </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit ( f.object.new_record? ? "Create OAI Seed" : "Update OAI Seed") %>
   </div>
 <% end %>

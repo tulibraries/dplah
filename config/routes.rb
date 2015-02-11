@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
   resources :oai_recs
 
-  resources :providers
+  resources :providers do
+    member do
+      post :harvest
+      post :dump_and_reindex_by_institution
+      post :dump_and_reindex_by_set
+    end
+  end
+
+  post "harvest_all_providers"=>"application#harvest_all_providers"
+  post "dump_whole_index"=>"application#dump_whole_index"
 
   root :to => "catalog#index"
+  
   blacklight_for :catalog
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008154725) do
+ActiveRecord::Schema.define(version: 20150202151301) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",       null: false
@@ -31,19 +31,14 @@ ActiveRecord::Schema.define(version: 20141008154725) do
     t.string   "endpoint_url"
     t.string   "metadata_prefix"
     t.string   "set"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "contributing_institution"
-  end
-
-  create_table "records", force: true do |t|
-    t.text     "content"
-    t.integer  "provider_id"
+    t.string   "collection_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "set_spec"
+    t.string   "in_production"
+    t.string   "new_contributing_institution"
   end
-
-  add_index "records", ["provider_id"], name: "index_records_on_provider_id"
 
   create_table "searches", force: true do |t|
     t.text     "query_params"

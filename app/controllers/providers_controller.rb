@@ -1,5 +1,6 @@
 class ProvidersController < ApplicationController
-  before_action :set_provider, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
 
   # GET /providers
   # GET /providers.json
@@ -21,6 +22,7 @@ class ProvidersController < ApplicationController
   def edit
   end
 
+
   # POST /providers
   # POST /providers.json
   def create
@@ -28,7 +30,7 @@ class ProvidersController < ApplicationController
 
     respond_to do |format|
       if @provider.save
-        format.html { redirect_to @provider, notice: 'Provider was successfully created.' }
+        format.html { redirect_to @provider, notice: 'OAI seed was successfully created.' }
         format.json { render :show, status: :created, location: @provider }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class ProvidersController < ApplicationController
   def update
     respond_to do |format|
       if @provider.update(provider_params)
-        format.html { redirect_to @provider, notice: 'Provider was successfully updated.' }
+        format.html { redirect_to @provider, notice: 'OAI seed was successfully updated.' }
         format.json { render :show, status: :ok, location: @provider }
       else
         format.html { render :edit }
@@ -51,14 +53,31 @@ class ProvidersController < ApplicationController
     end
   end
 
+  
+
   # DELETE /providers/1
   # DELETE /providers/1.json
   def destroy
     @provider.destroy
     respond_to do |format|
-      format.html { redirect_to providers_url, notice: 'Provider was successfully destroyed.' }
+      format.html { redirect_to providers_url, notice: 'OAI seed was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def harvest
+    rec_count = HarvestUtils.harvest_action(@provider)
+    redirect_to providers_url, notice: "#{rec_count} records harvested from OAI seed"
+  end
+
+  def dump_and_reindex_by_institution
+    rec_count = HarvestUtils.cleanout_and_reindex(@provider,  :reindex_by => "institution")
+    redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
+  end
+
+  def dump_and_reindex_by_set
+    rec_count = HarvestUtils.cleanout_and_reindex(@provider, :reindex_by => "set")
+    redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
   end
 
   private
@@ -69,6 +88,7 @@ class ProvidersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provider_params
-      params.require(:provider).permit(:name, :description, :endpoint_url, :metadata_prefix, :set, :contributing_institution)
+      params.require(:provider).permit(:name, :description, :endpoint_url, :metadata_prefix, :set, :contributing_institution, :collection_name, :in_production, :new_contributing_institution)
     end
+
 end

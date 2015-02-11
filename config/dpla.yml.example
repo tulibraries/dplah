@@ -2,3 +2,5 @@ harvest_data_directory: "/path/to/metadata/from/contributors"
 converted_foxml_directory: "/path/to/foxml/converted/metadata"
 pid_prefix: "changeme"
 partner: "Name of hub"
+human_log_path: '/abs/path/to/log/files'
+human_log_url: 'http://fullurltologfiles'

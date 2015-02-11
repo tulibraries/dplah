@@ -6,6 +6,8 @@ class CreateProviders < ActiveRecord::Migration
       t.string :endpoint_url
       t.string :metadata_prefix
       t.string :set
+      t.string :contributing_institution
+      t.string :collection_name
 
       t.timestamps
     end

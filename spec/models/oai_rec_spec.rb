@@ -4,11 +4,11 @@ RSpec.describe OaiRec, :type => :model do
   context 'OaiRec Class' do
     subject { OaiRec.new }
 
-    it { is_expected.to have_metadata_stream_of_type(OaiRecMetadata) }
+    it { is_expected.to have_metadata_stream_of_type(Datastreams::OaiRecMetadata) }
 
     it { is_expected.to respond_to(:creator) }
 	  it { is_expected.to respond_to(:title) }
-	  it { is_expected.to respond_to(:creator) }
+	  it { is_expected.to respond_to(:subject) }
 	  it { is_expected.to respond_to(:subject) }
 	  it { is_expected.to respond_to(:description) }
 	  it { is_expected.to respond_to(:publisher) }
@@ -24,7 +24,10 @@ RSpec.describe OaiRec, :type => :model do
 	  it { is_expected.to respond_to(:rights) }
 
 	  it { is_expected.to respond_to(:contributing_institution) }
+	  it { is_expected.to respond_to(:collection_name) }
 	  it { is_expected.to respond_to(:partner) }
+
+	  it { is_expected.to respond_to(:set_spec) }
   end
 
   context 'OaiRec Object' do
@@ -47,7 +50,9 @@ RSpec.describe OaiRec, :type => :model do
                              coverage: @o.coverage,
                              rights: @o.rights,
                              contributing_institution: @o.contributing_institution,
-                             partner: @o.partner)
+                             collection_name: @o.collection_name,
+                             partner: @o.partner,
+                             set_spec: @o.set_spec)
       oaiRec.update_index
       @object = ActiveFedora::Base.where(identifier_tesim: @o.identifier).to_a.first
     end
@@ -124,8 +129,16 @@ RSpec.describe OaiRec, :type => :model do
       expect(@object.contributing_institution).to eq(@o.contributing_institution)
     end
 
+    it "should match the collection name" do
+      expect(@object.collection_name).to eq(@o.collection_name)
+    end
+
     it "should match the partner" do
       expect(@object.partner).to eq(@o.partner)
+    end
+
+    it "should match the set spec" do
+      expect(@object.set_spec).to eq(@o.set_spec)
     end
   end
 

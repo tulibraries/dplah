@@ -3,11 +3,12 @@ require 'rails_helper'
 RSpec.describe "providers/edit", :type => :view do
   before(:each) do
     @provider = assign(:provider, Provider.create!(
-      :name => "MyString",
-      :description => "MyText",
+      :name => "Name",
       :endpoint_url => "http://example.com",
-      :metadata_prefix => "MyString",
-      :set => "MyString"
+      :set => "Set",
+      :collection_name => "Collection",
+      :contributing_institution => "Contributor",
+      :in_production => "NO"
     ))
   end
 
@@ -18,13 +19,17 @@ RSpec.describe "providers/edit", :type => :view do
 
       assert_select "input#provider_name[name=?]", "provider[name]"
 
-      assert_select "textarea#provider_description[name=?]", "provider[description]"
-
       assert_select "input#provider_endpoint_url[name=?]", "provider[endpoint_url]"
 
-      assert_select "input#provider_metadata_prefix[name=?]", "provider[metadata_prefix]"
-
       assert_select "input#provider_set[name=?]", "provider[set]"
+
+      assert_select "input#provider_collection_name[name=?]", "provider[collection_name]"
+
+      pending "Assert on multiselect options"
+
+      assert_select "option provider_contributing_institution[name=?]", "provider[contributing_institution]"
+
+      assert_select "input#provider_in_production[name=?]", "provider[in_production]"
     end
   end
 end

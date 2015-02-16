@@ -17,6 +17,8 @@ gem 'therubyracer',  platforms: :ruby
 gem 'hydra'
 gem 'rails_autolink'
 
+gem 'bootstrap-sass', '~> 3.3.1'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -48,13 +50,18 @@ gem "devise"
 gem "devise-guests", "~> 0.3"
 
 group :development do
-  gem "pry-rails"
 end
 
 group :development, :test do
   gem "rspec-rails"
+  gem "factory_girl_rails", "~> 4.4.1"
   gem "jettywrapper"
+  gem "pry-rails"
 end
 
-group :development, :test do
+group :test do
+  gem 'vcr'
+  gem 'webmock'
+  gem 'database_cleaner'
+  gem 'launchy'
 end

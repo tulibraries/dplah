@@ -6,18 +6,8 @@
 </p>
 
 <p>
-  <strong>Description:</strong>
-  <%= @provider.description %>
-</p>
-
-<p>
   <strong>Endpoint url:</strong>
   <%= @provider.endpoint_url %>
-</p>
-
-<p>
-  <strong>Metadata prefix:</strong>
-  <%= @provider.metadata_prefix %>
 </p>
 
 <p>
@@ -26,9 +16,22 @@
 </p>
 
 <p>
+  <strong>Collection Name:</strong>
+  <%= @provider.collection_name %>
+</p>
+
+<p>
   <strong>Contributing Institution:</strong>
   <%= @provider.contributing_institution %>
 </p>
 
+<p>
+  <strong>In production?:</strong>
+  <%= @provider.in_production %>
+</p>
+
 <%= link_to 'Edit', edit_provider_path(@provider) %> |
 <%= link_to 'Back', providers_path %>
+<div class="loading hide">
+Please wait...
+</div>

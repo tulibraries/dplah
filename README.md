@@ -6,6 +6,7 @@ DPLAH is a proof-of-concept aggregator for OAI-PMH metadata with additional feat
 
 * Hydra, and therefore everything Hydra needs
 * xsltproc for processing XSLT at the command line
+* Apache for serving harvesting logs in the browser, and for later production deployment
 
 ##Configuration
 
@@ -16,6 +17,9 @@ harvest_data_directory: "/path/to/metadata/from/contributors"
 converted_foxml_directory: "/path/to/foxml/converted/metadata"
 pid_prefix: "changeme"
 partner: "Name of hub"
+human_log_path: '/abs/path/to/log/files'
+human_log_url: 'http://fullurltologfiles'
+
 ```
 
 Substitute your own values as follows for the YML fields:
@@ -28,6 +32,10 @@ Substitute your own values as follows for the YML fields:
 ..The namespace for your Fedora objects
 * **partner**
 ..The name of the DPLA Partner hub
+* **human_log_path**
+..Absolute path on the file system where the OAI management logs should go
+* **human_log_url**
+..Full clickable URL path to the directory on your web server where OAI management logs live
 
 ##Start up locally
 
@@ -53,26 +61,41 @@ Coming soon!  Promise.
 * Run Hydra generators/set up jetty/tomcat, etc.
 * Start Fedora/Solr services.
 * Start the Rails server.
-* To begin harvesting, go to the relative path "/providers" and input data for an OAI-PMH harvestable repository (see "OAI Resources" below for tips on getting started)
-* Save the provider.
-* At the command line, run the following:
-```
-rake oai:harvest
-```
-If the provider is harvestable, you should see metadata fly past you in the terminal. If there are errors with the metadata, you should (hopefully) see those.
-* Go to the path on your filesystem specified in dpla.yml under the "harvest_data_directory" value, and you should see an XML file containing the harvested metadata from your provider.
-* Back in the root of your Hydra repo, run the following:
-```
-rake oai:convert
-```
-You should see a message displaying the absolute path to your harvested XML, stating that it was "converted." If you see errors, make sure you have xsltproc installed on your system.  If you do and you still see errors, the XML may not be valid.
-*In the terminal, run the following:
-```
-rake oai:ingest DIR=/converted_foxml_directory(THE ACTUAL PATH, NOT THIS STRING/
-```
-The ingest task will look at whatever relative or absolute path is given to DIR. It should match the value that you added to the dpla.yml file for "converted_foxml_directory."
 
+###Managing OAI Seeds
+* To begin harvesting, go to the relative path "/providers" (the "Manage OAI Seeds" dashboard) and input data for an OAI-PMH harvestable repository (see "OAI Resources" below for tips on getting started)
+* Save the provider.
+* From the dashboard, click the "Harvest from OAI Source" button in the OAI seeds table.  You should see the ajax spinner and a prompt to check the harvesting logs.  Click this link to go to the directory listing page of OAI management logs.  These are textual logs created every time an OAI seed action is performed from within the dashboard (that is, harvest, delete, etc).  Harvesting/ingesting and deleting from the index can take a while, especially for seeds with many records, so you can monitor the progress of an ingest by refreshing the textual log periodically.  
 * Go to your Hydra head in the browser to see if the metadata was harvested and has been made discoverable. 
+
+####More Actions for OAI Seeds
+* From the dashboard, you may delete all records from a collection, from an institution, or delete all records in the aggregator.  You can also re-harvest records from seeds (not deleting before doing so will result in duplication), and harvest everything available from all seeds via the actions underneath the OAI seeds table.
+
+###Rake tasks
+
+* To harvest all metadata and view the immediately-delivered OAI-PMH before it is converted and ingested, go to the the command line from the root of your Rails application and run the following:
+```
+rake oai:harvest_all
+```
+If the provider is harvestable, you should see metadata fly past you in the terminal. If there are errors with the metadata, you should (hopefully) see those too.  Go to the path on your filesystem specified in dpla.yml under the "harvest_data_directory" value, and you should see an XML file containing the harvested metadata in one large file.  
+
+* To see the FOXML output before it is ingested into the repository, go to the the command line from the root of your Rails application and run the following:
+```
+rake oai:convert_all
+```
+You should see a message displaying the absolute path to your harvested XML, stating that it was "converted." If you see errors, make sure you have xsltproc installed on your system.  If you do and you still see errors, the XML may be invalid or contain problematic characters.
+
+* In the terminal, run the following:
+```
+rake oai:harvest_ingest_all 
+```
+This will harvest, convert, normalize, and ingest all OAI-PMH records from all OAI seeds in the Hydra head into the repository.
+
+* In the terminal, run the following:
+```
+rake oai:delete_all 
+```
+This will delete all harvested records from the local repository. 
 
 ##OAI-PMH Resources
 * [OAI-PMH for Beginners Tutorial](http://www.oaforum.org/tutorial/)

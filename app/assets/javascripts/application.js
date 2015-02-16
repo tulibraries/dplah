@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require reveal
 //
 // Required by Blacklight
 //= require blacklight/blacklight

@@ -61,6 +61,7 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name('subject', :facetable), :label => 'Subject', :collapse => false, :limit => 5
     config.add_facet_field solr_name('type', :facetable), :label => 'Type', :limit => 7
     config.add_facet_field solr_name('contributing_institution', :facetable), :label => 'Contributing Institution', :limit => 7
+    config.add_facet_field solr_name('collection_name', :facetable), :label => 'Collection Name', :limit => 7
     config.add_facet_field solr_name('language', :facetable), :label => 'Language', :limit => 7
     config.add_facet_field solr_name('publisher', :facetable), :label => 'Publisher', :limit => 7
 
@@ -79,6 +80,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name('creator', :stored_searchable, type: :string), :label => 'Creator'
     config.add_index_field solr_name('description', :stored_searchable, type: :string), :label => 'Description'
     config.add_index_field solr_name('contributing_institution', :stored_searchable, type: :string), :label => 'Contributing Institution'
+    config.add_index_field solr_name('collection_name', :stored_searchable, type: :string), :label => 'Collection Name'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -98,7 +100,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name('coverage', :stored_searchable, type: :string), :label => 'Coverage'
     config.add_show_field solr_name('rights', :stored_searchable, type: :string), :label => 'Rights'
     config.add_show_field solr_name('contributing_institution', :stored_searchable, type: :string), :label => 'Contributing Institution', :link_to_search => 'contributing_institution_sim'
-    config.add_show_field solr_name('partner', :stored_searchable, type: :string), :label => 'DPLA Partner'
+    config.add_show_field solr_name('collection_name', :stored_searchable, type: :string), :label => 'Collection Name', :link_to_search => 'collection_name'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -171,6 +173,8 @@ class CatalogController < ApplicationController
     # mean") suggestion is offered.
     config.spell_max = 5
   end
+
+  
 
 
 

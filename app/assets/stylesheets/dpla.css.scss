@@ -1,0 +1,124 @@
+@import "base/mixins.scss";
+
+/******
+*
+* Overriding Blacklight styles as needed
+*
+******/
+
+/* Just for differentiating hubs -- this is for test */
+
+body{
+  background-color: #ddeffe;
+}
+
+.panel{
+  background-color: #fcfcfe;
+}
+
+.alert-info{
+  border-color: #165663;
+}
+
+a {
+  color: #265986;
+}
+
+.dl-invert dt{
+  color: #494949;
+}
+
+#sortAndPerPage, #previousNextDocument, #documents .document{
+  border-color: #494949;
+}
+
+/* End of hub differentiation */
+
+
+#header-navbar .navbar-brand {
+    /* background: url('/assets/dpla-logo.png') no-repeat scroll left top transparent;*/
+    background: none;
+    color: #ffffff;
+    font-weight: bold;
+    height: 50px;
+    width: 360px;
+    margin-top: 10px;
+}
+
+div#header-title h1, div#header-title h1 a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+div#header-title h1 a:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+.checkbox .toggle_bookmark {
+  display: none;
+}
+
+.pull-right a:hover {
+  color: #ffffff;
+}
+
+
+a.facet_select {
+}
+
+.facet-values .facet-label {
+  word-wrap: normal;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  hyphens: none;
+  word-break: keep-all;
+}
+
+
+#footer{
+  background: #222222;
+  width: 100%;
+  height: 100px;
+  color: #ffffff;
+  padding: 20px 50px;
+}
+
+#footer a {
+  color: #ffffff;
+}
+
+.footer-left{
+  float: left;
+}
+
+.footer-right{
+  clear: none;
+  float: right;
+}
+
+.glyphicon-lock{
+  font-size: 34px;
+  font-weight: bold;
+}
+
+
+/* Footer */
+
+@include sticky-footer(100px);
+
+html,body,#wrapper,#main-wrapper,#footer {
+  width:100%;
+}
+
+#footer{
+  background-color: #222222;
+  min-height: 70px;
+  margin-top: 100px;
+}
+
+#footer-runner{
+  background-color: #222222;
+  color: #ffffff;
+  padding: 10px;
+}

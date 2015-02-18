@@ -1,0 +1,74 @@
+en:
+  oai_seed_logs:
+    text_buffer: |+
+
+      ===========================================
+      ===========================================
+
+    current_time: |+
+      
+      Current time -  
+
+    log_begin: |+
+      Ingestion process beginning -- this log will update throughout this process.
+
+    harvest_begin: |+ 
+      BEGINNING HARVEST FOR 
+
+    harvest_end: |+
+      HARVEST COMPLETE FOR
+
+    records_count: |+
+       OAI record(s) detected 
+    transient_records_detected: |+ 
+       transient OAI record(s) detected
+
+    single_transient_record_detected: Transient record detected -- 
+    resumption_token_detected: |+
+      Resumption token detected
+    convert_begin: |+
+      BEGINNING CONVERSION
+    
+    convert_end: |+
+      CONVERSION COMPLETE
+    
+    convert_count: |+
+       OAI seeds detected
+    normalize_begin: |+
+      BEGINNING NORMALIZING
+
+    normalize_end: |+
+    
+      NORMALIZING COMPLETE
+
+    ingest_begin: |+
+      INGESTION BEGINNING
+
+    ingest_end: |+
+      INGESTION COMPLETE
+
+    ingest_count: |+
+      records ingested 
+    log_end: |+
+      HARVEST AND INGEST COMPLETE FOR
+
+    log_end_processed: |+
+       OAI record(s) processed
+
+    delete_begin: |+
+      INITIATING DELETE OF RECORDS FROM AGGREGATOR IN SET 
+
+    delete_count: |+ 
+      deleted from aggregator
+
+    delete_end: |+
+       RECORDS DELETED FROM AGGREGATOR
+
+    delete_all_begin: |+
+      INITIATING DELETE OF ALL RECORDS FROM AGGREGATOR
+    
+    delete_all_end: |+
+      ALL OAI RECORDS DELETED FROM AGGREGATOR
+
+    reindexing_error: |+
+      ERROR - No reindexing option specified.

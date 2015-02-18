@@ -33,7 +33,7 @@
   </xsl:variable>
 
   <xsl:output method="xml" indent="yes"/>
-    <xsl:template match="records/metadata/oai_dc:dc">
+    <xsl:template match="records/record">
       <xsl:copy>
 
       <xsl:variable name="current_time">
@@ -43,15 +43,15 @@
       <xsl:variable name="apos">'</xsl:variable>
 
       <xsl:variable name="pid_raw">
-        <xsl:value-of select="dc:identifier" />
+        <xsl:value-of select="header/identifier"/>
       </xsl:variable>
-      
-      <xsl:variable name="pid_intermed">
-        <xsl:value-of select="substring(translate($pid_raw, ' /:httpwww.,()-_', ''), 1, 59)"/>
+
+      <xsl:variable name="pid_local">
+        <xsl:value-of select="substring($pid_raw, 1, 59)"/>
       </xsl:variable>
 
       <xsl:variable name="pid">
-        <xsl:value-of select="substring(translate($pid_intermed, $apos, ''), 1, 59)"/>
+        <xsl:value-of select="concat('dplapa:', $pid_local)" />
       </xsl:variable>
 
       <exsl:document method="xml" href="{$converted_path}/file_{$pid}.foxml.xml">        
@@ -61,7 +61,8 @@
           <xsl:attribute name="VERSION">
             <xsl:value-of select="1.1"/>
           </xsl:attribute>
-          
+          <xsl:attribute name="PID"><xsl:value-of select="$pid"/></xsl:attribute>
+
           <xsl:attribute name="xsi:schemaLocation">info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd</xsl:attribute>
           <foxml:objectProperties>
           <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
@@ -84,77 +85,77 @@
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:title'" />
-                    <xsl:with-param name="values" select="dc:title" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:title" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:creator'" />
-                    <xsl:with-param name="values" select="dc:creator" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:creator" />
                   </xsl:call-template>
 
                   <xsl:call-template name="split-subjects">
                     <xsl:with-param name="tag" select="'dc:subject'" />
-                    <xsl:with-param name="subjects" select="concat(dc:subject, ';')" />
+                    <xsl:with-param name="subjects" select="concat(metadata/oai_dc:dc/dc:subject, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:description'" />
-                    <xsl:with-param name="values" select="dc:description" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:publisher'" />
-                    <xsl:with-param name="values" select="dc:publisher" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:publisher" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:contributor'" />
-                    <xsl:with-param name="values" select="dc:contributor" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:contributor" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:date'" />
-                    <xsl:with-param name="values" select="dc:date" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:date" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:type'" />
-                    <xsl:with-param name="values" select="dc:type" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:type" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:format'" />
-                    <xsl:with-param name="values" select="dc:format" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:format" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:identifier'" />
-                    <xsl:with-param name="values" select="dc:identifier" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:identifier" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:source'" />
-                    <xsl:with-param name="values" select="dc:source" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:source" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:language'" />
-                    <xsl:with-param name="values" select="dc:language" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:language" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:relation'" />
-                    <xsl:with-param name="values" select="dc:relation" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:relation" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:coverage'" />
-                    <xsl:with-param name="values" select="dc:coverage" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:coverage" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:rights'" />
-                    <xsl:with-param name="values" select="dc:rights" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:rights" />
                   </xsl:call-template>
 
                 </oai_dc:dc>
@@ -171,77 +172,77 @@
                 <fields>
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'title'" />
-                    <xsl:with-param name="values" select="dc:title" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:title" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'creator'" />
-                    <xsl:with-param name="values" select="dc:creator" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:creator" />
                   </xsl:call-template>
 
                   <xsl:call-template name="split-subjects">
                     <xsl:with-param name="tag" select="'subject'" />
-                    <xsl:with-param name="subjects" select="concat(dc:subject, ';')" />
+                    <xsl:with-param name="subjects" select="concat(metadata/oai_dc:dc/dc:subject, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'description'" />
-                    <xsl:with-param name="values" select="dc:description" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'publisher'" />
-                    <xsl:with-param name="values" select="dc:publisher" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:publisher" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'contributor'" />
-                    <xsl:with-param name="values" select="dc:contributor" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:contributor" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'date'" />
-                    <xsl:with-param name="values" select="dc:date" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:date" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'type'" />
-                    <xsl:with-param name="values" select="dc:type" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:type" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'format'" />
-                    <xsl:with-param name="values" select="dc:format" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:format" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'identifier'" />
-                    <xsl:with-param name="values" select="dc:identifier" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:identifier" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'source'" />
-                    <xsl:with-param name="values" select="dc:source" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:source" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'language'" />
-                    <xsl:with-param name="values" select="dc:language" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:language" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'relation'" />
-                    <xsl:with-param name="values" select="dc:relation" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:relation" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'coverage'" />
-                    <xsl:with-param name="values" select="dc:coverage" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:coverage" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'rights'" />
-                    <xsl:with-param name="values" select="dc:rights" />
+                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:rights" />
                   </xsl:call-template>
 
                   <xsl:element name="contributing_institution">

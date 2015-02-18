@@ -56,6 +56,22 @@
   </div>
 
   <div class="field">
+    <%= f.label :provider_id_prefix %><br>
+    <%= f.collection_select :provider_id_prefix, Provider.unique_by_provider_id_prefix, :provider_id_prefix, :provider_id_prefix, :prompt => "Please select one from this list or enter below" %>
+    <div class="field-tip">
+      Note: For end user display
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :new_provider_id_prefix %><br>
+    <%= f.text_field :new_provider_id_prefix %>
+    <div class="field-tip">
+      If not in the list above
+    </div>
+  </div>
+
+  <div class="field">
     <%= f.label :in_production %><br>
     <%= f.select :in_production, [['No', 'No'], ['Yes', 'Yes']] %>
     <div class="field-tip">

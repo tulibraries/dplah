@@ -1,14 +1,16 @@
 class Provider < ActiveRecord::Base
 	
 	validates :endpoint_url, :presence => true, :format => { :with => /^https?/, :message => "must be an http/https url", :multiline => true}
-	
+	validates_length_of :new_provider_id_prefix, :maximum => 8
 	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq}
+	scope :unique_by_provider_id_prefix, lambda { select(:provider_id_prefix).uniq}
 
 	before_save do
 		self.name = nil if self.name.blank?
 		self.set = nil if self.set.blank?
 		self.metadata_prefix = nil if self.metadata_prefix.blank?
 		self.contributing_institution = self.new_contributing_institution if self.contributing_institution.blank?
+		self.provider_id_prefix = self.new_provider_id_prefix if self.provider_id_prefix.blank?
 	end
 
 	def client
@@ -72,6 +74,10 @@ class Provider < ActiveRecord::Base
 
 	def in_production
 		read_attribute(:in_production) || ''
+	end
+
+	def provider_id_prefix
+		read_attribute(:provider_id_prefix) || ''
 	end
 
 	def next_harvest_at

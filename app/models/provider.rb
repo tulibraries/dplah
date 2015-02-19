@@ -1,6 +1,7 @@
 class Provider < ActiveRecord::Base
 	
 	validates :endpoint_url, :presence => true, :format => { :with => /^https?/, :message => "must be an http/https url", :multiline => true}
+	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}
 	
 	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq}
 
@@ -52,6 +53,10 @@ class Provider < ActiveRecord::Base
 
 	def name
 		read_attribute(:name) || endpoint_url
+	end
+
+	def email
+		read_attribute(:email) || ''
 	end
 
 	def metadata_prefix

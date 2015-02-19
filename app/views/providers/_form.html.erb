@@ -59,7 +59,7 @@
     <%= f.label :provider_id_prefix %><br>
     <%= f.collection_select :provider_id_prefix, Provider.unique_by_provider_id_prefix, :provider_id_prefix, :provider_id_prefix, :prompt => "Please select one from this list or enter below" %>
     <div class="field-tip">
-      Note: For use in creating the unique identifier URL for this object -- These should be unique per Endpoint URL and should be 1 - 8 characters long.
+      Note: For use in creating the unique identifier URL for this object -- this should reflect the contributing institution and (if no set spec is provided by the seed), the collection or set and should be 1 - 8 characters long.
     </div>
   </div>
 

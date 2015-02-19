@@ -67,9 +67,9 @@ HARVEST AND INGEST COMPLETE FOR #{provider.name} OAI SEED at #{Time.now}.
     f_name_full = Rails.root + @harvest_path + f_name
     FileUtils::mkdir_p @harvest_path
     File.open(f_name_full, "w") { |file| file.puts full_records }
-    add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name)
+    add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix)
       File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << provider.name << I18n.t('oai_seed_logs.current_time') << Time.now << num_files << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected') << I18n.t('oai_seed_logs.text_buffer')
+        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << provider.name << I18n.t('oai_seed_logs.current_time') << Time.now  << I18n.t('oai_seed_logs.text_buffer') << num_files << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected') << I18n.t('oai_seed_logs.text_buffer')
       end
     end
   module_function :harvest 
@@ -219,6 +219,7 @@ HARVEST AND INGEST COMPLETE FOR #{provider.name} OAI SEED at #{Time.now}.
       contributing_institution = options[:contributing_institution] || ''
       set_spec = options[:set_spec] || ''
       collection_name = options[:collection_name] || ''
+      provider_id_prefix = options[:provider_id_prefix] || ''
       new_file = "/tmp/xml_hold_file.xml"
       xml_heading = '<?xml version="1.0" encoding="UTF-8"?>'
       unless File.open(xml_file).each_line.any?{|line| line.include?(xml_heading)}
@@ -226,7 +227,7 @@ HARVEST AND INGEST COMPLETE FOR #{provider.name} OAI SEED at #{Time.now}.
         xml_file_contents = fopen.read
         xml_open = "<records>"
         xml_close = "</records>"
-        xml_manifest = get_xml_manifest(contributing_institution, set_spec, collection_name)
+        xml_manifest = get_xml_manifest(contributing_institution, set_spec, collection_name, provider_id_prefix)
         fopen.close
         File.open(new_file, 'w') do |f|  
           f.puts xml_heading
@@ -255,18 +256,17 @@ HARVEST AND INGEST COMPLETE FOR #{provider.name} OAI SEED at #{Time.now}.
       return full_records, transient_records, num_files
     end
 
-    def self.get_xml_manifest(contributing_institution, set_spec, collection_name)
+    def self.get_xml_manifest(contributing_institution, set_spec, collection_name, provider_id_prefix)
       harvest_s = @harvest_path.to_s
       converted_s = @converted_path.to_s
       partner_s = @partner.to_s
-      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
+      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><provider_id_prefix>#{provider_id_prefix}</provider_id_prefix><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
       return xml_manifest
     end
 
     def self.reform_oai_id(id_string)
-      id_string.slice! "oai:"
-      id_string = id_string.gsub(/([\/:.-])/,"_")
-      id_string = id_string.gsub(/\s+/, "")
+      local_id = id_string.split(":").last
+      local_id = local_id.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
     end
 end
 

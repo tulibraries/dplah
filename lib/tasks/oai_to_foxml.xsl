@@ -20,6 +20,10 @@
     <xsl:value-of select="records/manifest/collection_name" />
   </xsl:variable>
 
+  <xsl:variable name="provider_id_prefix">
+    <xsl:value-of select="records/manifest/provider_id_prefix" />
+  </xsl:variable>
+
   <xsl:variable name="set_spec">
     <xsl:value-of select="records/manifest/set_spec" />
   </xsl:variable>
@@ -41,9 +45,10 @@
       </xsl:variable>
 
       <xsl:variable name="apos">'</xsl:variable>
+      <xsl:variable name="separator">_</xsl:variable>
 
       <xsl:variable name="pid_raw">
-        <xsl:value-of select="header/identifier"/>
+        <xsl:value-of select="concat($provider_id_prefix, $separator, header/identifier)"/>
       </xsl:variable>
 
       <xsl:variable name="pid_local">

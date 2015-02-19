@@ -9,8 +9,8 @@ class Provider < ActiveRecord::Base
 		self.name = nil if self.name.blank?
 		self.set = nil if self.set.blank?
 		self.metadata_prefix = nil if self.metadata_prefix.blank?
-		self.contributing_institution = self.new_contributing_institution if self.contributing_institution.blank?
-		self.provider_id_prefix = self.new_provider_id_prefix if self.provider_id_prefix.blank?
+		self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
+		self.provider_id_prefix = self.new_provider_id_prefix unless self.new_provider_id_prefix.blank?
 	end
 
 	def client
@@ -38,7 +38,6 @@ class Provider < ActiveRecord::Base
 		rescue
 			raise unless $!.respond_to?(:code) and $!.try(:code) == "noRecordsMatch"
 			end while (options[:limit].blank? or count < options[:limit]) and not response.try(:resumption_token).blank?
-		
 		end
 
 		def consume!(options = {})
@@ -91,22 +90,6 @@ class Provider < ActiveRecord::Base
 	def interval
 		(read_attribute(:interval) || 1.day).seconds
 	end
-
-# [TODO] Candidate for deprecation
-#	def record_class
-#		str = read_attribute(:record_class) || default_record_class_name
-#		str.camelcase.constantize
-#		rescue
-#		nil
-#	end
-#
-#	def default_record_class_name
-#		"#{metadata_prefix}_document"
-#	end
-#
-#	def record_class= klass
-#		self[:record_class] = klass.to_s
-#	end
 	
 	protected
 	
@@ -124,6 +107,5 @@ class Provider < ActiveRecord::Base
 			record.update_index
 			record
 		end
-
 
 end

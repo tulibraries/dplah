@@ -59,7 +59,7 @@
     <%= f.label :provider_id_prefix %><br>
     <%= f.collection_select :provider_id_prefix, Provider.unique_by_provider_id_prefix, :provider_id_prefix, :provider_id_prefix, :prompt => "Please select one from this list or enter below" %>
     <div class="field-tip">
-      Note: For end user display
+      Note: For use in creating the unique identifier URL for this object -- These should be unique per Endpoint URL and should be 1 - 8 characters long.
     </div>
   </div>
 

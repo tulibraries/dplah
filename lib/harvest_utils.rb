@@ -142,29 +142,10 @@ module HarvestUtils
   def cleanout_and_reindex(provider, options = {})
     reindex_by = options[:reindex_by] || ''
     create_log_file("delete_#{reindex_by}_")
-    rec_count = 0
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_begin') << I18n.t('oai_seed_logs.text_buffer')
     end
-    if reindex_by == "institution"
-      ActiveFedora::Base.find_each({'contributing_institution_si'=>provider.contributing_institution}, batch_size: 2000) do |o|
-        delete_from_aggregator(o)
-        File.open(@log_file, "a+") do |f|
-          f << I18n.t('oai_seed_logs.text_buffer') << "#{rec_count} " << I18n.t('oai_seed_logs.delete_count') << I18n.t('oai_seed_logs.text_buffer')
-          rec_count += 1
-        end
-      end
-      File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << "#{provider.contributing_institution} " << I18n.t('oai_seed_logs.delete_end') << I18n.t('oai_seed_logs.text_buffer')
-      end
-    elsif reindex_by == "set"
-      remove_selective(reindex_by)
-    else
-      File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.reindexing_error')
-      end
-    end
-    rec_count
+    rec_count = remove_selective(reindex_by)
   end
   module_function :cleanout_and_reindex
 
@@ -230,12 +211,12 @@ module HarvestUtils
       end
     end
 
-    def self.process_record_token(record, full_records, log_file, transient_records)
+    def self.process_record_token(record, full_records, transient_records)
       puts record.metadata
       identifier_reformed = reform_oai_id(record.header.identifier.to_s)
       record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
       full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted"
-      File.open(log_file, "a+") do |f|
+      File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
         transient_records += 1 if record.header.status.to_s == "deleted"
       end
@@ -253,5 +234,34 @@ module HarvestUtils
     def self.reform_oai_id(id_string)
       local_id = id_string.split(":").last
       local_id = local_id.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
+    end
+
+    def self.remove_selective(reindex_by)
+      rec_count = 0
+      case reindex_by
+      when "set"
+        solr_term = 'set_spec_si'
+        model_term = provider.set
+      when "institution"
+        solr_term = 'contributing_institution_si'
+        model_term = provider.contributing_institution
+      else
+        File.open(@log_file, "a+") do |f|
+          f << I18n.t('oai_seed_logs.reindexing_error')
+        end
+        abort I18n.t('oai_seed_logs.reindexing_error')
+      end
+
+      ActiveFedora::Base.find_each({solr_term=>model_term}, batch_size: 2000) do |o|
+        delete_from_aggregator(o)
+        File.open(@log_file, "a+") do |f|
+          rec_count += 1
+          f << I18n.t('oai_seed_logs.text_buffer') << "#{rec_count} " << I18n.t('oai_seed_logs.delete_count') << I18n.t('oai_seed_logs.text_buffer')
+        end
+      end
+      File.open(@log_file, "a+") do |f|
+        f << I18n.t('oai_seed_logs.text_buffer') << "#{provider.set} " << I18n.t('oai_seed_logs.delete_end') << I18n.t('oai_seed_logs.text_buffer')
+      end
+      rec_count
     end
 end

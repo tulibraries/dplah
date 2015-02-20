@@ -71,6 +71,14 @@
     </div>
   </div>
 
+ <div class="field">
+    <%= f.label :Email %><br>
+    <%= f.text_field :email %>
+    <div class="field-tip">
+      Note: note about email
+    </div>
+  </div>
+
   <div class="field">
     <%= f.label :in_production %><br>
     <%= f.select :in_production, [['No', 'No'], ['Yes', 'Yes']] %>

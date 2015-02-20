@@ -1,16 +1,19 @@
 class Provider < ActiveRecord::Base
-	
-	validates :endpoint_url, :presence => true, :format => { :with => /^https?/, :message => "must be an http/https url", :multiline => true}
-	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}
+
+	validate :endpoint_url_is_valid_and_present
+	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}, :allow_blank => true
 	validates_length_of :new_provider_id_prefix, :maximum => 8
+
 	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq}
 	scope :unique_by_provider_id_prefix, lambda { select(:provider_id_prefix).uniq}
+	scope :unique_by_endpoint_url, lambda { select(:endpoint_url).uniq}
 
 	before_save do
 		self.name = nil if self.name.blank?
 		self.set = nil if self.set.blank?
 		self.metadata_prefix = nil if self.metadata_prefix.blank?
 		self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
+	    self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
 		self.provider_id_prefix = self.new_provider_id_prefix unless self.new_provider_id_prefix.blank?
 	end
 
@@ -113,4 +116,11 @@ class Provider < ActiveRecord::Base
 			record
 		end
 
+		def endpoint_url_is_valid_and_present
+			if self.endpoint_url.blank? && self.new_endpoint_url.blank?
+				errors.add :endpoint_url, "Please specify an endpoint URL for this OAI seed"
+			end
+		    self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
+		    errors.add :endpoint_url, " must begin with http/https" unless self.endpoint_url =~ /^https?/
+		end
 end

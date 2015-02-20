@@ -1,3 +1,4 @@
 en:
   dpla:
     application_name: 'DPLA Aggregator'
+    harvest_note: 'Note: If you wish to harvest ALL OAI seeds listed above, be sure to first delete all from the Aggregator index to avoid ingest errors. "Delete all" and "Harvest all" actions will take a while, and are not reversible, so proceed with caution. '

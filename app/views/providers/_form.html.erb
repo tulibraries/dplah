@@ -25,8 +25,14 @@
     
   <div class="field">
     <%= f.label :endpoint_url %><br>
-    <%= f.text_field :endpoint_url %>
+    <%= f.collection_select :endpoint_url, Provider.unique_by_endpoint_url, :endpoint_url, :endpoint_url, :prompt => "Please select one from this list or enter below" %>
   </div>
+
+  <div class="field">
+    <%= f.label :new_endpoint_url %><br>
+    <%= f.text_field :new_endpoint_url %>
+  </div>
+  
   <div class="field">
     <%= f.label :set %><br>
     <%= f.text_field :set %>

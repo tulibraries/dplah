@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202151301) do
+ActiveRecord::Schema.define(version: 20150218214020) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",       null: false
@@ -38,6 +38,10 @@ ActiveRecord::Schema.define(version: 20150202151301) do
     t.string   "set_spec"
     t.string   "in_production"
     t.string   "new_contributing_institution"
+    t.string   "new_endpoint_url"
+    t.string   "email"
+    t.string   "provider_id_prefix"
+    t.string   "new_provider_id_prefix"
   end
 
   create_table "searches", force: true do |t|

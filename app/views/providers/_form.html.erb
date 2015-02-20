@@ -56,6 +56,22 @@
   </div>
 
   <div class="field">
+    <%= f.label :provider_id_prefix %><br>
+    <%= f.collection_select :provider_id_prefix, Provider.unique_by_provider_id_prefix, :provider_id_prefix, :provider_id_prefix, :prompt => "Please select one from this list or enter below" %>
+    <div class="field-tip">
+      Note: For use in creating the unique identifier URL for this object -- this should reflect the contributing institution and (if no set spec is provided by the seed), the collection or set and should be 1 - 8 characters long.
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :new_provider_id_prefix %><br>
+    <%= f.text_field :new_provider_id_prefix %>
+    <div class="field-tip">
+      If not in the list above
+    </div>
+  </div>
+
+  <div class="field">
     <%= f.label :in_production %><br>
     <%= f.select :in_production, [['No', 'No'], ['Yes', 'Yes']] %>
     <div class="field-tip">

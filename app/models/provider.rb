@@ -11,6 +11,7 @@ class Provider < ActiveRecord::Base
 		self.set = nil if self.set.blank?
 		self.metadata_prefix = nil if self.metadata_prefix.blank?
 		self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
+		self.endpoint_url = self.new_endpoint_url if self.endpoint_url.blank?
 		self.provider_id_prefix = self.new_provider_id_prefix unless self.new_provider_id_prefix.blank?
 	end
 

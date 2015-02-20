@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "OaiRecMetadata" do
 
   context "Terminology" do
-    subject { OaiRecMetadata.new }
+    subject { Datastreams::OaiRecMetadata.new }
 
     it { is_expected.to have_term(:title) }
     it { is_expected.to have_term(:creator) }
@@ -28,13 +28,13 @@ describe "OaiRecMetadata" do
   end
 
   context "Template" do
-    subject { OaiRecMetadata.xml_template.to_xml }
+    subject { Datastreams::OaiRecMetadata.xml_template.to_xml }
 
     it { is_expected.to match("<?xml version=\"1.0\"?>\n<fields/>\n") }
   end
 
   context "Prefix" do
-    subject { OaiRecMetadata.new.prefix }
+    subject { Datastreams::OaiRecMetadata.new.prefix }
 
     it { is_expected.to match("") }
   end

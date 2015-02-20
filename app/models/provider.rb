@@ -2,14 +2,16 @@ class Provider < ActiveRecord::Base
 	
 	validates :endpoint_url, :presence => true, :format => { :with => /^https?/, :message => "must be an http/https url", :multiline => true}
 	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}
-	
+	validates_length_of :new_provider_id_prefix, :maximum => 8
 	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq}
+	scope :unique_by_provider_id_prefix, lambda { select(:provider_id_prefix).uniq}
 
 	before_save do
 		self.name = nil if self.name.blank?
 		self.set = nil if self.set.blank?
 		self.metadata_prefix = nil if self.metadata_prefix.blank?
-		self.contributing_institution = self.new_contributing_institution if self.contributing_institution.blank?
+		self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
+		self.provider_id_prefix = self.new_provider_id_prefix unless self.new_provider_id_prefix.blank?
 	end
 
 	def client
@@ -37,7 +39,6 @@ class Provider < ActiveRecord::Base
 		rescue
 			raise unless $!.respond_to?(:code) and $!.try(:code) == "noRecordsMatch"
 			end while (options[:limit].blank? or count < options[:limit]) and not response.try(:resumption_token).blank?
-		
 		end
 
 		def consume!(options = {})
@@ -79,6 +80,10 @@ class Provider < ActiveRecord::Base
 		read_attribute(:in_production) || ''
 	end
 
+	def provider_id_prefix
+		read_attribute(:provider_id_prefix) || ''
+	end
+
 	def next_harvest_at
 		consumed_at + interval
 	end
@@ -89,21 +94,6 @@ class Provider < ActiveRecord::Base
 
 	def interval
 		(read_attribute(:interval) || 1.day).seconds
-	end
-
-	def record_class
-		str = read_attribute(:record_class) || default_record_class_name
-		str.camelcase.constantize
-		rescue
-		nil
-	end
-
-	def default_record_class_name
-		"#{metadata_prefix}_document"
-	end
-
-	def record_class= klass
-		self[:record_class] = klass.to_s
 	end
 	
 	protected
@@ -122,6 +112,5 @@ class Provider < ActiveRecord::Base
 			record.update_index
 			record
 		end
-
 
 end

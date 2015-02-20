@@ -43,9 +43,15 @@ en:
     log_end_processed: |+
        OAI record(s) processed: 
     delete_begin: |+
-      INITIATING DELETE OF RECORDS FROM AGGREGATOR IN SET 
+      INITIATING DELETE OF RECORDS FROM AGGREGATOR WITH THE FOLLOWING PARAMETERS
+    delete_remove_by: |+
+      
+      remove by
+    delete_seed_derived: |+
+      
+      OAI record(s) derived from 
     delete_count: |+ 
-      deleted from aggregator
+      OAI record(s) deleted from aggregator
     delete_end: |+
        RECORDS DELETED FROM AGGREGATOR
     delete_all_begin: |+

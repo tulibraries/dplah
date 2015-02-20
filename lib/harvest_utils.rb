@@ -46,7 +46,7 @@ module HarvestUtils
     response = client.list_records :set => set if set
     response.each do |record|
         num_files += 1
-        full_records, transient_records = process_record_token(record, full_records, @log_file,transient_records)
+        full_records, transient_records = process_record_token(record, full_records,transient_records)
         File.open(@log_file, "a+") do |f|
           f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
         end
@@ -141,11 +141,7 @@ module HarvestUtils
 
   def cleanout_and_reindex(provider, options = {})
     reindex_by = options[:reindex_by] || ''
-    create_log_file("delete_#{reindex_by}_")
-    File.open(@log_file, "a+") do |f|
-      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_begin') << I18n.t('oai_seed_logs.text_buffer')
-    end
-    rec_count = remove_selective(reindex_by)
+    rec_count = remove_selective(provider, options[:reindex_by] || '')
   end
   module_function :cleanout_and_reindex
 
@@ -236,20 +232,26 @@ module HarvestUtils
       local_id = local_id.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
     end
 
-    def self.remove_selective(reindex_by)
+    def self.remove_selective(provider, reindex_by)
       rec_count = 0
       case reindex_by
       when "set"
         solr_term = 'set_spec_si'
         model_term = provider.set
+        create_log_file("delete_#{reindex_by}_#{provider.set}")
       when "institution"
         solr_term = 'contributing_institution_si'
         model_term = provider.contributing_institution
+        create_log_file("delete_#{reindex_by}_#{provider.contributing_institution}")
       else
         File.open(@log_file, "a+") do |f|
           f << I18n.t('oai_seed_logs.reindexing_error')
         end
         abort I18n.t('oai_seed_logs.reindexing_error')
+      end
+      
+      File.open(@log_file, "a+") do |f|
+        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_begin') << I18n.t('oai_seed_logs.delete_remove_by') << "#{reindex_by}" << I18n.t('oai_seed_logs.delete_seed_derived') << "#{model_term}" << I18n.t('oai_seed_logs.text_buffer')
       end
 
       ActiveFedora::Base.find_each({solr_term=>model_term}, batch_size: 2000) do |o|
@@ -260,7 +262,7 @@ module HarvestUtils
         end
       end
       File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << "#{provider.set} " << I18n.t('oai_seed_logs.delete_end') << I18n.t('oai_seed_logs.text_buffer')
+        f << I18n.t('oai_seed_logs.text_buffer') << "#{model_term} " << I18n.t('oai_seed_logs.delete_end') << I18n.t('oai_seed_logs.text_buffer')
       end
       rec_count
     end

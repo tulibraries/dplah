@@ -59,7 +59,11 @@ module HarvestUtils
       token = response.resumption_token
       response = client.list_records :resumption_token => token if token
       response.each do |record|
-        full_records, transient_records, num_files = process_record_token(record, full_records, @log_file,transient_records, num_files)
+        num_files += 1
+        full_records, transient_records = process_record_token(record, full_records,transient_records)
+        File.open(@log_file, "a+") do |f|
+          f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
+        end
       end
     end
     f_name = provider.name.gsub(/\s+/, "") +  (set ? set : "") + "_" + Time.current.utc.iso8601.to_i.to_s + ".xml"

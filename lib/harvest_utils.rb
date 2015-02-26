@@ -39,11 +39,11 @@ module HarvestUtils
     end
     num_files = 0
     transient_records = 0
-    full_records = ''
     client = OAI::Client.new provider.endpoint_url
     response = client.list_records
     set = provider.set if provider.set
     response = client.list_records :set => set if set
+    full_records = ''
     response.each do |record|
         num_files += 1
         full_records, transient_records = process_record_token(record, full_records,transient_records)
@@ -51,7 +51,9 @@ module HarvestUtils
           f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
         end
     end
-
+    create_harvest_file(provider, full_records, num_files)
+    
+    full_records = ''
     while(response.resumption_token and not response.resumption_token.empty?)
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.resumption_token_detected') << I18n.t('oai_seed_logs.text_buffer')
@@ -59,18 +61,18 @@ module HarvestUtils
       token = response.resumption_token
       response = client.list_records :resumption_token => token if token
       response.each do |record|
-        full_records, transient_records, num_files = process_record_token(record, full_records, @log_file,transient_records, num_files)
+        num_files += 1
+        full_records, transient_records = process_record_token(record, full_records,transient_records)
+        File.open(@log_file, "a+") do |f|
+          f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
+        end
       end
+      create_harvest_file(provider, full_records, num_files)
     end
-    f_name = provider.name.gsub(/\s+/, "") +  (set ? set : "") + "_" + Time.current.utc.iso8601.to_i.to_s + ".xml"
-    f_name_full = Rails.root + @harvest_path + f_name
-    FileUtils::mkdir_p @harvest_path
-    File.open(f_name_full, "w") { |file| file.puts full_records }
-    add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix)
-      File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << "#{provider.name}" << I18n.t('oai_seed_logs.text_buffer') << "#{num_files} " << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected') << I18n.t('oai_seed_logs.text_buffer')
-      end
+    File.open(@log_file, "a+") do |f|
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << "#{provider.name}" << I18n.t('oai_seed_logs.text_buffer') << "#{num_files} " << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected') << I18n.t('oai_seed_logs.text_buffer')
     end
+  end
   module_function :harvest 
 
   def convert(provider)
@@ -123,6 +125,7 @@ module HarvestUtils
     num_files = 1
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
     contents.each do |file|
+      check_if_exists(file)
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
       ActiveFedora::FixtureLoader.index(pid)
       obj = OaiRec.find(pid)
@@ -131,8 +134,8 @@ module HarvestUtils
       File.delete(file)
       File.open(@log_file, "a+") do |f|
         f << "#{num_files} " << I18n.t('oai_seed_logs.ingest_count')
-        
       end
+
       num_files += 1
     end
     contents.size
@@ -178,7 +181,7 @@ module HarvestUtils
       set_spec = options[:set_spec] || ''
       collection_name = options[:collection_name] || ''
       provider_id_prefix = options[:provider_id_prefix] || ''
-      new_file = "/tmp/xml_hold_file.xml"
+      new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
       xml_heading = '<?xml version="1.0" encoding="UTF-8"?>'
       unless File.open(xml_file).each_line.any?{|line| line.include?(xml_heading)}
         fopen = File.open(xml_file)
@@ -265,5 +268,25 @@ module HarvestUtils
         f << I18n.t('oai_seed_logs.text_buffer') << "#{model_term} " << I18n.t('oai_seed_logs.delete_end') << I18n.t('oai_seed_logs.text_buffer')
       end
       rec_count
+    end
+
+    def self.create_harvest_file(provider, full_records, num_files)
+      f_name = provider.name.gsub(/\s+/, "") +  (provider.set ? provider.set : "") + "_" + "#{num_files}" + "_" + Time.current.utc.iso8601.to_i.to_s + ".xml"
+      f_name_full = Rails.root + @harvest_path + f_name
+      FileUtils::mkdir_p @harvest_path
+      File.open(f_name_full, "w") { |file| file.puts full_records }
+      add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix)
+    end
+
+    def self.check_if_exists(file)
+      fopen = File.open(file)
+      xml_contents = fopen.read
+      doc = Nokogiri::XML(xml_contents)
+      pid_check = doc.child.attribute('PID').value
+      o = OaiRec.find(pid_check) if ActiveFedora::Base.exists?(pid_check)
+      o.delete if o
+      File.open(@log_file, "a+") do |f|
+        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.duplicate_record_detected') << " #{pid_check}" << I18n.t('oai_seed_logs.text_buffer') if o
+      end
     end
 end

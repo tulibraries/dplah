@@ -16,10 +16,6 @@ module HarvestUtils
 
   def harvest_action(provider)
 
-    #make sure there are no excess harvest or conversion fixture files before restarting the tasks
-    FileUtils.rm_rf(Dir.glob('#{@harvest_path}/*'))
-    FileUtils.rm_rf(Dir.glob('#{@converted_path}/*'))
-
     create_log_file(provider.name)
 
     harvest(provider)

@@ -87,6 +87,10 @@ class Provider < ActiveRecord::Base
 		read_attribute(:provider_id_prefix) || ''
 	end
 
+	def common_repository_type
+		read_attribute(:common_repository_type) || ''
+	end
+
 	def next_harvest_at
 		consumed_at + interval
 	end

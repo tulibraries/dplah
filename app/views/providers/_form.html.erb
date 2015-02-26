@@ -92,6 +92,14 @@
       Note: Is this seed featured in the production aggregator?
     </div>
   </div>
+
+  <div class="field">
+    <%= f.label :common_repository_type %><br>
+    <%= f.select :common_repository_type, [['CONTENTdm', 'CONTENTdm'], ['Omeka', 'Omeka'], ['Islandora', 'Islandora'], ['Bepress', 'Bepress']], :prompt => "Please select one from this list if applicable" %>
+    <div class="field-tip">
+      Note: if you use one of these systems but have modified it outside of the standard installation, the standard method for thumbnail retrieval may not work.
+    </div>
+  </div>
   <div class="actions">
     <%= f.submit ( f.object.new_record? ? "Create OAI Seed" : "Update OAI Seed") %>
   </div>

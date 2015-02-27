@@ -1,3 +1,6 @@
+<div class="show-thumbnail">
+  <%= render_asset(document) %>
+</div>
 <%# default partial to display solr document fields in catalog show view -%>
 <dl class="dl-horizontal  dl-invert">
   <% document_show_fields(document).each do |solr_fname, field| -%>

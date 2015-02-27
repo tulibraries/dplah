@@ -53,4 +53,15 @@ RSpec.configure do |config|
   
 end
 
+# Send output to null device to clean up rspec 
+# To use:
+#   orig_stdout = stdout_to_null
+#   # code that generates a lot of console output goes here
+#   $stdout = orig_stdout
+def stdout_to_null
+  original_stdout = $stdout
+  $stdout = File.new('/dev/null', 'w')
+  return original_stdout
+end
+
 #WebMock.disable_net_connect!(:allow_localhost => true)

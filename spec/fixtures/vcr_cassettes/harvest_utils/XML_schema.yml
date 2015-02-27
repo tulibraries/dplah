@@ -1,0 +1,126 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://www.fedora.info/definitions/1/0/foxml1-1.xsd
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 27 Feb 2015 14:16:13 GMT
+      Server:
+      - Apache
+      Last-Modified:
+      - Wed, 21 Jan 2015 21:54:58 GMT
+      Etag:
+      - '"1839a0ba-1e02-50d309b4ecc74"'
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '7682'
+      Content-Type:
+      - application/xml
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!--***********************************************************************-->\n<!--
+        TITLE       : FOXML 1.1 XSD Schema                                    -->\n<!--
+        DESCRIPTION : This document expresses the basic structure and         -->\n<!--
+        \              constraints for objects encoded in FOXML 1.1.           -->\n<!--
+        \              This schema, when combined with the FOXML 1.1           -->\n<!--
+        \              Schematron Rules, can be used to fully validate         -->\n<!--
+        \              a FOXML 1.1 XML document.                               -->\n<!--
+        CHANGELOG   : (1.0 to 1.1)                                            -->\n<!--
+        \              o Added a required VERSION attribute to the root        -->\n<!--
+        \                element, which must have a value of \"1.1\".            -->\n<!--
+        \              o Removed disseminator-related elements (disseminator   -->\n<!--
+        \                elements have been removed from the FOXML format      -->\n<!--
+        \                due to the CMA).                                      -->\r\n<!--
+        \              o Removed #contentModel property (As of Fedora 3.0,     -->\r\n<!--
+        \                content model is asserted via RELS-EXT predicate,     -->\r\n<!--
+        \                fedora-model:hasContentModel                          -->\n<!--
+        \              o Removed rdf:type property, since typeness is          -->\n<!--
+        \                determined by the content model(s)                    -->\n<!--***********************************************************************-->\n<xsd:schema
+        targetNamespace=\"info:fedora/fedora-system:def/foxml#\" xmlns=\"info:fedora/fedora-system:def/foxml#\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" elementFormDefault=\"qualified\"
+        attributeFormDefault=\"unqualified\">\n\t<!-- the root element for FOXML:
+        digitalObject -->\n\t<xsd:element name=\"digitalObject\">\n\t\t<xsd:annotation>\n\t\t\t<xsd:documentation/>\n\t\t</xsd:annotation>\n\t\t<xsd:complexType>\n\t\t\t<xsd:complexContent>\n\t\t\t\t<xsd:extension
+        base=\"digitalObjectType\"/>\n\t\t\t</xsd:complexContent>\n\t\t</xsd:complexType>\n\t</xsd:element>\n\t<!--
+        complex type declarations -->\n\t<xsd:complexType name=\"digitalObjectType\">\n\t\t<xsd:sequence>\n\t\t\t<xsd:element
+        name=\"objectProperties\" type=\"objectPropertiesType\"/>\n\t\t\t<xsd:element
+        name=\"datastream\" type=\"datastreamType\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t</xsd:sequence>\n\t\t<xsd:attribute
+        name=\"VERSION\" use=\"required\">\n\t\t\t<xsd:simpleType>\n\t\t\t\t<xsd:restriction
+        base=\"xsd:string\">\n\t\t\t\t\t<xsd:enumeration value=\"1.1\"/>\n                </xsd:restriction>\n
+        \           </xsd:simpleType>\n        </xsd:attribute>\n\t\t<xsd:attribute
+        name=\"PID\" type=\"pidType\" use=\"optional\"/>\n\t\t<xsd:attribute name=\"FEDORA_URI\"
+        type=\"xsd:anyURI\" use=\"optional\"/>\n\t\t<xsd:anyAttribute namespace=\"##other\"
+        processContents=\"lax\"/>\n\t</xsd:complexType>\n\t<xsd:complexType name=\"objectPropertiesType\">\n\t\t<xsd:sequence>\n\t\t\t<xsd:element
+        name=\"property\" type=\"propertyType\" maxOccurs=\"unbounded\"/>\n\t\t\t<xsd:element
+        name=\"extproperty\" type=\"extpropertyType\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t</xsd:sequence>\n\t</xsd:complexType>\n\t<xsd:complexType
+        name=\"datastreamType\">\n\t\t<xsd:sequence>\n\t\t\t<xsd:element name=\"datastreamVersion\"
+        type=\"datastreamVersionType\" maxOccurs=\"unbounded\"/>\n\t\t</xsd:sequence>\n\t\t<xsd:attribute
+        name=\"ID\" type=\"idType\" use=\"required\"/>\n\t\t<xsd:attribute name=\"CONTROL_GROUP\"
+        use=\"required\">\n\t\t\t<xsd:simpleType>\n\t\t\t\t<xsd:restriction base=\"xsd:string\">\n\t\t\t\t\t<xsd:enumeration
+        value=\"E\"/>\n\t\t\t\t\t<xsd:enumeration value=\"M\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"R\"/>\n\t\t\t\t\t<xsd:enumeration value=\"X\"/>\n\t\t\t\t</xsd:restriction>\n\t\t\t</xsd:simpleType>\n\t\t</xsd:attribute>\n\t\t<xsd:attribute
+        name=\"FEDORA_URI\" type=\"xsd:anyURI\" use=\"optional\"/>\n\t\t<xsd:attribute
+        name=\"STATE\" type=\"stateType\" use=\"optional\"/>\n\t\t<xsd:attribute name=\"VERSIONABLE\"
+        type=\"xsd:boolean\" use=\"optional\" default=\"true\"/>\n\t</xsd:complexType>\n\t<xsd:complexType
+        name=\"datastreamVersionType\">\n\t\t<xsd:sequence>\n\t\t\t<xsd:element name=\"contentDigest\"
+        type=\"contentDigestType\" minOccurs=\"0\"/>\n\t\t\t<xsd:choice>\n\t\t\t\t<xsd:element
+        name=\"xmlContent\" type=\"xmlContentType\"/>\n\t\t\t\t<xsd:element name=\"contentLocation\"
+        type=\"contentLocationType\"/>\n\t\t\t\t<xsd:element name=\"binaryContent\"
+        type=\"xsd:base64Binary\"/>\n\t\t\t</xsd:choice>\n\t\t</xsd:sequence>\n\t\t<xsd:attribute
+        name=\"ID\" type=\"idType\" use=\"required\"/>\n\t\t<xsd:attribute name=\"LABEL\"
+        type=\"xsd:string\" use=\"optional\"/>\n\t\t<xsd:attribute name=\"CREATED\"
+        type=\"xsd:dateTime\" use=\"optional\"/>\n\t\t<xsd:attribute name=\"MIMETYPE\"
+        type=\"xsd:string\" use=\"required\"/>\n\t\t<xsd:attribute name=\"ALT_IDS\"
+        type=\"uriListType\" use=\"optional\"/>\n\t\t<xsd:attribute name=\"FORMAT_URI\"
+        type=\"xsd:anyURI\" use=\"optional\"/>\n\t\t<xsd:attribute name=\"SIZE\" type=\"xsd:long\"
+        use=\"optional\" default=\"0\"/>\n\t</xsd:complexType>\n\t<xsd:complexType
+        name=\"contentDigestType\">\n\t\t<xsd:attribute name=\"TYPE\" use=\"optional\">\n\t\t\t<xsd:simpleType>\n\t\t\t\t<xsd:restriction
+        base=\"xsd:string\">\n\t\t\t\t\t<xsd:enumeration value=\"MD5\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"SHA-1\"/>\n\t\t\t\t\t<xsd:enumeration value=\"SHA-256\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"SHA-384\"/>\n\t\t\t\t\t<xsd:enumeration value=\"SHA-512\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"HAVAL\"/>\n\t\t\t\t\t<xsd:enumeration value=\"TIGER\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"WHIRLPOOL\"/>\n\t\t\t\t\t<xsd:enumeration value=\"DISABLED\"/>\n\t\t\t\t</xsd:restriction>\n\t\t\t</xsd:simpleType>\n\t\t</xsd:attribute>\n\t\t<xsd:attribute
+        name=\"DIGEST\" type=\"xsd:string\" use=\"optional\"/>\n\t</xsd:complexType>\n\t<xsd:complexType
+        name=\"xmlContentType\">\n\t\t<xsd:sequence>\n\t\t\t<xsd:any namespace=\"##any\"
+        processContents=\"skip\" maxOccurs=\"unbounded\"/>\n\t\t</xsd:sequence>\n\t</xsd:complexType>\n\t<xsd:complexType
+        name=\"contentLocationType\">\n\t\t<xsd:attribute name=\"TYPE\" use=\"required\">\n\t\t\t<xsd:simpleType>\n\t\t\t\t<xsd:restriction
+        base=\"xsd:string\">\n\t\t\t\t\t<xsd:enumeration value=\"INTERNAL_ID\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"URL\"/>\n\t\t\t\t</xsd:restriction>\n\t\t\t</xsd:simpleType>\n\t\t</xsd:attribute>\n\t\t<xsd:attribute
+        name=\"REF\" use=\"required\">\n\t\t\t<xsd:simpleType>\n\t\t\t\t<xsd:restriction
+        base=\"xsd:anyURI\">\n\t\t\t\t\t<xsd:minLength value=\"1\"/>\n\t\t\t\t</xsd:restriction>\n\t\t\t</xsd:simpleType>\n\t\t</xsd:attribute>\n\t</xsd:complexType>\n\t<xsd:complexType
+        name=\"propertyType\">\n\t\t<xsd:attribute name=\"NAME\" use=\"required\">\n\t\t\t<xsd:simpleType>\n\t\t\t\t<xsd:restriction
+        base=\"xsd:string\">\n\t\t\t\t\t<xsd:enumeration value=\"info:fedora/fedora-system:def/model#state\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"info:fedora/fedora-system:def/model#label\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"info:fedora/fedora-system:def/model#createdDate\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"info:fedora/fedora-system:def/view#lastModifiedDate\"/>\n\t\t\t\t\t<xsd:enumeration
+        value=\"info:fedora/fedora-system:def/model#ownerId\"/>\n\t\t\t\t</xsd:restriction>\n\t\t\t</xsd:simpleType>\n\t\t</xsd:attribute>\n\t\t<xsd:attribute
+        name=\"VALUE\" type=\"xsd:string\" use=\"required\"/>\n\t</xsd:complexType>\n\t<xsd:complexType
+        name=\"extpropertyType\">\n\t\t<xsd:attribute name=\"NAME\" type=\"xsd:string\"
+        use=\"required\"/>\n\t\t<xsd:attribute name=\"VALUE\" type=\"xsd:string\"
+        use=\"required\"/>\n\t</xsd:complexType>\n\t<xsd:simpleType name=\"stateType\">\n\t\t<xsd:restriction
+        base=\"xsd:string\">\n\t\t\t<xsd:enumeration value=\"A\"/>\n\t\t\t<xsd:enumeration
+        value=\"D\"/>\n\t\t\t<xsd:enumeration value=\"I\"/>\n\t\t</xsd:restriction>\n\t</xsd:simpleType>\n\t<!--
+        See http://www.fedora.info/definitions/identifiers/ -->\n\t<xsd:simpleType
+        name=\"pidType\">\n\t\t<xsd:restriction base=\"xsd:string\">\n\t\t\t<xsd:maxLength
+        value=\"64\"/>\n\t\t\t<xsd:pattern value=\"([A-Za-z0-9]|-|\\.)+:(([A-Za-z0-9])|-|\\.|~|_|(%[0-9A-F]{2}))+\"/>\n\t\t</xsd:restriction>\n\t</xsd:simpleType>\n\t<xsd:simpleType
+        name=\"idType\">\n\t\t<xsd:restriction base=\"xsd:ID\">\n\t\t\t<xsd:maxLength
+        value=\"64\"/>\n\t\t</xsd:restriction>\n\t</xsd:simpleType>\n\t<xsd:simpleType
+        name=\"uriListType\">\n\t\t<xsd:list itemType=\"xsd:anyURI\"/>\n\t</xsd:simpleType>\n</xsd:schema>\n"
+    http_version: 
+  recorded_at: Fri, 27 Feb 2015 14:16:12 GMT
+recorded_with: VCR 2.9.3

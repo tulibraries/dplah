@@ -1,7 +1,7 @@
 <%=
   %>
 <div class="loading hide">
-  Please wait...
+  <%= t('dpla.action_warning') %>
   <ul>
     <li><%= link_to "Check harvesting logs", human_logs_url, :target => '_blank'%></li>
   </ul>
@@ -14,7 +14,7 @@
       <th>Base url</th>
       <th>Set</th>
       <th>Collection Name</th>
-      <th>Contribution Institution</th>
+      <th>Contributing Institution</th>
       <th>Provider ID Prefix</th>
       <th>In production?</th>
       <th colspan="7">Actions</th>
@@ -32,7 +32,7 @@
         <td><%= provider.provider_id_prefix %></td>
         <td><%= provider.in_production %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Harvest from OAI Source', harvest_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while for OAI seeds with many items.  Are you sure?' } %></td>
-        <td class="oai-actions btn-provider"><%= link_to 'Remove this Insitution from Aggregator Index', dump_and_reindex_by_institution_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure?' } %></td>
+        <td class="oai-actions btn-provider"><%= link_to 'Remove this Institution from Aggregator Index', dump_and_reindex_by_institution_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure?' } %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Remove this Collection from Aggregator Index', dump_and_reindex_by_set_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure?' } %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Edit Seed', edit_provider_path(provider) %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Delete Seed', provider, method: :delete, data: { confirm: 'Are you sure you want to delete this OAI seed?' } %></td>

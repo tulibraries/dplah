@@ -34,6 +34,7 @@ en:
       NORMALIZING COMPLETE
     ingest_begin: |+
       INGESTION BEGINNING
+    duplicate_record_detected: DUPLICATE RECORD DETECTED -- GIVING PRECEDENCE TO INCOMING RECORD -- IDENTIFIER
     ingest_end: |+
       INGESTION COMPLETE
     ingest_count: |+

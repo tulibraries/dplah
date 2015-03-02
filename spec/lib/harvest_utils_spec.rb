@@ -8,17 +8,7 @@ RSpec.describe HarvestUtils do
   let (:convert_directory) { config['converted_foxml_directory'] }
   let (:schema_url) { "http://www.fedora.info/definitions/1/0/foxml1-1.xsd" }
 
-  let(:p) { FactoryGirl.build(:provider_small_collection) }
-  let!(:provider) {
-    Provider.new(
-      name: p.name,
-      description: p.description,
-      endpoint_url: p.endpoint_url,
-      metadata_prefix: p.metadata_prefix,
-      set: p.set,
-      contributing_institution: p.contributing_institution
-    ) 
-  }
+  let(:provider_small_collection) { FactoryGirl.build(:provider_small_collection) }
 
   context "Harvest Records" do
 
@@ -38,12 +28,12 @@ RSpec.describe HarvestUtils do
       expect(file_count).to eq(0)
 
       # Harvest the collection
+      HarvestUtils::create_log_file(provider_small_collection.name)
+      sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
-        HarvestUtils::create_log_file(provider.name)
-        sso = stdout_to_null
-        HarvestUtils::harvest(p)
-        $stdout = sso
+        HarvestUtils::harvest(provider_small_collection)
       end
+      $stdout = sso
 
       # Expect that we've harvest just one file
       file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
@@ -52,9 +42,10 @@ RSpec.describe HarvestUtils do
       doc = Nokogiri::XML(File.read(file))
 
       # Expect the harvested file to have representative metadata 
-      expect(doc.xpath("//manifest/set_spec").first.text).to eq(p.set)
-      expect(doc.xpath("//manifest/collection_name").first.text).to eq(p.collection_name)
-      expect(doc.xpath("//manifest/contributing_institution").first.text).to eq(p.contributing_institution)
+      expect(doc.xpath("//manifest/set_spec").first.text).to eq(provider_small_collection.set)
+      expect(doc.xpath("//manifest/collection_name").first.text).to eq(provider_small_collection.collection_name)
+      #expect(doc.xpath("//manifest/provider_id_prefix").first.text).to eq(provider_small_collection.contributing_institution)
+      expect(doc.xpath("//manifest/contributing_institution").first.text).to eq(provider_small_collection.contributing_institution)
     end
 
     it "should log the harvest"
@@ -64,21 +55,22 @@ RSpec.describe HarvestUtils do
   context "Convert Records" do
 
     before :each do
+      # Make sure conversion directory is empty
+      FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
+
       # Harvest a file to convert
+      HarvestUtils::create_log_file(provider_small_collection.name)
+      sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
-        HarvestUtils::create_log_file(p.name)
-        sso = stdout_to_null
-        HarvestUtils::harvest(p)
-        $stdout = sso
+        HarvestUtils::harvest(provider_small_collection)
       end
+      $stdout = sso
 
       # Get the schema
       VCR.use_cassette "harvest_utils/XML_schema" do
         @xsd = Nokogiri::XML::Schema(open(schema_url))
       end
 
-      # Make sure conversion directory is empty
-      FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
     end
 
     after :each do
@@ -90,7 +82,7 @@ RSpec.describe HarvestUtils do
 
       # Convert the harvested file
       sso = stdout_to_null
-      HarvestUtils::convert(p)
+      HarvestUtils::convert(provider_small_collection)
       $stdout = sso
 
       # Expect the file to be valid
@@ -111,7 +103,7 @@ RSpec.describe HarvestUtils do
 
       # Convert the harvested file
       sso = stdout_to_null
-      HarvestUtils::convert(p)
+      HarvestUtils::convert(provider_small_collection)
       $stdout = sso
 
       # Expect the number of conversion files
@@ -127,37 +119,53 @@ RSpec.describe HarvestUtils do
   context "Cleanup Records" do
 
     before :each do
+      FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
+
+      sso = stdout_to_null
+      HarvestUtils::create_log_file(provider_small_collection.name)
       VCR.use_cassette "harvest_utils/provider_small_collection" do
-        HarvestUtils::create_log_file(p.name)
-        sso = stdout_to_null
-        HarvestUtils::harvest(p)
-        $stdout = sso
+        HarvestUtils::harvest(provider_small_collection)
       end
+      HarvestUtils::convert(provider_small_collection)
+      $stdout = sso
 
       VCR.use_cassette "harvest_utils/XML_schema" do
         @xsd = Nokogiri::XML::Schema(open(schema_url))
       end
 
-      FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
+      sso = stdout_to_null
+      HarvestUtils::convert(provider_small_collection)
+      $stdout = sso
+
     end
 
     after :each do
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
     end
 
-    it "should clean up the collection" do
-
-      sso = stdout_to_null
-      HarvestUtils::convert(p)
-      $stdout = sso
-
-      file_count = Dir[File.join(convert_directory, '*.xml')].count { |file| File.file?(file) }
+    it "expect valid XML" do
+      HarvestUtils::cleanup()
       Dir.glob(File.join(convert_directory, '**', '*.xml')).each do |file|
         doc = Nokogiri::XML(File.read(file))
         @xsd.validate(doc).each do |error|
           puts error
         end
         expect(@xsd.valid?(doc)).to be
+      end
+    end
+
+    it "expect updated XML" do
+      trailing_separator = /[\,;\.]$/
+      # Copy non-conforming test fixture to convert directory
+      Dir.glob(File.join(Rails.root, 'spec', 'fixtures', 'converted_foxml', '*.xml')).each do |file|
+        FileUtils.cp file, File.join(convert_directory, File.basename(file))
+      end
+      # Clean up
+      HarvestUtils::cleanup()
+      Dir.glob(File.join(convert_directory, '**', '*.xml')).each do |file|
+        doc = Nokogiri::XML(File.read(file))
+        doc.xpath("//subject").each { |s| expect(trailing_separator).to_not match(s.text) }
+        doc.xpath("//type").each { |t| expect(trailing_separator).to_not match(t.text) }
       end
     end
   end

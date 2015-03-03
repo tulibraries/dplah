@@ -21,10 +21,11 @@ module HarvestUtils
     FileUtils.rm_rf(Dir.glob('#{@converted_path}/*'))
 
     create_log_file(provider.name)
-
     harvest(provider)
+    sleep(5)
     convert(provider)
     cleanup()
+    sleep(5)
     rec_count = ingest(provider)
     File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_end') << "#{provider.name} " << I18n.t('oai_seed_logs.log_end_processed') << " #{rec_count}" << I18n.t('oai_seed_logs.text_buffer')
@@ -52,9 +53,12 @@ module HarvestUtils
         end
     end
     create_harvest_file(provider, full_records, num_files)
+    `rake tmp:cache:clear`
+    sleep(5)
+
     
-    full_records = ''
     while(response.resumption_token and not response.resumption_token.empty?)
+      full_records = ''
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.resumption_token_detected') << I18n.t('oai_seed_logs.text_buffer')
       end
@@ -68,6 +72,8 @@ module HarvestUtils
         end
       end
       create_harvest_file(provider, full_records, num_files)
+      `rake tmp:cache:clear`
+      sleep(5)
     end
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << "#{provider.name}" << I18n.t('oai_seed_logs.text_buffer') << "#{num_files} " << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected') << I18n.t('oai_seed_logs.text_buffer')
@@ -123,7 +129,11 @@ module HarvestUtils
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.ingest_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
     num_files = 1
-    contents = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
+
+    file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
+    file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
+    contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
+    
     contents.each do |file|
       check_if_exists(file)
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
@@ -135,6 +145,7 @@ module HarvestUtils
       File.open(@log_file, "a+") do |f|
         f << "#{num_files} " << I18n.t('oai_seed_logs.ingest_count')
       end
+      `rake tmp:cache:clear`
 
       num_files += 1
     end
@@ -271,7 +282,7 @@ module HarvestUtils
     end
 
     def self.create_harvest_file(provider, full_records, num_files)
-      f_name = provider.name.gsub(/\s+/, "") +  (provider.set ? provider.set : "") + "_" + "#{num_files}" + "_" + Time.current.utc.iso8601.to_i.to_s + ".xml"
+      f_name = provider.provider_id_prefix.gsub(/\s+/, "") +  (provider.set ? provider.set : "") + "_" + "#{num_files}" + "_" + Time.current.utc.iso8601.to_i.to_s + ".xml"
       f_name_full = Rails.root + @harvest_path + f_name
       FileUtils::mkdir_p @harvest_path
       File.open(f_name_full, "w") { |file| file.puts full_records }

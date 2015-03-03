@@ -7,6 +7,7 @@ RSpec.describe HarvestUtils do
   let (:download_directory) { config['harvest_data_directory'] }
   let (:convert_directory) { config['converted_foxml_directory'] }
   let (:schema_url) { "http://www.fedora.info/definitions/1/0/foxml1-1.xsd" }
+  let (:log_name) { "harvest_utils_spec" }
 
   let(:provider_small_collection) { FactoryGirl.build(:provider_small_collection) }
 
@@ -28,7 +29,7 @@ RSpec.describe HarvestUtils do
       expect(file_count).to eq(0)
 
       # Harvest the collection
-      HarvestUtils::create_log_file(provider_small_collection.name)
+      HarvestUtils::create_log_file(log_name)
       sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
         HarvestUtils::harvest(provider_small_collection)
@@ -59,7 +60,7 @@ RSpec.describe HarvestUtils do
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
       # Harvest a file to convert
-      HarvestUtils::create_log_file(provider_small_collection.name)
+      HarvestUtils::create_log_file(log_name)
       sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
         HarvestUtils::harvest(provider_small_collection)
@@ -122,7 +123,7 @@ RSpec.describe HarvestUtils do
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
       sso = stdout_to_null
-      HarvestUtils::create_log_file(provider_small_collection.name)
+      HarvestUtils::create_log_file(log_name)
       VCR.use_cassette "harvest_utils/provider_small_collection" do
         HarvestUtils::harvest(provider_small_collection)
       end
@@ -154,10 +155,10 @@ RSpec.describe HarvestUtils do
       end
     end
 
-    it "expect updated XML" do
+    it "expect conformed XML" do
       trailing_separator = /[\,;\.]$/
       # Copy non-conforming test fixture to convert directory
-      Dir.glob(File.join(Rails.root, 'spec', 'fixtures', 'converted_foxml', '*.xml')).each do |file|
+      Dir.glob(File.join(Rails.root, 'spec', 'fixtures', 'converted_foxml', 'cleanup', '*.xml')).each do |file|
         FileUtils.cp file, File.join(convert_directory, File.basename(file))
       end
       # Clean up
@@ -175,11 +176,42 @@ RSpec.describe HarvestUtils do
       @pid = "#{pid_prefix}:#{SecureRandom.uuid}"
     end
 
-    it "should have the custom YAML attributes" do
+    it "has deletes all records for the collection" do
       ActiveFedora::Base.create({pid: @pid})
       expect(ActiveFedora::Base.count).to_not eq 0
       HarvestUtils::delete_all 
       expect(ActiveFedora::Base.count).to eq 0
     end
+  end
+
+  context "Ingest Records" do
+    let (:pid) { "dplapa:_alycc_voice_0" }
+    before(:each) do
+      # Clean out all records
+      ActiveFedora::Base.destroy_all
+
+      # Make sure conversion directory is empty
+      FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
+
+      # Harvest a file to convert
+      HarvestUtils::create_log_file(log_name)
+    end
+
+    after(:each) do
+      # Clean out all records
+      ActiveFedora::Base.destroy_all
+    end
+
+    it "Ingests one object" do
+      # Copy ingest test fixture to convert directory
+      Dir.glob(File.join(Rails.root, 'spec', 'fixtures', 'converted_foxml', 'ingest', '*.xml')).each do |file|
+        FileUtils.cp file, File.join(convert_directory, File.basename(file))
+      end
+
+      HarvestUtils::ingest(provider_small_collection)
+      expect(ActiveFedora::Base.count).to eq 1
+      expect(ActiveFedora::Base.first.pid).to eq pid
+    end
+
   end
 end

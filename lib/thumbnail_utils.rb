@@ -33,24 +33,14 @@ module ThumbnailUtils
 
   	class Omeka
   	  def self.asset_url(obj)
-  	  	binding.pry
         asset_url = ''
-		obj.identifier.each do |ident|
-		  thumb = ident if ident.include? '/files/thumbnails/'  
-		  asset_url = thumb if thumb
-          binding.pry
-		end
-		binding.pry
+        obj.identifier.each do |ident|
+          thumb = ident if ident.include? '/files/thumbnails/'  
+          asset_url = thumb ? thumb : ''
+        end
         asset_url
-
-  	  end
+      end
   	end
-
-  	# class Omeka
-   #    def self.asset_url(obj)
-
-   #    end
-  	# end
 
   	# class Islandora
    #    def self.asset_url(obj)		  

@@ -67,7 +67,7 @@
         <xsl:value-of select="concat('dplapa:', $pid_local)" />
       </xsl:variable>
 
-      <exsl:document method="xml" href="{$converted_path}/file_{$pid}.foxml.xml">        
+      <exsl:document method="xml" href="{$converted_path}/file_{$pid_local}.foxml.xml">        
         <xsl:element name="foxml:digitalObject"
           xmlns:foxml="info:fedora/fedora-system:def/foxml#"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">

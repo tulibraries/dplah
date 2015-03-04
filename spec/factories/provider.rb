@@ -8,6 +8,7 @@ FactoryGirl.define do
     endpoint_url "http://example.com"
     metadata_prefix "oai_dc"
     set "setname"
+    provider_id_prefix "prvdr"
     contributing_institution "The Contributing Instition"
   end
 
@@ -18,6 +19,7 @@ FactoryGirl.define do
     endpoint_url "http://contentdm1.accesspa.org/oai/oai.php"
     metadata_prefix "oai_dc"
     set "alycc-voice"
+    provider_id_prefix "lycoming"
     contributing_institution "POWER Library"
   end
 
@@ -27,6 +29,7 @@ FactoryGirl.define do
     description "Collection description"
     endpoint_url "http://collection1.libraries.psu.edu/oai/oai.php"
     metadata_prefix "oai_dc"
+    provider_id_prefix "psu"
     set "benson"
     contributing_institution "Penn State"
   end

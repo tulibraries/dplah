@@ -99,20 +99,25 @@ module HarvestUtils
       xml_content = File.read(xml_file)
       doc = Nokogiri::XML(xml_content)
 
-      normalize(doc, "//title")
-      normalize(doc, "//creator")
-      normalize(doc, "//subject")
-      normalize(doc, "//description")
-      normalize(doc, "//publisher")
-      normalize(doc, "//contributor")
-      normalize(doc, "//date")
-      normalize(doc, "//type")
-      normalize(doc, "//format")
-      normalize(doc, "//source")
-      normalize(doc, "//language")
-      normalize(doc, "//relation")
-      normalize(doc, "//coverage")
-      normalize(doc, "//rights")
+      normalize_global(doc, "//title")
+      normalize_global(doc, "//creator")
+      normalize_global(doc, "//subject")
+      normalize_global(doc, "//description")
+      normalize_global(doc, "//publisher")
+      normalize_global(doc, "//contributor")
+      normalize_global(doc, "//date")
+      normalize_global(doc, "//type")
+      normalize_global(doc, "//format")
+      normalize_global(doc, "//source")
+      normalize_global(doc, "//language")
+      normalize_global(doc, "//relation")
+      normalize_global(doc, "//coverage")
+      normalize_global(doc, "//rights")
+
+      normalize_facets(doc, "//subject")
+      normalize_facets(doc, "//type")
+      normalize_facets(doc, "//language")
+      normalize_facets(doc, "//publisher")
 
       File.open(new_file, 'w') do |f|  
           f.print(doc.to_xml)
@@ -216,11 +221,19 @@ module HarvestUtils
 
     end
 
-    def self.normalize(doc, string_to_search)
+    def self.normalize_global(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
-        node_value.inner_html[0] = node_value.inner_html[0].upcase
+        node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
+        node_value.inner_html = node_value.inner_html.gsub(/[\,;]$/, '')
+      end
+    end
+
+    def self.normalize_facets(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.gsub(/[\,;.]$/, '')
+        binding.pry()
       end
     end
 

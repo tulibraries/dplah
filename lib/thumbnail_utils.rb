@@ -33,13 +33,11 @@ module ThumbnailUtils
 
     class Vudl
       def self.asset_url(obj)
-        binding.pry()
         asset_url = ''
         rec = obj.identifier.first
         thumb = rec.gsub("/Record/", "/files/") << "/THUMBNAIL"
         asset_url = thumb if thumb
         asset_url
-        binding.pry()
       end
     end
 
@@ -62,7 +60,7 @@ module ThumbnailUtils
     		asset_url = ThumbnailUtils::CommonRepositories::Contentdm.asset_url(obj)
       when "Bepress"
         asset_url = ThumbnailUtils::CommonRepositories::Bepress.asset_url(obj)
-    	when "Vudl"
+    	when "VuDL"
         asset_url = ThumbnailUtils::CommonRepositories::Vudl.asset_url(obj)
       when "Omeka"
         asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)

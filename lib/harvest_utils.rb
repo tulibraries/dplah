@@ -98,8 +98,22 @@ module HarvestUtils
     xml_files.each do |xml_file|
       xml_content = File.read(xml_file)
       doc = Nokogiri::XML(xml_content)
+
+      normalize(doc, "//title")
+      normalize(doc, "//creator")
       normalize(doc, "//subject")
+      normalize(doc, "//description")
+      normalize(doc, "//publisher")
+      normalize(doc, "//contributor")
+      normalize(doc, "//date")
       normalize(doc, "//type")
+      normalize(doc, "//format")
+      normalize(doc, "//source")
+      normalize(doc, "//language")
+      normalize(doc, "//relation")
+      normalize(doc, "//coverage")
+      normalize(doc, "//rights")
+
       File.open(new_file, 'w') do |f|  
           f.print(doc.to_xml)
           File.rename(new_file, xml_file)
@@ -205,6 +219,7 @@ module HarvestUtils
     def self.normalize(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
+        node_value.inner_html[0] = node_value.inner_html[0].upcase
         node_value.inner_html = node_value.inner_html.gsub(/[\,;.]$/, '')
       end
     end

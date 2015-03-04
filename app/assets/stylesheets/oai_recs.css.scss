@@ -9,3 +9,12 @@
 		width: 150px;
 	}
 } 
+
+.default-thumbnail {
+	background: url('/assets/default-thumbnail.png') no-repeat;
+	float: right;
+	padding: 10px;
+	background-size: 100px;
+	width: 100px;
+	height: 140px;
+}

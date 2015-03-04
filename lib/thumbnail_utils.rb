@@ -21,15 +21,27 @@ module ThumbnailUtils
   	end
 
   	class Bepress
-  	  def self.asset_url(obj)
+      def self.asset_url(obj)
         asset_url = ''
-		obj.description.each do |desc|
-		  thumb = desc if desc.include? 'thumbnail.jpg'  
-		  asset_url = thumb if thumb
-		end
+        obj.description.each do |desc|
+        thumb = desc if desc.include? 'thumbnail.jpg'  
+        asset_url = thumb if thumb
+      end
         asset_url
-  	  end
-  	end
+      end
+    end
+
+    class Vudl
+      def self.asset_url(obj)
+        binding.pry()
+        asset_url = ''
+        rec = obj.identifier.first
+        thumb = rec.gsub("/Record/", "/files/") << "/THUMBNAIL"
+        asset_url = thumb if thumb
+        asset_url
+        binding.pry()
+      end
+    end
 
   	class Omeka
   	  def self.asset_url(obj)
@@ -48,10 +60,12 @@ module ThumbnailUtils
   	case provider.common_repository_type
     	when "CONTENTdm"
     		asset_url = ThumbnailUtils::CommonRepositories::Contentdm.asset_url(obj)
-    	when "Omeka"
-    		asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)
-    	when "Bepress"
-    		asset_url = ThumbnailUtils::CommonRepositories::Bepress.asset_url(obj)
+      when "Bepress"
+        asset_url = ThumbnailUtils::CommonRepositories::Bepress.asset_url(obj)
+    	when "Vudl"
+        asset_url = ThumbnailUtils::CommonRepositories::Vudl.asset_url(obj)
+      when "Omeka"
+        asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)
     	else
     		abort "Invalid common repository type - #{provider.common_repository_type}"
   	end
@@ -61,9 +75,18 @@ module ThumbnailUtils
 
   def define_thumbnail_pattern(obj, provider)
     asset_url = ''
-    if provider.thumbnail_token_1
+    if !provider.thumbnail_token_1.blank?
       token_1 = obj.send(provider.thumbnail_token_1).first
+      
+      if provider.provider_id_prefix == "UPENNWHL"
+        token_1 = token_1.gsub("WHEELER_","wheeler_")
+      end
+
       asset_url = provider.thumbnail_pattern.gsub("$1", token_1)
+    end
+    if !provider.thumbnail_token_2.blank?
+      token_1 = obj.send(provider.thumbnail_token_2).first
+      asset_url = provider.thumbnail_pattern.gsub("$2", token_2)
     end
     asset_url
   end
@@ -76,15 +99,20 @@ module ThumbnailUtils
       asset_url = define_thumbnail_pattern(obj, provider)
     else
       asset_url = ''
-    end     
+    end
     set_and_save_thumbnail(obj.pid, asset_url)
   end
   module_function :define_thumbnail
 
   def self.set_and_save_thumbnail(pid, asset_url)
   	obj = OaiRec.find(pid)
-	  obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
-	  obj.save
+    if !asset_url.blank?
+      obj.thumbnail = (asset_url)
+    else
+      obj.thumbnail = "default-thumbnail.png"
+    end
+    #obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
+    obj.save
 	  obj.to_solr
 	  obj.update_index
   end

@@ -125,7 +125,9 @@ module HarvestUtils
       obj = OaiRec.find(pid)
       obj.to_solr
       obj.update_index
+
       ThumbnailUtils.define_thumbnail(obj, provider)
+
       File.delete(file)
       File.open(@log_file, "a+") do |f|
         f << "#{num_files} " << I18n.t('oai_seed_logs.ingest_count')

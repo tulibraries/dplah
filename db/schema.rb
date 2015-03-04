@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150226173655) do
+ActiveRecord::Schema.define(version: 20150303192810) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",       null: false
@@ -43,6 +43,11 @@ ActiveRecord::Schema.define(version: 20150226173655) do
     t.string   "new_provider_id_prefix"
     t.string   "new_endpoint_url"
     t.string   "common_repository_type"
+    t.string   "thumbnail_pattern"
+    t.string   "thumbnail_token_1"
+    t.string   "thumbnail_token_2"
+    t.string   "thumbnail_explanation"
+    t.string   "common_transformation"
   end
 
   create_table "searches", force: true do |t|

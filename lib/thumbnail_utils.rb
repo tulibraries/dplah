@@ -42,35 +42,51 @@ module ThumbnailUtils
       end
   	end
 
-  	# class Islandora
-   #    def self.asset_url(obj)		  
-  	#   end
-  	# end
-
   end
 
+  def define_thumbnail_common(obj, provider)
+  	case provider.common_repository_type
+    	when "CONTENTdm"
+    		asset_url = ThumbnailUtils::CommonRepositories::Contentdm.asset_url(obj)
+    	when "Omeka"
+    		asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)
+    	when "Bepress"
+    		asset_url = ThumbnailUtils::CommonRepositories::Bepress.asset_url(obj)
+    	else
+    		abort "Invalid common repository type - #{provider.common_repository_type}"
+  	end
+    asset_url
+  end
+  module_function :define_thumbnail_common
+
+  def define_thumbnail_pattern(obj, provider)
+    asset_url = ''
+    if provider.thumbnail_token_1
+      token_1 = obj.send(provider.thumbnail_token_1).first
+      asset_url = provider.thumbnail_pattern.gsub("$1", token_1)
+    end
+    asset_url
+  end
+  module_function :define_thumbnail_pattern
+
   def define_thumbnail(obj, provider)
-	case provider.common_repository_type
-	when "CONTENTdm"
-		asset_url = ThumbnailUtils::CommonRepositories::Contentdm.asset_url(obj)
-	when "Omeka"
-		asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)
-	when "Bepress"
-		asset_url = ThumbnailUtils::CommonRepositories::Bepress.asset_url(obj)
-	else
-		abort "Invalid common repository type - #{provider.common_repository_type}"
-	end
-	set_and_save_thumbnail(obj.pid, asset_url)
+    if !provider.common_repository_type.blank?
+      asset_url = define_thumbnail_common(obj, provider)
+    elsif !provider.thumbnail_pattern.blank?
+      asset_url = define_thumbnail_pattern(obj, provider)
+    else
+      asset_url = ''
+    end     
+    set_and_save_thumbnail(obj.pid, asset_url)
   end
   module_function :define_thumbnail
 
-
   def self.set_and_save_thumbnail(pid, asset_url)
   	obj = OaiRec.find(pid)
-	obj.thumbnail = asset_url if Faraday.head(asset_url).status == 200
-	obj.save
-	obj.to_solr
-	obj.update_index
+	  obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
+	  obj.save
+	  obj.to_solr
+	  obj.update_index
   end
 
 end

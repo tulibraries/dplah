@@ -1,3 +1,20 @@
-// Place all the styles related to the OaiRecs controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.document-thumbnail img{
+	width: 80px;
+}
+
+.show-thumbnail{
+	float: right;
+	padding: 10px;
+	img {
+		width: 150px;
+	}
+} 
+
+.default-thumbnail {
+	background: url('/assets/default-thumbnail.png') no-repeat;
+	float: right;
+	padding: 10px;
+	background-size: 100px;
+	width: 100px;
+	height: 140px;
+}

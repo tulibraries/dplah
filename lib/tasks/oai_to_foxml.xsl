@@ -32,6 +32,14 @@
     <xsl:value-of select="records/manifest/partner" />
   </xsl:variable>
 
+  <xsl:variable name="common_repository_type">
+    <xsl:value-of select="records/manifest/common_repository_type" />
+  </xsl:variable>
+
+  <xsl:variable name="endpoint_url">
+    <xsl:value-of select="records/manifest/endpoint_url" />
+  </xsl:variable>
+
   <xsl:variable name="type">
     <xsl:value-of select="OaiRec" />
   </xsl:variable>
@@ -75,7 +83,20 @@
           <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE=""/>
           <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="{$current_time}"/>
           <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE=""/>
-        </foxml:objectProperties>                                        
+        </foxml:objectProperties>    
+
+        <foxml:datastream ID="partner" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+          <foxml:datastreamVersion ID="partner.0" LABEL="Partner supplied metadata" MIMETYPE="text/xml">
+            <foxml:xmlContent>
+              <fields>
+                <xsl:call-template name="name-tag">
+                  <xsl:with-param name="tag" select="'dc:title'" />
+                  <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:title" />
+                </xsl:call-template>
+              </fields>
+            </foxml:xmlContent>
+          </foxml:datastreamVersion>
+        </foxml:datastream>                                               
 
           <foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X"
             VERSIONABLE="true">
@@ -264,6 +285,18 @@
 
                   <xsl:element name="partner">
                     <xsl:value-of select="$partner" />
+                  </xsl:element>
+
+                  <xsl:element name="common_repository_type">
+                    <xsl:value-of select="$common_repository_type" />
+                  </xsl:element>
+
+                  <xsl:element name="endpoint_url">
+                    <xsl:value-of select="$endpoint_url" />
+                  </xsl:element>
+
+                  <xsl:element name="provider_id_prefix">
+                    <xsl:value-of select="$provider_id_prefix" />
                   </xsl:element>
 
                 </fields>

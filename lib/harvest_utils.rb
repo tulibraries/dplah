@@ -16,10 +16,6 @@ module HarvestUtils
 
   def harvest_action(provider)
 
-    #make sure there are no excess harvest or conversion fixture files before restarting the tasks
-    FileUtils.rm_rf(Dir.glob('#{@harvest_path}/*'))
-    FileUtils.rm_rf(Dir.glob('#{@converted_path}/*'))
-
     create_log_file(provider.name)
     harvest(provider)
     sleep(5)
@@ -93,7 +89,7 @@ module HarvestUtils
       end
       u_files.length.times do |i|
         puts "Contents of #{u_files[i]} transformed"
-        `xsltproc #{Rails.root}/lib/tasks/oai_to_foxml.xsl #{u_files[i]}`
+        `xsltproc #{xslt_path} #{u_files[i]}`
         File.delete(u_files[i])
       end
   end
@@ -106,11 +102,28 @@ module HarvestUtils
     new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
     xml_files = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
     xml_files.each do |xml_file|
-
       xml_content = File.read(xml_file)
       doc = Nokogiri::XML(xml_content)
-      normalize(doc, "//subject")
-      normalize(doc, "//type")
+
+      normalize_global(doc, "//title")
+      normalize_global(doc, "//creator")
+      normalize_global(doc, "//subject")
+      normalize_global(doc, "//description")
+      normalize_global(doc, "//publisher")
+      normalize_global(doc, "//contributor")
+      normalize_global(doc, "//date")
+      normalize_global(doc, "//type")
+      normalize_global(doc, "//format")
+      normalize_global(doc, "//source")
+      normalize_global(doc, "//language")
+      normalize_global(doc, "//relation")
+      normalize_global(doc, "//coverage")
+      normalize_global(doc, "//rights")
+
+      normalize_facets(doc, "//subject")
+      normalize_facets(doc, "//type")
+      normalize_facets(doc, "//language")
+      normalize_facets(doc, "//publisher")
 
       File.open(new_file, 'w') do |f|  
           f.print(doc.to_xml)
@@ -141,12 +154,13 @@ module HarvestUtils
       obj = OaiRec.find(pid)
       obj.to_solr
       obj.update_index
+
+      ThumbnailUtils.define_thumbnail(obj, provider)
+
       File.delete(file)
       File.open(@log_file, "a+") do |f|
         f << "#{num_files} " << I18n.t('oai_seed_logs.ingest_count')
       end
-      `rake tmp:cache:clear`
-
       num_files += 1
     end
     contents.size
@@ -192,6 +206,9 @@ module HarvestUtils
       set_spec = options[:set_spec] || ''
       collection_name = options[:collection_name] || ''
       provider_id_prefix = options[:provider_id_prefix] || ''
+      common_repository_type = options[:common_repository_type] || ''
+      endpoint_url = options[:endpoint_url] || ''
+
       new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
       xml_heading = '<?xml version="1.0" encoding="UTF-8"?>'
       unless File.open(xml_file).each_line.any?{|line| line.include?(xml_heading)}
@@ -199,7 +216,7 @@ module HarvestUtils
         xml_file_contents = fopen.read
         xml_open = "<records>"
         xml_close = "</records>"
-        xml_manifest = get_xml_manifest(contributing_institution, set_spec, collection_name, provider_id_prefix)
+        xml_manifest = get_xml_manifest(:contributing_institution => contributing_institution, :set_spec => set_spec, :collection_name => collection_name, :provider_id_prefix => provider_id_prefix, :common_repository_type => common_repository_type, :endpoint_url => endpoint_url)
         fopen.close
         File.open(new_file, 'w') do |f|  
           f.puts xml_heading
@@ -214,7 +231,15 @@ module HarvestUtils
 
     end
 
-    def self.normalize(doc, string_to_search)
+    def self.normalize_global(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
+        node_value.inner_html = node_value.inner_html.gsub(/[\,;]$/, '')
+      end
+    end
+
+    def self.normalize_facets(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.gsub(/[\,;.]$/, '')
@@ -233,11 +258,19 @@ module HarvestUtils
       return full_records, transient_records
     end
 
-    def self.get_xml_manifest(contributing_institution, set_spec, collection_name, provider_id_prefix)
+    def self.get_xml_manifest(options = {})
       harvest_s = @harvest_path.to_s
       converted_s = @converted_path.to_s
       partner_s = @partner.to_s
-      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><provider_id_prefix>#{provider_id_prefix}</provider_id_prefix><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
+
+      contributing_institution = options[:contributing_institution] || ''
+      set_spec = options[:set_spec] || ''
+      collection_name = options[:collection_name] || ''
+      provider_id_prefix = options[:provider_id_prefix] || ''
+      common_repository_type = options[:common_repository_type] || ''
+      endpoint_url = options[:endpoint_url] || ''
+
+      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><common_repository_type>#{common_repository_type}</common_repository_type><endpoint_url>#{endpoint_url}</endpoint_url><provider_id_prefix>#{provider_id_prefix}</provider_id_prefix><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
       return xml_manifest
     end
 
@@ -250,8 +283,10 @@ module HarvestUtils
       rec_count = 0
       case reindex_by
       when "set"
-        solr_term = 'set_spec_si'
-        model_term = provider.set
+
+        solr_term = (provider.set) ? 'set_spec_si' : 'provider_id_prefix_si'
+        model_term = (provider.set) ? provider.set : provider.provider_id_prefix
+
         create_log_file("delete_#{reindex_by}_#{provider.set}")
       when "institution"
         solr_term = 'contributing_institution_si'
@@ -286,7 +321,7 @@ module HarvestUtils
       f_name_full = Rails.root + @harvest_path + f_name
       FileUtils::mkdir_p @harvest_path
       File.open(f_name_full, "w") { |file| file.puts full_records }
-      add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix)
+      add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix, :common_repository_type => provider.common_repository_type, :endpoint_url => provider.endpoint_url)
     end
 
     def self.check_if_exists(file)

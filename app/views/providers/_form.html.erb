@@ -92,6 +92,50 @@
       Note: Is this seed featured in the production aggregator?
     </div>
   </div>
+
+<%= field_set_tag 'Thumbnail Retrieval Details' do %>
+
+  <div class="field">
+    <%= f.label :common_repository_type%><br>
+    <%= f.select :common_repository_type, Provider.common_repositories, :prompt => "Please select one from this list if applicable" %>
+    <div class="field-tip">
+      Note: if you use one of these systems but have modified it outside of the standard installation, the standard method for thumbnail retrieval may not work.
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :thumbnail_pattern %><br>
+    <%= f.text_field :thumbnail_pattern %>
+    <div class="field-tip">
+      Note: URL pattern (with up to two tokens) for retrieving the thumbnail for each record.<br />
+      Example: http://repository.org/oai/$1/thumbnails/$2.jpg
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :thumbnail_token_1 %><br>
+    <%= f.select :thumbnail_token_1, Provider.possible_thumbnail_fields, :prompt => "Please select one..." %>
+    <div class="field-tip">
+      Note: Please select the metadata field (first occurrence per record only) to which the first token maps (if one is present in your thumbnail retrieval pattern).
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :thumbnail_token_2 %><br>
+    <%= f.select :thumbnail_token_2, Provider.possible_thumbnail_fields, :prompt => "Please select one..." %>
+    <div class="field-tip">
+      Note: Please select the metadata field (first occurrence per record only) to which the second token maps (if one is present in your thumbnail retrieval pattern).
+    </div>
+  </div>
+
+  <div class="field-tip">
+    <%= t('dpla.thumbnail_warning') %>
+  </div>
+
+ 
+  <% end %>
+
+
   <div class="actions">
     <%= f.submit ( f.object.new_record? ? "Create OAI Seed" : "Update OAI Seed") %>
   </div>

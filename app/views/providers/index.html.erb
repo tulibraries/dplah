@@ -15,6 +15,7 @@
       <th>Set</th>
       <th>Collection Name</th>
       <th>Contributing Institution</th>
+      <th>Common Repository Type (if applicable)</th>
       <th>Provider ID Prefix</th>
       <th>In production?</th>
       <th colspan="7">Actions</th>
@@ -29,6 +30,7 @@
         <td><%= provider.set %></td>
         <td><%= provider.collection_name %></td>
         <td><%= provider.contributing_institution %></td>
+        <td><%= provider.common_repository_type %></td>
         <td><%= provider.provider_id_prefix %></td>
         <td><%= provider.in_production %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Harvest from OAI Source', harvest_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while for OAI seeds with many items.  Are you sure?' } %></td>

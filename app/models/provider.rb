@@ -87,6 +87,22 @@ class Provider < ActiveRecord::Base
 		read_attribute(:provider_id_prefix) || ''
 	end
 
+	def common_repository_type
+		read_attribute(:common_repository_type) || ''
+	end
+
+	def thumbnail_pattern
+		read_attribute(:thumbnail_pattern) || ''
+	end
+	
+	def thumbnail_token_1
+		read_attribute(:thumbnail_token_1) || ''
+	end
+
+	def thumbnail_token_2
+		read_attribute(:thumbnail_token_2) || ''
+	end
+
 	def next_harvest_at
 		consumed_at + interval
 	end
@@ -123,4 +139,15 @@ class Provider < ActiveRecord::Base
 		    self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
 		    errors.add :endpoint_url, " must begin with http/https" unless self.endpoint_url =~ /^https?/
 		end
+
+	private
+
+	    def self.common_repositories
+          common_repositories = [['CONTENTdm', 'CONTENTdm'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['VuDL', 'VuDL']]
+	    end
+
+	    def self.possible_thumbnail_fields
+          oai_dc_fields = [['OAI seed set','set'],['title','title'],['creator','creator'],['subject','subject'],['description','description'],['publisher','publisher'],['contributor','contributor'],['date','date'],['type','type'],['format','format'],['identifier','identifier'],['source','source'],['language','language'],['relation','relation'],['coverage','coverage'],['rights','rights']]
+          oai_dc_fields
+	    end
 end

@@ -64,4 +64,5 @@ group :test do
   gem 'webmock'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'simplecov', :require => false
 end

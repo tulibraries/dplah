@@ -24,7 +24,7 @@ RSpec.describe ProvidersController, :type => :controller do
   # Provider. As you add validations to Provider, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+   FactoryGirl.build(:provider_small_collection).attributes
   }
 
   let(:invalid_attributes) {
@@ -35,6 +35,10 @@ RSpec.describe ProvidersController, :type => :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # ProvidersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+
+  before (:each) do
+    sign_in FactoryGirl.create(:user)
+  end
 
   describe "GET index" do
     it "assigns all providers as @providers" do

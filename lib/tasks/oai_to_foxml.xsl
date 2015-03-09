@@ -40,6 +40,10 @@
     <xsl:value-of select="records/manifest/endpoint_url" />
   </xsl:variable>
 
+  <xsl:variable name="pid_prefix">
+    <xsl:value-of select="concat(records/manifest/pid_prefix, ':')" />
+  </xsl:variable>
+
   <xsl:variable name="type">
     <xsl:value-of select="OaiRec" />
   </xsl:variable>
@@ -64,7 +68,7 @@
       </xsl:variable>
 
       <xsl:variable name="pid">
-        <xsl:value-of select="concat('dplapa:', $pid_local)" />
+        <xsl:value-of select="concat($pid_prefix, $pid_local)" />
       </xsl:variable>
 
       <exsl:document method="xml" href="{$converted_path}/file_{$pid_local}.foxml.xml">        
@@ -325,6 +329,20 @@
   </xsl:template>
 
   <xsl:template name="split-subjects">
+    <xsl:param name="tag" />
+    <xsl:param name="subjects" />
+    <xsl:if test="$subjects != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($subjects), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-subjects">
+        <xsl:with-param name="subjects" select="substring-after(normalize-space($subjects), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-types">
     <xsl:param name="tag" />
     <xsl:param name="subjects" />
     <xsl:if test="$subjects != ''">

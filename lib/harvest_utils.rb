@@ -209,6 +209,7 @@ module HarvestUtils
       provider_id_prefix = options[:provider_id_prefix] || ''
       common_repository_type = options[:common_repository_type] || ''
       endpoint_url = options[:endpoint_url] || ''
+      pid_prefix = options[:pid_prefix] || ''
 
       new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
       xml_heading = '<?xml version="1.0" encoding="UTF-8"?>'
@@ -217,7 +218,7 @@ module HarvestUtils
         xml_file_contents = fopen.read
         xml_open = "<records>"
         xml_close = "</records>"
-        xml_manifest = get_xml_manifest(:contributing_institution => contributing_institution, :set_spec => set_spec, :collection_name => collection_name, :provider_id_prefix => provider_id_prefix, :common_repository_type => common_repository_type, :endpoint_url => endpoint_url)
+        xml_manifest = get_xml_manifest(:contributing_institution => contributing_institution, :set_spec => set_spec, :collection_name => collection_name, :provider_id_prefix => provider_id_prefix, :common_repository_type => common_repository_type, :endpoint_url => endpoint_url, :pid_prefix => pid_prefix)
         fopen.close
         File.open(new_file, 'w') do |f|  
           f.puts xml_heading
@@ -233,19 +234,19 @@ module HarvestUtils
     end
 
     def self.normalize_global(doc, string_to_search)
-      nupdate = doc.search(string_to_search)
-      nupdate.each do |nvalu|
-        nvalu.inner_html = nvalu.inner_html.sub(/^./) { |m| m.upcase }
-        nvalu.inner_html = nvalu.inner_html.gsub(/[\,;]$/, '')
-        nvalu.inner_html = nvalu.inner_html.gsub(/^\s+/, "")
-        nvalu.inner_html = nvalu.inner_html.gsub(/\s+$/, "")
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
+        node_value.inner_html = node_value.inner_html.gsub(/[\,;]$/, '')
+        node_value.inner_html = node_value.inner_html.gsub(/^\s+/, "")
+        node_value.inner_html = node_value.inner_html.gsub(/\s+$/, "")
       end
     end
 
     def self.normalize_facets(doc, string_to_search)
-      nupdate = doc.search(string_to_search)
-      nupdate.each do |nvalu|
-        nvalu.inner_html = nvalu.inner_html.gsub(/[\.]$/, '')
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.gsub(/[\.]$/, '')
       end
     end
 
@@ -272,8 +273,9 @@ module HarvestUtils
       provider_id_prefix = options[:provider_id_prefix] || ''
       common_repository_type = options[:common_repository_type] || ''
       endpoint_url = options[:endpoint_url] || ''
+      pid_prefix = options[:pid_prefix] || ''
 
-      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><common_repository_type>#{common_repository_type}</common_repository_type><endpoint_url>#{endpoint_url}</endpoint_url><provider_id_prefix>#{provider_id_prefix}</provider_id_prefix><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
+      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><common_repository_type>#{common_repository_type}</common_repository_type><endpoint_url>#{endpoint_url}</endpoint_url><provider_id_prefix>#{provider_id_prefix}</provider_id_prefix><pid_prefix>#{pid_prefix}</pid_prefix><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
       return xml_manifest
     end
 
@@ -324,7 +326,7 @@ module HarvestUtils
       f_name_full = Rails.root + @harvest_path + f_name
       FileUtils::mkdir_p @harvest_path
       File.open(f_name_full, "w") { |file| file.puts full_records }
-      add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix, :common_repository_type => provider.common_repository_type, :endpoint_url => provider.endpoint_url)
+      add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix, :common_repository_type => provider.common_repository_type, :endpoint_url => provider.endpoint_url, :pid_prefix => @pid_prefix)
     end
 
     def self.check_if_exists(file)

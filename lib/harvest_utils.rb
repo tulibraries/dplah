@@ -145,7 +145,8 @@ module HarvestUtils
 
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
-    contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
+    #contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
+    contents = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
     
     contents.each do |file|
       check_if_exists(file)
@@ -232,17 +233,19 @@ module HarvestUtils
     end
 
     def self.normalize_global(doc, string_to_search)
-      node_update = doc.search(string_to_search)
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
-        node_value.inner_html = node_value.inner_html.gsub(/[\,;]$/, '')
+      nupdate = doc.search(string_to_search)
+      nupdate.each do |nvalu|
+        nvalu.inner_html = nvalu.inner_html.sub(/^./) { |m| m.upcase }
+        nvalu.inner_html = nvalu.inner_html.gsub(/[\,;]$/, '')
+        nvalu.inner_html = nvalu.inner_html.gsub(/^\s+/, "")
+        nvalu.inner_html = nvalu.inner_html.gsub(/\s+$/, "")
       end
     end
 
     def self.normalize_facets(doc, string_to_search)
-      node_update = doc.search(string_to_search)
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.gsub(/[\,;.]$/, '')
+      nupdate = doc.search(string_to_search)
+      nupdate.each do |nvalu|
+        nvalu.inner_html = nvalu.inner_html.gsub(/[\.]$/, '')
       end
     end
 

@@ -391,10 +391,10 @@
     <comment>Description: Exposes the repository for OAI harvesters.</comment>
     <param name="maxRecords" value="100"/>
     <param name="friends" value="http://arXiv.org/oai2 http://memory.loc.gov/cgi-bin/oai2_0"/>
-    <param name="adminEmails" value="oai-admin@example.org bob@example.org"/>
+    <param name="adminEmails" value="admin@example.org"/>
     <param name="repositoryDomainName" value="example.org"/>
     <param name="maxHeaders" value="100"/>
-    <param name="repositoryName" value="Your Fedora Repository Name Here"/>
+    <param name="repositoryName" value="Example Aggregator"/>
   </module>
   <module role="org.fcrepo.server.storage.translation.DOTranslator" class="org.fcrepo.server.storage.translation.DOTranslatorModule">
     <comment>Supports translation from DigitalObject to a stream of some

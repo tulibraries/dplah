@@ -5,6 +5,7 @@ class Provider < ActiveRecord::Base
 	validates_length_of :new_provider_id_prefix, :maximum => 8
 
 	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq}
+	scope :unique_by_intermediate_provider, lambda { select(:intermediate_provider).uniq}
 	scope :unique_by_provider_id_prefix, lambda { select(:provider_id_prefix).uniq}
 	scope :unique_by_endpoint_url, lambda { select(:endpoint_url).uniq}
 
@@ -13,6 +14,7 @@ class Provider < ActiveRecord::Base
 		self.set = nil if self.set.blank?
 		self.metadata_prefix = nil if self.metadata_prefix.blank?
 		self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
+		self.intermediate_provider = self.new_intermediate_provider unless self.new_intermediate_provider.blank?
 	    self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
 		self.provider_id_prefix = self.new_provider_id_prefix unless self.new_provider_id_prefix.blank?
 	end
@@ -73,6 +75,14 @@ class Provider < ActiveRecord::Base
 
 	def new_contributing_institution
 		read_attribute(:new_contributing_institution) || ''
+	end
+
+	def intermediate_provider
+		read_attribute(:intermediate_provider) || ''
+	end
+
+	def new_intermediate_provider
+		read_attribute(:new_intermediate_provider) || ''
 	end
 
 	def collection_name

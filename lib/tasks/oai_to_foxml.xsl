@@ -16,6 +16,10 @@
     <xsl:value-of select="records/manifest/contributing_institution" />
   </xsl:variable>
 
+  <xsl:variable name="intermediate_provider">
+    <xsl:value-of select="records/manifest/intermediate_provider" />
+  </xsl:variable>
+
   <xsl:variable name="collection_name">
     <xsl:value-of select="records/manifest/collection_name" />
   </xsl:variable>
@@ -277,6 +281,10 @@
 
                   <xsl:element name="contributing_institution">
                     <xsl:value-of select="$contributing_institution" />
+                  </xsl:element>
+
+                  <xsl:element name="intermediate_provider">
+                    <xsl:value-of select="$intermediate_provider" />
                   </xsl:element>
 
                   <xsl:element name="set_spec">

@@ -62,6 +62,22 @@
   </div>
 
   <div class="field">
+    <%= f.label :intermediate_provider %><br>
+    <%= f.collection_select :intermediate_provider, Provider.unique_by_intermediate_provider, :intermediate_provider, :intermediate_provider, :prompt => "Please select one from this list or enter below" %>
+    <div class="field-tip">
+      Note: For end user display
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :new_intermediate_provider %><br>
+    <%= f.text_field :new_intermediate_provider %>
+    <div class="field-tip">
+      If not in the list above
+    </div>
+  </div>
+
+  <div class="field">
     <%= f.label :provider_id_prefix %><br>
     <%= f.collection_select :provider_id_prefix, Provider.unique_by_provider_id_prefix, :provider_id_prefix, :provider_id_prefix, :prompt => "Please select one from this list or enter below" %>
     <div class="field-tip">

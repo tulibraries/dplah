@@ -157,6 +157,7 @@ module HarvestUtils
       obj.update_index
 
       ThumbnailUtils.define_thumbnail(obj, provider)
+      obj.reorg_identifiers
 
       File.delete(file)
       File.open(@log_file, "a+") do |f|

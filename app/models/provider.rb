@@ -1,5 +1,6 @@
 class Provider < ActiveRecord::Base
 
+	validate :clean_data
 	validate :endpoint_url_is_valid_and_present
 	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}, :allow_blank => true
 	validates_length_of :new_provider_id_prefix, :maximum => 8
@@ -150,6 +151,13 @@ class Provider < ActiveRecord::Base
 		    errors.add :endpoint_url, " must begin with http/https" unless self.endpoint_url =~ /^https?/
 		end
 
+		def clean_data
+			attribute_names().each do |name|
+				if self.send(name.to_sym).respond_to?(:strip)
+					self.send("#{name}=".to_sym, self.send(name).strip)
+				end
+			end
+		end
 	private
 
 	    def self.common_repositories

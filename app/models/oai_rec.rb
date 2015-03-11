@@ -40,4 +40,18 @@ class OaiRec < ActiveFedora::Base
 
 	#has_model :oai_rec
 
+	def reorg_identifiers
+		f = self.identifier
+		f.each do |ident|
+			if ident.start_with?('http')
+				pos = f.index(ident)
+				f.insert(0,f.delete_at(pos))
+			end  
+		end
+		self.identifier = f
+		self.save
+	    self.to_solr
+	    self.update_index
+	end
 end
+

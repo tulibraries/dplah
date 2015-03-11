@@ -91,28 +91,25 @@ module ThumbnailUtils
   module_function :define_thumbnail_pattern
 
   def define_thumbnail(obj, provider)
+    asset_url = ''
     if !provider.common_repository_type.blank?
       asset_url = define_thumbnail_common(obj, provider)
     elsif !provider.thumbnail_pattern.blank?
       asset_url = define_thumbnail_pattern(obj, provider)
-    else
-      asset_url = ''
     end
-    set_and_save_thumbnail(obj.pid, asset_url)
+    set_thumbnail(asset_url)
   end
   module_function :define_thumbnail
 
-  def self.set_and_save_thumbnail(pid, asset_url)
-  	obj = OaiRec.find(pid)
+  def self.set_thumbnail(asset_url)
     if !asset_url.blank?
-      obj.thumbnail = (asset_url)
+      thumbnail = (asset_url)
     else
-      obj.thumbnail = "default-thumbnail.png"
+      thumbnail = "default-thumbnail.png"
     end
     #obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
-    obj.save
-	  obj.to_solr
-	  obj.update_index
+
+    
   end
 
 end

@@ -49,9 +49,6 @@ class OaiRec < ActiveFedora::Base
 			end  
 		end
 		self.identifier = f
-		self.save
-	    self.to_solr
-	    self.update_index
 	end
 end
 

@@ -153,11 +153,15 @@ module HarvestUtils
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
       ActiveFedora::FixtureLoader.index(pid)
       obj = OaiRec.find(pid)
+
+      thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
+      
+      obj.thumbnail = thumbnail
+
+      obj.reorg_identifiers
+      obj.save
       obj.to_solr
       obj.update_index
-
-      ThumbnailUtils.define_thumbnail(obj, provider)
-      obj.reorg_identifiers
 
       File.delete(file)
       File.open(@log_file, "a+") do |f|

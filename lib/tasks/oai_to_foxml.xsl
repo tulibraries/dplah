@@ -152,9 +152,9 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:date" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-types">
                     <xsl:with-param name="tag" select="'dc:type'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:type" />
+                    <xsl:with-param name="types" select="concat(metadata/oai_dc:dc/dc:type, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
@@ -239,9 +239,9 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:date" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-types">
                     <xsl:with-param name="tag" select="'type'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:type" />
+                    <xsl:with-param name="types" select="concat(metadata/oai_dc:dc/dc:type, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
@@ -352,13 +352,13 @@
 
   <xsl:template name="split-types">
     <xsl:param name="tag" />
-    <xsl:param name="subjects" />
-    <xsl:if test="$subjects != ''">
+    <xsl:param name="types" />
+    <xsl:if test="$types != ''">
       <xsl:element name="{$tag}">
-        <xsl:value-of select="substring-before(normalize-space($subjects), ';')" />
+        <xsl:value-of select="substring-before(normalize-space($types), ';')" />
       </xsl:element> 
-      <xsl:call-template name="split-subjects">
-        <xsl:with-param name="subjects" select="substring-after(normalize-space($subjects), ';')" />
+      <xsl:call-template name="split-types">
+        <xsl:with-param name="types" select="substring-after(normalize-space($types), ';')" />
         <xsl:with-param name="tag" select="$tag" />
       </xsl:call-template>
     </xsl:if>

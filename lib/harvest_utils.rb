@@ -145,8 +145,8 @@ module HarvestUtils
 
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
-    #contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
-    contents = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
+    
+    contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
     
     contents.each do |file|
       check_if_exists(file)

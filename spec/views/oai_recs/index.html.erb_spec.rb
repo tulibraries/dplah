@@ -42,20 +42,20 @@ RSpec.describe "oai_recs/index", :type => :view do
 
   it "renders a list of oai_recs" do
     render
-    assert_select "tr>td", :text => "Title".to_s, :count => 2
-    assert_select "tr>td", :text => "Creator".to_s, :count => 2
-    assert_select "tr>td", :text => "Subject".to_s, :count => 2
-    assert_select "tr>td", :text => "Description".to_s, :count => 2
-    assert_select "tr>td", :text => "Publisher".to_s, :count => 2
-    assert_select "tr>td", :text => "Contributor".to_s, :count => 2
-    assert_select "tr>td", :text => "Date".to_s, :count => 2
-    assert_select "tr>td", :text => "Type".to_s, :count => 2
-    assert_select "tr>td", :text => "Format".to_s, :count => 2
-    assert_select "tr>td", :text => "Identifier".to_s, :count => 2
-    assert_select "tr>td", :text => "Source".to_s, :count => 2
-    assert_select "tr>td", :text => "Language".to_s, :count => 2
-    assert_select "tr>td", :text => "Relation".to_s, :count => 2
-    assert_select "tr>td", :text => "Coverage".to_s, :count => 2
-    assert_select "tr>td", :text => "Rights".to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Title&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Creator&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Subject&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Description&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Publisher&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Contributor&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Date&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Type&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Format&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Identifier&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Source&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Language&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Relation&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Coverage&quot;]'.to_s, :count => 2
+    assert_select "tr>td", :text => '[&quot;Rights&quot;]'.to_s, :count => 2
   end
 end

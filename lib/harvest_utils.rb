@@ -145,6 +145,9 @@ module HarvestUtils
 
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
+
+    # little fix for weird nested OAI identifiers in Bepress -- earmarking for potential custom module
+    file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
     
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
     

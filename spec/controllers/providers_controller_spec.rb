@@ -179,8 +179,7 @@ RSpec.describe ProvidersController, :type => :controller do
     end
   end
 
-  xdescribe "dump and reindex" do
-    xspecify "spec skipped until harvest uses config[pid_prefix] to generate PID in oai_to_foxml xslt"
+  describe "dump and reindex" do
     before (:each) do
       # Clean out all records
       ActiveFedora::Base.destroy_all

@@ -218,7 +218,7 @@
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:subject">
                     <xsl:call-template name="split-subjects">
-                      <xsl:with-param name="tag" select="'dc:subject'" />
+                      <xsl:with-param name="tag" select="'subject'" />
                       <xsl:with-param name="subjects" select="concat(., ';')" />
                     </xsl:call-template>
                   </xsl:for-each> 

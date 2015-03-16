@@ -62,6 +62,7 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name('subject', :facetable), :label => 'Subject', :collapse => false, :limit => 5
     config.add_facet_field solr_name('type', :facetable), :label => 'Type', :limit => 7
     config.add_facet_field solr_name('contributing_institution', :facetable), :label => 'Contributing Institution', :limit => 7
+    config.add_facet_field solr_name('intermediate_provider', :facetable), :label => 'Intermediate Provider', :limit => 7
     config.add_facet_field solr_name('collection_name', :facetable), :label => 'Collection Name', :limit => 7
     config.add_facet_field solr_name('language', :facetable), :label => 'Language', :limit => 7
     config.add_facet_field solr_name('publisher', :facetable), :label => 'Publisher', :limit => 7
@@ -101,6 +102,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name('coverage', :stored_searchable, type: :string), :label => 'Coverage'
     config.add_show_field solr_name('rights', :stored_searchable, type: :string), :label => 'Rights'
     config.add_show_field solr_name('contributing_institution', :stored_searchable, type: :string), :label => 'Contributing Institution', :link_to_search => 'contributing_institution_sim'
+    config.add_show_field solr_name('intermediate_provider', :stored_searchable, type: :string), :label => 'Intermediate Provider', :link_to_search => 'intermediate_provider'
     config.add_show_field solr_name('collection_name', :stored_searchable, type: :string), :label => 'Collection Name', :link_to_search => 'collection_name'
 
     # "fielded" search configuration. Used by pulldown among other places.

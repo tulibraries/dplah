@@ -18,6 +18,7 @@ class Datastreams::OaiRecMetadata < ActiveFedora::OmDatastream
     t.coverage(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
     t.rights(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
     t.contributing_institution(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
+    t.intermediate_provider(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
     t.set_spec(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
     t.provider_id_prefix(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
     t.collection_name(:index_as=>[:facetable, :stored_searchable], :type=>:string)

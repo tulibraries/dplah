@@ -94,10 +94,18 @@
   </div>
 
  <div class="field">
-    <%= f.label :Email %><br>
-    <%= f.text_field :email %>
+    <%= f.label :email %><br>
+    <%= f.collection_select :email, Provider.unique_by_email, :email, :email, :prompt => "Please select one from this list or enter below" %>
     <div class="field-tip">
       Note: Contact information for OAI seed
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :new_email %><br>
+    <%= f.text_field :new_email %>
+    <div class="field-tip">
+      If not in the list above
     </div>
   </div>
 

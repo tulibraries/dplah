@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310174619) do
+ActiveRecord::Schema.define(version: 20150316160815) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",       null: false
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150310174619) do
     t.string   "common_transformation"
     t.string   "intermediate_provider"
     t.string   "new_intermediate_provider"
+    t.string   "new_email"
   end
 
   create_table "searches", force: true do |t|

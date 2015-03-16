@@ -2,29 +2,20 @@ class ProvidersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
 
-  # GET /providers
-  # GET /providers.json
   def index
     @providers = Provider.all
   end
 
-  # GET /providers/1
-  # GET /providers/1.json
   def show
   end
 
-  # GET /providers/new
   def new
     @provider = Provider.new
   end
 
-  # GET /providers/1/edit
   def edit
   end
 
-
-  # POST /providers
-  # POST /providers.json
   def create
     @provider = Provider.new(provider_params)
 
@@ -39,8 +30,6 @@ class ProvidersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /providers/1
-  # PATCH/PUT /providers/1.json
   def update
     respond_to do |format|
       if @provider.update(provider_params)
@@ -53,10 +42,6 @@ class ProvidersController < ApplicationController
     end
   end
 
-  
-
-  # DELETE /providers/1
-  # DELETE /providers/1.json
   def destroy
     @provider.destroy
     respond_to do |format|
@@ -81,14 +66,12 @@ class ProvidersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_provider
       @provider = Provider.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def provider_params
-      params.require(:provider).permit(:name, :description, :endpoint_url, :new_endpoint_url, :email, :metadata_prefix, :set, :contributing_institution, :new_contributing_institution, :intermediate_provider, :new_intermediate_provider, :collection_name, :in_production, :provider_id_prefix, :new_provider_id_prefix, :common_repository_type, :thumbnail_pattern, :thumbnail_token_1, :thumbnail_token_2)
+      params.require(:provider).permit(:name, :description, :endpoint_url, :new_endpoint_url, :email, :new_email, :metadata_prefix, :set, :contributing_institution, :new_contributing_institution, :intermediate_provider, :new_intermediate_provider, :collection_name, :in_production, :provider_id_prefix, :new_provider_id_prefix, :common_repository_type, :thumbnail_pattern, :thumbnail_token_1, :thumbnail_token_2)
     end
 
 end

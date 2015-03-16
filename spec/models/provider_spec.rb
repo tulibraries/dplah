@@ -41,6 +41,10 @@ RSpec.describe Provider, :type => :model do
       expect(provider.description).to eq(p.description)
     end
 
+    it "specifies the endpoint url" do
+      expect(provider.endpoint_url).to eq(p.endpoint_url)
+    end
+
     it "specifies the metadata_prefix" do
       expect(provider.metadata_prefix).to eq(p.metadata_prefix)
     end

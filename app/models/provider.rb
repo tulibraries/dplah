@@ -19,7 +19,6 @@ class Provider < ActiveRecord::Base
 		self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
 		self.intermediate_provider = self.new_intermediate_provider unless self.new_intermediate_provider.blank?
 	    self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
-	    self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
 	end
 
 	def client

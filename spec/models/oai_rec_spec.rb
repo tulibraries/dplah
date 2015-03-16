@@ -7,27 +7,27 @@ RSpec.describe OaiRec, :type => :model do
     it { is_expected.to have_metadata_stream_of_type(Datastreams::OaiRecMetadata) }
 
     it { is_expected.to respond_to(:creator) }
-	  it { is_expected.to respond_to(:title) }
-	  it { is_expected.to respond_to(:subject) }
-	  it { is_expected.to respond_to(:subject) }
-	  it { is_expected.to respond_to(:description) }
-	  it { is_expected.to respond_to(:publisher) }
-	  it { is_expected.to respond_to(:contributor) }
-	  it { is_expected.to respond_to(:date) }
-	  it { is_expected.to respond_to(:type) }
-	  it { is_expected.to respond_to(:format) }
-	  it { is_expected.to respond_to(:identifier) }
-	  it { is_expected.to respond_to(:source) }
-	  it { is_expected.to respond_to(:language) }
-	  it { is_expected.to respond_to(:relation) }
-	  it { is_expected.to respond_to(:coverage) }
-	  it { is_expected.to respond_to(:rights) }
+    it { is_expected.to respond_to(:title) }
+    it { is_expected.to respond_to(:subject) }
+    it { is_expected.to respond_to(:subject) }
+    it { is_expected.to respond_to(:description) }
+    it { is_expected.to respond_to(:publisher) }
+    it { is_expected.to respond_to(:contributor) }
+    it { is_expected.to respond_to(:date) }
+    it { is_expected.to respond_to(:type) }
+    it { is_expected.to respond_to(:format) }
+    it { is_expected.to respond_to(:identifier) }
+    it { is_expected.to respond_to(:source) }
+    it { is_expected.to respond_to(:language) }
+    it { is_expected.to respond_to(:relation) }
+    it { is_expected.to respond_to(:coverage) }
+    it { is_expected.to respond_to(:rights) }
 
-	  it { is_expected.to respond_to(:contributing_institution) }
-	  it { is_expected.to respond_to(:collection_name) }
-	  it { is_expected.to respond_to(:partner) }
+    it { is_expected.to respond_to(:contributing_institution) }
+    it { is_expected.to respond_to(:collection_name) }
+    it { is_expected.to respond_to(:partner) }
 
-	  it { is_expected.to respond_to(:set_spec) }
+    it { is_expected.to respond_to(:set_spec) }
   end
 
   context 'OaiRec Object' do
@@ -52,7 +52,13 @@ RSpec.describe OaiRec, :type => :model do
                              contributing_institution: @o.contributing_institution,
                              collection_name: @o.collection_name,
                              partner: @o.partner,
-                             set_spec: @o.set_spec)
+                             set_spec: @o.set_spec,
+                             intermediate_provider: @o.intermediate_provider,
+                             provider_id_prefix: @o.provider_id_prefix,
+                             common_repository_type: @o.common_repository_type,
+                             endpoint_url: @o.endpoint_url,
+                             thumbnail: @o.thumbnail)
+
       oaiRec.update_index
       @object = ActiveFedora::Base.where(identifier_tesim: @o.identifier).to_a.first
     end
@@ -140,6 +146,27 @@ RSpec.describe OaiRec, :type => :model do
     it "should match the set spec" do
       expect(@object.set_spec).to eq(@o.set_spec)
     end
+
+    it "should match the intermediate provider" do
+      expect(@object.intermediate_provider).to eq(@o.intermediate_provider)
+    end
+
+    it "should match the provider id prefix" do
+      expect(@object.provider_id_prefix).to eq(@o.provider_id_prefix)
+    end
+
+    it "should match the common repository type" do
+      expect(@object.common_repository_type).to eq(@o.common_repository_type)
+    end
+
+    it "should match the endpoint url" do
+      expect(@object.endpoint_url).to eq(@o.endpoint_url)
+    end
+
+    it "should match the thumbnail" do
+      expect(@object.thumbnail).to eq(@o.thumbnail)
+    end
+
   end
 
 end

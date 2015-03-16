@@ -1,20 +1,25 @@
 class Provider < ActiveRecord::Base
 
+	validate :clean_data
 	validate :endpoint_url_is_valid_and_present
 	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}, :allow_blank => true
 	validates_length_of :new_provider_id_prefix, :maximum => 8
 
 	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq}
+	scope :unique_by_intermediate_provider, lambda { select(:intermediate_provider).uniq}
 	scope :unique_by_provider_id_prefix, lambda { select(:provider_id_prefix).uniq}
 	scope :unique_by_endpoint_url, lambda { select(:endpoint_url).uniq}
+	scope :unique_by_email, lambda { select(:email).uniq}
 
 	before_save do
 		self.name = nil if self.name.blank?
 		self.set = nil if self.set.blank?
 		self.metadata_prefix = nil if self.metadata_prefix.blank?
+		self.email = self.new_email unless self.new_email.blank?
 		self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
+		self.intermediate_provider = self.new_intermediate_provider unless self.new_intermediate_provider.blank?
 	    self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
-		self.provider_id_prefix = self.new_provider_id_prefix unless self.new_provider_id_prefix.blank?
+	    self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
 	end
 
 	def client
@@ -63,6 +68,10 @@ class Provider < ActiveRecord::Base
 		read_attribute(:email) || ''
 	end
 
+	def new_email
+		read_attribute(:new_email) || ''
+	end
+
 	def metadata_prefix
 		read_attribute(:metadata_prefix) || 'oai_dc'
 	end
@@ -73,6 +82,14 @@ class Provider < ActiveRecord::Base
 
 	def new_contributing_institution
 		read_attribute(:new_contributing_institution) || ''
+	end
+
+	def intermediate_provider
+		read_attribute(:intermediate_provider) || ''
+	end
+
+	def new_intermediate_provider
+		read_attribute(:new_intermediate_provider) || ''
 	end
 
 	def collection_name
@@ -140,6 +157,13 @@ class Provider < ActiveRecord::Base
 		    errors.add :endpoint_url, " must begin with http/https" unless self.endpoint_url =~ /^https?/
 		end
 
+		def clean_data
+			attribute_names().each do |name|
+				if self.send(name.to_sym).respond_to?(:strip)
+					self.send("#{name}=".to_sym, self.send(name).strip)
+				end
+			end
+		end
 	private
 
 	    def self.common_repositories

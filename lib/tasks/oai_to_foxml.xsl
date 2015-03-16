@@ -16,6 +16,10 @@
     <xsl:value-of select="records/manifest/contributing_institution" />
   </xsl:variable>
 
+  <xsl:variable name="intermediate_provider">
+    <xsl:value-of select="records/manifest/intermediate_provider" />
+  </xsl:variable>
+
   <xsl:variable name="collection_name">
     <xsl:value-of select="records/manifest/collection_name" />
   </xsl:variable>
@@ -38,6 +42,10 @@
 
   <xsl:variable name="endpoint_url">
     <xsl:value-of select="records/manifest/endpoint_url" />
+  </xsl:variable>
+
+  <xsl:variable name="pid_prefix">
+    <xsl:value-of select="concat(records/manifest/pid_prefix, ':')" />
   </xsl:variable>
 
   <xsl:variable name="type">
@@ -64,7 +72,7 @@
       </xsl:variable>
 
       <xsl:variable name="pid">
-        <xsl:value-of select="concat('dplapa:', $pid_local)" />
+        <xsl:value-of select="concat($pid_prefix, $pid_local)" />
       </xsl:variable>
 
       <exsl:document method="xml" href="{$converted_path}/file_{$pid_local}.foxml.xml">        
@@ -119,10 +127,12 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:creator" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="split-subjects">
-                    <xsl:with-param name="tag" select="'dc:subject'" />
-                    <xsl:with-param name="subjects" select="concat(metadata/oai_dc:dc/dc:subject, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:subject">
+                    <xsl:call-template name="split-subjects">
+                      <xsl:with-param name="tag" select="'dc:subject'" />
+                      <xsl:with-param name="subjects" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each> 
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:description'" />
@@ -144,9 +154,9 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:date" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-types">
                     <xsl:with-param name="tag" select="'dc:type'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:type" />
+                    <xsl:with-param name="types" select="concat(metadata/oai_dc:dc/dc:type, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
@@ -206,10 +216,12 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:creator" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="split-subjects">
-                    <xsl:with-param name="tag" select="'subject'" />
-                    <xsl:with-param name="subjects" select="concat(metadata/oai_dc:dc/dc:subject, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:subject">
+                    <xsl:call-template name="split-subjects">
+                      <xsl:with-param name="tag" select="'subject'" />
+                      <xsl:with-param name="subjects" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each> 
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'description'" />
@@ -231,9 +243,9 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:date" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-types">
                     <xsl:with-param name="tag" select="'type'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:type" />
+                    <xsl:with-param name="types" select="concat(metadata/oai_dc:dc/dc:type, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
@@ -273,6 +285,10 @@
 
                   <xsl:element name="contributing_institution">
                     <xsl:value-of select="$contributing_institution" />
+                  </xsl:element>
+
+                  <xsl:element name="intermediate_provider">
+                    <xsl:value-of select="$intermediate_provider" />
                   </xsl:element>
 
                   <xsl:element name="set_spec">
@@ -333,6 +349,20 @@
       </xsl:element> 
       <xsl:call-template name="split-subjects">
         <xsl:with-param name="subjects" select="substring-after(normalize-space($subjects), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-types">
+    <xsl:param name="tag" />
+    <xsl:param name="types" />
+    <xsl:if test="$types != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($types), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-types">
+        <xsl:with-param name="types" select="substring-after(normalize-space($types), ';')" />
         <xsl:with-param name="tag" select="$tag" />
       </xsl:call-template>
     </xsl:if>

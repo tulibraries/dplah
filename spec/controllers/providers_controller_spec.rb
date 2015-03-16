@@ -160,4 +160,53 @@ RSpec.describe ProvidersController, :type => :controller do
     end
   end
 
+  describe "HARVEST" do
+    before (:each) do
+      # Clean out all records
+      ActiveFedora::Base.destroy_all
+      # Create initial provider
+      @provider = Provider.create! valid_attributes
+    end
+
+    it "Harvests all of the data from a provider" do
+      sso = stdout_to_null
+      VCR.use_cassette "provider_controller/harvest_small_collection" do
+        post :harvest, {:id => @provider.to_param}, valid_session
+      end
+      $stdout = sso
+      expect(ActiveFedora::Base.count).to eq 6
+      expect(response).to redirect_to(providers_url)
+    end
+  end
+
+  xdescribe "dump and reindex" do
+    xspecify "spec skipped until harvest uses config[pid_prefix] to generate PID in oai_to_foxml xslt"
+    before (:each) do
+      # Clean out all records
+      ActiveFedora::Base.destroy_all
+      # Create initial provider
+      @provider = Provider.create! valid_attributes
+      # Harvest data
+      sso = stdout_to_null
+      VCR.use_cassette "provider_controller/harvest_small_collection" do
+        post :harvest, {:id => @provider.to_param}, valid_session
+      end
+      $stdout = sso
+    end
+
+    it "Dumps and reindexes by institution" do
+      expect(ActiveFedora::Base.count).to eq 6
+      post :dump_and_reindex_by_institution, {:id => @provider.to_param}, valid_session
+      expect(ActiveFedora::Base.count).to eq 0
+      expect(response).to redirect_to(providers_url)
+    end
+
+    it "Dumps and reindexes by set" do
+      expect(ActiveFedora::Base.count).to eq 6
+      post :dump_and_reindex_by_set, {:id => @provider.to_param}, valid_session
+      expect(ActiveFedora::Base.count).to eq 0
+      expect(response).to redirect_to(providers_url)
+    end
+  end
+
 end

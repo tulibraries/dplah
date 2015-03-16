@@ -1,0 +1,1323 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://contentdm1.accesspa.org/oai/oai.php?metadataPrefix=oai_dc&verb=ListRecords
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Mar 2015 14:15:08 GMT
+      Server:
+      - Apache/2.2.16 (Debian)
+      X-Powered-By:
+      - PHP/5.3.3-7+squeeze19
+      Set-Cookie:
+      - PHPSESSID=v3q5n9j1qm8is3voctbfbs71c6; path=/
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Pragma:
+      - no-cache
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '17138'
+      Content-Type:
+      - text/xml
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"><responseDate>2015-03-10T14:15:08Z</responseDate><request verb="ListRecords" metadataPrefix="oai_dc">http://contentdm1.accesspa.org/oai/oai.php</request><ListRecords><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/0</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/16</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Benjamin Franklin and the University of Pennsylvania; an address delivered at the Academy of Music in Philadelphia at the request of Pennsylvania, April 17,1906</dc:title>
+        <dc:subject>Franklin, Benjamin, 1706-1790.&lt;br&gt;University of Pennsylvania.</dc:subject>
+        <dc:description>Hampton Carson, Pennsylvania attorney general, describes the personality and interests of Benjamin Franklin, touching especially on those characteristics that led Franklin to be involved with educational efforts in general and the University of Pennsylvania in particular.  Carson also mentions by name a large number of notable alumni.</dc:description>
+        <dc:creator>Carson, Hampton L. (Hampton Lawrence), 1852-1929.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:date>1906</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z C23</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/16</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/29</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/36</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Franklin &amp; fires : his interest therein and his efforts to protect the citizens of Philadelphia from devastation : especially in relation to the Philadelphia Contributionship for the Insurance of Houses from Loss by Fire.</dc:title>
+        <dc:subject>Franklin, Benjamin, 1706-1790.&lt;br&gt;Fire prevention--History.&lt;br&gt;Insurance, Fire--History.</dc:subject>
+        <dc:description>Published in the bicentennial year of his birth, this volume describes Benjamin Franklin&#x27;s numerous achievements in connection with fire. Particularly highlighted are: his role in the establishment of a fire company in Philadelphia; the invention of the &#x27;Franklin stove,&#x27; an efficient wood-burning stove; his observations on fire retardant construction methods seen in Paris, France; and his involvement in the establishment of a fire insurance cooperative (&quot;The Philadelphia Contributionship&quot;) in Philadelphia.  The pamphlet is interleaved with illustrations and portraits.  It includes facsimiles of newspaper announcements.</dc:description>
+        <dc:creator>Philadelphia Contributionship for the Insurance of Houses from Loss by Fire.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:date>1906</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 368.11 P53f 1906</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/36</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/37</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/56</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Narrative of the late massacres, in Lancaster County, of a number of Indians, friends of this province, by persons unknown : With some observations on the same.</dc:title>
+        <dc:subject>Paxton boys.&lt;br&gt;Conestoga Indians.&lt;br&gt;Pennsylvania -- History -- Colonial period, ca. 1600-1775.</dc:subject>
+        <dc:description>Benjamin Franklin decries the recent massacre by the self-styled Paxton Boys of peaceful Native Americans belonging to the Conestoga tribe in Lancaster County, Pennsylvania, and the subsequent murder by mob action against those remaining Indians who had been taken to the county workhouse for protection.  By contrast, he  recounts examples of the &quot;rite of hospitality&quot; exercised on behalf of their enemies by ancient Greeks in Homer&#x27;s Ulysses, by Muslim Moors under the Saracens, by native Africans in Guinea, and by Native Americans.  Franklin also includes copies of proclamations by Governor John Penn against the outrage.  The pamphlet concludes with calls for justice against the perpetrators.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1705-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Philadelphia (Pa.) -- Armbruster. [printer]</dc:contributor>
+        <dc:date>1764</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAR 093 P . Ar5 1764</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/56</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/57</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/94</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Conduct of the Paxton-men, impartially represented; the distresses of the frontiers, and the complaints and sufferings of the people fully stated ... With some remarks upon the Narrative, of the Indian-massacre, lately publish&#x27;d. Interspers&#x27;d with several interesting anecdotes, relating to the military genius, and warlike principles of the people call&#x27;d Quakers: together-with proper reflection and advice upon the whole. In a letter from a gentleman in one of the back counties, to a friend in Philadelphia. ...</dc:title>
+        <dc:subject>Franklin, Benjamin, 1706-1790. A narrative of the late massacres.&lt;br&gt;Paxton boys.&lt;br&gt;Conestoga Indians.&lt;br&gt;Indians of North America -- Pennsylvania.&lt;br&gt;Massacres.&lt;br&gt;Pennsylvania -- History -- Colonial period, ca. 1600-1775.&lt;br&gt;Lancaster County (Pa.) -- History -- Colonial period, ca. 1600-1775.</dc:subject>
+        <dc:description>Writing in response to the reports of and commentary on the recent masssacre of Native Americans in Lancaster County, Pennsylvania -- and especially to Benjamin Franklin&#x27;s &#x27;A Narrative of the Late Massacres&#x27; -- Thomas Barton defends the actions of the Paxton Boys, who carried out the killings.  His argument includes characterizations of the Philadelphia Quakers who are not, he argues, as pacifistic as they claim to be.  Barton ends the pamphlet by asking his reader to advise the &quot;visionary Quakers and Don Quixotes&quot; that they should hear the complaints of the people and remove the Indians from the scene in order to restore peace, harmony, and good order in the colony.</dc:description>
+        <dc:creator>Barton, Thomas, 1730-1780.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Philadelphia (Pa.). Stewart. [publisher]</dc:contributor>
+        <dc:date>1764</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAR 093 P. St4f 1764</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/94</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/103</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Franklin and the University.</dc:title>
+        <dc:subject>Franklin, Benjamin, 1706-1790.&lt;br&gt;University of Pennsylvania.</dc:subject>
+        <dc:description>Reprinted from the &quot;Alumni register&quot; of the University of Pennsylvania, of February and March, 1906, this article  describes Benjamin Franklin&#x27;s role as the &quot;real founder&quot; of the university, and as one of its important financial benefactors.  Reprint includes Morris Jastrow&#x27;s &#x27;Frankliniana in the University Library.&#x27;</dc:description>
+        <dc:creator>Rosengarten, J. G. (Joseph George), 1835-1921.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:date>1906-03</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z R72</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/103</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/112</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Frankliniana in the University library.</dc:title>
+        <dc:subject>Franklin, Benjamin, 1706-1790.&lt;br&gt;University of Pennsylvania. Library.</dc:subject>
+        <dc:description>Reprinted from the &quot;Alumni register&quot; of the University of Pennsylvania, of February and March, 1906, this article  consists of a numbered descriptive list of items in the university library that are related to Benjamin Franklin.  The items include a painting, engravings, manuscripts, Franklin imprints, and related documents.  Reprint includes J. G. Rosengarten&#x27;s &#x27;Franklin and the University.&#x27;</dc:description>
+        <dc:creator>Jastrow, Morris, 1861-1921.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:date>1906-03</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z R72</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/112</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/123</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/131</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/140</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Ben Franklin&#x27;s other library : the Pennsylvania State Library.</dc:title>
+        <dc:subject>Franklin, Benjamin, 1706-1790 -- Libraries.&lt;br&gt;State Library of Pennsylvania -- History.&lt;br&gt;Libraries -- Pennsylvania -- History.</dc:subject>
+        <dc:description>A history and description of the State Library of Pennsylvania at its 220th anniversary.  Acknowledges the Benjamin Franklin&#x27;s &quot;participation was on a technical basis only, as that of a clerk who was requested to order some books.&quot;  Continues by sketching the subsequent history of the Library.  Describes the organization and mission of the Library.  Written in fulfillment of requirements for a &#x27;Library in Society&#x27; course at the Drexel Institute of Technology, Graduate School of Library Science, Philadelphia, Pennsylvania.</dc:description>
+        <dc:creator>Shelly, Nancy L.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:date>1965-12-05</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAC 027.5748 P384Z Sh4</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/140</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/149</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Electricity experiments reported in the Philosophical Transactions of the Royal Society of London, 1751-1755.</dc:title>
+        <dc:subject>Lightning -- Experiments -- History.&lt;br&gt;Electricity -- Experiments -- History.&lt;br&gt;Franklin, Benjamin, 1706-1790.</dc:subject>
+        <dc:description>Letters to the Royal Society dealing with Benjamin Franklin&#x27;s experiments with lightning and electricity.  These include &quot;Account of Mr. Benjamin Franklin&#x27;s treatise, intitled, Experiments and observations on electricity, made at Philadelphia in America,&quot; by William Watson, 1751; &quot;Concerning the Effects of Lightning&quot; by Benjamin Franklin, Philadelphia, June 20, 1751; &quot;A Letter from Benjamin Franklin, Esq. to Mr. Peter Collinson, F.R.S. concerning an Electrical Kite.&quot; Philadelphia, Oct. 1, 1752; &quot;A Letter from Mr. W. Watson, F.R.S. to the Royal Society, concerning the Electrical Experiments in England on Thunder Clouds&quot; Dec. 20, 1752; &quot;Electrical Experiments, made in Pursuance of those by Mr. Canton, dated Dec. 3, 1753; with Explanations&quot; by Mr. Benjamin Franklin, F.R.S. Philadelphia, March 14, 1755; and &quot;Extract of a Letter concerning Electricity, from Mr. B. Franklin to Mons. Delibard, inclosed in a Letter to Mr. Peter Collinson, F.R.S. Philadelphia, June 29, 1755.  These all appear i</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:date>1809</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAC 506 R812p 1809 vol. 10</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/149</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/150</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/154</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/162</identifier><datestamp>2005-12-30</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letters to the Gentleman&#x27;s Magazine on the subject of electricity, May 1750 and January 1756.</dc:title>
+        <dc:subject>Electricity -- History -- 18th century.&lt;br&gt;Lightning rods.</dc:subject>
+        <dc:description>In two letters, correspondents to the &quot;Gentleman&#x27;s Magazine&quot; published in London, England write about electricity and, in particular, the design of lightning rods.</dc:description>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAC  050 G2871</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/162</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/176</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Minutes of the Provincial Council of Pennsylvania, 14 November 1753 : Reports on meetings at Carlisle, Pennsylvania between Native American deputies of the Six Nations, Delawares, Shawonese, Twightwees, and Owendats, and the three commissioners Richard Peters, Isaac Norris, and Benjamin Franklin.</dc:title>
+        <dc:subject>Franklin, Benjamin, 1706-1790.&lt;br&gt;United States -- History -- French and Indian War, 1755-1763&lt;br&gt;Indians of North America.&lt;br&gt;Indian wars -- Pennsylvania.&lt;br&gt;Peace treaties.</dc:subject>
+        <dc:description>Consists of reports on peace negotiations between commissioners from the colonial government of Pennsylvania and representatives of several Indian tribes from western Pennsylvania in early October 1753 because of tensions leading up to the French and Indian War.  Records speeches made by both sides and gifts exchanged.  Conrad Weiser and Andrew Montour acted as interpreters.  Refers to acts of the French to gain allies among the Indians.  Includes mention made by both sides of the deleterious effect of alcohol among the Native Americans.  Includes a &quot;List of the Names of the principal Indians that were present at the foregoing Treaty.&quot;</dc:description>
+        <dc:creator>Pennsylvania. Provincial Council.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:date>1753-11-14</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE  974.8 P386 vol. 5</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/176</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/181</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Minutes of the Provincial Council of Pennsylvania, 5 December 1753 : correspondence regarding continuing efforts to secure peace with Native Americans in western Pennsylvania</dc:title>
+        <dc:subject>Indians of North America.&lt;br&gt;Peace treaties.&lt;br&gt;United States -- History -- French and Indian War, 1755-1763.</dc:subject>
+        <dc:description>Consists of copies of correspondence read before the Provincial Council of Pennsylvania in the continuing matter of securing treaties with Indians in western Pennsylvania on the eve of the French and Indian War.</dc:description>
+        <dc:creator>Pennsylvania. Provincial Council.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:date>1753-12-05</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE  974.8 P386 vol. 5</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/181</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/191</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Minutes of the Provincial Council of Pennsylvania, 15 November 1753 : correspondence related to treaty negotiations between the colony of Pennsylvania and Native Americans of western Pennsylvania.</dc:title>
+        <dc:subject>United States -- History -- French and Indian War, 1755-1763.&lt;br&gt;Indians of North America.&lt;br&gt;Peace treaties.&lt;br&gt;Hamilton, James, 1710-1783.&lt;br&gt;Dinwiddie, Robert, 1693-1770.&lt;br&gt;Glen, James, 1701-1777.&lt;br&gt;Franklin, Benjamin, 1706-1790.</dc:subject>
+        <dc:description>Consists primarily of correspondence connected with the treaty negotiations carried out by Benjamin Franklin, Richard Peters, and Isaac Norris with Native American tribes of western Pennsylvania.  Begins with a copy of a letter &quot;from the Right Honourable the Earl of Holdernesse, One of his Majestie&#x27;s Principal Secretaries of State, to all the Governors of North America&quot; which was occasioned by the king having heard of &quot;the March of a considerable Number of Indians not in Alliance with the King, supported by some Regular European Troops.&quot;  These French-supported Indians were, it was reported, intending to commit hostilities against English colonists.  The letters directed the various governors to cooperate in the defense of English interests.  Also includes a letter containing speeches by Indian chiefs asking for assistance against the French; a response from Pennsylvania Governor James Hamilton to the Indians; and other letters between Governor Robert Dinwiddie of Virginia, Governor Ja</dc:description>
+        <dc:creator>Pennsylvania. Provincial Council.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:date>1753-11-15</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE  974.8 P386 vol. 5</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/191</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/211</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Chronology of Benjamin Franklin, founder of the American Philosophical Society</dc:title>
+        <dc:subject>Franklin, Benjamin, 1706-1790.</dc:subject>
+        <dc:description>A chronological listing of personal and public events in the life of Benjamin Franklin, including his publications, inventions, and diplomatic endeavours.</dc:description>
+        <dc:creator>Hays, I. Minis (Isaac Minis), 1847-1925.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>American Philosophical Society [publisher]</dc:contributor>
+        <dc:date>1904</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z H33</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/211</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/212</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/213</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/214</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/215</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/216</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/217</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/220</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Monsieur Dubourg, 8 December 1772 : answer to some queries of Monsieur Dubourg respecting the armonica.  From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Glass harmonica.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin explains the arrangement of the glasses in the &quot;armonica,&quot; and explains how to play the instrument.  He concludes that &quot;nothing but experience can instruct with respect to this manipulation ... a few hours&#x27; exercise will teach this.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1772-12-08</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 148-149</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/220</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/223</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter, 1762 : on fire. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Fire.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin describes his theories concerning the nature of fire and &quot;the operation of fire upon fuel with the assistance of air.&quot;  Noting that different types of substances burn more easily than others, he explains that &quot;this is in proportion as they are good or bad conductors of fire, and as their parts cohere with less or more strength.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1762</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 149-151</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/223</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/226</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Thomas Ronayne, 20 April 1766 : on the electricity of fogs.  From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Electricity -- Early works to 1800.&lt;br&gt;Electricity -- Experiments -- History -- 18th century.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Knowledge -- Physics.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin explains his theory of positively and negatively charged clouds, and describes an experiment designed to investigate the same.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1766-04-20</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 154-157</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/226</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/229</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mr. Croghan, 5 August 1767 : conjecture as to elephants being native to America.  From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Elephants -- Early works to 1800.&lt;br&gt;Elephants -- United States.&lt;br&gt;Elephants, Fossil.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes about his reactions to elephant tusks and teeth sent to him for examination.  Includes his puzzlement over some characteristics of the teeth.  Concludes that finding elephant fossils &quot;on the Ohio&quot; makes it look &quot;as if the earth had anciently been in another position, and the climates differently placed from what they are at present.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1767-08-05</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 157-158</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/229</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/230</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/231</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/232</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/233</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/234</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/235</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/241</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to the Rev. Father Beccaria, 13 July 1762 : description of a new musical instrument composed of glasses, called the armonica.  From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Glass harmonica.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Franklin writes from London to Father Beccaria about the &quot;new instrument lately added here&quot; which he called the &quot;Armonica.&quot;  He mentions similar instruments created by two other men, and then his own refinements.  Describes the process of tuning the glasses, and assembling the final instrument which, he writes, &quot;seems peculiarly adapted to the Italian music, especially that of the soft and plaintive kind.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1762-07-13</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 141-146</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/241</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/244</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Dr. Evans, 20 February 1768 : on the colica pictorum, and pernicious use of lead in distilleries.  From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Lead poisoning.&lt;br&gt;Rum -- Early works to 1800.&lt;br&gt;Wealth.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes from London to Dr. Evans about the use of lead tubing in rum distilleries.  He draws a connection between the use of lead in that and other occupations, and disease - specifically that disease called colica pictorum.  He then discusses his attempts to influence public opinion in matters related to cloth manufacturing.  &quot;And after all,&quot; he writes, &quot;the true source of riches is husbandry. That is truly productive of new wealth; manufacturers only change forms.. . .Riches are not increased by manufacturing.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1768-02-20</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 159-160</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/244</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/248</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Lord Kaines, 28 February 1768 : on chimnies &amp;c.  From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Chimneys -- Design and construction -- Early works to 1800.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes from London to Lord Kaines in Scotland concerning the reasons the chimneys in the latter&#x27;s new house might be drawing smoke from outside down the flue.  Franklin says that poor construction is not the reason, rather that it can be explained by differences in air temperature: warmer air outside, and cooler air inside the chimney.  &quot;Chimnies that have fires in them daily are not subject to this inconvenience.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1768-02-28</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 161-164</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/248</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/252</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mr. Winthorp, 2 July 1768 : on astronomical subjects, electricity &amp;c.  From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Astronomical instruments -- Early works to 1800.&lt;br&gt;Lightning.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes from London to Mr. Winthorp about a series of astronomical instruments the latter had ordered made for himself.  Various delays in the manufacture and delivery are explained.  Franklin then summarizes some recent information about lightning and lightning rods that had come to his attention.  He also describes coming across a small sealed glass tube with water inside that produced bubbles when warmed by the hand.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1768-07-02</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 164-171</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/252</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/253</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mons. Dubourg, 28 July 1768 : on the free use of air.  From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Smallpox -- Early works to 1800.&lt;br&gt; Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes from London to Monsieur Dubourg in reply to the latter&#x27;s remarks about a new method of treating smallpox.  Franklin does not like the cold water bath which was then in vogue.  He describes instead his own practice of sitting naked in his room every morning for 30-60 minutes after awakening in order to &quot;bathe&quot; in the cold air.  Of this air bath, Franklin writes that &quot;at least it does not injure my health, if it does not in fact contribute much to its preservation.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1768-07-28</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, page 172-173</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/253</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/289</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>&quot;A valuable collection of neat books well chosen&quot; : the Pennsylvania Assembly Library.</dc:title>
+        <dc:subject>Pennsylvania. General Assembly. Library -- History -- 18th century.&lt;br&gt;Government libraries--Pennsylvania -- History -- 18th century.</dc:subject>
+        <dc:description>Describes the history and contents of the General Assembly, Rare Books Collection at the State Library of Pennsylvania.  The original colleciton was ordered from England by the clerk of Pennsylvania&#x27;s General Assembly, Benjamin Franklin.  Includes many photographs of the items in the collection, as well as an &quot;Abbreviated list of titles from the General Assembly, Rare Books Collection&quot; in the Appendix.  Also includes bibliographical references.</dc:description>
+        <dc:creator>Deibler, Barbara E., 1943-1991.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Society for Political Enquiries in conjunction with the Capitol Preservation Committee [publisher]</dc:contributor>
+        <dc:date>1994</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAR PY C2442.2 V215c c.2</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/289</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/300</identifier><datestamp>2006-01-06</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Extracts from the autobiography and other writings of Benjamin Franklin suggested for use in the public schools of the city of Boston by the Joint Bi-Centennial Committee in connection with the observance of the 200th anniversary of Franklin&#x27;s birth January 17, 1906.</dc:title>
+        <dc:subject>Franklin, Benjamin, 1706-1790.</dc:subject>
+        <dc:description>Contains short, titled readings from Benjamin Franklin&#x27;s writings.</dc:description>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Municipal Printing Office [publisher]</dc:contributor>
+        <dc:date>1906</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/300</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/313</identifier><datestamp>2006-01-09</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter : on ventilation, &amp;c. written by Mr. Small, the surgeon, but containing Dr. Franklin&#x27;s observations on the subject.  From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Ventilation -- Health aspects.&lt;br&gt;Natural ventilation.&lt;br&gt;Dampness in buildings.&lt;br&gt;Drainage, House.&lt;br&gt;Sewage -- Health aspects.&lt;br&gt;Sewerage.</dc:subject>
+        <dc:description>Dr. Small describes his own and Benjamin Franklin&#x27;s concerns about inadequate ventilation of houses, hospitals, and other public buildings.  Examples of poorly ventilated structures leading to disease, and of ways to provide ventilation (especially through existing chimneys) are provided.  The second part describes the noxious health effects of sewage, with examples of the benefits of proper sewers and of properly constructed drainage systems.</dc:description>
+        <dc:creator>Small, A.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 173-194</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/313</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/318</identifier><datestamp>2006-01-09</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Report on lightning conductors for the powder magazines at Purfleet, to the president and council of the Royal Society. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Lightning rods.&lt;br&gt;Powder magazines -- Great Britain.</dc:subject>
+        <dc:description>Benjamin Franklin -- with fellow committee members H. Cavendish, William Watson, and J. Robertson -- reports on the construction and arrangement of the British powder magazine at Purfleet, and then describes in detail the design of lightning rods to protect the magazine and surroundings from accidental destruction.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1772-08-21</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 197-202</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/318</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/321</identifier><datestamp>2006-01-09</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter : on rain, extract of a letter to Dr. Percival. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Raindrops.&lt;br&gt;Hail.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin responds to a recent letter from Percival and explains his understanding of the formation of rain drops and hailstones.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1771</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 194-197</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/321</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/331</identifier><datestamp>2006-01-09</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Experiments, observations, and facts relative to the utility of long pointed rods, for securing buildings from damage by strokes of lightning. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Lightning rods.</dc:subject>
+        <dc:description>Benjamin Franklin, in a &quot;report read at the committee appointed to consider the erecting conductors to secure the magazines at Purfleet. Aug. 27, 1772,&quot; describes a series of six experiments designed to test theories about the nature of lightning and ways to protect structures against damage from lightning strikes.  Franklin concludes the report with his comments meeting the objections some have raised against the use of lightning rods.  He explains, for example, the necessity of grounding the lightning rod with a stout lead pipe.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1772-08-27</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 203-216</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/331</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/334</identifier><datestamp>2006-01-09</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Monsieur Dubourg, 1 June 1773 : on the choice of glass for the Leyden experiment. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Glass -- Early works to 1800.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes about problems with glass used for the Leyden jar experiment into the nature and properties of electricity.  He offers conjectures about various imperfections in the glass that might be the cause of failures in the experiment.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1773-06-01</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 223-225</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/334</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/338</identifier><datestamp>2006-01-09</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Monsiuer Dubourg : on the death of persons struck by lightning. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Life (Biology) -- Early works to 1800.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin uses a reference to persons killed by lightning as a springboard to speculate about &quot;the doctrines of life and death, in general.&quot;  He writes about toads remaining buried alive in sand &quot;till the sand becomes petrified,&quot; and relates having seen apparently lifeless flies revived after having been transported across the Atlantic in a bottle of wine.  Franklin then concludes &quot;I wish it were possible, from this instance, to invent a method of enbalming drowned persons, in such a manner that they might be recalled to life at any period, however distant; for, having a very ardent desire to see and observe the state of America an hundred years hence, I should prefer to an ordinary death, the being immersed in a cask of Madeira wine, with a few friends, till that time, to be recalled to life by the solar warmth of my dear country!&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 225-228</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/338</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/341</identifier><datestamp>2006-01-09</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mr. Humphry, 14 February 1773 : on the spots in the sun, a new hypothesis. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Sunspots -- Early works to 1800.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Writing from London, Benjamin Franklin acknowledges receipt of some seeds from Humphry, as well as the latter&#x27;s observations on sunspots.  Franklin relates how he has circulated Humphry&#x27;s notes to members of the Royal Society,  He also describes the theories and hypothesis of a Dr. Wilson, professor of astronomy in Glasgow, concerning the nature and origin of sunspots.  Franklin encourages Hymphry&#x27;s further solar observations and invites further correspondence.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1773-02-14</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 216-219</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/341</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/344</identifier><datestamp>2006-01-09</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Messrs. Dubourg and D&#x27;Alibard : on the mode of rendering meat tender by electricity. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Electric shock -- Physiological effect.&lt;br&gt;Electricity -- Early works to 1800.&lt;br&gt;Electricity -- Experiments -- History -- 18th century.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin responds to an inquiry about the possibility of using electricity to tenderize meat with his speculations about the possibilities.  He cautions that animals killed by lightning are known to putrefy more quickly than otherwise, but outlines a method for killing poultry by electric shock in order to make the flesh more tender.  He concludes with the further caution that since the amount of electricity he suggests is &quot;capable of giving a very violent shock, the operator must be very circumspect, lest he should happen to make the experiment on his own flesh, instead of that of the fowl.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 228-231</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/344</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/348</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Monsieur Dubourg, 10 March 1773 : on the analogy between magnetism and electricity. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Magnetism -- Early works to 1800.&lt;br&gt;Magnetism -- Experiments.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes about &quot;the magnetism which seems produced by electricity&quot; stating that his &quot;real opinion is, that these two powers of nature have no affinity whatever with each other, and that the apparent production of magnetism is purely accidental.&quot;  Franklin lists and describes ten arguments supporting his suppositions about the true nature of &quot;magnetic fluid.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1773-03-10</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 219-222</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/348</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/349</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/352</identifier><datestamp>2006-01-10</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Dr. Cooper, 7 July 1773 : stoves for public buildings. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Public buildings -- Heating and ventilation.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes from London about possible ways to heat a large meeting house for Sabbath services.  He describes the operation of a stove, but believes that it would not be efficient enough to sufficiently warm the large open space unless it was kept burning all week.  Even then there would be problems.  In the end, Franklin writes, since people do not catch colds from cold air, those who cannot stand &quot;the short inconvenience of cold feet (which only takes place towards the end of the service)&quot; should bring various personal foot warmers with them.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1773-07-07</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 237-239</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/352</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/356</identifier><datestamp>2006-01-10</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mons. Dubourg : answer to some inquiries resepcting the art of swimming. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Swimming -- Early works to 1800.&lt;br&gt;Swimming -- Health aspects.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes about various aspects of swimming.  Among these are his having fashioned and used a kind of swim fin as a youth; various health benefits of swimming; the dangers of swimming in cold water when one is overheated; and having done a kind of kite surfing as a boy, wherein he had a kite pull him across a mile-wide pond.  In all, Franklin writes, &quot;the exercise of swimming is one of the most healthy and agreeable in the world.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 233-236</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/356</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/358</identifier><datestamp>2006-01-10</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mons. Dubourg : on the nature of sea-coal. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Coal.&lt;br&gt;Coal mines and mining -- England.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin tender the opinion that &quot;sea-coal has a vegetable origin, and that it has been formed near the surface  of the earth.&quot;  He describes a visit to a coal mine at Whitehaven near Cumberland, England, into which he descended until he was some 800 fathoms beneath the surface of the ocean.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, page 232</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/358</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/367</identifier><datestamp>2006-01-10</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Preparatory notes and hints for writing a paper concerning what is called catching a cold. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Cold (Disease).</dc:subject>
+        <dc:description>Benjamin Franklin writes a series of notes defining a common cold and its physiology, and then describing his understanding of the various ways people can and cannot catch colds.  He is greatly concerned with the effects of temperature, ventilation, and excess moisture in the process.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 239-258</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/367</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/375</identifier><datestamp>2006-01-10</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Dr. Percival, 15 October 1773 : moist air not unhealthy. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Moisture -- Health aspects.&lt;br&gt;Cold (Disease).&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes to Dr. Percival and explains his belief that moist air itself is not unhealthy.  He writes that it seems strange that anyone would think that it was.  Describing the practice of Londoners &quot;taking the air&quot; in closed carriage rides, Franklin makes the point that &quot;the gentry of England are remarkably afraid of moisture, and of air&quot; while farmers and seamen who are regularly exposed to both are quite healthy.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1773-10-15</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 258-260</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/375</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/386</identifier><datestamp>2006-01-10</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Extracts from sundry letters between Dr. Franklin, William Brownrigg, and the Rev. Mr, Farish, 1770-1773 : on the stilling of waves by means of oil. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Oils and fats.&lt;br&gt;Water.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin and others exchange information on the observed phenomenon that a small amount of oil will spread widely over the surface of water and calm the movement thereof.  They speculate about the scientific explanation for this.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1773</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 261-278</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/386</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/388</identifier><datestamp>2006-01-10</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mr. Winthrop, 25 July 1773 : on lightning conductors. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Lightning rods.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes from London describing in French and English the growing use of lightning rods.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1773-07-25</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 260-261</dc:source>
+        <dc:language>eng, fre</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/388</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/395</identifier><datestamp>2006-01-10</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to John Ingenhausz : an attempt to explain the effects of lightning on the vane of the steeple of a church in Cremona, August, 1777. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Lightning.&lt;br&gt;Lightning rods.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin relates the effects of a lightning strike on a church in Cremona, Italy, which he took from an Italian-language publication.  He describes the general effects of lightning and describes experiments that may be carried out to investigate it.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1773</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 278-289</dc:source>
+        <dc:language>eng, ita</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/395</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/398</identifier><datestamp>2006-04-05</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter, 1778 : on electricity; the Leyden bottle and M. Volta&#x27;s experiment. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Electricity -- Early works to 1800.&lt;br&gt;Electricity -- Experiments -- History -- 18th century.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Knowledge -- Physics.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin, writing from Paris, gives his brief reactions to reported experiments by Volta that, Franklin says, appear to replicate the Leyden jars.  He questions whether the electric charge can, indeed, be preserved for years, as claimed.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1778</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 290-291</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/398</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/401</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to the Marquis Turgot, 1 May 1781 : on a new invented stove. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Stoves.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin describes the construction and operation of a recently-designed stove, concluding that &quot;it is capable of being used to advantage in our kitchens, if one could overcome the repugnance of cooks to the using of new instruments and new methods.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1781-05-01</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 297-299</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/401</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/406</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Aurora borealis : suppositions and conjectures towards forming an hypothesis for its explanation. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Auroras.&lt;br&gt;Atmospheric circulation.</dc:subject>
+        <dc:description>Benjamin Franklin outlines an orderly progression of conjectures to explain the phenomenon of the northern lights.  He begins with the fact of warmer air rising, moves to moisture circulating from the tropics to the polar regions, then to electricity being precipitated from the polar clouds with snow.  Then, due to the thinner atmosphere at the poles, the electricity is drawn into the vacuum of space where it is seen as the aurora borealis before circulating back to the tropics.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Franklin, Benjamin, 1706-1790.</dc:contributor>
+        <dc:date>1779</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 291-297</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/406</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/409</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Account of toads found enclosed in the solid of a stone quarry. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Toads -- Longevity.</dc:subject>
+        <dc:description>Benjamin Franklin records visiting a quarry near Paris and being told &quot;that the workmen had found a living toad shut up in the stone.&quot;  While the evidence already had been discarded, two of the toads were still available for examination.  Franklin explains that &quot;animals who perspire but little, can live long without food&quot; and that this, along with the protection afforded by the limestone, must explain the toads&#x27; longevity.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1782-04-06</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 307-309</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/409</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/413</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Queries on electricity from Dr. Ingerhausz with answers by Dr. Franklin. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Electricity -- Early works to 1800.&lt;br&gt;Electricity -- Experiments -- History -- 18th century.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Knowledge -- Physics.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin gives answers to four questions about the nature and effects of electricity.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 310-315</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/413</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/417</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Dr. Ingenhausz, 2 October 1781 : on conductors of heat &amp;c. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Thermal conductivity -- Experiments.&lt;br&gt;Metals -- thermal conductivity.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin encourages Ingenhausz in his scientific pursuits.  Franklin then suggests some things to try should the latter&#x27;s experiments on heat transfer in wires be repeated.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1781-10-02</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 303-306</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/417</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/421</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mons. Vicq D&#x27;Azyr, 20 July 1781 : on the long retention of infection in dead bodies after sepulture &amp;c. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Dead.&lt;br&gt;Communicable diseases.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin relates several anecdotes about people having fallen ill after being exposed to long-dead bodies, including an Egyptian mummy.  He speculates on the possibility of disease contagion surviving through enbalming and burial.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1781-07-20</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 299-303</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/421</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/426</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to the Abbe Soulavie, 22 September 1782 : on the theory of the earth and its magnetism. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Geology -- Early works to 1800.&lt;br&gt;Magnetism -- Early works to 1800.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes his conjectures about the internal composition and structure of the earth, being quite certain from observable surface changes that the interior is not a solid but a dense fluid.  He turns then to magnetism.  Franklin supposes that the whole earth is one large magnet, and that since &quot;the fluid of magnetism perhaps exists in all space,&quot; someone on a journey &quot;from star to star&quot; could be guided by a compass.  He concludes with an apology for having &quot;permitted myself to wander a little in the wilds of fancy&quot; but offers the excuse that in his present circumstances he is not able to study scientific matters with experimentation and observation.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1782-09-22</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 315</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/426</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/432</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mr. Edward Nairn, 18 October 1783 : on his patent electrical machine, and the effects of lightning on the eyes &amp;c. of animals killed by it. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Electricity -- Early works to 1800.&lt;br&gt;Hygrometers -- Early works to 1800.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin writes to comment on a machine sent to him with an accompanying pamphlet about electrical experiments.  He responds to Nairn&#x27;s letter with a brief anecdote about the effect of lightning on animals.  Then he encloses a lengthier letter begun three years earlier on the subject of hygrometers.  Nairn had built and given Franklin a mahogany box for magnets some 20 years earlier.  Franklin found that that the contents fit better or worse depending on the different ambient humidity in England, Pennsylvania, or France.  He proposes Nairn build a set of hygrometers from the same wood so that they could be sent to different countries and that the different mean moisture or dryness could be determined.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1783-10-18</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 324-332</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/432</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/434</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter, 14 June 1783 : on the shock by the electric bottle, and the density of glass. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Electricity -- Early works to 1800.&lt;br&gt;Electricity -- Experiments -- History -- 18th century.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin comments on past experiments with electricity.  As his final advice, he writes, &quot;I see you are endowed with a genius for the study of nature, and I would recommend it to you to employ your time rather in making experiments than in making hypothesis and forming imaginary systems, which we are all to apt to please ourselves with till some experiments comes, and unluckily destroys them.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1783-06-14</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 322-323</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/434</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/437</identifier><datestamp>2006-01-11</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Dr. Ingenhausz, 16 May 1783 : on an electrical experiment. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Electricity -- Early works to 1800.&lt;br&gt;Electricity -- Experiments -- History -- 18th century.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Knowledge -- Physics.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin comments on the results of an electricity experiment conducted by Ingenhausz.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1783-05-16</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 321-322</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/437</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/439</identifier><datestamp>2006-01-12</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Mr. Rittenhause, 15 December 1783 : on the comet seen in Yorkshire, 1783. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Comets -- 1783.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin, writing from France, passes on a reported sighting of a comet in England to a friend in America.  Letter includes data on the comet&#x27;s position.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1783-12-15</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 332-333</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/439</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/442</identifier><datestamp>2006-01-12</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Dr. Ingenhausz, 16 January 1784 : on balloons, and their probable importance. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Balloons -- 18th century.&lt;br&gt;Hot air balloons.&lt;br&gt;Montgolfier, Jacques-Etienne, 1745-1799.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin, writing from France, describes both the hot air balloon of Montgolfier and the hydrogen (&quot;inflammable air&quot;) balloon of Charles and Robert to Ingenhausz, who seems to have thought Franklin had been withholding information from him.  Franklin continues with conjectures about the possible use of balloons in warfare.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1786-01-16</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 334-336</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/442</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/444</identifier><datestamp>2006-01-12</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to B. Vaughan, 29 April 1784 : on fire. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Fire -- Early works to 1800.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin spells out his ideas about the nature of fire. He explains that he had &quot;long been of the opinion that it exists everywhere in the state of a subtile fluid.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1784-04-29</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 336-337</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/444</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/448</identifier><datestamp>2006-01-12</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Meteorological imaginations and conjectures, May 1784.</dc:title>
+        <dc:subject>Meteorology -- Early works to 1800.&lt;br&gt;Hail.&lt;br&gt;Climatology.</dc:subject>
+        <dc:description>Benjamin Franklin writes about a number of subjects in the field of meteorology, including the nature of hail, and the effect of temperature and fog on other aspects of weather.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1784-05</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 337-341</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/448</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/457</identifier><datestamp>2006-01-12</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Physical and meteorological conjectures, observations and suppositions, 1756. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Meteorology.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Knowledge -- Physics.</dc:subject>
+        <dc:description>Benjamin Franklin collects various notes on matters of interest to him, dealing especially with matters of warm and cool air, moisture content in the atmosphere, wind, and other weather conditions.</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1756</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 341-353</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/457</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:SLP2005001/464</identifier><datestamp>2006-01-12</datestamp><setSpec>SLP2005001</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Letter to Dr. Ingenhausz, 29 April 1785 : on electricity, a three wheeled clock, gravitation of bodies affected by sun and moon, conjecture on tides. From: Memoirs of the life and writings of Benjamin Franklin ... / written by himself to a late period; and continued to the time of his death by the grandson, William Temple Franklin; comprising the private correspondence and public negociations [sic] of Dr. Franklin and his select political, philosophical, and miscellaneous works, published from the original mss.  Second edition.  London: Printed for Henry Colburn, 1818-1819.</dc:title>
+        <dc:subject>Electric shock.&lt;br&gt;Electroconvulsive therapy -- Early works to 1800.&lt;br&gt;Clocks and watches.&lt;br&gt;Gravity.&lt;br&gt;Tides.&lt;br&gt;Franklin, Benjamin, 1706-1790 -- Correspondence.</dc:subject>
+        <dc:description>Benjamin Franklin touches upon a number of subjects in this response to Ingenhausz.  He includes an anecdote about himself receiving an electric shock; describes and advocates use of electric shock therapy on &quot;epileptic and other poor patients&quot; as well as &quot;on mad people&quot;; mentions a clock he had designed; explains an experiment investigating the effect of gravity; and mentions an idea about tides.  Franklin refers a number of times to how busy he is at age 80 and concludes with the thought that &quot;celebrity may for a while flatter one&#x27;s vanity, but its effects are troublesome.&quot;</dc:description>
+        <dc:creator>Franklin, Benjamin, 1706-1790.</dc:creator>
+        <dc:publisher>State Library of Pennsylvania</dc:publisher>
+        <dc:contributor>Henry Colburn [publisher]</dc:contributor>
+        <dc:date>1785-04-26</dc:date>
+        <dc:type>text</dc:type>
+        <dc:format>image/jpeg</dc:format>
+        <dc:source>PHAE 973.3 F854Z F85a 1818 vol. 6, pages 353-359</dc:source>
+        <dc:language>eng</dc:language>
+        <dc:rights>Digital images copyright State Library of Pennsylvania.  All rights reserved.  May be used for educational purposes as long as a credit statement is included.  For all other uses, contact the State Library of Pennsylvania, Digital Rights Office, 333 Market Street, Harrisburg, PA 17126-1745.  Phone: (717) 783-5969</dc:rights>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/SLP2005001/id/464</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/465</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/466</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/467</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/468</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/469</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/470</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/471</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/472</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/473</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/474</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/475</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/476</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/477</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/478</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/479</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/480</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/481</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/482</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/483</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/484</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/485</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/486</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/487</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/488</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/489</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/490</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/491</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/492</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/493</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/494</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/495</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/496</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/497</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/498</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/499</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/500</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/501</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/502</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/503</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/504</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/505</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/506</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/507</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/508</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/509</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/510</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/511</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/512</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/513</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/514</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/515</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/516</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/517</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/518</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/519</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/520</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/521</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/522</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/523</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/524</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/525</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/526</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/527</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/528</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/529</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/530</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/531</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/532</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/533</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/534</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/535</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/536</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/537</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/538</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/539</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/540</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/541</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/542</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/543</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/544</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/545</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/546</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/547</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/548</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/549</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/550</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/551</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/552</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/553</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/554</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/555</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/556</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/557</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/558</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/559</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/560</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/561</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/562</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/563</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/564</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/565</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/566</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/567</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/568</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/569</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/570</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/571</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/572</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/573</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/574</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/575</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/576</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/577</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/578</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/579</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/580</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/581</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/582</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/583</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/584</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><record><header status="deleted"><identifier>oai:contentdm1.accesspa.org:SLP2005001/585</identifier><datestamp>2013-07-26</datestamp><setSpec>SLP2005001</setSpec></header>
+        </record><resumptionToken>SLP2005001:586:oclc-cdm-allsets:0000-00-00:9999-99-99:oai_dc</resumptionToken></ListRecords></OAI-PMH>
+    http_version: 
+  recorded_at: Tue, 10 Mar 2015 14:17:05 GMT
+- request:
+    method: get
+    uri: http://contentdm1.accesspa.org/oai/oai.php?metadataPrefix=oai_dc&set=alycc-voice&verb=ListRecords
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Mar 2015 14:15:09 GMT
+      Server:
+      - Apache/2.2.16 (Debian)
+      X-Powered-By:
+      - PHP/5.3.3-7+squeeze19
+      Set-Cookie:
+      - PHPSESSID=8j2tcna1mfb9j7qeh1gcg0br55; path=/
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Pragma:
+      - no-cache
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1732'
+      Content-Type:
+      - text/xml
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"><responseDate>2015-03-10T14:15:08Z</responseDate><request verb="ListRecords" metadataPrefix="oai_dc" set="alycc-voice">http://contentdm1.accesspa.org/oai/oai.php</request><ListRecords><record><header><identifier>oai:contentdm1.accesspa.org:alycc-voice/0</identifier><datestamp>2013-03-21</datestamp><setSpec>alycc-voice</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Mid-Year Convocation Address</dc:title>
+        <dc:date>1961-01-31</dc:date>
+        <dc:subject>Graduation ceremonies</dc:subject>
+        <dc:description>Dr. D. Frederick Wertz presents the mid-year convocation address on January 31, 1961, as one of the first acts of his presidency at Lycoming College. Many references are made to the &quot;weather forecast&quot; that was part of President John F. Kennedy&#x27;s State of the Union address the preceding day.</dc:description>
+        <dc:format>00:30:15</dc:format>
+        <dc:coverage>United States, Pennsylvania, Lycoming County, Williamsport</dc:coverage>
+        <dc:creator>Lycoming College Music Department</dc:creator>
+        <dc:publisher>Lycoming College Archives</dc:publisher>
+        <dc:contributor>Snowden Library of Lycoming College</dc:contributor>
+        <dc:type>Sound</dc:type>
+        <dc:format>reel-to-reel audiotape</dc:format>
+        <dc:format>MP3</dc:format>
+        <dc:relation>Digitized collections of the Lycoming College Archives. http://www.lycoming.edu/library/archives/index.html</dc:relation>
+        <dc:language>eng</dc:language>
+        <dc:rights>May be used for educational purposes as long as a credit statement is included. For all other uses, contact Lycoming College Archives</dc:rights>
+        <dc:identifier>Wertz01</dc:identifier>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/alycc-voice/id/0</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:alycc-voice/1</identifier><datestamp>2013-03-21</datestamp><setSpec>alycc-voice</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Upon Being Elected Bishop</dc:title>
+        <dc:date>1970-02-10</dc:date>
+        <dc:subject>Rites &amp; ceremonies; Bishops</dc:subject>
+        <dc:description>Service of Consecration for the installation of Bishops D. Frederick Wertz and Roy Nichols, Northeastern Jurisdictional Conference, July 27, 1968.</dc:description>
+        <dc:format>00:30:20</dc:format>
+        <dc:coverage>United States, Pennsylvania, Lycoming County, Williamsport</dc:coverage>
+        <dc:creator>Lycoming College Music Department</dc:creator>
+        <dc:publisher>Lycoming College Archives</dc:publisher>
+        <dc:contributor>Snowden Library of Lycoming College</dc:contributor>
+        <dc:type>Sound</dc:type>
+        <dc:format>reel-to-reel audiotape</dc:format>
+        <dc:format>MP3</dc:format>
+        <dc:relation>Digitized collections of the Lycoming College Archives. http://www.lycoming.edu/library/archives/index.html</dc:relation>
+        <dc:language>eng</dc:language>
+        <dc:rights>May be used for educational purposes as long as a credit statement is included. For all other uses, contact Lycoming College Archives</dc:rights>
+        <dc:identifier>Wertz02</dc:identifier>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/alycc-voice/id/1</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:alycc-voice/2</identifier><datestamp>2013-03-21</datestamp><setSpec>alycc-voice</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Religion Versus Relevance</dc:title>
+        <dc:date>1970-02-10</dc:date>
+        <dc:subject>Religion</dc:subject>
+        <dc:description>Dr. Harold T. Hutson discusses religion vs. relevancy in his February 10, 1970 lecture.</dc:description>
+        <dc:format>00:31:10</dc:format>
+        <dc:coverage>United States, Pennsylvania, Lycoming County, Williamsport</dc:coverage>
+        <dc:creator>Lycoming College Music Department</dc:creator>
+        <dc:publisher>Lycoming College Archives</dc:publisher>
+        <dc:contributor>Snowden Library of Lycoming College</dc:contributor>
+        <dc:type>Sound</dc:type>
+        <dc:format>reel-to-reel audiotape</dc:format>
+        <dc:format>MP3</dc:format>
+        <dc:relation>Digitized collections of the Lycoming College Archives. http://www.lycoming.edu/library/archives/index.html</dc:relation>
+        <dc:language>eng</dc:language>
+        <dc:rights>May be used for educational purposes as long as a credit statement is included. For all other uses, contact Lycoming College Archives</dc:rights>
+        <dc:identifier>Hutson03</dc:identifier>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/alycc-voice/id/2</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:alycc-voice/3</identifier><datestamp>2013-03-21</datestamp><setSpec>alycc-voice</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Forum</dc:title>
+        <dc:date>1969-02-08</dc:date>
+        <dc:subject>Forums (Dicussion &amp; debate)</dc:subject>
+        <dc:description>Lycoming College President John G. Detwiler responds to student concerns about the firing of Dean Marshall at an open forum sponsored by the Student Government Association, February 8, 1969.</dc:description>
+        <dc:format>00:51:44</dc:format>
+        <dc:coverage>United States, Pennsylvania, Lycoming County, Williamsport</dc:coverage>
+        <dc:creator>Lycoming College Music Department</dc:creator>
+        <dc:publisher>Lycoming College Archives</dc:publisher>
+        <dc:contributor>Snowden Library of Lycoming College</dc:contributor>
+        <dc:type>Sound</dc:type>
+        <dc:format>reel-to-reel audiotape</dc:format>
+        <dc:format>MP3</dc:format>
+        <dc:relation>Digitized collections of the Lycoming College Archives. http://www.lycoming.edu/library/archives/index.html</dc:relation>
+        <dc:language>eng</dc:language>
+        <dc:rights>May be used for educational purposes as long as a credit statement is included. For all other uses, contact Lycoming College Archives</dc:rights>
+        <dc:identifier>Detwiler04</dc:identifier>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/alycc-voice/id/3</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:alycc-voice/4</identifier><datestamp>2013-03-21</datestamp><setSpec>alycc-voice</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Woody Wolfe on Dr. Long</dc:title>
+        <dc:date>ca. 1955</dc:date>
+        <dc:subject>College presidents</dc:subject>
+        <dc:description>In his &quot;Architects of Success&quot; series, local broadcaster Sol &quot;Woody&quot; Wolfe tells the story of John W. Long, president of Lycoming College from 1921-1955.</dc:description>
+        <dc:format>00:17:35</dc:format>
+        <dc:coverage>United States, Pennsylvania, Lycoming County, Williamsport</dc:coverage>
+        <dc:creator>Lycoming College Music Department</dc:creator>
+        <dc:publisher>Lycoming College Archives</dc:publisher>
+        <dc:contributor>Snowden Library of Lycoming College</dc:contributor>
+        <dc:type>Sound</dc:type>
+        <dc:format>reel-to-reel audiotape</dc:format>
+        <dc:format>MP3</dc:format>
+        <dc:relation>Digitized collections of the Lycoming College Archives. http://www.lycoming.edu/library/archives/index.html</dc:relation>
+        <dc:language>eng</dc:language>
+        <dc:rights>May be used for educational purposes as long as a credit statement is included. For all other uses, contact Lycoming College Archives</dc:rights>
+        <dc:identifier>Wolfe05</dc:identifier>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/alycc-voice/id/4</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record><record><header><identifier>oai:contentdm1.accesspa.org:alycc-voice/5</identifier><datestamp>2013-03-21</datestamp><setSpec>alycc-voice</setSpec></header>
+        <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+        <dc:title>Lycoming Associate&#x27;s Meeting</dc:title>
+        <dc:date>1964-04-14</dc:date>
+        <dc:subject>Meetings</dc:subject>
+        <dc:description>Bishop Fred Pierce Corson addresses the Lycoming Associate&#x27;s Meeting of April 14, 1964. His talk focuses on resistance and success in the college&#x27;s history.</dc:description>
+        <dc:format>00:43:60</dc:format>
+        <dc:coverage>United States, Pennsylvania, Lycoming County, Williamsport</dc:coverage>
+        <dc:creator>Lycoming College Music Department</dc:creator>
+        <dc:publisher>Lycoming College Archives</dc:publisher>
+        <dc:contributor>Snowden Library of Lycoming College</dc:contributor>
+        <dc:type>Sound</dc:type>
+        <dc:format>reel-to-reel audiotape</dc:format>
+        <dc:format>MP3</dc:format>
+        <dc:relation>Digitized collections of the Lycoming College Archives. http://www.lycoming.edu/library/archives/index.html</dc:relation>
+        <dc:language>eng</dc:language>
+        <dc:rights>May be used for educational purposes as long as a credit statement is included. For all other uses, contact Lycoming College Archives</dc:rights>
+        <dc:identifier>Corson06</dc:identifier>
+        <dc:identifier>http://contentdm1.accesspa.org/cdm/ref/collection/alycc-voice/id/5</dc:identifier></oai_dc:dc>
+        </metadata>
+        </record></ListRecords></OAI-PMH>
+    http_version: 
+  recorded_at: Tue, 10 Mar 2015 14:17:05 GMT
+recorded_with: VCR 2.9.3

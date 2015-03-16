@@ -14,7 +14,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
 gem 'therubyracer',  platforms: :ruby
-gem 'hydra'
+# gem 'hydra', "~> 8.1"
+gem 'hydra-head', github: 'projecthydra/hydra-head', branch: 'blacklight-5-10-backport'
 gem 'rails_autolink'
 
 gem 'bootstrap-sass', '~> 3.3.1'

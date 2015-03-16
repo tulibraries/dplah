@@ -12,6 +12,7 @@ class CatalogController < ApplicationController
 
 
   configure_blacklight do |config|
+    config.search_builder_class = Hydra::SearchBuilder
     config.default_solr_params = {
       :qf => 'title_tesim
               creator_tesim 

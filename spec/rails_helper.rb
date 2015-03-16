@@ -66,4 +66,9 @@ def stdout_to_null
   return original_stdout
 end
 
+VCR.configure do |c|
+  # Don't record transactions with local Jetty and rails servers
+  c.ignore_localhost = true
+end
+
 #WebMock.disable_net_connect!(:allow_localhost => true)

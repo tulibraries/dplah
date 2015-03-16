@@ -24,7 +24,7 @@ RSpec.describe ProvidersController, :type => :controller do
   # Provider. As you add validations to Provider, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+   FactoryGirl.build(:provider_small_collection).attributes
   }
 
   let(:invalid_attributes) {
@@ -35,6 +35,10 @@ RSpec.describe ProvidersController, :type => :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # ProvidersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+
+  before (:each) do
+    sign_in FactoryGirl.create(:user)
+  end
 
   describe "GET index" do
     it "assigns all providers as @providers" do
@@ -152,6 +156,54 @@ RSpec.describe ProvidersController, :type => :controller do
     it "redirects to the providers list" do
       provider = Provider.create! valid_attributes
       delete :destroy, {:id => provider.to_param}, valid_session
+      expect(response).to redirect_to(providers_url)
+    end
+  end
+
+  describe "HARVEST" do
+    before (:each) do
+      # Clean out all records
+      ActiveFedora::Base.destroy_all
+      # Create initial provider
+      @provider = Provider.create! valid_attributes
+    end
+
+    it "Harvests all of the data from a provider" do
+      sso = stdout_to_null
+      VCR.use_cassette "provider_controller/harvest_small_collection" do
+        post :harvest, {:id => @provider.to_param}, valid_session
+      end
+      $stdout = sso
+      expect(ActiveFedora::Base.count).to eq 6
+      expect(response).to redirect_to(providers_url)
+    end
+  end
+
+  describe "dump and reindex" do
+    before (:each) do
+      # Clean out all records
+      ActiveFedora::Base.destroy_all
+      # Create initial provider
+      @provider = Provider.create! valid_attributes
+      # Harvest data
+      sso = stdout_to_null
+      VCR.use_cassette "provider_controller/harvest_small_collection" do
+        post :harvest, {:id => @provider.to_param}, valid_session
+      end
+      $stdout = sso
+    end
+
+    it "Dumps and reindexes by institution" do
+      expect(ActiveFedora::Base.count).to eq 6
+      post :dump_and_reindex_by_institution, {:id => @provider.to_param}, valid_session
+      expect(ActiveFedora::Base.count).to eq 0
+      expect(response).to redirect_to(providers_url)
+    end
+
+    it "Dumps and reindexes by set" do
+      expect(ActiveFedora::Base.count).to eq 6
+      post :dump_and_reindex_by_set, {:id => @provider.to_param}, valid_session
+      expect(ActiveFedora::Base.count).to eq 0
       expect(response).to redirect_to(providers_url)
     end
   end

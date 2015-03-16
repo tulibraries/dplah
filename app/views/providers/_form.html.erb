@@ -47,7 +47,7 @@
     
   <div class="field">
     <%= f.label :contributing_institution %><br>
-    <%= f.collection_select :contributing_institution, Provider.unique_by_contributing_institution, :contributing_institution, :contributing_institution, :prompt => "Please select one from this list or enter below" %>
+    <%= f.collection_select :contributing_institution, Provider.unique_by_contributing_institution, :contributing_institution, :contributing_institution, :prompt => "Please select one from this list or enter below"%>
     <div class="field-tip">
       Note: For end user display
     </div>
@@ -113,7 +113,7 @@
 
   <div class="field">
     <%= f.label :common_repository_type%><br>
-    <%= f.select :common_repository_type, Provider.common_repositories, :prompt => "Please select one from this list if applicable" %>
+    <%= f.select :common_repository_type, Provider.common_repositories, :include_blank => true, :prompt => "Please select one from this list if applicable" %>
     <div class="field-tip">
       Note: if you use one of these systems but have modified it outside of the standard installation, the standard method for thumbnail retrieval may not work.
     </div>

@@ -25,6 +25,7 @@ module HarvestUtils
     File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_end') << "#{provider.name} " << I18n.t('oai_seed_logs.log_end_processed') << " #{rec_count}" << I18n.t('oai_seed_logs.text_buffer')
       end
+      flash[:notice] = "Successfully harvested #{rec_count} records from #{provider.name}."
     rec_count
   end
   module_function :harvest_action

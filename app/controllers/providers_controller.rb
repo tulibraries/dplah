@@ -51,8 +51,9 @@ class ProvidersController < ApplicationController
   end
 
   def harvest
+    queue_name = "harvest"
     Resque.enqueue(Harvest, @provider)
-    redirect_to providers_url, notice: "Seed is harvesting"
+    redirect_to providers_url, notice: "Seed is harvesting in the background.  Currently at position ##{Resque.size(queue_name)} in the queue"
   end
 
   def dump_and_reindex_by_institution

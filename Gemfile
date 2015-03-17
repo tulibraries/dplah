@@ -17,6 +17,9 @@ gem 'therubyracer',  platforms: :ruby
 gem 'hydra', '7.1.0'
 gem 'rails_autolink'
 
+gem "resque"
+gem "resque-pool"
+
 gem 'bootstrap-sass', '~> 3.3.1'
 
 # Use jquery as the JavaScript library

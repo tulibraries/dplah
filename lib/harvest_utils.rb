@@ -15,7 +15,6 @@ module HarvestUtils
   @human_log_path = config['human_log_path'] 
 
   def harvest_action(provider)
-
     create_log_file(provider.name)
     harvest(provider)
     sleep(5)

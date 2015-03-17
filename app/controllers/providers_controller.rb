@@ -51,8 +51,8 @@ class ProvidersController < ApplicationController
   end
 
   def harvest
-    rec_count = HarvestUtils.harvest_action(@provider)
-    redirect_to providers_url, notice: "#{rec_count} records harvested from OAI seed"
+    Resque.enqueue(Harvest, @provider)
+    redirect_to providers_url, notice: "Seed is harvesting"
   end
 
   def dump_and_reindex_by_institution

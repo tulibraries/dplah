@@ -53,17 +53,19 @@ class ProvidersController < ApplicationController
   def harvest
     queue_name = "harvest"
     Resque.enqueue(Harvest, @provider)
-    redirect_to providers_url, notice: "Seed is harvesting in the background.  Currently at position ##{Resque.size(queue_name)} in the queue"
+    redirect_to providers_url, notice: "Seed is harvesting in the background.  Currently at position ##{Resque.size(queue_name)} in the queue."
   end
 
   def dump_and_reindex_by_institution
-    rec_count = HarvestUtils.cleanout_and_reindex(@provider,  :reindex_by => "institution")
-    redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
+    queue_name = "delete"
+    Resque.enqueue(DumpReindex, @provider, "institution")
+    redirect_to providers_url, notice: "Records are being removed from aggregator index for institution provider.contributing_institution}. Currently at position ##{Resque.size(queue_name)} in the queue."
   end
 
   def dump_and_reindex_by_set
-    rec_count = HarvestUtils.cleanout_and_reindex(@provider, :reindex_by => "set")
-    redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
+    queue_name = "delete"
+    Resque.enqueue(DumpReindex, @provider, "set")
+    redirect_to providers_url, notice: "Records are being removed from aggregator index for set  \"#{@provider.set}.\" Currently at position ##{Resque.size(queue_name)} in the queue."
   end
 
   private

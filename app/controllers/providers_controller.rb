@@ -2,6 +2,12 @@ class ProvidersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
 
+  before_action :display_flash
+
+  def display_flash
+    flash[:notice] = "Help me!"
+  end
+
   def index
     @providers = Provider.all
   end

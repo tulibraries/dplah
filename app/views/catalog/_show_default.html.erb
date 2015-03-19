@@ -9,6 +9,6 @@
 	    <dd class="blacklight-<%= solr_fname.parameterize %>"><%= auto_link(render_document_show_field_value document, :field => solr_fname) %></dd>
     <% end -%>
   <% end -%>
-  	    <dt class="blacklight-url">URL</dt>
+  	    <dt class="blacklight-url">Link Back to Original Item</dt>
 	    <dd class="blacklight-url"><%= link_to(document['identifier_tesim'].first, document['identifier_tesim'].first)%></dd>
 </dl>

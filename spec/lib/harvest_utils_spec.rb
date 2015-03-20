@@ -16,26 +16,35 @@ RSpec.describe HarvestUtils do
     before :each do
       # Make sure sure download directory is empty
       FileUtils.rm Dir.glob "#{download_directory}/*.xml"
-    end
 
-    after :each do
-      # Delete the harvested test files 
-      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
-    end
+      # Clear out the mail array
+      ActionMailer::Base.deliveries = []
 
-    it "should harvest a collection" do
       # Make we are starting fresh
       file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
-      expect(file_count).to eq(0)
+
+      # Create the harvest log file
+      HarvestUtils::create_log_file(log_name)
 
       # Harvest the collection
-      HarvestUtils::create_log_file(log_name)
       sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
         HarvestUtils::harvest(provider_small_collection)
       end
       $stdout = sso
 
+    end
+
+    after :each do
+      # Delete the harvested test files 
+      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
+
+      # Clear out the mail array
+      ActionMailer::Base.deliveries = []
+
+    end
+
+    it "should harvest a collection" do
       # Expect that we've harvest just one file
       file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
       expect(file_count).to eq(1)
@@ -47,9 +56,15 @@ RSpec.describe HarvestUtils do
       expect(doc.xpath("//manifest/collection_name").first.text).to eq(provider_small_collection.collection_name)
       #expect(doc.xpath("//manifest/provider_id_prefix").first.text).to eq(provider_small_collection.contributing_institution)
       expect(doc.xpath("//manifest/contributing_institution").first.text).to eq(provider_small_collection.contributing_institution)
+
+      # Expect harvest completion message ssent to provider
+      # [TODO] Determine why there are two messages in the deliveries array instead of just 1
+      expect(ActionMailer::Base.deliveries.size).to be > 0
+      expect(ActionMailer::Base.deliveries.last.to).to include(provider_small_collection.email)
+      expect(ActionMailer::Base.deliveries.last.subject).to include(provider_small_collection.set)
     end
 
-    it "should log the harvest"
+#[TODO]    it "should log the harvest"
 
   end
 
@@ -59,8 +74,13 @@ RSpec.describe HarvestUtils do
       # Make sure conversion directory is empty
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
-      # Harvest a file to convert
+      # Clear out the mail array
+      ActionMailer::Base.deliveries = []
+
+      # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
+
+      # Harvest a file to convert
       sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
         HarvestUtils::harvest(provider_small_collection)
@@ -110,10 +130,16 @@ RSpec.describe HarvestUtils do
       # Expect the number of conversion files
       file_count = Dir[File.join(convert_directory, '*.xml')].count { |file| File.file?(file) }
       expect(file_count).to be record_count
+
+      # Expect conversion completion message sent to provider
+      expect(ActionMailer::Base.deliveries.size).to be > 0
+      expect(ActionMailer::Base.deliveries.last.to).to include(provider_small_collection.email)
+      expect(ActionMailer::Base.deliveries.last.subject).to include("Conversion")
+      expect(ActionMailer::Base.deliveries.last.subject).to include(provider_small_collection.set)
     end
 
-    it "should log the conversion"
-    it "should remove the harvested files after conversion"
+#[TODO]    it "should log the conversion"
+#[TODO]    it "should remove the harvested files after conversion"
 
   end
 
@@ -193,7 +219,7 @@ RSpec.describe HarvestUtils do
       # Make sure conversion directory is empty
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
-      # Harvest a file to convert
+      # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
     end
 
@@ -211,6 +237,12 @@ RSpec.describe HarvestUtils do
       HarvestUtils::ingest(provider_small_collection)
       expect(ActiveFedora::Base.count).to eq 1
       expect(ActiveFedora::Base.first.pid).to eq pid
+
+      # Expect ingest completion message sent to provider
+      expect(ActionMailer::Base.deliveries.size).to be > 0
+      expect(ActionMailer::Base.deliveries.last.to).to include(provider_small_collection.email)
+      expect(ActionMailer::Base.deliveries.last.subject).to include("Ingest")
+      expect(ActionMailer::Base.deliveries.last.subject).to include(provider_small_collection.set)
     end
 
   end

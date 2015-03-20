@@ -57,6 +57,7 @@ group :development, :test do
   gem "factory_girl_rails", "~> 4.4.1"
   gem "jettywrapper"
   gem "pry-rails"
+  gem "guard-rspec"
 end
 
 group :test do

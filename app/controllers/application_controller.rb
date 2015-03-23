@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
 
   def dump_whole_index
     HarvestUtils.delete_all
+    HarvestMailer.dumped_whole_index_email
     redirect_to providers_url, notice: "Index deleted from Aggregator"
   end
 

@@ -38,6 +38,8 @@ RSpec.describe ProvidersController, :type => :controller do
 
   before (:each) do
     sign_in FactoryGirl.create(:user)
+    # Clear out the mail array
+    ActionMailer::Base.deliveries = []
   end
 
   describe "GET index" do
@@ -194,10 +196,17 @@ RSpec.describe ProvidersController, :type => :controller do
     end
 
     it "Dumps and reindexes by institution" do
+      expect(ActionMailer::Base.deliveries.uniq.size).to eq 0
       expect(ActiveFedora::Base.count).to eq 6
       post :dump_and_reindex_by_institution, {:id => @provider.to_param}, valid_session
       expect(ActiveFedora::Base.count).to eq 0
       expect(response).to redirect_to(providers_url)
+
+      # [NOTE] Workaround to handle duplicate items in action_mailer deliveries array
+      mail_deliveries = ActionMailer::Base.deliveries.uniq
+      expect(mail_deliveries.size).to eq 1
+      expect(mail_deliveries.first.to).to include(@provider['email'])
+      expect(mail_deliveries.first.subject).to match /Dumped and reindexed #{@provider['name']} collection/
     end
 
     it "Dumps and reindexes by set" do
@@ -205,6 +214,12 @@ RSpec.describe ProvidersController, :type => :controller do
       post :dump_and_reindex_by_set, {:id => @provider.to_param}, valid_session
       expect(ActiveFedora::Base.count).to eq 0
       expect(response).to redirect_to(providers_url)
+
+      # [NOTE] Workaround to handle duplicate items in action_mailer deliveries array
+      mail_deliveries = ActionMailer::Base.deliveries.uniq
+      expect(mail_deliveries.size).to eq 1
+      expect(mail_deliveries.first.to).to include(@provider['email'])
+      expect(mail_deliveries.first.subject).to match /Dumped and reindexed the #{@provider['set']} collection/
     end
   end
 

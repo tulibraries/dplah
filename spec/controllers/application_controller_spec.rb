@@ -40,13 +40,13 @@ RSpec.describe ApplicationController, type: :controller do
       expect(ActiveFedora::Base.count).to eq 12 
       expect(response).to redirect_to(providers_url)
 
-      # Expect harvest completion message ssent to provider
       # [NOTE] Workaround to handle duplicate items in action_mailer deliveries array
-      expect(ActionMailer::Base.deliveries.uniq.size).to eq 2
-      expect(ActionMailer::Base.deliveries.uniq.first.to).to include(provider1['email'])
-      expect(ActionMailer::Base.deliveries.uniq.first.subject).to include(provider1['set'])
-      expect(ActionMailer::Base.deliveries.uniq.last.to).to include(provider2['email'])
-      expect(ActionMailer::Base.deliveries.uniq.last.subject).to include(provider2['set'])
+      mail_deliveries = ActionMailer::Base.deliveries.uniq
+      expect(mail_deliveries.size).to eq 2
+      expect(mail_deliveries.first.to).to include(provider1['email'])
+      expect(mail_deliveries.first.subject).to include(provider1['set'])
+      expect(mail_deliveries.last.to).to include(provider2['email'])
+      expect(mail_deliveries.last.subject).to include(provider2['set'])
     end
   end
 
@@ -63,6 +63,8 @@ RSpec.describe ApplicationController, type: :controller do
         post :harvest_all_providers, valid_session
       end
       $stdout = sso
+      # Clear out the mail array
+      ActionMailer::Base.deliveries = []
     end
 
     after (:each) do
@@ -72,9 +74,16 @@ RSpec.describe ApplicationController, type: :controller do
 
     it "deletes the index" do
       expect(ActiveFedora::Base.count).to eq 12
+      expect(ActionMailer::Base.deliveries.uniq.size).to eq 0
       post :dump_whole_index, valid_session
       expect(ActiveFedora::Base.count).to eq 0
       expect(response).to redirect_to(providers_url)
+
+      # [NOTE] Workaround to handle duplicate items in action_mailer deliveries array
+      mail_deliveries = ActionMailer::Base.deliveries.uniq
+      expect(mail_deliveries.size).to eq 1
+      expect(mail_deliveries.last.to).to include(HarvestMailer.default[:to])
+      expect(mail_deliveries.last.subject).to match /Whole Index Deleted/
     end
   end
 

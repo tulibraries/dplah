@@ -17,15 +17,21 @@ RSpec.describe ApplicationController, type: :controller do
       # Create initial provider
       Provider.create! provider1
       Provider.create! provider2
+      # Clear out the mail array
+      ActionMailer::Base.deliveries = []
     end
 
     after (:each) do
       # Clean out all records
       ActiveFedora::Base.destroy_all
+
+      # Clear out the mail array
+      ActionMailer::Base.deliveries = []
     end
 
     it "Harvests all of the data from all providers" do
       expect(ActiveFedora::Base.count).to eq 0
+      expect(ActionMailer::Base.deliveries.size).to eq 0
       sso = stdout_to_null
       VCR.use_cassette "application_controller/multiple_providers" do
         post :harvest_all_providers, valid_session
@@ -33,6 +39,14 @@ RSpec.describe ApplicationController, type: :controller do
       $stdout = sso
       expect(ActiveFedora::Base.count).to eq 12 
       expect(response).to redirect_to(providers_url)
+
+      # Expect harvest completion message ssent to provider
+      # [NOTE] Workaround to handle duplicate items in action_mailer deliveries array
+      expect(ActionMailer::Base.deliveries.uniq.size).to eq 2
+      expect(ActionMailer::Base.deliveries.uniq.first.to).to include(provider1['email'])
+      expect(ActionMailer::Base.deliveries.uniq.first.subject).to include(provider1['set'])
+      expect(ActionMailer::Base.deliveries.uniq.last.to).to include(provider2['email'])
+      expect(ActionMailer::Base.deliveries.uniq.last.subject).to include(provider2['set'])
     end
   end
 

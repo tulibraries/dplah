@@ -44,7 +44,7 @@ FactoryGirl.define do
     metadata_prefix "oai_dc"
     set "alycc-voice"
     sequence(:provider_id_prefix) { |n| "lycoming#{n}" }
-    sequence(:provider_id_prefix) { |n| "lycoming#{n}@example.com" }
+    sequence(:email) { |n| "lycoming#{n}@example.com" }
     contributing_institution "POWER Library"
   end
 end

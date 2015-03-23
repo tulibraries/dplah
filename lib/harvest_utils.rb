@@ -26,7 +26,6 @@ module HarvestUtils
     File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_end') << "#{provider.name} " << I18n.t('oai_seed_logs.log_end_processed') << " #{rec_count}" << I18n.t('oai_seed_logs.text_buffer')
       end
-    #HarvestMailer.harvest_complete_email(provider).deliver
     rec_count
   end
   module_function :harvest_action
@@ -209,6 +208,10 @@ module HarvestUtils
   def self.create_log_file(log_name)
     @log_file = "#{@human_log_path}/#{log_name}.#{Time.now.to_i}.txt"
     FileUtils.touch(@log_file)
+  end
+
+  def self.get_log_file
+    @log_file
   end
 
   def self.add_xml_formatting(xml_file, options = {})

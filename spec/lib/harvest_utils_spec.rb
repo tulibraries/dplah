@@ -17,9 +17,6 @@ RSpec.describe HarvestUtils do
       # Make sure sure download directory is empty
       FileUtils.rm Dir.glob "#{download_directory}/*.xml"
 
-      # Clear out the mail array
-      ActionMailer::Base.deliveries = []
-
       # Make we are starting fresh
       file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
 
@@ -39,9 +36,6 @@ RSpec.describe HarvestUtils do
       # Delete the harvested test files 
       FileUtils.rm Dir.glob "#{download_directory}/*.xml"
 
-      # Clear out the mail array
-      ActionMailer::Base.deliveries = []
-
     end
 
     it "should harvest a collection" do
@@ -56,12 +50,6 @@ RSpec.describe HarvestUtils do
       expect(doc.xpath("//manifest/collection_name").first.text).to eq(provider_small_collection.collection_name)
       #expect(doc.xpath("//manifest/provider_id_prefix").first.text).to eq(provider_small_collection.contributing_institution)
       expect(doc.xpath("//manifest/contributing_institution").first.text).to eq(provider_small_collection.contributing_institution)
-
-#      # Expect harvest completion message ssent to provider
-#      # [TODO] Determine why there are two messages in the deliveries array instead of just 1
-#      expect(ActionMailer::Base.deliveries.size).to be > 0
-#      expect(ActionMailer::Base.deliveries.last.to).to include(provider_small_collection.email)
-#      expect(ActionMailer::Base.deliveries.last.subject).to include(provider_small_collection.set)
     end
 
 #[TODO]    it "should log the harvest"

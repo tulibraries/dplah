@@ -26,12 +26,12 @@ module HarvestUtils
     File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_end') << "#{provider.name} " << I18n.t('oai_seed_logs.log_end_processed') << " #{rec_count}" << I18n.t('oai_seed_logs.text_buffer')
       end
+    #HarvestMailer.harvest_complete_email(provider).deliver
     rec_count
   end
   module_function :harvest_action
 
   def harvest(provider)
-    puts "***harvest starts"
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_begin') << I18n.t('oai_seed_logs.current_time') << Time.current.utc.iso8601 << I18n.t('oai_seed_logs.harvest_begin') << provider.name << I18n.t('oai_seed_logs.text_buffer')
     end
@@ -75,7 +75,6 @@ module HarvestUtils
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << "#{provider.name}" << I18n.t('oai_seed_logs.text_buffer') << "#{num_files} " << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected') << I18n.t('oai_seed_logs.text_buffer')
     end
-    HarvestMailer.harvest_complete_email(provider).deliver
   end
   module_function :harvest 
 
@@ -94,7 +93,6 @@ module HarvestUtils
         `xsltproc #{xslt_path} #{u_files[i]}`
         File.delete(u_files[i])
       end
-      HarvestMailer.conversion_complete_email(provider).deliver
   end
   module_function :convert
 
@@ -175,7 +173,6 @@ module HarvestUtils
       end
       num_files += 1
     end
-    HarvestMailer.ingest_complete_email(provider).deliver
     contents.size
   end
   module_function :ingest

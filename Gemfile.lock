@@ -120,6 +120,7 @@ GEM
     ffi (1.9.6)
     haml (4.0.6)
       tilt
+    high_voltage (2.2.1)
     hike (1.2.3)
     hooks (0.3.6)
       uber (~> 0.0.4)
@@ -433,6 +434,7 @@ DEPENDENCIES
   devise
   devise-guests (~> 0.3)
   factory_girl_rails (~> 4.4.1)
+  high_voltage (~> 2.2.1)
   hydra (= 7.1.0)
   jbuilder (~> 2.0)
   jettywrapper

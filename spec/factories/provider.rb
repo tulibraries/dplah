@@ -33,4 +33,15 @@ FactoryGirl.define do
     set "benson"
     contributing_institution "Penn State"
   end
+
+  factory :multiple_providers, class: Provider do
+    name "Voices of Lycoming"
+    collection_name "Voices of Lycoming"
+    description "Collection description"
+    endpoint_url "http://contentdm1.accesspa.org/oai/oai.php"
+    metadata_prefix "oai_dc"
+    set "alycc-voice"
+    sequence(:provider_id_prefix) { |n| "lycoming#{n}" }
+    contributing_institution "POWER Library"
+  end
 end

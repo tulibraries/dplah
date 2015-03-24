@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer',  platforms: :ruby
 gem 'hydra', '7.1.0'
 gem 'rails_autolink'
+gem 'high_voltage', '~> 2.2.1'
 
 gem "resque"
 gem "resque-pool"

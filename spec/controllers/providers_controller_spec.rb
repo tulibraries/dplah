@@ -162,6 +162,8 @@ RSpec.describe ProvidersController, :type => :controller do
 
   describe "HARVEST" do
     before (:each) do
+      #reset Resquespec
+      ResqueSpec.reset!
       # Clean out all records
       ActiveFedora::Base.destroy_all
       # Create initial provider
@@ -171,16 +173,17 @@ RSpec.describe ProvidersController, :type => :controller do
     it "Harvests all of the data from a provider" do
       sso = stdout_to_null
       VCR.use_cassette "provider_controller/harvest_small_collection" do
-        post :harvest, {:id => @provider.to_param}, valid_session
+        Resque.enqueue(Harvest, @provider)
       end
       $stdout = sso
-      expect(ActiveFedora::Base.count).to eq 6
-      expect(response).to redirect_to(providers_url)
+      expect(Harvest).to have_queue_size_of(1)
     end
   end
 
   describe "dump and reindex" do
     before (:each) do
+      #reset Resquespec
+      ResqueSpec.reset!
       # Clean out all records
       ActiveFedora::Base.destroy_all
       # Create initial provider
@@ -194,17 +197,15 @@ RSpec.describe ProvidersController, :type => :controller do
     end
 
     it "Dumps and reindexes by institution" do
-      expect(ActiveFedora::Base.count).to eq 6
-      post :dump_and_reindex_by_institution, {:id => @provider.to_param}, valid_session
-      expect(ActiveFedora::Base.count).to eq 0
-      expect(response).to redirect_to(providers_url)
+      #post :dump_and_reindex_by_institution, {:id => @provider.to_param}, valid_session
+      Resque.enqueue(DumpReindex, @provider, "institution")
+      expect(DumpReindex).to have_queue_size_of(1)
     end
 
     it "Dumps and reindexes by set" do
-      expect(ActiveFedora::Base.count).to eq 6
-      post :dump_and_reindex_by_set, {:id => @provider.to_param}, valid_session
-      expect(ActiveFedora::Base.count).to eq 0
-      expect(response).to redirect_to(providers_url)
+      #post :dump_and_reindex_by_set, {:id => @provider.to_param}, valid_session
+      Resque.enqueue(DumpReindex, @provider, "set")
+      expect(DumpReindex).to have_queue_size_of(1)
     end
   end
 

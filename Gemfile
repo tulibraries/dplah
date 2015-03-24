@@ -19,6 +19,7 @@ gem 'rails_autolink'
 
 gem "resque"
 gem "resque-pool"
+gem "resque-status"
 
 gem 'bootstrap-sass', '~> 3.3.1'
 

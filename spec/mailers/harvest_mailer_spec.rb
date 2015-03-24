@@ -3,12 +3,18 @@ require "rails_helper"
 RSpec.describe HarvestMailer, type: :mailer do
   let(:provider) { FactoryGirl.build(:provider_small_collection) }
   let(:logfile) { File.expand_path(File.join(Rails.root, "spec", "fixtures", "log", "harvest_log.txt")) }
+  let(:config) { YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__)) }
   
   before :each do
     ActionMailer::Base.deliveries = []
   end
+
+  it "is expected to use the default email recepient and sender" do
+    expect(HarvestMailer.default[:from]).to eq config['email_sender']
+    expect(HarvestMailer.default[:to]).to eq config['email_recipient']
+  end
   
-  it "should deliver a successful harvest email" do
+  it "is expected to deliver harvested all OAI seeds email" do
     mail = HarvestMailer.harvest_complete_email(provider, logfile)
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(provider.email)
@@ -16,7 +22,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     expect(mail.attachments.first.filename).to eq File.basename(logfile)
   end
   
-  it "should deliver a dumped whole index email" do
+  it "is expected to deliver Deleted all from Aggregator Index email" do
     mail = HarvestMailer.dumped_whole_index_email
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(HarvestMailer.default[:to])

@@ -308,8 +308,6 @@ GEM
       rake
       resque (~> 1.22)
       trollop (~> 1.16)
-    resque-status (0.5.0)
-      resque (~> 1.19)
     rest-client (1.7.3)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
@@ -442,7 +440,6 @@ DEPENDENCIES
   rails_autolink
   resque
   resque-pool
-  resque-status
   rspec-rails
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)

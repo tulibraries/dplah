@@ -71,22 +71,23 @@ class ProvidersController < ApplicationController
 
   def harvest
     queue_name = "harvest"
-    #Resque.enqueue(Harvest, @provider)
-    job_id = Harvest.create(@provider)
-
-    redirect_to providers_url, notice: "#{status}. Currently at position ##{Resque.size(queue_name)} in the queue."
+    workers = "workers"
+    Resque.enqueue(Harvest, @provider)
+    redirect_to providers_url, notice: "Seed for \"#{@provider.name}\" is being harvested in the background. Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
   def dump_and_reindex_by_institution
     queue_name = "delete"
+    workers = "workers"
     Resque.enqueue(DumpReindex, @provider, "institution")
-    redirect_to providers_url, notice: "Records are being removed from aggregator index for institution provider.contributing_institution}. Currently at position ##{Resque.size(queue_name)} in the queue."
+    redirect_to providers_url, notice: "Records are being removed from aggregator index for institution provider.contributing_institution}. Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
   def dump_and_reindex_by_set
     queue_name = "delete"
+    workers = "workers"
     Resque.enqueue(DumpReindex, @provider, "set")
-    redirect_to providers_url, notice: "Records are being removed from aggregator index for set  \"#{@provider.set}.\" Currently at position ##{Resque.size(queue_name)} in the queue."
+    redirect_to providers_url, notice: "Records are being removed from aggregator index for set  \"#{@provider.set}.\" Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
   private

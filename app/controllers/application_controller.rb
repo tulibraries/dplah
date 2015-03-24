@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
   def harvest_all_providers
     Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
       HarvestUtils.harvest_action(provider)
-      HarvestMailer.harvest_complete_email(provider, HarvestUtils.get_log_file).deliver
     end
     redirect_to providers_url, notice: "All OAI seeds harvested"
 
@@ -22,7 +21,6 @@ class ApplicationController < ActionController::Base
 
   def dump_whole_index
     HarvestUtils.delete_all
-    HarvestMailer.dumped_whole_index_email
     redirect_to providers_url, notice: "Index deleted from Aggregator"
   end
 

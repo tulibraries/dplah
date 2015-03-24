@@ -57,13 +57,11 @@ class ProvidersController < ApplicationController
 
   def dump_and_reindex_by_institution
     rec_count = HarvestUtils.cleanout_and_reindex(@provider,  :reindex_by => "institution")
-    HarvestMailer.dump_and_reindex_by_institution_email(@provider).deliver
     redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
   end
 
   def dump_and_reindex_by_set
     rec_count = HarvestUtils.cleanout_and_reindex(@provider, :reindex_by => "set")
-    HarvestMailer.dump_and_reindex_by_collection_email(@provider).deliver
     redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
   end
 

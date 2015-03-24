@@ -68,4 +68,5 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'simplecov', :require => false
+  gem 'resque_spec'
 end

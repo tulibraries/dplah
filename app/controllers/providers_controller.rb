@@ -2,25 +2,6 @@ class ProvidersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
 
-  before_action :display_flash, only: :index
-
-  def display_flash
-    flash_string = ""
-    Resque::Plugins::Status::Hash.statuses.each do |stat|
-
-      stat_job = Resque::Plugins::Status::Hash.get(stat.uuid)
-      if stat_job 
-        flash_options = stat_job.options.to_json
-        statj = JSON.parse(flash_options)
-        flash_string += " #{statj["name"]}"
-        flash_string += " Job complete." if stat_job.completed?
-        flash_string += " Job queued but not yet working. <br />" if stat_job.queued?
-        flash_string += " Job in progress." if stat_job.working?
-      end
-    end
-      flash[:notice] = flash_string.html_safe unless flash_string.blank?
-  end
-
   def index
     @providers = Provider.all
   end

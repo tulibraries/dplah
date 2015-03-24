@@ -1,7 +1,7 @@
 class HarvestMailer < ActionMailer::Base
-  config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
-  default from: config['email_sender'],
-          to: config['email_recipient']
+  @config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
+  default from: @config['email_sender'],
+          to: @config['email_recipient']
 
   def harvest_complete_email(provider, logfile)
     @provider = provider

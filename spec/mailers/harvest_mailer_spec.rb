@@ -27,6 +27,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(HarvestMailer.default[:to])
     expect(mail.subject).to match /Whole Index Deleted/
+    expect(mail.body.raw_source).to include(I18n.t 'dpla.harvest_mailer.dumped_whole_index_text')
   end
   
   it "should deliver a successful dump and reindex by institution email" do
@@ -34,6 +35,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(provider.email)
     expect(mail.subject).to match /Dumped and reindexed #{provider.name} collection/
+    expect(mail.body.raw_source).to include(provider.name)
   end
   
   it "should deliver a successful dump and reindex by collection email" do
@@ -41,5 +43,6 @@ RSpec.describe HarvestMailer, type: :mailer do
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(provider.email)
     expect(mail.subject).to match /Dumped and reindexed the #{provider.set} collection/
+    expect(mail.body.raw_source).to include(provider.collection_name)
   end
 end

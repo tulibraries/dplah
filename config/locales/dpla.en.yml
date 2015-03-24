@@ -4,3 +4,15 @@ en:
     harvest_note: 'Note: If you wish to harvest ALL OAI seeds listed above, be sure to first delete all from the Aggregator index to avoid ingest errors. "Delete all" and "Harvest all" actions will take a while, and are not reversible, so proceed with caution. '
     action_warning: 'Please wait...(DO NOT REFRESH THIS PAGE)'
     thumbnail_warning: 'If you are unable to harvest thumbnails with information supplied in the fields above, or if the fields above do not express the method for thumbnail retrieval, contact the development team via Katherine Lynch (katherine.lynch@temple.edu) for guidance.'
+    harvest_mailer:
+      log_url_text: 'Log file at'
+      log_file_text: 'log file attached'
+      harvest_subject: 'Harvest Status'
+      dump_and_reindex_subject: 'Reindex Status'
+      dump_whole_index_subject: 'Dump Status'
+      harvest_complete_text: 'Harvesting all collections completed.'
+      the_text: 'The '
+      dump_and_reindex_by_collection_text: ' collection deleted from the DPLA PA index'
+      all_of_text: 'All of '
+      dump_and_reindex_by_institution_text: "'s collections have been deleted from the DPLA PA index"
+      dumped_whole_index_text: 'All items have been deleted from the DPLA PA index'

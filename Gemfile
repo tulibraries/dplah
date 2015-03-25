@@ -16,6 +16,10 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer',  platforms: :ruby
 gem 'hydra', '7.1.0'
 gem 'rails_autolink'
+gem 'high_voltage', '~> 2.2.1'
+
+gem "resque"
+gem "resque-pool"
 
 gem 'bootstrap-sass', '~> 3.3.1'
 
@@ -66,4 +70,5 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'simplecov', :require => false
+  gem 'resque_spec'
 end

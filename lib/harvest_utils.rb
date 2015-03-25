@@ -15,12 +15,11 @@ module HarvestUtils
   @human_log_path = config['human_log_path'] 
 
   def harvest_action(provider)
-
     create_log_file(provider.name)
     harvest(provider)
     sleep(5)
     convert(provider)
-    cleanup()
+    cleanup(provider)
     sleep(5)
     rec_count = ingest(provider)
     File.open(@log_file, "a+") do |f|
@@ -96,12 +95,20 @@ module HarvestUtils
   end
   module_function :convert
 
-  def cleanup()
+  def cleanup(provider)
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
     new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
-    xml_files = @converted_path ? Dir.glob(File.join(@converted_path, "*.xml")) : Dir.glob("spec/fixtures/fedora/*.xml")
+
+    file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
+    file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
+
+    # little fix for weird nested OAI identifiers in Bepress -- earmarking for potential custom module
+    file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
+    
+    xml_files = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
+
     xml_files.each do |xml_file|
       xml_content = File.read(xml_file)
       doc = Nokogiri::XML(xml_content)

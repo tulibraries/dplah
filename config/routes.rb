@@ -1,3 +1,5 @@
+require 'resque/server'
+
 Rails.application.routes.draw do
   resources :oai_recs
 
@@ -13,9 +15,14 @@ Rails.application.routes.draw do
   post "dump_whole_index"=>"application#dump_whole_index"
 
   root :to => "catalog#index"
+
+  get 'about' => 'high_voltage/pages#show', id: 'about'
   
   blacklight_for :catalog
   devise_for :users
+
+  mount Resque::Server.new, at: "/resque"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

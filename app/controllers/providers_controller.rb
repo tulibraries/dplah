@@ -51,18 +51,24 @@ class ProvidersController < ApplicationController
   end
 
   def harvest
-    rec_count = HarvestUtils.harvest_action(@provider)
-    redirect_to providers_url, notice: "#{rec_count} records harvested from OAI seed"
+    queue_name = "harvest"
+    workers = "workers"
+    Resque.enqueue(Harvest, @provider)
+    redirect_to providers_url, notice: "Seed for \"#{@provider.name}\" is being harvested in the background. Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
   def dump_and_reindex_by_institution
-    rec_count = HarvestUtils.cleanout_and_reindex(@provider,  :reindex_by => "institution")
-    redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
+    queue_name = "delete"
+    workers = "workers"
+    Resque.enqueue(DumpReindex, @provider, "institution")
+    redirect_to providers_url, notice: "Records are being removed from aggregator index for institution provider.contributing_institution}. Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
   def dump_and_reindex_by_set
-    rec_count = HarvestUtils.cleanout_and_reindex(@provider, :reindex_by => "set")
-    redirect_to providers_url, notice: "#{rec_count} records removed from aggregator index"
+    queue_name = "delete"
+    workers = "workers"
+    Resque.enqueue(DumpReindex, @provider, "set")
+    redirect_to providers_url, notice: "Records are being removed from aggregator index for set  \"#{@provider.set}.\" Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
   private

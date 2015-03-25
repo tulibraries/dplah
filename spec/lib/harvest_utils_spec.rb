@@ -159,7 +159,7 @@ RSpec.describe HarvestUtils do
     end
 
     it "expect valid XML" do
-      HarvestUtils::cleanup()
+      HarvestUtils::cleanup(provider_small_collection)
       Dir.glob(File.join(convert_directory, '**', '*.xml')).each do |file|
         doc = Nokogiri::XML(File.read(file))
         @xsd.validate(doc).each do |error|
@@ -176,7 +176,7 @@ RSpec.describe HarvestUtils do
         FileUtils.cp file, File.join(convert_directory, File.basename(file))
       end
       # Clean up
-      HarvestUtils::cleanup()
+      HarvestUtils::cleanup(provider_small_collection)
       Dir.glob(File.join(convert_directory, '**', '*.xml')).each do |file|
         doc = Nokogiri::XML(File.read(file))
         doc.xpath("//subject").each { |s| expect(trailing_separator).to_not match(s.text) }

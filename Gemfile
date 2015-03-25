@@ -54,6 +54,7 @@ gem "devise"
 gem "devise-guests", "~> 0.3"
 
 group :development do
+  gem "foreman"
 end
 
 group :development, :test do

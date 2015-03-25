@@ -199,7 +199,7 @@ module HarvestUtils
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_all_end') << I18n.t('oai_seed_logs.text_buffer')
     end
-    HarvestMailer.dumped_whole_index_email
+    HarvestMailer.dumped_whole_index_email(@log_file).deliver
   end
   module_function :delete_all
 
@@ -336,9 +336,9 @@ module HarvestUtils
       end
       case reindex_by
       when "set"
-        HarvestMailer.dump_and_reindex_by_collection_email(provider).deliver
+        HarvestMailer.dump_and_reindex_by_collection_email(provider, @log_file).deliver
       when "institution"
-        HarvestMailer.dump_and_reindex_by_institution_email(provider).deliver
+        HarvestMailer.dump_and_reindex_by_institution_email(provider, @log_file).deliver
       end
       rec_count
     end

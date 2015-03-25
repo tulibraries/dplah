@@ -193,6 +193,8 @@ RSpec.describe ProvidersController, :type => :controller do
         post :harvest, {:id => @provider.to_param}, valid_session
       end
       $stdout = sso
+
+      ActionMailer::Base.deliveries = []
     end
 
     it "Dumps and reindexes by institution" do

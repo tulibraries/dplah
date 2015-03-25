@@ -6,27 +6,27 @@ class HarvestMailer < ActionMailer::Base
   def harvest_complete_email(provider, logfile)
     @provider = provider
     attachments[File.basename(logfile)] = File.read(logfile)
-    subject_text = "Harvest of #{provider.set} Completed"
+    subject_text = I18n.t('dpla.harvest_mailer.harvest_subject')
     m = mail(:to=> provider.email, :subject => subject_text)
   end
 
   def dumped_whole_index_email(logfile)
     attachments[File.basename(logfile)] = File.read(logfile)
-    subject_text = "Whole Index Deleted"
+    subject_text = I18n.t('dpla.harvest_mailer.dump_whole_index_subject')
     m = mail(subject: subject_text)
   end
 
   def dump_and_reindex_by_institution_email(provider, logfile)
     @provider = provider
     attachments[File.basename(logfile)] = File.read(logfile)
-    subject_text = "Dumped and reindexed #{provider.name} collections"
+    subject_text = I18n.t('dpla.harvest_mailer.dump_and_reindex_subject')
     m = mail(to: provider.email, subject: subject_text)
   end
 
   def dump_and_reindex_by_collection_email(provider, logfile)
     @provider = provider
     attachments[File.basename(logfile)] = File.read(logfile)
-    subject_text = "Dumped and reindexed the #{provider.set} collection"
+    subject_text = I18n.t('dpla.harvest_mailer.dump_and_reindex_subject')
     m = mail(to: provider.email, subject: subject_text)
   end
 end

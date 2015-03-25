@@ -7,7 +7,7 @@ en:
     harvest_mailer:
       log_file_text: 'Please see attached log for more information.'
       harvest_subject: 'Harvest Status'
-      dump_and_reindex_subject: 'Reindex Status'
+      dump_and_reindex_subject: 'Dump and Reindex Status'
       dump_whole_index_subject: 'Dump Status'
       harvest_complete_text: 'Harvesting all collections completed.'
       the_text: 'The '

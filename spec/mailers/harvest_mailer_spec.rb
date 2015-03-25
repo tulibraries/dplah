@@ -23,7 +23,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     mail = HarvestMailer.harvest_complete_email(provider, logfile).deliver
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(provider.email)
-    expect(mail.subject).to match /Harvest of #{provider.set} Completed/
+    expect(mail.subject).to match I18n.t 'dpla.harvest_mailer.harvest_subject'
     expect(html_part_of(mail).body.raw_source).to include(I18n.t 'dpla.harvest_mailer.harvest_complete_text')
     expect(mail.attachments.first.filename).to eq File.basename(logfile)
   end
@@ -32,7 +32,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     mail = HarvestMailer.dumped_whole_index_email(logfile).deliver
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(HarvestMailer.default[:to])
-    expect(mail.subject).to match /Whole Index Deleted/
+    expect(mail.subject).to match I18n.t('dpla.harvest_mailer.dump_whole_index_subject')
     expect(html_part_of(mail).body.raw_source).to include(I18n.t 'dpla.harvest_mailer.dumped_whole_index_text')
     expect(mail.attachments.first.filename).to eq File.basename(logfile)
   end
@@ -41,7 +41,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     mail = HarvestMailer.dump_and_reindex_by_institution_email(provider, logfile).deliver
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(provider.email)
-    expect(mail.subject).to match /Dumped and reindexed #{provider.name} collection/
+    expect(mail.subject).to match I18n.t('dpla.harvest_mailer.dump_and_reindex_subject')
     expect(html_part_of(mail).body.raw_source).to include(provider.name)
     expect(mail.attachments.first.filename).to eq File.basename(logfile)
   end
@@ -50,7 +50,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     mail = HarvestMailer.dump_and_reindex_by_collection_email(provider, logfile).deliver
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(provider.email)
-    expect(mail.subject).to match /Dumped and reindexed the #{provider.set} collection/
+    expect(mail.subject).to match I18n.t('dpla.harvest_mailer.dump_and_reindex_subject')
     expect(html_part_of(mail).body.raw_source).to include(provider.collection_name)
     expect(mail.attachments.first.filename).to eq File.basename(logfile)
   end

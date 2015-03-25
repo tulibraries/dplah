@@ -101,6 +101,7 @@ GEM
       devise
     diff-lcs (1.2.5)
     docile (1.1.5)
+    dotenv (1.0.2)
     ebnf (0.3.6)
       haml (~> 4.0)
       rdf (~> 1.1)
@@ -120,6 +121,9 @@ GEM
       faraday (>= 0.7.4, < 0.10)
     fastercsv (1.5.5)
     ffi (1.9.6)
+    foreman (0.77.0)
+      dotenv (~> 1.0.2)
+      thor (~> 0.19.1)
     formatador (0.2.5)
     guard (2.12.5)
       formatador (>= 0.2.4)
@@ -471,6 +475,7 @@ DEPENDENCIES
   devise
   devise-guests (~> 0.3)
   factory_girl_rails (~> 4.4.1)
+  foreman
   guard-rspec
   high_voltage (~> 2.2.1)
   hydra (= 7.1.0)

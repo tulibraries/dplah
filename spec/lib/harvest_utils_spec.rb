@@ -20,9 +20,6 @@ RSpec.describe HarvestUtils do
       # Make we are starting fresh
       file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
 
-      # Clear out the mail array
-      ActionMailer::Base.deliveries = []
-
       # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
 
@@ -53,12 +50,6 @@ RSpec.describe HarvestUtils do
       expect(doc.xpath("//manifest/collection_name").first.text).to eq(provider_small_collection.collection_name)
       #expect(doc.xpath("//manifest/provider_id_prefix").first.text).to eq(provider_small_collection.contributing_institution)
       expect(doc.xpath("//manifest/contributing_institution").first.text).to eq(provider_small_collection.contributing_institution)
- 
-      # [TODO] Determine why there are two messages in the deliveries array instead of just 1
-      mail_deliveries = ActionMailer::Base.deliveries.uniq
-      expect(mail_deliveries.size).to be > 1
-      expect(mail_deliveries.last.to).to include(provider_small_collection.email)
-      expect(mail_deliveries.last.subject).to include(provider_small_collection.set)
     end
 
 #[TODO]    it "should log the harvest"
@@ -188,6 +179,7 @@ RSpec.describe HarvestUtils do
   context "Delete Records" do
     before(:each) do
       @pid = "#{pid_prefix}:#{SecureRandom.uuid}"
+      ActionMailer::Base.deliveries = []
     end
 
     it "has deletes all records for the collection" do
@@ -195,6 +187,10 @@ RSpec.describe HarvestUtils do
       expect(ActiveFedora::Base.count).to_not eq 0
       HarvestUtils::delete_all 
       expect(ActiveFedora::Base.count).to eq 0
+
+      mail_deliveries = ActionMailer::Base.deliveries.uniq
+      expect(mail_deliveries.size).to eq 1
+      expect(mail_deliveries.last.subject).to match /Whole Index Deleted/
     end
   end
 

@@ -197,15 +197,15 @@ RSpec.describe ProvidersController, :type => :controller do
     end
 
     it "Dumps and reindexes by institution" do
-      #post :dump_and_reindex_by_institution, {:id => @provider.to_param}, valid_session
       Resque.enqueue(DumpReindex, @provider, "institution")
       expect(DumpReindex).to have_queue_size_of(1)
+      expect(response).to redirect_to(providers_url)
     end
 
     it "Dumps and reindexes by set" do
-      #post :dump_and_reindex_by_set, {:id => @provider.to_param}, valid_session
       Resque.enqueue(DumpReindex, @provider, "set")
       expect(DumpReindex).to have_queue_size_of(1)
+      expect(response).to redirect_to(providers_url)
     end
   end
 

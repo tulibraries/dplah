@@ -54,6 +54,7 @@ gem "devise"
 gem "devise-guests", "~> 0.3"
 
 group :development do
+  gem "foreman"
 end
 
 group :development, :test do
@@ -61,6 +62,7 @@ group :development, :test do
   gem "factory_girl_rails", "~> 4.4.1"
   gem "jettywrapper"
   gem "pry-rails"
+  gem "guard-rspec"
 end
 
 group :test do

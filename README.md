@@ -80,7 +80,7 @@ env TERM_CHILD=1 VVERBOSE=1 COUNT='NUM' QUEUE=NAME_OF_QUEUE bundle exec rake res
 
 * To harvest just the raw OAI from a specific OAI seed in the application, run the following in the terminal:
 ```
-rake oai:harvest[#] 
+rake oai:harvest[NUM] 
 ```
 **NOTE:** 
 * `NUM` = the ID of the provider/OAI seed that you are attempting to harvest 

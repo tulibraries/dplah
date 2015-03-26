@@ -16,26 +16,29 @@ RSpec.describe HarvestUtils do
     before :each do
       # Make sure sure download directory is empty
       FileUtils.rm Dir.glob "#{download_directory}/*.xml"
-    end
 
-    after :each do
-      # Delete the harvested test files 
-      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
-    end
-
-    it "should harvest a collection" do
       # Make we are starting fresh
       file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
-      expect(file_count).to eq(0)
+
+      # Create the harvest log file
+      HarvestUtils::create_log_file(log_name)
 
       # Harvest the collection
-      HarvestUtils::create_log_file(log_name)
       sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
         HarvestUtils::harvest(provider_small_collection)
       end
       $stdout = sso
 
+    end
+
+    after :each do
+      # Delete the harvested test files 
+      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
+
+    end
+
+    it "should harvest a collection" do
       # Expect that we've harvest just one file
       file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
       expect(file_count).to eq(1)
@@ -49,7 +52,7 @@ RSpec.describe HarvestUtils do
       expect(doc.xpath("//manifest/contributing_institution").first.text).to eq(provider_small_collection.contributing_institution)
     end
 
-    it "should log the harvest"
+#[TODO]    it "should log the harvest"
 
   end
 
@@ -59,8 +62,10 @@ RSpec.describe HarvestUtils do
       # Make sure conversion directory is empty
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
-      # Harvest a file to convert
+      # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
+
+      # Harvest a file to convert
       sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
         HarvestUtils::harvest(provider_small_collection)
@@ -112,8 +117,8 @@ RSpec.describe HarvestUtils do
       expect(file_count).to be record_count
     end
 
-    it "should log the conversion"
-    it "should remove the harvested files after conversion"
+#[TODO]    it "should log the conversion"
+#[TODO]    it "should remove the harvested files after conversion"
 
   end
 
@@ -174,6 +179,7 @@ RSpec.describe HarvestUtils do
   context "Delete Records" do
     before(:each) do
       @pid = "#{pid_prefix}:#{SecureRandom.uuid}"
+      ActionMailer::Base.deliveries = []
     end
 
     it "has deletes all records for the collection" do
@@ -181,6 +187,10 @@ RSpec.describe HarvestUtils do
       expect(ActiveFedora::Base.count).to_not eq 0
       HarvestUtils::delete_all 
       expect(ActiveFedora::Base.count).to eq 0
+
+      mail_deliveries = ActionMailer::Base.deliveries.uniq
+      expect(mail_deliveries.size).to eq 1
+      expect(mail_deliveries.last.subject).to match /Whole Index Deleted/
     end
   end
 
@@ -193,7 +203,7 @@ RSpec.describe HarvestUtils do
       # Make sure conversion directory is empty
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
-      # Harvest a file to convert
+      # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
     end
 

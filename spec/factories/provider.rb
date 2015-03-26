@@ -10,6 +10,7 @@ FactoryGirl.define do
     set "setname"
     provider_id_prefix "prvdr"
     contributing_institution "The Contributing Instition"
+    email "provider@example.com"
   end
 
   factory :provider_small_collection, class: Provider do
@@ -21,6 +22,7 @@ FactoryGirl.define do
     set "alycc-voice"
     provider_id_prefix "lycoming"
     contributing_institution "POWER Library"
+    email "lycoming@example.com"
   end
 
   factory :provider_transient_records, class: Provider do
@@ -42,6 +44,7 @@ FactoryGirl.define do
     metadata_prefix "oai_dc"
     set "alycc-voice"
     sequence(:provider_id_prefix) { |n| "lycoming#{n}" }
+    sequence(:email) { |n| "lycoming#{n}@example.com" }
     contributing_institution "POWER Library"
   end
 end

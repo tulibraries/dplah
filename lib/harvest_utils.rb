@@ -25,6 +25,7 @@ module HarvestUtils
     File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_end') << "#{provider.name} " << I18n.t('oai_seed_logs.log_end_processed') << " #{rec_count}" << I18n.t('oai_seed_logs.text_buffer')
       end
+    HarvestMailer.harvest_complete_email(provider, HarvestUtils.get_log_file).deliver
     rec_count
   end
   module_function :harvest_action
@@ -204,6 +205,7 @@ module HarvestUtils
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_all_end') << I18n.t('oai_seed_logs.text_buffer')
     end
+    HarvestMailer.dumped_whole_index_email(@log_file).deliver
   end
   module_function :delete_all
 
@@ -214,6 +216,10 @@ module HarvestUtils
   def self.create_log_file(log_name)
     @log_file = "#{@human_log_path}/#{log_name}.#{Time.now.to_i}.txt"
     FileUtils.touch(@log_file)
+  end
+
+  def self.get_log_file
+    @log_file
   end
 
   def self.add_xml_formatting(xml_file, options = {})
@@ -333,6 +339,12 @@ module HarvestUtils
       end
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << "#{model_term} " << I18n.t('oai_seed_logs.delete_end') << I18n.t('oai_seed_logs.text_buffer')
+      end
+      case reindex_by
+      when "set"
+        HarvestMailer.dump_and_reindex_by_collection_email(provider, @log_file).deliver
+      when "institution"
+        HarvestMailer.dump_and_reindex_by_institution_email(provider, @log_file).deliver
       end
       rec_count
     end

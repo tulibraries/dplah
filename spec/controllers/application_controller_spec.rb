@@ -19,11 +19,6 @@ RSpec.describe ApplicationController, type: :controller do
       Provider.create! provider2
     end
 
-    after (:each) do
-      # Clean out all records
-      ActiveFedora::Base.destroy_all
-    end
-
     it "Harvests all of the data from all providers" do
       expect(ActiveFedora::Base.count).to eq 0
       sso = stdout_to_null

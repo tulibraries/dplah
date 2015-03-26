@@ -154,8 +154,7 @@ module HarvestUtils
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
 
-    # little fix for weird nested OAI identifiers in Bepress -- earmarking for potential custom module
-    file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
+    custom_file_prefixing(file_prefix, provider)
     
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
     
@@ -368,5 +367,15 @@ module HarvestUtils
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.duplicate_record_detected') << " #{pid_check}" << I18n.t('oai_seed_logs.text_buffer') if o
       end
+    end
+
+    ###
+    # special case customizations -- hopefully can be eliminated later
+    ###
+    def self.custom_file_prefixing(file_prefix, provider)
+      # little fix for weird nested OAI identifiers in Bepress
+      file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
+      # little fix for Villanova's DPLA set
+      file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
     end
 end

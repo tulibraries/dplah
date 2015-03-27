@@ -1,8 +1,7 @@
 module OaiRecsHelper
 	def render_asset(document)
 		link_ident = asset_link(document)
-		asset_linked = link_to(image_tag(document['thumbnail_tesim'].to_sentence, :alt => document['title_tesim'].to_sentence),link_ident) if document['thumbnail_tesim']
-		obj = tag(:span, :class => 'glyphicon glyphicon-new-window')
+		asset_linked = link_to(image_tag(document['thumbnail_tesim'].to_sentence, :alt => document['title_tesim'].to_sentence),link_ident, :target => "_blank", :title => "opens in a new tab") if document['thumbnail_tesim']
 		return asset_linked
 	end
 	def asset_link(document)

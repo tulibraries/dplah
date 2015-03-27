@@ -1,8 +1,7 @@
 <div class="show-thumbnail">
   <%= render_asset(document) %>
-  <span class="view-object"><a href="<% asset_link(document) %>">View Object <span class="glyphicon glyphicon-new-window"></span></a></span>
+  <span class="view-object"><a target="_blank" title="opens in a new tab" href="<%= asset_link(document) %>">View Object <span class="glyphicon glyphicon-new-window"></span><span class="screenreader">opens in a new tab</span></a></span>
 </div>
-<%# default partial to display solr document fields in catalog show view -%>
 <dl class="dl-horizontal  dl-invert">
   <% document_show_fields(document).each do |solr_fname, field| -%>
     <% if should_render_show_field? document, field %>
@@ -10,6 +9,4 @@
 	    <dd class="blacklight-<%= solr_fname.parameterize %>"><%= auto_link(render_document_show_field_value document, :field => solr_fname) %></dd>
     <% end -%>
   <% end -%>
-  	    <dt class="blacklight-url">Link Back to Original Item</dt>
-	    <dd class="blacklight-url"><%= link_to(document['identifier_tesim'].first, document['identifier_tesim'].first)%></dd>
 </dl>

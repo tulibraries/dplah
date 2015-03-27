@@ -1,5 +1,6 @@
 <div class="show-thumbnail">
   <%= render_asset(document) %>
+  <span class="view-object"><a href="<% asset_link(document) %>">View Object <span class="glyphicon glyphicon-new-window"></span></a></span>
 </div>
 <%# default partial to display solr document fields in catalog show view -%>
 <dl class="dl-horizontal  dl-invert">

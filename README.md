@@ -80,7 +80,7 @@ env TERM_CHILD=1 VVERBOSE=1 COUNT='NUM' QUEUE=NAME_OF_QUEUE bundle exec rake res
 
 * To harvest just the raw OAI from a specific OAI seed in the application, run the following in the terminal:
 ```
-rake oai:harvest[#] 
+rake oai:harvest[NUM] 
 ```
 **NOTE:** 
 * `NUM` = the ID of the provider/OAI seed that you are attempting to harvest 
@@ -134,6 +134,8 @@ The test suite uses [rspec](https://github.com/rspec/rspec-rails), [factory_girl
   * Note with this one, not all listed necessarily still provide OAI-PMH metadata in a harvestable format
 
 ##Credit
+This Hydra head was developed as part of the [Pennsylvania Digital Collections Project for DPLA](http://www.powerlibrary.org/librarians/special-projects-office-of-commonwealth-libraries/project-for-dpla/). [[See the Prototype](http://libcollab.temple.edu/aggregator/)]
+
 Some code in this project (and much research) is based on the talented Chris Beer's work in the following invaluable repos:
 * [Blacklight OAI Provider](https://github.com/cbeer/blacklight_oai_provider)
 * [Blacklight OAI Harvester Demo](https://github.com/cbeer/blacklight_oai_harvester_demo)

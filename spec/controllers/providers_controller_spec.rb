@@ -28,7 +28,7 @@ RSpec.describe ProvidersController, :type => :controller do
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    FactoryGirl.build(:invalid_provider).attributes
   }
 
   # This should return the minimal set of values that should be in the session

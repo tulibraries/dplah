@@ -47,4 +47,17 @@ FactoryGirl.define do
     sequence(:email) { |n| "lycoming#{n}@example.com" }
     contributing_institution "POWER Library"
   end
+
+  factory :invalid_provider, class: Provider do
+    name "Voices of Lycoming"
+    collection_name "Voices of Lycoming"
+    description "Collection description"
+    endpoint_url ""
+    metadata_prefix "oai_dc"
+    set "alycc-voice"
+    provider_id_prefix "lycoming"
+    contributing_institution "POWER Library"
+    email "lycoming@example.com"
+  end
+
 end

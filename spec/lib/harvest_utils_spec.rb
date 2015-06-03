@@ -178,6 +178,7 @@ RSpec.describe HarvestUtils do
 
   context "Delete Records" do
     before(:each) do
+      ActiveFedora::Base.destroy_all
       @pid = "#{pid_prefix}:#{SecureRandom.uuid}"
       ActionMailer::Base.deliveries = []
     end
@@ -190,7 +191,7 @@ RSpec.describe HarvestUtils do
 
       mail_deliveries = ActionMailer::Base.deliveries.uniq
       expect(mail_deliveries.size).to eq 1
-      expect(mail_deliveries.last.subject).to match /Whole Index Deleted/
+      expect(mail_deliveries.last.subject).to match /#{I18n.t 'dpla.harvest_mailer.dump_whole_index_subject' }/
     end
   end
 

@@ -107,14 +107,14 @@ RSpec.describe ProvidersController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        FactoryGirl.build(:edited_provider_small_collection).attributes
       }
 
       it "updates the requested provider" do
         provider = Provider.create! valid_attributes
         put :update, {:id => provider.to_param, :provider => new_attributes}, valid_session
         provider.reload
-        skip("Add assertions for updated state")
+        expect(assigns(:provider)).to eq(provider)
       end
 
       it "assigns the requested provider as @provider" do
@@ -197,13 +197,17 @@ RSpec.describe ProvidersController, :type => :controller do
     end
 
     it "Dumps and reindexes by institution" do
-      Resque.enqueue(DumpReindex, @provider, "institution")
+      provider = Provider.create! valid_attributes
+      put :dump_and_reindex_by_institution, {:id => provider.to_param, :provider => valid_attributes}, valid_session
+      #Resque.enqueue(DumpReindex, @provider, "institution")
       expect(DumpReindex).to have_queue_size_of(1)
       expect(response).to redirect_to(providers_url)
     end
 
     it "Dumps and reindexes by set" do
-      Resque.enqueue(DumpReindex, @provider, "set")
+      provider = Provider.create! valid_attributes
+      put :dump_and_reindex_by_set, {:id => provider.to_param, :provider => valid_attributes}, valid_session
+      #Resque.enqueue(DumpReindex, @provider, "set")
       expect(DumpReindex).to have_queue_size_of(1)
       expect(response).to redirect_to(providers_url)
     end

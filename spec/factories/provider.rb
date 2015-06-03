@@ -25,6 +25,18 @@ FactoryGirl.define do
     email "lycoming@example.com"
   end
 
+  factory :edited_provider_small_collection, class: Provider do
+    name "Voices of Lycoming"
+    collection_name "Voices of Lycoming"
+    description "Edited collection description"
+    endpoint_url "http://contentdm1.accesspa.org/oai/oai.php"
+    metadata_prefix "oai_dc"
+    set "alycc-voice"
+    provider_id_prefix "lycoming"
+    contributing_institution "POWER Library"
+    email "lycoming@example.com"
+  end
+
   factory :provider_transient_records, class: Provider do
     name "Thomas W. Benson Political Protest Collection"
     collection_name "Thomas W. Benson Political Protest Collection"

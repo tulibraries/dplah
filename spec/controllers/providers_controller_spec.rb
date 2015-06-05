@@ -199,7 +199,6 @@ RSpec.describe ProvidersController, :type => :controller do
     it "Dumps and reindexes by institution" do
       provider = Provider.create! valid_attributes
       put :dump_and_reindex_by_institution, {:id => provider.to_param, :provider => valid_attributes}, valid_session
-      #Resque.enqueue(DumpReindex, @provider, "institution")
       expect(DumpReindex).to have_queue_size_of(1)
       expect(response).to redirect_to(providers_url)
     end
@@ -207,7 +206,6 @@ RSpec.describe ProvidersController, :type => :controller do
     it "Dumps and reindexes by set" do
       provider = Provider.create! valid_attributes
       put :dump_and_reindex_by_set, {:id => provider.to_param, :provider => valid_attributes}, valid_session
-      #Resque.enqueue(DumpReindex, @provider, "set")
       expect(DumpReindex).to have_queue_size_of(1)
       expect(response).to redirect_to(providers_url)
     end

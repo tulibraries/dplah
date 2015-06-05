@@ -85,18 +85,10 @@ RSpec.describe HarvestUtils do
 
     end
 
-    it "should harvest a collection" do
-      # Expect that we've harvest just one file
+    it "should harvest collection with a resumption token" do
+      # Expect that we've harvest just two files
       file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
       expect(file_count).to eq(2)
-      file = Dir[File.join(download_directory, '*.xml')].first
-      doc = Nokogiri::XML(File.read(file))
-
-      # Expect the harvested file to have representative metadata 
-      expect(doc.xpath("//manifest/set_spec").first.text).to eq(provider_resumption_token.set)
-      expect(doc.xpath("//manifest/collection_name").first.text).to eq(provider_resumption_token.collection_name)
-      #expect(doc.xpath("//manifest/provider_id_prefix").first.text).to eq(provider_resumption_token.contributing_institution)
-      expect(doc.xpath("//manifest/contributing_institution").first.text).to eq(provider_resumption_token.contributing_institution)
     end
   end
 
@@ -268,6 +260,24 @@ RSpec.describe HarvestUtils do
       expect(ActiveFedora::Base.count).to eq 1
       expect(ActiveFedora::Base.first.pid).to eq pid
     end
-
   end
+
+  describe "cleanout_and_reindex" do
+    let (:dummy_count) { 1 }
+
+    it "reindexes by set" do
+      reindex_by = "set"
+      allow(HarvestUtils).to receive(:remove_selective).with(provider_small_collection, reindex_by) { dummy_count }
+      count = HarvestUtils::cleanout_and_reindex(provider_small_collection, {reindex_by: reindex_by})
+      expect(count).to eq dummy_count
+    end
+
+    it "reindexes by institution" do
+      reindex_by = "institution"
+      allow(HarvestUtils).to receive(:remove_selective).with(provider_small_collection, reindex_by) { dummy_count }
+      count = HarvestUtils::cleanout_and_reindex(provider_small_collection, {reindex_by: reindex_by})
+      expect(count).to eq dummy_count
+    end
+  end
+
 end

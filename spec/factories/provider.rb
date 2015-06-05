@@ -72,4 +72,16 @@ FactoryGirl.define do
     email "lycoming@example.com"
   end
 
+  factory :provider_resumption_token, class: Provider do
+    name "Benson Collection"
+    collection_name "Thomas W. Benson Political Protest Collection"
+    description "Collection description"
+    endpoint_url "http://collection1.libraries.psu.edu/oai/oai.php"
+    metadata_prefix "oai_dc"
+    set "benson"
+    provider_id_prefix "psu"
+    contributing_institution "Penn State"
+    email "psu@example.com"
+  end
+
 end

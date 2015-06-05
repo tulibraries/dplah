@@ -56,6 +56,51 @@ RSpec.describe HarvestUtils do
 
   end
 
+
+  context "Harvest with Resumption Token" do
+    let(:provider_resumption_token) { FactoryGirl.build(:provider_resumption_token) }
+
+    before :each do
+      # Make sure sure download directory is empty
+      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
+
+      # Make we are starting fresh
+      file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
+
+      # Create the harvest log file
+      HarvestUtils::create_log_file(log_name)
+
+      # Harvest the collection
+      sso = stdout_to_null
+      VCR.use_cassette "harvest_utils/provider_resumption_token" do
+        HarvestUtils::harvest(provider_resumption_token)
+      end
+      $stdout = sso
+
+    end
+
+    after :each do
+      # Delete the harvested test files 
+      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
+
+    end
+
+    it "should harvest a collection" do
+      # Expect that we've harvest just one file
+      file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
+      expect(file_count).to eq(2)
+      file = Dir[File.join(download_directory, '*.xml')].first
+      doc = Nokogiri::XML(File.read(file))
+
+      # Expect the harvested file to have representative metadata 
+      expect(doc.xpath("//manifest/set_spec").first.text).to eq(provider_resumption_token.set)
+      expect(doc.xpath("//manifest/collection_name").first.text).to eq(provider_resumption_token.collection_name)
+      #expect(doc.xpath("//manifest/provider_id_prefix").first.text).to eq(provider_resumption_token.contributing_institution)
+      expect(doc.xpath("//manifest/contributing_institution").first.text).to eq(provider_resumption_token.contributing_institution)
+    end
+  end
+
+
   context "Convert Records" do
 
     before :each do

@@ -54,4 +54,12 @@ FactoryGirl.define do
 	  set_spec ["Record set"]
 	  provider_id_prefix ["Record provider id prefix"]
   end
+
+  factory :oai_rec_contentdm, class: OaiRec do
+	  endpoint_url "http://cdm16002.contentdm.oclc.org/oai/oai.php"
+	  thumbnail "http://example.com/thumbnail.jpg"
+	  set_spec "p16002coll9"
+	  provider_id_prefix "TEMPLE"
+  end
+
 end

@@ -122,9 +122,9 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:title" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-creators">
                     <xsl:with-param name="tag" select="'dc:creator'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:creator" />
+                    <xsl:with-param name="creators" select="concat(metadata/oai_dc:dc/dc:creator, ';')" />
                   </xsl:call-template>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:subject">
@@ -139,19 +139,19 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-publishers">
                     <xsl:with-param name="tag" select="'dc:publisher'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:publisher" />
+                    <xsl:with-param name="publishers" select="concat(metadata/oai_dc:dc/dc:publisher, ';')" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-contributors">
                     <xsl:with-param name="tag" select="'dc:contributor'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:contributor" />
+                    <xsl:with-param name="contributors" select="concat(metadata/oai_dc:dc/dc:contributor, ';')" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-dates">
                     <xsl:with-param name="tag" select="'dc:date'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:date" />
+                    <xsl:with-param name="dates" select="concat(metadata/oai_dc:dc/dc:date, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="split-types">
@@ -159,9 +159,9 @@
                     <xsl:with-param name="types" select="concat(metadata/oai_dc:dc/dc:type, ';')" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-formats">
                     <xsl:with-param name="tag" select="'dc:format'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:format" />
+                    <xsl:with-param name="formats" select="concat(metadata/oai_dc:dc/dc:format, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
@@ -169,14 +169,14 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:identifier" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-sources">
                     <xsl:with-param name="tag" select="'dc:source'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:source" />
+                    <xsl:with-param name="sources" select="concat(metadata/oai_dc:dc/dc:source, ';')" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-languages">
                     <xsl:with-param name="tag" select="'dc:language'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:language" />
+                    <xsl:with-param name="languages" select="concat(metadata/oai_dc:dc/dc:language, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
@@ -211,9 +211,9 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:title" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-creators">
                     <xsl:with-param name="tag" select="'creator'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:creator" />
+                    <xsl:with-param name="creators" select="concat(metadata/oai_dc:dc/dc:creator, ';')" />
                   </xsl:call-template>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:subject">
@@ -228,19 +228,19 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-publishers">
                     <xsl:with-param name="tag" select="'publisher'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:publisher" />
+                    <xsl:with-param name="publishers" select="concat(metadata/oai_dc:dc/dc:publisher, ';')" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-contributors">
                     <xsl:with-param name="tag" select="'contributor'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:contributor" />
+                    <xsl:with-param name="contributors" select="concat(metadata/oai_dc:dc/dc:contributor, ';')" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-dates">
                     <xsl:with-param name="tag" select="'date'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:date" />
+                    <xsl:with-param name="dates" select="concat(metadata/oai_dc:dc/dc:date, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="split-types">
@@ -248,9 +248,9 @@
                     <xsl:with-param name="types" select="concat(metadata/oai_dc:dc/dc:type, ';')" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-formats">
                     <xsl:with-param name="tag" select="'format'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:format" />
+                    <xsl:with-param name="formats" select="concat(metadata/oai_dc:dc/dc:format, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
@@ -263,9 +263,9 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:source" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
+                  <xsl:call-template name="split-languages">
                     <xsl:with-param name="tag" select="'language'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:language" />
+                    <xsl:with-param name="languages" select="concat(metadata/oai_dc:dc/dc:language, ';')" />
                   </xsl:call-template>
 
                   <xsl:call-template name="name-tag">
@@ -326,13 +326,19 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="dc:subject[substring(., string-length()) = '.']|dc:type[substring(., string-length()) = '.']|dc:publisher[substring(., string-length()) = '.']|dc:language[substring(., string-length()) = '.']">
+  <xsl:template match="dc:subject[substring(., string-length()) = '.']|dc:type[substring(., string-length()) = '.']|dc:publisher[substring(., string-length()) = '.']|dc:language[substring(., string-length()) = '.']|dc:creator[substring(., string-length()) = '.']|dc:contributor[substring(., string-length()) = '.']|dc:date[substring(., string-length()) = '.']|dc:format[substring(., string-length()) = '.']|dc:source[substring(., string-length()) = '.']">
     <xsl:value-of select="substring(., 1, string-length(.) - 1)" />
   </xsl:template>
 
-  <xsl:template match="dc:subject[substring(., string-length()) = ';']|dc:type[substring(., string-length()) = ';']|dc:publisher[substring(., string-length()) = ';']|dc:language[substring(., string-length()) = ';']">
+  <xsl:template match="dc:subject[substring(., string-length()) = ';']|dc:type[substring(., string-length()) = ';']|dc:publisher[substring(., string-length()) = ';']|dc:language[substring(., string-length()) = ';']|dc:creator[substring(., string-length()) = ';']|dc:contributor[substring(., string-length()) = ';']|dc:date[substring(., string-length()) = ';']|dc:format[substring(., string-length()) = ';']|dc:source[substring(., string-length()) = ';']">
     <xsl:value-of select="substring(., 1, string-length(.) - 1)" />
   </xsl:template>
+
+
+
+
+
+
 
   <xsl:template match="@*">
     <xsl:attribute name="{name()}">
@@ -363,6 +369,104 @@
       </xsl:element> 
       <xsl:call-template name="split-types">
         <xsl:with-param name="types" select="substring-after(normalize-space($types), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-publishers">
+    <xsl:param name="tag" />
+    <xsl:param name="publishers" />
+    <xsl:if test="$publishers != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($publishers), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-publishers">
+        <xsl:with-param name="publishers" select="substring-after(normalize-space($publishers), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-languages">
+    <xsl:param name="tag" />
+    <xsl:param name="languages" />
+    <xsl:if test="$languages != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($languages), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-languages">
+        <xsl:with-param name="languages" select="substring-after(normalize-space($languages), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-creators">
+    <xsl:param name="tag" />
+    <xsl:param name="creators" />
+    <xsl:if test="$creators != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($creators), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-creators">
+        <xsl:with-param name="creators" select="substring-after(normalize-space($creators), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-contributors">
+    <xsl:param name="tag" />
+    <xsl:param name="contributors" />
+    <xsl:if test="$contributors != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($contributors), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-contributors">
+        <xsl:with-param name="contributors" select="substring-after(normalize-space($contributors), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-dates">
+    <xsl:param name="tag" />
+    <xsl:param name="dates" />
+    <xsl:if test="$dates != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($dates), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-dates">
+        <xsl:with-param name="dates" select="substring-after(normalize-space($dates), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-formats">
+    <xsl:param name="tag" />
+    <xsl:param name="formats" />
+    <xsl:if test="$formats != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($formats), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-formats">
+        <xsl:with-param name="formats" select="substring-after(normalize-space($formats), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-sources">
+    <xsl:param name="tag" />
+    <xsl:param name="sources" />
+    <xsl:if test="$sources != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($sources), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-sources">
+        <xsl:with-param name="sources" select="substring-after(normalize-space($sources), ';')" />
         <xsl:with-param name="tag" select="$tag" />
       </xsl:call-template>
     </xsl:if>

@@ -59,7 +59,18 @@ FactoryGirl.define do
 	  endpoint_url "http://cdm16002.contentdm.oclc.org/oai/oai.php"
 	  thumbnail "http://example.com/thumbnail.jpg"
 	  set_spec "p16002coll9"
-	  provider_id_prefix "TEMPLE"
+  end
+
+  factory :oai_rec_bepress, class: OaiRec do
+    description ["http://example.com/example_collection/1234/thumbnail.jpg"]
+  end
+
+  factory :oai_rec_vudl, class: OaiRec do
+    identifier ["http://digital.library.example.com/Record/vudl:1234"]
+  end
+
+  factory :oai_rec_omeka, class: OaiRec do
+    identifier ["http://omeka.example.com/files/thumbnails/example_thumbnail.jpg"]
   end
 
 end

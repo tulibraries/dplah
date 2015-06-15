@@ -22,15 +22,42 @@ RSpec.describe ThumbnailUtils do
   end
   
   describe "Bepress.asset_url" do
-    it "should render a valid URL"
+
+    let (:thumbnail_url) { "http://example.com/example_collection/1234/thumbnail.jpg" }
+
+    subject {
+      oai_rec = FactoryGirl.create(:oai_rec_bepress)
+      ThumbnailUtils::CommonRepositories::Bepress.asset_url(oai_rec)
+    }
+
+    it { is_expected.to match(thumbnail_url) }
+
   end
   
   describe "Vudl.asset_url" do
-    it "should render a valid URL"
+
+    let (:thumbnail_url) { "http://digital.library.example.com/files/vudl:1234/THUMBNAIL" }
+
+    subject {
+      oai_rec = FactoryGirl.create(:oai_rec_vudl)
+      ThumbnailUtils::CommonRepositories::Vudl.asset_url(oai_rec)
+    }
+
+    it { is_expected.to match(thumbnail_url) }
+
   end
   
   describe "Omeka.asset_url" do
-    it "should render a valid URL"
+
+    let (:thumbnail_url) { "http://omeka.example.com/files/thumbnails/example_thumbnail.jpg" }
+
+    subject {
+      oai_rec = FactoryGirl.create(:oai_rec_omeka)
+      ThumbnailUtils::CommonRepositories::Omeka.asset_url(oai_rec)
+    }
+
+    it { is_expected.to match(thumbnail_url) }
+
   end
 
   context "define_thumbnail_common" do

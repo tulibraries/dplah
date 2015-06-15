@@ -17,6 +17,7 @@ gem 'therubyracer',  platforms: :ruby
 gem 'hydra', '7.1.0'
 gem 'rails_autolink'
 gem 'high_voltage', '~> 2.2.1'
+gem 'will_paginate', '~> 3.0.6'
 
 gem "resque"
 gem "resque-pool"

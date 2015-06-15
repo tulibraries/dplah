@@ -3,7 +3,7 @@ class ProvidersController < ApplicationController
   before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
 
   def index
-    @providers = Provider.all
+    @providers = Provider.all.paginate(page: params[:page], per_page: 8).order('name ASC')
   end
 
   def show

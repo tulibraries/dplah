@@ -122,10 +122,12 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:title" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="split-creators">
-                    <xsl:with-param name="tag" select="'dc:creator'" />
-                    <xsl:with-param name="creators" select="concat(metadata/oai_dc:dc/dc:creator, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:creator">
+                    <xsl:call-template name="split-creators">
+                      <xsl:with-param name="tag" select="'dc:creator'" />
+                      <xsl:with-param name="creators" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:subject">
                     <xsl:call-template name="split-subjects">
@@ -139,50 +141,66 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="split-publishers">
-                    <xsl:with-param name="tag" select="'dc:publisher'" />
-                    <xsl:with-param name="publishers" select="concat(metadata/oai_dc:dc/dc:publisher, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:publisher">
+                    <xsl:call-template name="split-publishers">
+                      <xsl:with-param name="tag" select="'dc:publisher'" />
+                      <xsl:with-param name="publishers" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="split-contributors">
-                    <xsl:with-param name="tag" select="'dc:contributor'" />
-                    <xsl:with-param name="contributors" select="concat(metadata/oai_dc:dc/dc:contributor, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:contributor">
+                    <xsl:call-template name="split-contributors">
+                      <xsl:with-param name="tag" select="'dc:contributor'" />
+                      <xsl:with-param name="contributors" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="split-dates">
-                    <xsl:with-param name="tag" select="'dc:date'" />
-                    <xsl:with-param name="dates" select="concat(metadata/oai_dc:dc/dc:date, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:date">
+                    <xsl:call-template name="split-dates">
+                      <xsl:with-param name="tag" select="'dc:date'" />
+                      <xsl:with-param name="dates" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="split-types">
-                    <xsl:with-param name="tag" select="'dc:type'" />
-                    <xsl:with-param name="types" select="concat(metadata/oai_dc:dc/dc:type, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:type">
+                    <xsl:call-template name="split-types">
+                      <xsl:with-param name="tag" select="'dc:type'" />
+                      <xsl:with-param name="types" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="split-formats">
-                    <xsl:with-param name="tag" select="'dc:format'" />
-                    <xsl:with-param name="formats" select="concat(metadata/oai_dc:dc/dc:format, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:format">
+                    <xsl:call-template name="split-formats">
+                      <xsl:with-param name="tag" select="'dc:format'" />
+                      <xsl:with-param name="formats" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:identifier'" />
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:identifier" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="split-sources">
-                    <xsl:with-param name="tag" select="'dc:source'" />
-                    <xsl:with-param name="sources" select="concat(metadata/oai_dc:dc/dc:source, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:source">
+                    <xsl:call-template name="split-sources">
+                      <xsl:with-param name="tag" select="'dc:source'" />
+                      <xsl:with-param name="sources" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="split-languages">
-                    <xsl:with-param name="tag" select="'dc:language'" />
-                    <xsl:with-param name="languages" select="concat(metadata/oai_dc:dc/dc:language, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:language">
+                    <xsl:call-template name="split-languages">
+                      <xsl:with-param name="tag" select="'dc:language'" />
+                      <xsl:with-param name="languages" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'dc:relation'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:relation" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:relation">
+                    <xsl:call-template name="split-relations">
+                      <xsl:with-param name="tag" select="'relation'" />
+                      <xsl:with-param name="relations" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:coverage'" />
@@ -211,10 +229,12 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:title" />
                   </xsl:call-template>
 
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:creator">
                   <xsl:call-template name="split-creators">
                     <xsl:with-param name="tag" select="'creator'" />
-                    <xsl:with-param name="creators" select="concat(metadata/oai_dc:dc/dc:creator, ';')" />
+                    <xsl:with-param name="creators" select="concat(., ';')" />
                   </xsl:call-template>
+                </xsl:for-each>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:subject">
                     <xsl:call-template name="split-subjects">
@@ -228,30 +248,40 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="split-publishers">
-                    <xsl:with-param name="tag" select="'publisher'" />
-                    <xsl:with-param name="publishers" select="concat(metadata/oai_dc:dc/dc:publisher, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:publisher">
+                    <xsl:call-template name="split-publishers">
+                      <xsl:with-param name="tag" select="'publisher'" />
+                      <xsl:with-param name="publishers" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="split-contributors">
-                    <xsl:with-param name="tag" select="'contributor'" />
-                    <xsl:with-param name="contributors" select="concat(metadata/oai_dc:dc/dc:contributor, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:contributor">
+                    <xsl:call-template name="split-contributors">
+                      <xsl:with-param name="tag" select="'contributor'" />
+                      <xsl:with-param name="contributors" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="split-dates">
-                    <xsl:with-param name="tag" select="'date'" />
-                    <xsl:with-param name="dates" select="concat(metadata/oai_dc:dc/dc:date, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:date">
+                    <xsl:call-template name="split-dates">
+                      <xsl:with-param name="tag" select="'date'" />
+                      <xsl:with-param name="dates" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="split-types">
-                    <xsl:with-param name="tag" select="'type'" />
-                    <xsl:with-param name="types" select="concat(metadata/oai_dc:dc/dc:type, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:type">
+                    <xsl:call-template name="split-types">
+                      <xsl:with-param name="tag" select="'type'" />
+                      <xsl:with-param name="types" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="split-formats">
-                    <xsl:with-param name="tag" select="'format'" />
-                    <xsl:with-param name="formats" select="concat(metadata/oai_dc:dc/dc:format, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:format">
+                    <xsl:call-template name="split-formats">
+                      <xsl:with-param name="tag" select="'format'" />
+                      <xsl:with-param name="formats" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'identifier'" />
@@ -263,15 +293,19 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:source" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="split-languages">
-                    <xsl:with-param name="tag" select="'language'" />
-                    <xsl:with-param name="languages" select="concat(metadata/oai_dc:dc/dc:language, ';')" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:language">
+                    <xsl:call-template name="split-languages">
+                      <xsl:with-param name="tag" select="'language'" />
+                      <xsl:with-param name="languages" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'relation'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:relation" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_dc:dc/dc:relation">
+                    <xsl:call-template name="split-relations">
+                      <xsl:with-param name="tag" select="'relation'" />
+                      <xsl:with-param name="relations" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'coverage'" />
@@ -334,12 +368,6 @@
     <xsl:value-of select="substring(., 1, string-length(.) - 1)" />
   </xsl:template>
 
-
-
-
-
-
-
   <xsl:template match="@*">
     <xsl:attribute name="{name()}">
       <xsl:value-of select="normalize-space()"/>
@@ -397,6 +425,20 @@
       </xsl:element> 
       <xsl:call-template name="split-languages">
         <xsl:with-param name="languages" select="substring-after(normalize-space($languages), ';')" />
+        <xsl:with-param name="tag" select="$tag" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="split-relations">
+    <xsl:param name="tag" />
+    <xsl:param name="relations" />
+    <xsl:if test="$relations != ''">
+      <xsl:element name="{$tag}">
+        <xsl:value-of select="substring-before(normalize-space($relations), ';')" />
+      </xsl:element> 
+      <xsl:call-template name="split-relations">
+        <xsl:with-param name="relations" select="substring-after(normalize-space($relations), ';')" />
         <xsl:with-param name="tag" select="$tag" />
       </xsl:call-template>
     </xsl:if>

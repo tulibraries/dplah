@@ -9,6 +9,7 @@ RSpec.describe ThumbnailUtils do
   let (:bepress_thumbnail_url) { "http://example.com/example_collection/1234/thumbnail.jpg" }
   let (:vudl_thumbnail_url) { "http://digital.library.example.com/files/vudl:1234/THUMBNAIL" }
   let (:omeka_thumbnail_url) { "http://omeka.example.com/files/thumbnails/example_thumbnail.jpg" }
+  let (:default_thumbnail) { "default-thumbnail.png" }
 
 
   before(:all) do
@@ -144,7 +145,7 @@ RSpec.describe ThumbnailUtils do
     let (:thumbnail_pattern_both) { "http://example.com/oai/$1/thumbnails/$2.jpg" }
     let (:thumbnail_pattern_first) { "http://example.com/oai/thumbnails/$1.jpg" }
     let (:thumbnail_pattern_second) { "http://example.com/oai/thumbnails/$2.jpg" }
-    let (:thumbnail_pattern_wheeler) { "http://example.com/oai/WHEELER_$1/thumbnails/$2.jpg" }
+    let (:thumbnail_pattern_wheeler) { "http://example.com/oai/$1/thumbnails/$2.jpg" }
     let (:thumbnail_token_1) { "source" }
     let (:thumbnail_token_2) { "identifier" }
     let (:custom_thumbnail_url_both) { "http://example.com/oai/coll1/thumbnails/object1.jpg" }
@@ -153,6 +154,7 @@ RSpec.describe ThumbnailUtils do
     let (:custom_thumbnail_url_wheeler) { "http://example.com/oai/wheeler_coll1/thumbnails/object1.jpg" }
     let (:provider_id_prefix_wheeler) { "UPENNWHL" }
     let (:source) { "coll1" }
+    let (:source_wheeler) { "WHEELER_coll1" }
     let (:identifier) { "object1" }
 
     let (:oai_rec) {
@@ -198,6 +200,7 @@ RSpec.describe ThumbnailUtils do
       provider.thumbnail_token_1 = thumbnail_token_1
       provider.thumbnail_token_2 = thumbnail_token_2
       provider.provider_id_prefix = provider_id_prefix_wheeler
+      oai_rec.source = source_wheeler
       thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
 
       expect(thumbnail_url).to match(custom_thumbnail_url_wheeler)
@@ -205,7 +208,56 @@ RSpec.describe ThumbnailUtils do
 
   end
 
-  it "defines a thumbnail"
+  describe "define_thumbnail" do
+    let (:oai_rec) { FactoryGirl.create(:oai_rec) }
+    let (:thumbnail_pattern_both) { "http://example.com/oai/$1/thumbnails/$2.jpg" }
+    let (:thumbnail_token_1) { "source" }
+    let (:thumbnail_token_2) { "identifier" }
+    let (:custom_thumbnail_url_both) { "http://example.com/oai/coll1/thumbnails/object1.jpg" }
+    let (:source) { "coll1" }
+    let (:identifier) { "object1" }
 
-  it "set a thumbnail"
+    it "returns thumbnail with common repository type" do
+      provider = FactoryGirl.create(:provider) 
+      provider.common_repository_type = "CONTENTdm"
+      obj = FactoryGirl.create(:oai_rec)
+      obj.endpoint_url = "http://cdm16002.contentdm.oclc.org/oai/oai.php"
+      obj.thumbnail = "http://example.com/thumbnail.jpg"
+      obj.set_spec = "p16002coll9"
+      oai_rec = OaiRec.new(pid: contentdm_pid)
+      oai_rec.endpoint_url = obj.endpoint_url
+      oai_rec.set_spec =  obj.set_spec
+      thumbnail_url = ThumbnailUtils.define_thumbnail(oai_rec, provider)
+
+      expect(thumbnail_url).to match(contentdm_thumbnail_url)
+    end
+
+    it "returns thumbnail with thumbnail pattern type" do
+      oai_rec = FactoryGirl.create(:oai_rec)
+      oai_rec.source = source
+      oai_rec.identifier = identifier
+      provider = FactoryGirl.create(:provider) 
+      provider.thumbnail_pattern = thumbnail_pattern_both
+      provider.thumbnail_token_1 = thumbnail_token_1
+      provider.thumbnail_token_2 = thumbnail_token_2
+      thumbnail_url = ThumbnailUtils.define_thumbnail(oai_rec, provider)
+
+      expect(thumbnail_url).to match(custom_thumbnail_url_both)
+    end
+
+    it "returns default thumbnail" do
+
+      oai_rec = FactoryGirl.create(:oai_rec)
+      oai_rec.source = ""
+      oai_rec.identifier = ""
+      provider = FactoryGirl.create(:provider) 
+      provider.thumbnail_pattern = ""
+      provider.thumbnail_token_1 = ""
+      provider.thumbnail_token_2 = ""
+      thumbnail_url = ThumbnailUtils.define_thumbnail(oai_rec, provider)
+
+      expect(thumbnail_url).to match(default_thumbnail)
+    end
+  end
+
 end

@@ -30,6 +30,14 @@ module HarvestUtils
   end
   module_function :harvest_action
 
+  def harvest_action_all(provider)
+    seeds = Provider.where(:contributing_institution => "#{provider.contributing_institution}")
+    seeds.each do |ci|
+      harvest_action(ci)
+    end
+  end
+  module_function :harvest_action_all
+
   def harvest(provider)
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_begin') << I18n.t('oai_seed_logs.current_time') << Time.current.utc.iso8601 << I18n.t('oai_seed_logs.harvest_begin') << provider.name << I18n.t('oai_seed_logs.text_buffer')
@@ -150,29 +158,21 @@ module HarvestUtils
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.ingest_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
     num_files = 1
-
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
-
     custom_file_prefixing(file_prefix, provider)
-    
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
-    
     contents.each do |file|
       check_if_exists(file)
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
       ActiveFedora::FixtureLoader.index(pid)
       obj = OaiRec.find(pid)
-
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
-      
       obj.thumbnail = thumbnail
-
       obj.reorg_identifiers
       obj.save
       obj.to_solr
       obj.update_index
-
       File.delete(file)
       File.open(@log_file, "a+") do |f|
         f << "#{num_files} " << I18n.t('oai_seed_logs.ingest_count')

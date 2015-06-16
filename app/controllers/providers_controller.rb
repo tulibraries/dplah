@@ -1,6 +1,6 @@
 class ProvidersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
+  before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :harvest_all_by_institution, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
 
   def index
     @providers = Provider.all.paginate(page: params[:page], per_page: 10).order('name ASC')
@@ -57,11 +57,18 @@ class ProvidersController < ApplicationController
     redirect_to providers_url, notice: "Seed for \"#{@provider.name}\" is being harvested in the background. Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
+  def harvest_all_by_institution
+    queue_name = "harvest"
+    workers = "workers"
+    Resque.enqueue(HarvestAllByInstitution, @provider)
+    redirect_to providers_url, notice: "All seeds from \"#{@provider.contributing_institution}\" being harvested in the background. Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
+  end
+
   def dump_and_reindex_by_institution
     queue_name = "delete"
     workers = "workers"
     Resque.enqueue(DumpReindex, @provider, "institution")
-    redirect_to providers_url, notice: "Records are being removed from aggregator index for institution provider.contributing_institution}. Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
+    redirect_to providers_url, notice: "Records are being removed from aggregator index for institution \"#{@provider.contributing_institution}\". Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
   def dump_and_reindex_by_set

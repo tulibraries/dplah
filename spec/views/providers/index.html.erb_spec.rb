@@ -23,6 +23,7 @@ RSpec.describe "providers/index", :type => :view do
   end
 
   it "renders a list of providers" do
+    allow(view).to receive(:will_paginate)
     render
     assert_select "tr>td", :text => "Name".to_s, :count => 2
     assert_select "tr>td", :text => "http://example.com".to_s, :count => 2

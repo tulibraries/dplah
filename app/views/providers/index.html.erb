@@ -7,6 +7,8 @@
     <li><%= link_to "Check harvesting logs", human_logs_url, :target => '_blank'%></li>
   </ul>
 </div>
+
+<%= will_paginate @providers %>
 <h1>Listing OAI seeds</h1>
 <table class="oai-seeds">
   <thead>
@@ -35,6 +37,7 @@
         <td><%= provider.provider_id_prefix %></td>
         <td><%= provider.in_production %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Harvest from OAI Source', harvest_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while for OAI seeds with many items.  Are you sure?' } %></td>
+        <td class="oai-actions btn-provider"><%= link_to 'Harvest all OAI Seeds from this Institution', harvest_all_by_institution_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while for institutions with many OAI seeds. Are you sure?' } %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Remove this Institution from Aggregator Index', dump_and_reindex_by_institution_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure?' } %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Remove this Collection from Aggregator Index', dump_and_reindex_by_set_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure?' } %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Edit Seed', edit_provider_path(provider) %></td>

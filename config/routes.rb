@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :providers do
     member do
       post :harvest
+      post :harvest_all_by_institution
       post :dump_and_reindex_by_institution
       post :dump_and_reindex_by_set
     end

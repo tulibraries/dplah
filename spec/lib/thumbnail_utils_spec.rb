@@ -5,13 +5,24 @@ RSpec.describe ThumbnailUtils do
   let (:config) { YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__)) }
   let (:pid_prefix) { config['pid_prefix'] }
 
+  before(:all) do
+    OaiRec.destroy_all
+  end
+
+  after(:all) do
+    OaiRec.destroy_all
+  end
+
   describe "Contentdm.asset_url" do
 
     let (:pid) { "test-prefix:TEMPLE_p16002coll9_1" }
     let (:thumbnail_url) { "http://cdm16002.contentdm.oclc.org/utils/getthumbnail/collection/p16002coll9/id/1" }
 
     subject {
-      obj = FactoryGirl.create(:oai_rec_contentdm)
+      obj = FactoryGirl.create(:oai_rec)
+      obj.endpoint_url = "http://cdm16002.contentdm.oclc.org/oai/oai.php"
+      obj.thumbnail = "http://example.com/thumbnail.jpg"
+      obj.set_spec = "p16002coll9"
       oai_rec = OaiRec.new(pid: pid)
       oai_rec.endpoint_url = obj.endpoint_url
       oai_rec.set_spec =  obj.set_spec
@@ -26,7 +37,8 @@ RSpec.describe ThumbnailUtils do
     let (:thumbnail_url) { "http://example.com/example_collection/1234/thumbnail.jpg" }
 
     subject {
-      oai_rec = FactoryGirl.create(:oai_rec_bepress)
+      oai_rec = FactoryGirl.create(:oai_rec)
+      oai_rec.description = ["http://example.com/example_collection/1234/thumbnail.jpg"]
       ThumbnailUtils::CommonRepositories::Bepress.asset_url(oai_rec)
     }
 
@@ -39,7 +51,8 @@ RSpec.describe ThumbnailUtils do
     let (:thumbnail_url) { "http://digital.library.example.com/files/vudl:1234/THUMBNAIL" }
 
     subject {
-      oai_rec = FactoryGirl.create(:oai_rec_vudl)
+      oai_rec = FactoryGirl.create(:oai_rec)
+      oai_rec.identifier = ["http://digital.library.example.com/Record/vudl:1234"]
       ThumbnailUtils::CommonRepositories::Vudl.asset_url(oai_rec)
     }
 
@@ -52,7 +65,8 @@ RSpec.describe ThumbnailUtils do
     let (:thumbnail_url) { "http://omeka.example.com/files/thumbnails/example_thumbnail.jpg" }
 
     subject {
-      oai_rec = FactoryGirl.create(:oai_rec_omeka)
+      oai_rec = FactoryGirl.create(:oai_rec)
+      oai_rec.identifier = ["http://omeka.example.com/files/thumbnails/example_thumbnail.jpg"]
       ThumbnailUtils::CommonRepositories::Omeka.asset_url(oai_rec)
     }
 

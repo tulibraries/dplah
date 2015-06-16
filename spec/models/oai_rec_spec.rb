@@ -32,7 +32,8 @@ RSpec.describe OaiRec, :type => :model do
 
   context 'OaiRec Object' do
 
-    before(:context) do
+    before(:all) do
+      OaiRec.destroy_all
       @o = FactoryGirl.build(:oai_rec)
       oaiRec = OaiRec.create(title: @o.title,
                              creator: @o.creator,
@@ -64,7 +65,7 @@ RSpec.describe OaiRec, :type => :model do
     end
 
     after(:context) do
-      OaiRec.delete_all
+      OaiRec.destroy_all
     end
 
     it "should find the object" do

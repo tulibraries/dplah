@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :oai_rec do
-    sequence(:title) { |n| ["Record Title #{n}"]}
+    sequence(:title) { |n| "Record Title #{n}"}
     creator ["Record creator"]
     subject ["Record subject"]
     description ["Record description"]
@@ -29,7 +29,7 @@ FactoryGirl.define do
   end
   
   factory :oai_rec_invalid, class: OaiRec do
-    sequence(:title) { |n| ["Record Title #{n}"]}
+    sequence(:title) { |n| "Record Title #{n}"}
     creator ["Record creator"]
     subject ["Record subject"]
     description ["Record description"]

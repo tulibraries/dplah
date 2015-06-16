@@ -139,7 +139,71 @@ RSpec.describe ThumbnailUtils do
     end
   end
 
-  it "defines a thumbnail pattern"
+  describe "define_thumbnail_pattern" do
+
+    let (:thumbnail_pattern_both) { "http://example.com/oai/$1/thumbnails/$2.jpg" }
+    let (:thumbnail_pattern_first) { "http://example.com/oai/thumbnails/$1.jpg" }
+    let (:thumbnail_pattern_second) { "http://example.com/oai/thumbnails/$2.jpg" }
+    let (:thumbnail_pattern_wheeler) { "http://example.com/oai/WHEELER_$1/thumbnails/$2.jpg" }
+    let (:thumbnail_token_1) { "source" }
+    let (:thumbnail_token_2) { "identifier" }
+    let (:custom_thumbnail_url_both) { "http://example.com/oai/coll1/thumbnails/object1.jpg" }
+    let (:custom_thumbnail_url_first) { "http://example.com/oai/thumbnails/object1.jpg" }
+    let (:custom_thumbnail_url_second) { "http://example.com/oai/thumbnails/object1.jpg" }
+    let (:custom_thumbnail_url_wheeler) { "http://example.com/oai/wheeler_coll1/thumbnails/object1.jpg" }
+    let (:provider_id_prefix_wheeler) { "UPENNWHL" }
+    let (:source) { "coll1" }
+    let (:identifier) { "object1" }
+
+    let (:oai_rec) {
+      obj = FactoryGirl.create(:oai_rec)
+      obj.source = source
+      obj.identifier = identifier
+      obj 
+    }
+
+    it "defines a thumbnail pattern with both parameters defined" do
+      provider = FactoryGirl.create(:provider) 
+      provider.thumbnail_pattern = thumbnail_pattern_both
+      provider.thumbnail_token_1 = thumbnail_token_1
+      provider.thumbnail_token_2 = thumbnail_token_2
+      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+
+      expect(thumbnail_url).to match(custom_thumbnail_url_both)
+    end
+
+    it "defines a thumbnail pattern with only first parameter defined" do
+      provider = FactoryGirl.create(:provider) 
+      provider.thumbnail_pattern = thumbnail_pattern_first
+      provider.thumbnail_token_1 = thumbnail_token_2
+      provider.thumbnail_token_2 = ""
+      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+
+      expect(thumbnail_url).to match(custom_thumbnail_url_first)
+    end
+
+    it "defines a thumbnail pattern with only second parameter defined" do
+      provider = FactoryGirl.create(:provider) 
+      provider.thumbnail_pattern = thumbnail_pattern_second
+      provider.thumbnail_token_1 = ""
+      provider.thumbnail_token_2 = thumbnail_token_2
+      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+
+      expect(thumbnail_url).to match(custom_thumbnail_url_second)
+    end
+
+    it "defines a thumbnail pattern with for wheeler" do
+      provider = FactoryGirl.create(:provider) 
+      provider.thumbnail_pattern = thumbnail_pattern_wheeler
+      provider.thumbnail_token_1 = thumbnail_token_1
+      provider.thumbnail_token_2 = thumbnail_token_2
+      provider.provider_id_prefix = provider_id_prefix_wheeler
+      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+
+      expect(thumbnail_url).to match(custom_thumbnail_url_wheeler)
+    end
+
+  end
 
   it "defines a thumbnail"
 

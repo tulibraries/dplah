@@ -11,6 +11,9 @@ FactoryGirl.define do
     provider_id_prefix "prvdr"
     contributing_institution "The Contributing Instition"
     email "provider@example.com"
+    thumbnail_pattern "http://repository.org/oai/$1/thumbnails/$2.jpg"
+    thumbnail_token_1 "thumbnail_token_1"
+    thumbnail_token_2 "thumbnail_token_2"
   end
 
   factory :provider_small_collection, class: Provider do

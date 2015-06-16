@@ -72,7 +72,7 @@ module ThumbnailUtils
   module_function :define_thumbnail_common
 
   def define_thumbnail_pattern(obj, provider)
-    asset_url = ''
+    asset_url = provider.thumbnail_pattern
     if !provider.thumbnail_token_1.blank?
       token_1 = obj.send(provider.thumbnail_token_1).first
       
@@ -80,11 +80,11 @@ module ThumbnailUtils
         token_1 = token_1.gsub("WHEELER_","wheeler_")
       end
 
-      asset_url = provider.thumbnail_pattern.gsub("$1", token_1)
+      asset_url = asset_url.gsub("$1", token_1)
     end
     if !provider.thumbnail_token_2.blank?
-      token_1 = obj.send(provider.thumbnail_token_2).first
-      asset_url = provider.thumbnail_pattern.gsub("$2", token_2)
+      token_2 = obj.send(provider.thumbnail_token_2).first
+      asset_url = asset_url.gsub("$2", token_2)
     end
     asset_url
   end

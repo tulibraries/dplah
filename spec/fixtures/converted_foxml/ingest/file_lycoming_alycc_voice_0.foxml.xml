@@ -18,6 +18,7 @@
           <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Lycoming College Archives</dc:publisher>
           <dc:contributor xmlns:dc="http://purl.org/dc/elements/1.1/">Snowden Library of Lycoming College</dc:contributor>
           <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1961-01-31</dc:date>
+          <dcterms:temporal xmlns:dcterms='http://purl.org/dc/terms/'>1957</dcterms:temporal>
           <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Sound</dc:type>
           <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">00:30:15</dc:format>
           <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">reel-to-reel audiotape</dc:format>
@@ -26,8 +27,11 @@
           <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://contentdm1.accesspa.org/cdm/ref/collection/alycc-voice/id/0</dc:identifier>
           <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
           <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Digitized collections of the Lycoming College Archives. http://www.lycoming.edu/library/archives/index.html</dc:relation>
+          <dcterms:spatial xmlns:dcterms='http://purl.org/dc/terms/'>Lycoming College, Lycoming County</dcterms:spatial>
           <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/">United States, Pennsylvania, Lycoming County, Williamsport</dc:coverage>
           <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">May be used for educational purposes as long as a credit statement is included. For all other uses, contact Lycoming College Archives</dc:rights>
+          <dcterms:accessRights xmlns:dcterms='http://purl.org/dc/terms/'>Visitors to the Archives can access.</dcterms:accessRights>
+          <dcterms:rightsHolder xmlns:dcterms='http://purl.org/dc/terms/'>Lycoming College Archives</dcterms:rightsHolder>
         </oai_dc:dc>
       </foxml:xmlContent>
     </foxml:datastreamVersion>
@@ -43,6 +47,7 @@
           <publisher>Lycoming College Archives</publisher>
           <contributor>Snowden Library of Lycoming College</contributor>
           <date>1961-01-31</date>
+          <temporal>1961</temporal>
           <type>Sound</type>
           <format>00:30:15</format>
           <format>reel-to-reel audiotape</format>
@@ -51,8 +56,11 @@
           <identifier>http://contentdm1.accesspa.org/cdm/ref/collection/alycc-voice/id/0</identifier>
           <language>eng</language>
           <relation>Digitized collections of the Lycoming College Archives. http://www.lycoming.edu/library/archives/index.html</relation>
+          <spatial>Lycoming College, Lycoming County</spatial>
           <coverage>United States, Pennsylvania, Lycoming County, Williamsport</coverage>
           <rights>May be used for educational purposes as long as a credit statement is included. For all other uses, contact Lycoming College Archives</rights>
+          <access_rights>Visitors to the Archives can access.</access_rights>
+          <rights_holder>Lycoming College Archives</rights_holder>
           <contributing_institution>POWER Library</contributing_institution>
           <set_spec>alycc-voice</set_spec>
           <collection_name>Voices of Lycoming</collection_name>

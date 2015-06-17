@@ -14,14 +14,18 @@ class OaiRec < ActiveFedora::Base
 	has_attributes :publisher, datastream: 'descMetadata', multiple: true
 	has_attributes :contributor, datastream: 'descMetadata', multiple: true
 	has_attributes :date, datastream: 'descMetadata', multiple: true
+	has_attributes :temporal, datastream: 'descMetadata', multiple: true
 	has_attributes :type, datastream: 'descMetadata', multiple: true
 	has_attributes :format, datastream: 'descMetadata', multiple: true
+	has_attributes :spatial, datastream: 'descMetadata', multiple: true
 	has_attributes :identifier, datastream: 'descMetadata', multiple: true
 	has_attributes :source, datastream: 'descMetadata', multiple: true
 	has_attributes :language, datastream: 'descMetadata', multiple: true
 	has_attributes :relation, datastream: 'descMetadata', multiple: true
 	has_attributes :coverage, datastream: 'descMetadata', multiple: true
 	has_attributes :rights, datastream: 'descMetadata', multiple: true
+	has_attributes :access_rights, datastream: 'descMetadata', multiple: true
+	has_attributes :rights_holder, datastream: 'descMetadata', multiple: true
 
 	# Partner-specific
 	has_attributes :common_repository_type, datastream: 'descMetadata', multiple: false

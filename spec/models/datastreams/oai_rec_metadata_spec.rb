@@ -12,14 +12,18 @@ describe "OaiRecMetadata" do
     it { is_expected.to have_term(:publisher) }
     it { is_expected.to have_term(:contributor) }
     it { is_expected.to have_term(:date) }
+    it { is_expected.to have_term(:temporal) }
     it { is_expected.to have_term(:type) }
     it { is_expected.to have_term(:format) }
     it { is_expected.to have_term(:identifier) }
     it { is_expected.to have_term(:source) }
     it { is_expected.to have_term(:language) }
     it { is_expected.to have_term(:relation) }
+    it { is_expected.to have_term(:spatial) }
     it { is_expected.to have_term(:coverage) }
     it { is_expected.to have_term(:rights) }
+    it { is_expected.to have_term(:access_rights) }
+    it { is_expected.to have_term(:rights_holder) }
     it { is_expected.to have_term(:contributing_institution) }
     it { is_expected.to have_term(:set_spec) }
     it { is_expected.to have_term(:collection_name) }

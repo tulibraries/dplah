@@ -21,6 +21,8 @@ pid_prefix: "changeme"
 partner: "Name of hub"
 human_log_path: '/abs/path/to/log/files'
 human_log_url: 'http://fullurltologfiles'
+email_sender: "from@example.edu"
+email_recipient: "to@example.edu"
 
 ```
 
@@ -32,6 +34,8 @@ Substitute your own values as follows for the YML fields:
 * `partner` refers to the name of the DPLA Partner hub
 * `human_log_path` refers to the absolute path on the file system where the OAI management logs should go
 * `human_log_url` refers to the full clickable URL path to the directory on your web server where OAI management logs live
+* `email_sender` refers to the sending address for harvest utility email reports
+* `email_recipient` refers to the recipient address for harvest utility email reports
 
 ##Start up locally
 

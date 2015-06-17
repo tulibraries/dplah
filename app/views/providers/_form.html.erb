@@ -32,6 +32,11 @@
     <%= f.label :new_endpoint_url %><br>
     <%= f.text_field :new_endpoint_url %>
   </div>
+
+  <div class="field">
+    <%= f.label :metadata_prefix %><br>
+    <%= f.select :metadata_prefix, [['oai_dc', 'oai_dc'], ['oai_qdc', 'oai_qdc']] %>
+  </div>
   
   <div class="field">
     <%= f.label :set %><br>

@@ -14,14 +14,18 @@ RSpec.describe OaiRec, :type => :model do
     it { is_expected.to respond_to(:publisher) }
     it { is_expected.to respond_to(:contributor) }
     it { is_expected.to respond_to(:date) }
+    it { is_expected.to respond_to(:temporal) }
     it { is_expected.to respond_to(:type) }
     it { is_expected.to respond_to(:format) }
     it { is_expected.to respond_to(:identifier) }
     it { is_expected.to respond_to(:source) }
     it { is_expected.to respond_to(:language) }
     it { is_expected.to respond_to(:relation) }
+    it { is_expected.to respond_to(:spatial) }
     it { is_expected.to respond_to(:coverage) }
     it { is_expected.to respond_to(:rights) }
+    it { is_expected.to respond_to(:access_rights) }
+    it { is_expected.to respond_to(:rights_holder) }
 
     it { is_expected.to respond_to(:contributing_institution) }
     it { is_expected.to respond_to(:collection_name) }
@@ -41,14 +45,18 @@ RSpec.describe OaiRec, :type => :model do
                              publisher: @o.publisher,
                              contributor: @o.contributor,
                              date: @o.date,
+                             temporal: @o.temporal,
                              type: @o.type,
                              format: @o.format,
                              identifier: @o.identifier,
                              source: @o.source,
                              language: @o.language,
                              relation: @o.relation,
+                             spatial: @o.spatial,
                              coverage: @o.coverage,
                              rights: @o.rights,
+                             access_rights: @o.access_rights,
+                             rights_holder: @o.rights_holder,
                              contributing_institution: @o.contributing_institution,
                              collection_name: @o.collection_name,
                              partner: @o.partner,
@@ -99,6 +107,10 @@ RSpec.describe OaiRec, :type => :model do
       expect(@object.date).to eq(@o.date)
     end
 
+    it "should match the temporal" do
+      expect(@object.temporal).to eq(@o.temporal)
+    end
+
     it "should match the type" do
       expect(@object.type).to eq(@o.type)
     end
@@ -123,12 +135,24 @@ RSpec.describe OaiRec, :type => :model do
       expect(@object.relation).to eq(@o.relation)
     end
 
+    it "should match the spatial" do
+      expect(@object.spatial).to eq(@o.spatial)
+    end
+
     it "should match the coverage" do
       expect(@object.coverage).to eq(@o.coverage)
     end
 
     it "should match the rights" do
       expect(@object.rights).to eq(@o.rights)
+    end
+
+    it "should match the access_rights" do
+      expect(@object.access_rights).to eq(@o.access_rights)
+    end
+
+    it "should match the rights_holder" do
+      expect(@object.rights_holder).to eq(@o.rights_holder)
     end
 
     it "should match the contributing institution" do

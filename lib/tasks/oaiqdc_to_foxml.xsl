@@ -102,7 +102,7 @@
               FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/"
               SIZE="342">
               <foxml:xmlContent>
-                <oai_qdc:qualifieddc xsi:schemaLocation="http://oclc.org/appqualifieddc/ appqualifieddc.xsdd"> 
+                <oai_qdc:qualifieddc> 
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:title'" />

@@ -130,11 +130,11 @@ RSpec.describe ThumbnailUtils do
     end
 
     describe "Invalid provider" do
-      xit "is a thumbnail URL" do
+      it "is a thumbnail URL" do
         common_repository_type = "Fake Repository"
         @provider.common_repository_type = common_repository_type
         oai_rec = FactoryGirl.create(:oai_rec)
-        expect(ThumbnailUtils.define_thumbnail_common(oai_rec, @provider)).to raise_error(SystemExit)
+        expect(lambda{ThumbnailUtils.define_thumbnail_common(oai_rec, @provider)}).to raise_error SystemExit
       end
 
     end

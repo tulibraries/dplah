@@ -69,6 +69,6 @@ class OaiRecsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def oai_rec_params
-      params.require(:oai_rec).permit(:title, :creator, :subject, :description, :publisher, :contributor, :date, :type, :format, :identifier, :source, :language, :relation, :coverage, :rights)
+      params.require(:oai_rec).permit(:title, :creator, :subject, :description, :publisher, :contributor, :date, :temporal, :type, :format, :spatial, :identifier, :source, :language, :relation, :coverage, :rights, :accessRights, :rightsHolder)
     end
 end

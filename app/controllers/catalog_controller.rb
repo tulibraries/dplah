@@ -65,6 +65,9 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name('intermediate_provider', :facetable), :label => 'Intermediate Provider', :limit => 7
     config.add_facet_field solr_name('collection_name', :facetable), :label => 'Collection Name', :limit => 7
     config.add_facet_field solr_name('language', :facetable), :label => 'Language', :limit => 7
+    config.add_facet_field solr_name('temporal', :facetable), :label => 'Temporal Date', :limit => 7
+    config.add_facet_field solr_name('spatial', :facetable), :label => 'Spatial Relation', :limit => 7
+    config.add_facet_field solr_name('access_rights', :facetable), :label => 'Access Rights', :limit => 7
     config.add_facet_field solr_name('publisher', :facetable), :label => 'Publisher', :limit => 7
 
     # Have BL send all facet field names to Solr, which has been the default
@@ -93,14 +96,18 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name('publisher', :stored_searchable, type: :string), :label => 'Publisher'
     config.add_show_field solr_name('contributor', :stored_searchable, type: :string), :label => 'Contributor'
     config.add_show_field solr_name('date', :stored_searchable, type: :string), :label => 'Date'
+    config.add_show_field solr_name('temporal', :stored_searchable, type: :string), :label => 'Temporal Date'
     config.add_show_field solr_name('type', :stored_searchable, type: :string), :label => 'Type'
     config.add_show_field solr_name('format', :stored_searchable, type: :string), :label => 'Format'
     config.add_show_field solr_name('identifier', :stored_searchable, type: :string), :label => 'Identifier'
     config.add_show_field solr_name('source', :stored_searchable, type: :string), :label => 'Source'
     config.add_show_field solr_name('language', :stored_searchable, type: :string), :label => 'Language'
     config.add_show_field solr_name('relation', :stored_searchable, type: :string), :label => 'Relation'
+    config.add_show_field solr_name('spatial', :stored_searchable, type: :string), :label => 'Spatial Relation'
     config.add_show_field solr_name('coverage', :stored_searchable, type: :string), :label => 'Coverage'
     config.add_show_field solr_name('rights', :stored_searchable, type: :string), :label => 'Rights'
+    config.add_show_field solr_name('access_rights', :stored_searchable, type: :string), :label => 'Access Rights'
+    config.add_show_field solr_name('rights_holder', :stored_searchable, type: :string), :label => 'Rights Holder'
     config.add_show_field solr_name('contributing_institution', :stored_searchable, type: :string), :label => 'Contributing Institution', :link_to_search => 'contributing_institution_sim'
     config.add_show_field solr_name('intermediate_provider', :stored_searchable, type: :string), :label => 'Intermediate Provider', :link_to_search => 'intermediate_provider'
     config.add_show_field solr_name('collection_name', :stored_searchable, type: :string), :label => 'Collection Name', :link_to_search => 'collection_name'

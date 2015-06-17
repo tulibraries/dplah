@@ -47,7 +47,8 @@ module HarvestUtils
     client = OAI::Client.new provider.endpoint_url
     response = client.list_records
     set = provider.set if provider.set
-    response = client.list_records :set => set if set
+    metadata_prefix = provider.metadata_prefix if provider.metadata_prefix
+    response = client.list_records(:metadata_prefix => metadata_prefix, :set => set)
     full_records = ''
     response.each do |record|
         num_files += 1
@@ -89,7 +90,10 @@ module HarvestUtils
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.convert_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
-      xslt_path = Rails.root.join("lib", "tasks", "oai_to_foxml.xsl")
+
+      xslt_file = provider.metadata_prefix == "oai_qdc" ? "oaiqdc_to_foxml" : "oai_to_foxml"
+
+      xslt_path = Rails.root.join("lib", "tasks", "#{xslt_file}.xsl")
       u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
       File.open(@log_file, "a+") do |f|
 

@@ -46,8 +46,8 @@ module HarvestUtils
     transient_records = 0
     client = OAI::Client.new provider.endpoint_url
     response = client.list_records
-    set = provider.set if provider.set
-    metadata_prefix = provider.metadata_prefix if provider.metadata_prefix
+    set = provider.set ? provider.set : ""
+    metadata_prefix = provider.metadata_prefix ? provider.metadata_prefix : "oai_dc"
     response = client.list_records(:metadata_prefix => metadata_prefix, :set => set)
     full_records = ''
     response.each do |record|

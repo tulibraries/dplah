@@ -1,4 +1,5 @@
 class OaiRecsController < ApplicationController
+  # [TODO] Validate parametewrs such as URLs, email addresses, prefix formats, etc
   before_action :set_oai_rec, only: [:show, :edit, :update, :destroy]
 
   # GET /oai_recs

@@ -28,7 +28,7 @@ RSpec.describe ProvidersController, :type => :controller do
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    FactoryGirl.build(:invalid_provider).attributes
   }
 
   # This should return the minimal set of values that should be in the session
@@ -107,14 +107,14 @@ RSpec.describe ProvidersController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        FactoryGirl.build(:edited_provider_small_collection).attributes
       }
 
       it "updates the requested provider" do
         provider = Provider.create! valid_attributes
         put :update, {:id => provider.to_param, :provider => new_attributes}, valid_session
         provider.reload
-        skip("Add assertions for updated state")
+        expect(assigns(:provider)).to eq(provider)
       end
 
       it "assigns the requested provider as @provider" do
@@ -178,6 +178,16 @@ RSpec.describe ProvidersController, :type => :controller do
       $stdout = sso
       expect(Harvest).to have_queue_size_of(1)
     end
+
+    it "Harvests all of the data by institution" do
+      @provider = Provider.create! valid_attributes
+      sso = stdout_to_null
+      VCR.use_cassette "provider_controller/harvest_small_collection" do
+        post :harvest_all_by_institution, {:id => @provider.to_param}, valid_session
+      end
+      $stdout = sso
+      expect(Harvest).to have_queue_size_of(1)
+    end
   end
 
   describe "dump and reindex" do
@@ -197,13 +207,15 @@ RSpec.describe ProvidersController, :type => :controller do
     end
 
     it "Dumps and reindexes by institution" do
-      Resque.enqueue(DumpReindex, @provider, "institution")
+      provider = Provider.create! valid_attributes
+      put :dump_and_reindex_by_institution, {:id => provider.to_param, :provider => valid_attributes}, valid_session
       expect(DumpReindex).to have_queue_size_of(1)
       expect(response).to redirect_to(providers_url)
     end
 
     it "Dumps and reindexes by set" do
-      Resque.enqueue(DumpReindex, @provider, "set")
+      provider = Provider.create! valid_attributes
+      put :dump_and_reindex_by_set, {:id => provider.to_param, :provider => valid_attributes}, valid_session
       expect(DumpReindex).to have_queue_size_of(1)
       expect(response).to redirect_to(providers_url)
     end

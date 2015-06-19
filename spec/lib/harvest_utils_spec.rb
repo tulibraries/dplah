@@ -23,6 +23,14 @@ RSpec.describe HarvestUtils do
       # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
 
+    end
+
+    after :each do
+      # Delete the harvested test files
+      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
+    end
+
+    it "should harvest a collection" do
       # Harvest the collection
       sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
@@ -30,31 +38,56 @@ RSpec.describe HarvestUtils do
       end
       $stdout = sso
 
-    end
-
-    after :each do
-      # Delete the harvested test files 
-      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
-
-    end
-
-    it "should harvest a collection" do
       # Expect that we've harvest just one file
-      file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
-      expect(file_count).to eq(1)
-      file = Dir[File.join(download_directory, '*.xml')].first
-      doc = Nokogiri::XML(File.read(file))
+      files = Dir[File.join(download_directory, '*.xml')]
+      expect(files.count).to eq(1)
 
-      # Expect the harvested file to have representative metadata 
+      # Expect the harvested file to have representative metadata
+      doc = Nokogiri::XML(File.read(files.first))
       expect(doc.xpath("//manifest/set_spec").first.text).to eq(provider_small_collection.set)
       expect(doc.xpath("//manifest/collection_name").first.text).to eq(provider_small_collection.collection_name)
-      #expect(doc.xpath("//manifest/provider_id_prefix").first.text).to eq(provider_small_collection.contributing_institution)
       expect(doc.xpath("//manifest/contributing_institution").first.text).to eq(provider_small_collection.contributing_institution)
     end
 
 #[TODO]    it "should log the harvest"
 
   end
+
+  context "Harvest with Resumption Token" do
+    let(:provider_resumption_token) { FactoryGirl.build(:provider_resumption_token) }
+
+    before :each do
+      # Make sure sure download directory is empty
+      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
+
+      # Make we are starting fresh
+      file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
+
+      # Create the harvest log file
+      HarvestUtils::create_log_file(log_name)
+
+      # Harvest the collection
+      sso = stdout_to_null
+      VCR.use_cassette "harvest_utils/provider_resumption_token" do
+        HarvestUtils::harvest(provider_resumption_token)
+      end
+      $stdout = sso
+
+    end
+
+    after :each do
+      # Delete the harvested test files
+      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
+
+    end
+
+    it "should harvest collection with a resumption token" do
+      # Expect that we've harvest just two files
+      file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
+      expect(file_count).to eq(2)
+    end
+  end
+
 
   context "Convert Records" do
 
@@ -178,6 +211,7 @@ RSpec.describe HarvestUtils do
 
   context "Delete Records" do
     before(:each) do
+      ActiveFedora::Base.destroy_all
       @pid = "#{pid_prefix}:#{SecureRandom.uuid}"
       ActionMailer::Base.deliveries = []
     end
@@ -185,12 +219,12 @@ RSpec.describe HarvestUtils do
     it "has deletes all records for the collection" do
       ActiveFedora::Base.create({pid: @pid})
       expect(ActiveFedora::Base.count).to_not eq 0
-      HarvestUtils::delete_all 
+      HarvestUtils::delete_all
       expect(ActiveFedora::Base.count).to eq 0
 
       mail_deliveries = ActionMailer::Base.deliveries.uniq
       expect(mail_deliveries.size).to eq 1
-      expect(mail_deliveries.last.subject).to match /Whole Index Deleted/
+      expect(mail_deliveries.last.subject).to match /#{I18n.t 'dpla.harvest_mailer.dump_whole_index_subject' }/
     end
   end
 
@@ -222,6 +256,117 @@ RSpec.describe HarvestUtils do
       expect(ActiveFedora::Base.count).to eq 1
       expect(ActiveFedora::Base.first.pid).to eq pid
     end
+  end
+
+  describe "cleanout_and_reindex" do
+    let (:dummy_count) { 1 }
+
+    it "reindexes by set" do
+      reindex_by = "set"
+      allow(HarvestUtils).to receive(:remove_selective).with(provider_small_collection, reindex_by) { dummy_count }
+      count = HarvestUtils::cleanout_and_reindex(provider_small_collection, {reindex_by: reindex_by})
+      expect(count).to eq dummy_count
+    end
+
+    it "reindexes by institution" do
+      reindex_by = "institution"
+      allow(HarvestUtils).to receive(:remove_selective).with(provider_small_collection, reindex_by) { dummy_count }
+      count = HarvestUtils::cleanout_and_reindex(provider_small_collection, {reindex_by: reindex_by})
+      expect(count).to eq dummy_count
+    end
+  end
+
+  context "Harvest Actions" do
+
+    before :each do
+      # Make sure harvest directories are empty
+      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
+      FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
+
+      # Start with fresh Fedora test database
+      ActiveFedora::Base.destroy_all
+
+      # Create the harvest log file
+      HarvestUtils::create_log_file(log_name)
+    end
+
+    after :each do
+      # Delete the harvested test files
+      FileUtils.rm Dir.glob "#{download_directory}/*.xml"
+      FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
+    end
+
+    describe "Single harvest action" do
+
+      it "should harvest the collection" do
+        # Harvest the collection
+        sso = stdout_to_null
+        VCR.use_cassette "harvest_utils/provider_small_collection" do
+          HarvestUtils::harvest_action(provider_small_collection)
+        end
+        $stdout = sso
+
+        # Expect it harvested records
+        expect(ActiveFedora::Base.count).to eq(6)
+      end
+
+    end
+
+    describe "Harvest Action All from Contributing Institution" do
+
+      before :each do
+        provider_small_collection.save
+      end
+
+      it "should harvest a collection" do
+        # Harvest the collection
+        sso = stdout_to_null
+        VCR.use_cassette "harvest_utils/provider_small_collection" do
+          HarvestUtils::harvest_action_all(provider_small_collection)
+        end
+        $stdout = sso
+
+        # Expect it harvested records
+        expect(ActiveFedora::Base.count).to eq(6)
+      end
+
+    end
 
   end
+
+
+  describe "remove_selective" do
+
+    before :each do
+      # Start with fresh Fedora repository
+      ActiveFedora::Base.destroy_all
+
+      # Add items to the repository
+      sso = stdout_to_null
+      HarvestUtils::harvest_action(provider_small_collection)
+      $stdout = sso
+
+      @initial_count = ActiveFedora::Base.count
+    end
+
+    it "removes objects by set" do
+      HarvestUtils::remove_selective(provider_small_collection, "set")
+      expect(ActiveFedora::Base.count).to_not eq(@initial_count)
+      expect(ActiveFedora::Base.count).to eq(0)
+    end
+
+    it "removes objects by institution" do
+      HarvestUtils::remove_selective(provider_small_collection, "institution")
+      expect(ActiveFedora::Base.count).to_not eq(@initial_count)
+      expect(ActiveFedora::Base.count).to eq(0)
+    end
+
+    it "rejects non set and insitution option" do
+      expect(lambda{HarvestUtils::remove_selective(provider_small_collection, "")}).to raise_error SystemExit
+      expect(ActiveFedora::Base.count).to eq(@initial_count)
+      expect(ActiveFedora::Base.count).to_not eq(0)
+    end
+
+  end
+
 end

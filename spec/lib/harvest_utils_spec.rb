@@ -283,6 +283,9 @@ RSpec.describe HarvestUtils do
       FileUtils.rm Dir.glob "#{download_directory}/*.xml"
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
+      # Start with fresh Fedora test database
+      ActiveFedora::Base.destroy_all
+
       # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
     end
@@ -331,5 +334,39 @@ RSpec.describe HarvestUtils do
 
   end
 
+
+  describe "remove_selective" do
+
+    before :each do
+      # Start with fresh Fedora repository
+      ActiveFedora::Base.destroy_all
+
+      # Add items to the repository
+      sso = stdout_to_null
+      HarvestUtils::harvest_action(provider_small_collection)
+      $stdout = sso
+
+      @initial_count = ActiveFedora::Base.count
+    end
+
+    it "removes objects by set" do
+      HarvestUtils::remove_selective(provider_small_collection, "set")
+      expect(ActiveFedora::Base.count).to_not eq(@initial_count)
+      expect(ActiveFedora::Base.count).to eq(0)
+    end
+
+    it "removes objects by institution" do
+      HarvestUtils::remove_selective(provider_small_collection, "institution")
+      expect(ActiveFedora::Base.count).to_not eq(@initial_count)
+      expect(ActiveFedora::Base.count).to eq(0)
+    end
+
+    it "rejects non set and insitution option" do
+      expect(lambda{HarvestUtils::remove_selective(provider_small_collection, "")}).to raise_error SystemExit
+      expect(ActiveFedora::Base.count).to eq(@initial_count)
+      expect(ActiveFedora::Base.count).to_not eq(0)
+    end
+
+  end
 
 end

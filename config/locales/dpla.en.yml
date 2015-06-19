@@ -15,3 +15,5 @@ en:
       all_of_text: 'All of '
       dump_and_reindex_by_institution_text: "'s collections have been deleted from the DPLA PA index"
       dumped_whole_index_text: 'All items have been deleted from the DPLA PA index'
+    basic_mailer:
+      error_occured: 'An error has occured'

@@ -34,6 +34,7 @@ class OaiRec < ActiveFedora::Base
 
 	#DPLA-specific fields
 	has_attributes :contributing_institution, datastream: 'descMetadata', multiple: false
+	has_attributes :rights_statement, datastream: 'descMetadata', multiple: false
 	has_attributes :intermediate_provider, datastream: 'descMetadata', multiple: false
 	has_attributes :collection_name, datastream: 'descMetadata', multiple: false
 	has_attributes :partner, datastream: 'descMetadata', multiple: false
@@ -54,5 +55,10 @@ class OaiRec < ActiveFedora::Base
 		end
 		self.identifier = f
 	end
+
+	def assign_rights
+	  self.rights = self.rights_statement unless self.rights_statement.blank?
+    end
+
 end
 

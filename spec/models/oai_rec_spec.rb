@@ -64,6 +64,7 @@ RSpec.describe OaiRec, :type => :model do
                              set_spec: @o.set_spec,
                              intermediate_provider: @o.intermediate_provider,
                              provider_id_prefix: @o.provider_id_prefix,
+                             rights_statement: @o.rights_statement,
                              common_repository_type: @o.common_repository_type,
                              endpoint_url: @o.endpoint_url,
                              thumbnail: @o.thumbnail)
@@ -178,6 +179,10 @@ RSpec.describe OaiRec, :type => :model do
 
     it "should match the provider id prefix" do
       expect(@object.provider_id_prefix).to eq(@o.provider_id_prefix)
+    end
+
+    it "should match the rights statement" do
+      expect(@object.rights_statement).to eq(@o.rights_statement)
     end
 
     it "should match the common repository type" do

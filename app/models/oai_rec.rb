@@ -54,5 +54,11 @@ class OaiRec < ActiveFedora::Base
 		end
 		self.identifier = f
 	end
+
+	def add_identifier(new_identifier)
+		binding.pry()
+    	f = self.identifier
+    	f.insert(0, new_identifier)
+	end
 end
 

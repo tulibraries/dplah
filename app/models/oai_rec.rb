@@ -55,5 +55,10 @@ class OaiRec < ActiveFedora::Base
 		end
 		self.identifier = f
 	end
+
+	def assign_rights
+	  self.rights = self.rights_statement unless self.rights_statement.blank?
+    end
+
 end
 

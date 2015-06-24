@@ -104,6 +104,10 @@ class Provider < ActiveRecord::Base
 		read_attribute(:provider_id_prefix) || ''
 	end
 
+	def rights_statement
+		read_attribute(:rights_statement) || ''
+	end
+
 	def common_repository_type
 		read_attribute(:common_repository_type) || ''
 	end

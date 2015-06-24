@@ -115,6 +115,14 @@
     </div>
   </div>
 
+  <div class="field">
+    <%= f.label :rights_statement %><br>
+    <%= f.text_area :rights_statement %>
+    <div class="field-tip">
+      If no rights statement exists, or if this rights statement should supersede the rights statement that exists for the object 
+    </div>
+  </div>
+
  <div class="field">
     <%= f.label :email %><br>
     <%= f.collection_select :email, Provider.unique_by_email, :email, :email, :prompt => "Please select one from this list or enter below" %>

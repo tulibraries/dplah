@@ -36,6 +36,10 @@
     <xsl:value-of select="records/manifest/identifier_token" />
   </xsl:variable>
 
+  <xsl:variable name="rights_statement">
+    <xsl:value-of select="records/manifest/rights_statement" />
+  </xsl:variable>
+
   <xsl:variable name="set_spec">
     <xsl:value-of select="records/manifest/set_spec" />
   </xsl:variable>
@@ -363,6 +367,10 @@
 
                   <xsl:element name="identifier_token">
                     <xsl:value-of select="$identifier_token" />
+                  </xsl:element>
+
+                  <xsl:element name="rights_statement">
+                    <xsl:value-of select="$rights_statement" />
                   </xsl:element>
 
                 </fields>

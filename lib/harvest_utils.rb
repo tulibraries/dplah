@@ -171,12 +171,11 @@ module HarvestUtils
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
       ActiveFedora::FixtureLoader.index(pid)
       obj = OaiRec.find(pid)
-      binding.pry()
-      build_identifier(obj, provider) if provider.identifier_pattern
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
       obj.thumbnail = thumbnail
-      obj.reorg_identifiers
       obj.assign_rights
+      build_identifier(obj, provider) if provider.identifier_pattern
+      obj.reorg_identifiers
       obj.save
       obj.to_solr
       obj.update_index
@@ -379,7 +378,6 @@ module HarvestUtils
     end
 
     def self.build_identifier(obj, provider)
-      binding.pry
       token = obj.send(provider.identifier_token).first
       assembled_identifier = provider.identifier_pattern.gsub("$1", token)
       obj.add_identifier(assembled_identifier)

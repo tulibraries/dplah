@@ -168,10 +168,64 @@
   <div class="field-tip">
     <%= t('dpla.thumbnail_warning') %>
   </div>
-
- 
   <% end %>
+  <%= field_set_tag 'Type Mapping Details' do %>
 
+
+  
+  <div class="field">
+    <%= f.label :types_mapping %><br>
+    <%= f.select :types_mapping, [['No', 'No'], ['Yes', 'Yes']] %>
+    <div class="field-tip">
+      Note: Map type field to DCMI Terms?
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "Type: Image" %><br>
+    <%= f.text_area :type_image %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "Type: Text" %><br>
+    <%= f.text_area :type_text %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "Type: Sound" %><br>
+    <%= f.text_area :type_sound %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "Type: Moving Image" %><br>
+    <%= f.text_area :type_moving_image %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "Type: Physical Object" %><br>
+    <%= f.text_area :type_physical_object %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit ( f.object.new_record? ? "Create OAI Seed" : "Update OAI Seed") %>

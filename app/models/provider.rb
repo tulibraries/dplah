@@ -124,6 +124,30 @@ class Provider < ActiveRecord::Base
 		read_attribute(:thumbnail_token_2) || ''
 	end
 
+	def types_mapping
+		read_attribute(:types_mapping) || ''
+	end
+
+	def type_image
+		read_attribute(:type_image) || ''
+	end
+
+	def type_moving_image
+		read_attribute(:type_moving_image) || ''
+	end
+
+	def type_text
+		read_attribute(:type_text) || ''
+	end
+
+	def type_sound
+		read_attribute(:type_sound) || ''
+	end
+
+	def type_physical_object
+		read_attribute(:type_physical_object) || ''
+	end
+
 	def next_harvest_at
 		consumed_at + interval
 	end

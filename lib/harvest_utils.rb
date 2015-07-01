@@ -146,6 +146,7 @@ module HarvestUtils
       normalize_facets(doc, "//publisher")
 
       normalize_language(doc, "//language")
+      dcmi_types(doc, "//type", provider)
       normalize_type(doc, "//type")
 
 
@@ -364,7 +365,47 @@ module HarvestUtils
         node_value.inner_html = node_value.inner_html.downcase
         node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
       end
-      
+    end
+
+
+    def self.dcmi_types(doc, string_to_search, provider)
+      provider.type_sound = "Audio"
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        if provider.type_sound.present? 
+          new_val = sort_types("Sound", provider.type_sound, node_value.inner_html)
+          node_value.inner_html = new_val
+        end
+
+        if provider.type_text.present? 
+          new_val = sort_types("Text", provider.type_text, node_value.inner_html)
+          node_value.inner_html = new_val
+        end
+
+        if provider.type_image.present? 
+          new_val = sort_types("Image", provider.type_image, node_value.inner_html)
+          node_value.inner_html = new_val
+        end
+
+        if provider.type_moving_image.present? 
+          new_val = sort_types("Moving Image", provider.type_moving_image, node_value.inner_html)
+          node_value.inner_html = new_val
+        end
+
+        if provider.type_physical_object.present? 
+          new_val = sort_types("Physical Object", provider.type_physical_object, node_value.inner_html)
+          node_value.inner_html = new_val
+        end
+
+      end
+    end
+
+    def self.sort_types(dcmi_type, type_array, value)
+      t_arr = type_array.split(";")
+      t_arr.each do |a|
+        value = dcmi_type if value == a.to_s
+      end
+      value
     end
 
     def self.process_record_token(record, full_records, transient_records)

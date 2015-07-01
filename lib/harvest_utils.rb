@@ -145,6 +145,9 @@ module HarvestUtils
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
 
+      normalize_language(doc, "//language")
+
+
       File.open(new_file, 'w') do |f|  
           f.print(doc.to_xml)
           File.rename(new_file, xml_file)
@@ -293,6 +296,62 @@ module HarvestUtils
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.gsub(/[\.]$/, '')
+      end
+    end
+
+    def self.normalize_language(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        case node_value.inner_html
+          when "Amh"
+            node_value.inner_html = "Amharic" 
+          when "Grc"
+            node_value.inner_html = "Ancient Greek" 
+          when "Chi"
+            node_value.inner_html = "Chinese" 
+          when "Zho"
+            node_value.inner_html = "Chinese" 
+          when "Cze"
+            node_value.inner_html = "Czech" 
+          when "Ces"
+            node_value.inner_html = "Czech" 
+          when "Dan"
+            node_value.inner_html = "Danish" 
+          when "Dut"  
+            node_value.inner_html = "Dutch" 
+          when "Eng"  
+            node_value.inner_html = "English" 
+          when "En"  
+            node_value.inner_html = "English"  
+          when "Fre"  
+            node_value.inner_html = "French" 
+          when "Fra"  
+            node_value.inner_html = "French"  
+          when "Ger"
+            node_value.inner_html = "German" 
+          when "Deu"
+            node_value.inner_html = "German" 
+          when "Gre"
+            node_value.inner_html = "Greek" 
+          when "Ita"  
+            node_value.inner_html = "Italian" 
+          when "Gle"
+            node_value.inner_html = "Irish" 
+          when "Jpn"
+            node_value.inner_html = "Japanese" 
+          when "Kor"
+            node_value.inner_html = "Korean" 
+          when "Lat"  
+            node_value.inner_html = "Latin"  
+          when "Pol"
+            node_value.inner_html = "Polish" 
+          when "Spa"  
+            node_value.inner_html = "Spanish"  
+          when "Vie"
+            node_value.inner_html = "Vietnamese" 
+          else  
+            node_value.inner_html = node_value.inner_html  
+          end  
       end
     end
 

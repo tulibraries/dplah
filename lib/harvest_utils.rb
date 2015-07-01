@@ -146,6 +146,7 @@ module HarvestUtils
       normalize_facets(doc, "//publisher")
 
       normalize_language(doc, "//language")
+      normalize_type(doc, "//type")
 
 
       File.open(new_file, 'w') do |f|  
@@ -321,6 +322,8 @@ module HarvestUtils
             node_value.inner_html = "Dutch" 
           when "Eng"  
             node_value.inner_html = "English" 
+          when "English (eng)"  
+            node_value.inner_html = "English" 
           when "En"  
             node_value.inner_html = "English"  
           when "Fre"  
@@ -353,6 +356,15 @@ module HarvestUtils
             node_value.inner_html = node_value.inner_html  
           end  
       end
+    end
+
+    def self.normalize_type(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.downcase
+        node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
+      end
+      
     end
 
     def self.process_record_token(record, full_records, transient_records)

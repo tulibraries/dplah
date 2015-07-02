@@ -12,16 +12,17 @@ class ApplicationController < ActionController::Base
 
 
   def harvest_all_providers
-    Provider.all.select { |x| Time.now > x.next_harvest_at }.each do |provider|
-      HarvestUtils.harvest_action(provider)
-    end
-    redirect_to providers_url, notice: "All OAI seeds harvested"
-
+    queue_name = "harvest"
+    workers = "workers"
+    Resque.enqueue(HarvestAll)
+    redirect_to providers_url, notice: "All OAI seeds being harvested.  Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
   def dump_whole_index
-    HarvestUtils.delete_all
-    redirect_to providers_url, notice: "Index deleted from Aggregator"
+    queue_name = "delete"
+    workers = "workers"
+    Resque.enqueue(DumpWholeIndex)
+    redirect_to providers_url, notice: "All records are now being deleted from the aggregator index.  Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
 end

@@ -38,6 +38,14 @@ module HarvestUtils
   end
   module_function :harvest_action_all
 
+  def harvest_all()
+    Provider.all.each do |provider|
+      harvest_action(provider)
+    end
+  end
+  module_function :harvest_all
+
+
   def harvest(provider)
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_begin') << I18n.t('oai_seed_logs.current_time') << Time.current.utc.iso8601 << I18n.t('oai_seed_logs.harvest_begin') << provider.name << I18n.t('oai_seed_logs.text_buffer')
@@ -205,7 +213,7 @@ module HarvestUtils
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_all_begin') << I18n.t('oai_seed_logs.text_buffer')
     end
     records_num = 0
-    ActiveFedora::Base.find_each({},batch_size: 2000) do |o|
+    ActiveFedora::Base.find_each({},batch_size: 20000) do |o|
       delete_from_aggregator(o)
       records_num += 1
       File.open(@log_file, "a+") do |f|

@@ -99,6 +99,23 @@
   </div>
 
   <div class="field">
+    <%= f.label :identifier_pattern %><br>
+    <%= f.text_field :identifier_pattern %>
+    <div class="field-tip">
+      Note: URL pattern (with up to one token) for retrieving the identifier link for each record.<br />
+      Example: http://repository.org/oai/records/$1
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :identifier_token %><br>
+    <%= f.select :identifier_token, Provider.possible_identifier_fields, :prompt => "Please select one..." %>
+    <div class="field-tip">
+      Note: Please select the metadata field (first occurrence per record only) to which the first token maps (if one is present in your identifier pattern).
+    </div>
+  </div>
+
+  <div class="field">
     <%= f.label :rights_statement %><br>
     <%= f.text_area :rights_statement %>
     <div class="field-tip">

@@ -198,4 +198,9 @@ class Provider < ActiveRecord::Base
           oai_dc_fields = [['OAI seed set','set'],['title','title'],['creator','creator'],['subject','subject'],['description','description'],['publisher','publisher'],['contributor','contributor'],['date','date'],['type','type'],['format','format'],['identifier','identifier'],['source','source'],['language','language'],['relation','relation'],['coverage','coverage'],['rights','rights']]
           oai_dc_fields
 	    end
+
+	    def self.possible_identifier_fields
+          oai_dc_fields = [['title','title'],['creator','creator'],['subject','subject'],['contributor','contributor'],['identifier','identifier'],['source','source']]
+          oai_dc_fields
+	    end
 end

@@ -56,7 +56,7 @@ module HarvestUtils
     response = client.list_records
     set = provider.set ? provider.set : ""
     metadata_prefix = provider.metadata_prefix ? provider.metadata_prefix : "oai_dc"
-    response = client.list_records(:metadata_prefix => metadata_prefix, :set => set)
+    response = provider.set ? client.list_records(:metadata_prefix => metadata_prefix, :set => set) : client.list_records(:metadata_prefix => metadata_prefix)
     full_records = ''
     response.each do |record|
         num_files += 1
@@ -186,8 +186,9 @@ module HarvestUtils
       obj = OaiRec.find(pid)
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
       obj.thumbnail = thumbnail
-      obj.reorg_identifiers
       obj.assign_rights
+      build_identifier(obj, provider) if provider.identifier_pattern
+      obj.reorg_identifiers
       obj.save
       obj.to_solr
       obj.update_index
@@ -535,6 +536,12 @@ module HarvestUtils
       end
     end
 
+    def self.build_identifier(obj, provider)
+      token = obj.send(provider.identifier_token).first
+      assembled_identifier = provider.identifier_pattern.gsub("$1", token)
+      obj.add_identifier(assembled_identifier)
+    end
+
     ###
     # special case customizations -- hopefully can be eliminated later
     ###
@@ -544,4 +551,5 @@ module HarvestUtils
       # little fix for Villanova's DPLA set
       file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
     end
+
 end

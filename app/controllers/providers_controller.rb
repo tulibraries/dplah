@@ -84,7 +84,7 @@ class ProvidersController < ApplicationController
     end
 
     def provider_params
-      params.require(:provider).permit(:name, :description, :endpoint_url, :new_endpoint_url, :email, :new_email, :metadata_prefix, :set, :contributing_institution, :new_contributing_institution, :intermediate_provider, :new_intermediate_provider, :collection_name, :in_production, :provider_id_prefix, :new_provider_id_prefix, :rights_statement, :common_repository_type, :thumbnail_pattern, :thumbnail_token_1, :thumbnail_token_2, :types_mapping, :type_image, :type_moving_image, :type_text, :type_sound, :type_physical_object)
+      params.require(:provider).permit(:name, :description, :endpoint_url, :new_endpoint_url, :email, :new_email, :metadata_prefix, :set, :contributing_institution, :new_contributing_institution, :intermediate_provider, :new_intermediate_provider, :collection_name, :in_production, :provider_id_prefix, :new_provider_id_prefix, :rights_statement, :common_repository_type, :thumbnail_pattern, :thumbnail_token_1, :thumbnail_token_2, :type_image, :type_moving_image, :type_text, :type_sound, :type_physical_object)
     end
 
 end

@@ -124,10 +124,6 @@ class Provider < ActiveRecord::Base
 		read_attribute(:thumbnail_token_2) || ''
 	end
 
-	def types_mapping
-		read_attribute(:types_mapping) || ''
-	end
-
 	def type_image
 		read_attribute(:type_image) || ''
 	end

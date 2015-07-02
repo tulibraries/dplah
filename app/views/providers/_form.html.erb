@@ -171,16 +171,6 @@
   <% end %>
   <%= field_set_tag 'Type Mapping Details' do %>
 
-
-  
-  <div class="field">
-    <%= f.label :types_mapping %><br>
-    <%= f.select :types_mapping, [['No', 'No'], ['Yes', 'Yes']] %>
-    <div class="field-tip">
-      Note: Map type field to DCMI Terms?
-    </div>
-  </div>
-
   <div class="field">
     <%= f.label "Type: Image" %><br>
     <%= f.text_area :type_image %>

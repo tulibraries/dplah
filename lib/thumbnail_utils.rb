@@ -76,7 +76,7 @@ module ThumbnailUtils
     if !provider.thumbnail_token_1.blank?
       token_1 = obj.send(provider.thumbnail_token_1).first
       
-      if provider.provider_id_prefix == "UPENNWHL"
+      if provider.provider_id_prefix == "UPENNWHE"
         token_1 = token_1.gsub("WHEELER_","wheeler_")
       end
 

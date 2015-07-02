@@ -213,7 +213,7 @@ module HarvestUtils
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_all_begin') << I18n.t('oai_seed_logs.text_buffer')
     end
     records_num = 0
-    ActiveFedora::Base.find_each({},batch_size: 20000) do |o|
+    ActiveFedora::Base.all.each do |o|
       delete_from_aggregator(o)
       records_num += 1
       File.open(@log_file, "a+") do |f|

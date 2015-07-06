@@ -144,6 +144,8 @@ module HarvestUtils
       normalize_facets(doc, "//type")
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
+      
+      normalize_dates(doc, "//date")
 
       File.open(new_file, 'w') do |f|  
           f.print(doc.to_xml)
@@ -295,6 +297,27 @@ module HarvestUtils
         node_value.inner_html = node_value.inner_html.gsub(/[\.]$/, '')
       end
     end
+
+    def self.normalize_dates(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.gsub(/[circacaCIRCACA.]/, '').strip!
+      end
+    end
+
+    #TODO: may be incorporated into date sanitizing -- save here for now
+    # def self.check_for_to_range(date_range)
+    #   dates = ""
+    #   if date_range.include?("to")
+    #     first = date_range.split("to").first.strip!.to_i
+    #     last = date_range.split("to").last.strip!.to_i
+    #     total = (last - first) + 1
+    #     total.times do |i|
+    #       dates += "#{first + i};" 
+    #     end
+    #   end 
+    #   dates
+    # end
 
     def self.process_record_token(record, full_records, transient_records)
       puts record.metadata

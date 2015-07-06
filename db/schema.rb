@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150623153819) do
+ActiveRecord::Schema.define(version: 20150701203649) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",       null: false
@@ -52,6 +52,14 @@ ActiveRecord::Schema.define(version: 20150623153819) do
     t.string   "new_intermediate_provider"
     t.string   "new_email"
     t.string   "rights_statement"
+    t.string   "identifier_pattern"
+    t.string   "identifier_token"
+    t.string   "types_mapping"
+    t.string   "type_image"
+    t.string   "type_text"
+    t.string   "type_moving_image"
+    t.string   "type_sound"
+    t.string   "type_physical_object"
   end
 
   create_table "searches", force: true do |t|

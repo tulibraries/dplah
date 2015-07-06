@@ -59,9 +59,17 @@ class OaiRec < ActiveFedora::Base
 		self.identifier = f
 	end
 
+	def add_identifier(new_identifier)
+		f = self.identifier
+		j = f.push("#{new_identifier}")
+		self.update_attributes({"identifier" => j})
+		self.save
+        self.to_solr
+		self.update_index
+	end
+
 	def assign_rights
 	  self.rights = self.rights_statement unless self.rights_statement.blank?
     end
 
 end
-

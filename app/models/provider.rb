@@ -124,6 +124,26 @@ class Provider < ActiveRecord::Base
 		read_attribute(:thumbnail_token_2) || ''
 	end
 
+	def type_image
+		read_attribute(:type_image) || ''
+	end
+
+	def type_moving_image
+		read_attribute(:type_moving_image) || ''
+	end
+
+	def type_text
+		read_attribute(:type_text) || ''
+	end
+
+	def type_sound
+		read_attribute(:type_sound) || ''
+	end
+
+	def type_physical_object
+		read_attribute(:type_physical_object) || ''
+	end
+
 	def next_harvest_at
 		consumed_at + interval
 	end
@@ -176,6 +196,11 @@ class Provider < ActiveRecord::Base
 
 	    def self.possible_thumbnail_fields
           oai_dc_fields = [['OAI seed set','set'],['title','title'],['creator','creator'],['subject','subject'],['description','description'],['publisher','publisher'],['contributor','contributor'],['date','date'],['type','type'],['format','format'],['identifier','identifier'],['source','source'],['language','language'],['relation','relation'],['coverage','coverage'],['rights','rights']]
+          oai_dc_fields
+	    end
+
+	    def self.possible_identifier_fields
+          oai_dc_fields = [['title','title'],['creator','creator'],['subject','subject'],['contributor','contributor'],['identifier','identifier'],['source','source']]
           oai_dc_fields
 	    end
 end

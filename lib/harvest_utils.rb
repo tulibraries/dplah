@@ -260,6 +260,25 @@ module HarvestUtils
 
     end
 
+    def self.remove_bad_namespaces(xml_file)
+      bad_namespace = "xmlns:oai_qdc='http://worldcat.org/xmlschemas/qdc-1.0/'"
+      good_namespace = "xmlns:oai_qdc='http://oclc.org/appqualifieddc/'"
+      new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
+      fopen = File.open(xml_file)
+
+      file_contents = fopen.read
+      fopen.close
+
+      File.open(new_file, 'w') do |f|
+        fc = file_contents.gsub(bad_namespace, good_namespace)
+        f.puts fc
+        File.rename(new_file, xml_file)
+        f.close
+      end
+
+
+    end
+
     def self.normalize_global(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
@@ -362,6 +381,7 @@ module HarvestUtils
       FileUtils::mkdir_p @harvest_path
       File.open(f_name_full, "w") { |file| file.puts full_records }
       add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :intermediate_provider => provider.intermediate_provider, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix, :rights_statement => provider.rights_statement, :common_repository_type => provider.common_repository_type, :endpoint_url => provider.endpoint_url, :pid_prefix => @pid_prefix)
+      remove_bad_namespaces(f_name_full)
     end
 
     def self.check_if_exists(file)

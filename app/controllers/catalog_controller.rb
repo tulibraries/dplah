@@ -61,13 +61,16 @@ class CatalogController < ApplicationController
     # facet bar
     config.add_facet_field solr_name('subject', :facetable), :label => 'Subject', :collapse => false, :limit => 5
     config.add_facet_field solr_name('type', :facetable), :label => 'Type', :limit => 7
+    config.add_facet_field solr_name('created', :facetable), :label => 'Date Created', :limit => 7
+    config.add_facet_field solr_name('issued', :facetable), :label => 'Date Issued', :limit => 7
+    config.add_facet_field solr_name('available', :facetable), :label => 'Date Available', :limit => 7
+    config.add_facet_field solr_name('temporal', :facetable), :label => 'Temporal Date', :limit => 7
     config.add_facet_field solr_name('spatial', :facetable), :label => 'Spatial Relation', :limit => 7
     config.add_facet_field solr_name('access_rights', :facetable), :label => 'Access Rights', :limit => 7
     config.add_facet_field solr_name('contributing_institution', :facetable), :label => 'Contributing Institution', :limit => 7
     config.add_facet_field solr_name('intermediate_provider', :facetable), :label => 'Intermediate Provider', :limit => 7
     config.add_facet_field solr_name('collection_name', :facetable), :label => 'Collection Name', :limit => 7
     config.add_facet_field solr_name('language', :facetable), :label => 'Language', :limit => 7
-    config.add_facet_field solr_name('temporal', :facetable), :label => 'Temporal Date', :limit => 7
     config.add_facet_field solr_name('publisher', :facetable), :label => 'Publisher', :limit => 7
 
     # Have BL send all facet field names to Solr, which has been the default
@@ -96,6 +99,9 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name('publisher', :stored_searchable, type: :string), :label => 'Publisher'
     config.add_show_field solr_name('contributor', :stored_searchable, type: :string), :label => 'Contributor'
     config.add_show_field solr_name('date', :stored_searchable, type: :string), :label => 'Date'
+    config.add_show_field solr_name('created', :stored_searchable, type: :string), :label => 'Date Created'
+    config.add_show_field solr_name('issued', :stored_searchable, type: :string), :label => 'Date Issued'
+    config.add_show_field solr_name('available', :stored_searchable, type: :string), :label => 'Date Available'
     config.add_show_field solr_name('temporal', :stored_searchable, type: :string), :label => 'Temporal Date'
     config.add_show_field solr_name('type', :stored_searchable, type: :string), :label => 'Type'
     config.add_show_field solr_name('format', :stored_searchable, type: :string), :label => 'Format'

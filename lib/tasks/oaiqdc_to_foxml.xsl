@@ -2,8 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:foxml="info:fedora/fedora-system:def/foxml#"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:oai_qdc="http://oclc.org/appqualifieddc/"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:oai_qdc="http://oclc.org/appqualifieddc/"
   xmlns:dcterms="http://purl.org/dc/terms/"
   xmlns:exsl="http://exslt.org/common"
   xmlns:ex="http://exslt.org/dates-and-times"
@@ -153,10 +153,33 @@
                     </xsl:call-template>
                   </xsl:for-each>
 
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'dcterms:temporal'" />
-                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:temporal" />
-                  </xsl:call-template>
+                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:created">
+                    <xsl:call-template name="name-tag">
+                      <xsl:with-param name="tag" select="'dcterms:created'" />
+                      <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:created" />
+                    </xsl:call-template>
+                  </xsl:for-each>
+
+                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:issued">
+                    <xsl:call-template name="name-tag">
+                      <xsl:with-param name="tag" select="'dcterms:issued'" />
+                      <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:issued" />
+                    </xsl:call-template>
+                  </xsl:for-each>
+
+                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:available">
+                    <xsl:call-template name="name-tag">
+                      <xsl:with-param name="tag" select="'dcterms:available'" />
+                      <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:available" />
+                    </xsl:call-template>
+                  </xsl:for-each>
+
+                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:temporal">
+                    <xsl:call-template name="name-tag">
+                      <xsl:with-param name="tag" select="'dcterms:temporal'" />
+                      <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:temporal" />
+                    </xsl:call-template>
+                  </xsl:for-each>
 
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:type">
                     <xsl:call-template name="split-on">
@@ -170,10 +193,13 @@
                       <xsl:with-param name="tag" select="'dc:format'" />
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'dcterms:spatial'" />
-                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:spatial" />
-                  </xsl:call-template>
+                  </xsl:for-each>
+
+                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:spatial">
+                    <xsl:call-template name="name-tag">
+                      <xsl:with-param name="tag" select="'dcterms:spatial'" />
+                      <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:spatial" />
+                    </xsl:call-template>
                   </xsl:for-each>
 
                   <xsl:call-template name="name-tag">
@@ -276,6 +302,27 @@
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:date">
                     <xsl:call-template name="split-on">
                       <xsl:with-param name="tag" select="'date'" />
+                      <xsl:with-param name="on" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
+
+                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:created">
+                    <xsl:call-template name="split-on">
+                      <xsl:with-param name="tag" select="'created'" />
+                      <xsl:with-param name="on" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
+
+                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:issued">
+                    <xsl:call-template name="split-on">
+                      <xsl:with-param name="tag" select="'issued'" />
+                      <xsl:with-param name="on" select="concat(., ';')" />
+                    </xsl:call-template>
+                  </xsl:for-each>
+
+                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:available">
+                    <xsl:call-template name="split-on">
+                      <xsl:with-param name="tag" select="'available'" />
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
                   </xsl:for-each>

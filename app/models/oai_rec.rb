@@ -14,6 +14,9 @@ class OaiRec < ActiveFedora::Base
 	has_attributes :publisher, datastream: 'descMetadata', multiple: true
 	has_attributes :contributor, datastream: 'descMetadata', multiple: true
 	has_attributes :date, datastream: 'descMetadata', multiple: true
+	has_attributes :created, datastream: 'descMetadata', multiple: true
+	has_attributes :issued, datastream: 'descMetadata', multiple: true
+	has_attributes :available, datastream: 'descMetadata', multiple: true
 	has_attributes :temporal, datastream: 'descMetadata', multiple: true
 	has_attributes :type, datastream: 'descMetadata', multiple: true
 	has_attributes :format, datastream: 'descMetadata', multiple: true

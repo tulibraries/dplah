@@ -38,6 +38,14 @@ module HarvestUtils
   end
   module_function :harvest_action_all
 
+  def harvest_all()
+    Provider.all.each do |provider|
+      harvest_action(provider)
+    end
+  end
+  module_function :harvest_all
+
+
   def harvest(provider)
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_begin') << I18n.t('oai_seed_logs.current_time') << Time.current.utc.iso8601 << I18n.t('oai_seed_logs.harvest_begin') << provider.name << I18n.t('oai_seed_logs.text_buffer')
@@ -48,7 +56,7 @@ module HarvestUtils
     response = client.list_records
     set = provider.set ? provider.set : ""
     metadata_prefix = provider.metadata_prefix ? provider.metadata_prefix : "oai_dc"
-    response = client.list_records(:metadata_prefix => metadata_prefix, :set => set)
+    response = provider.set ? client.list_records(:metadata_prefix => metadata_prefix, :set => set) : client.list_records(:metadata_prefix => metadata_prefix)
     full_records = ''
     response.each do |record|
         num_files += 1
@@ -145,6 +153,11 @@ module HarvestUtils
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
 
+      normalize_language(doc, "//language")
+      normalize_type(doc, "//type")
+      dcmi_types(doc, "//type", provider)
+
+
       File.open(new_file, 'w') do |f|  
           f.print(doc.to_xml)
           File.rename(new_file, xml_file)
@@ -173,8 +186,9 @@ module HarvestUtils
       obj = OaiRec.find(pid)
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
       obj.thumbnail = thumbnail
-      obj.reorg_identifiers
       obj.assign_rights
+      build_identifier(obj, provider) if provider.identifier_pattern
+      obj.reorg_identifiers
       obj.save
       obj.to_solr
       obj.update_index
@@ -200,7 +214,7 @@ module HarvestUtils
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_all_begin') << I18n.t('oai_seed_logs.text_buffer')
     end
     records_num = 0
-    ActiveFedora::Base.find_each({},batch_size: 2000) do |o|
+    ActiveFedora::Base.all.each do |o|
       delete_from_aggregator(o)
       records_num += 1
       File.open(@log_file, "a+") do |f|
@@ -294,6 +308,132 @@ module HarvestUtils
       node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.gsub(/[\.]$/, '')
       end
+    end
+
+    def self.normalize_language(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        case node_value.inner_html
+          when "Amh"
+            node_value.inner_html = "Amharic" 
+          when "Grc"
+            node_value.inner_html = "Ancient Greek" 
+          when "Chi"
+            node_value.inner_html = "Chinese" 
+          when "Zho"
+            node_value.inner_html = "Chinese" 
+          when "Cze"
+            node_value.inner_html = "Czech" 
+          when "Ces"
+            node_value.inner_html = "Czech" 
+          when "Dan"
+            node_value.inner_html = "Danish" 
+          when "Dut"  
+            node_value.inner_html = "Dutch" 
+          when "Eng"  
+            node_value.inner_html = "English" 
+          when "English (eng)"  
+            node_value.inner_html = "English" 
+          when "En"  
+            node_value.inner_html = "English"  
+          when "Fre"  
+            node_value.inner_html = "French" 
+          when "Fra"  
+            node_value.inner_html = "French"  
+          when "Ger"
+            node_value.inner_html = "German" 
+          when "Deu"
+            node_value.inner_html = "German" 
+          when "Gre"
+            node_value.inner_html = "Greek" 
+          when "Ita"  
+            node_value.inner_html = "Italian" 
+          when "Gle"
+            node_value.inner_html = "Irish" 
+          when "Jpn"
+            node_value.inner_html = "Japanese" 
+          when "Kor"
+            node_value.inner_html = "Korean" 
+          when "Lat"  
+            node_value.inner_html = "Latin"  
+          when "Pol"
+            node_value.inner_html = "Polish" 
+          when "Spa"  
+            node_value.inner_html = "Spanish"  
+          when "Vie"
+            node_value.inner_html = "Vietnamese" 
+          else  
+            node_value.inner_html = node_value.inner_html  
+          end  
+      end
+    end
+
+    def self.normalize_type(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.downcase
+        node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
+      end
+    end
+
+
+    def self.dcmi_types(doc, string_to_search, provider)
+      
+      types_ongoing ||= []
+
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        if provider.type_sound.present? 
+          new_val = sort_types("Sound", provider.type_sound, node_value.inner_html)
+          unless types_ongoing.include?(new_val)
+            node_value.inner_html = new_val 
+            types_ongoing.push(new_val)
+          end
+
+        end
+
+        if provider.type_text.present? 
+          new_val = sort_types("Text", provider.type_text, node_value.inner_html)
+          unless types_ongoing.include?(new_val)
+            node_value.inner_html = new_val 
+            types_ongoing.push(new_val)
+          end
+        end
+
+        if provider.type_image.present? 
+          new_val = sort_types("Image", provider.type_image, node_value.inner_html)
+          unless types_ongoing.include?(new_val)
+            node_value.inner_html = new_val 
+            types_ongoing.push(new_val)
+          end
+
+        end
+
+        if provider.type_moving_image.present? 
+          new_val = sort_types("Moving image", provider.type_moving_image, node_value.inner_html)
+          unless types_ongoing.include?(new_val)
+            node_value.inner_html = new_val 
+            types_ongoing.push(new_val)
+          end
+        end
+
+        if provider.type_physical_object.present? 
+          new_val = sort_types("Physical object", provider.type_physical_object, node_value.inner_html)
+          unless types_ongoing.include?(new_val)
+            node_value.inner_html = new_val 
+            types_ongoing.push(new_val)
+          end
+        end
+
+      end
+    end
+
+    def self.sort_types(dcmi_type, type_array, value)
+      t_arr = type_array.split(";")
+      t_arr.each do |a|
+        value = dcmi_type if value == a.to_s 
+      end
+      value
     end
 
     def self.process_record_token(record, full_records, transient_records)
@@ -396,6 +536,12 @@ module HarvestUtils
       end
     end
 
+    def self.build_identifier(obj, provider)
+      token = obj.send(provider.identifier_token).first
+      assembled_identifier = provider.identifier_pattern.gsub("$1", token)
+      obj.add_identifier(assembled_identifier)
+    end
+
     ###
     # special case customizations -- hopefully can be eliminated later
     ###
@@ -405,4 +551,5 @@ module HarvestUtils
       # little fix for Villanova's DPLA set
       file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
     end
+
 end

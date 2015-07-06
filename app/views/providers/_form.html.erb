@@ -99,6 +99,23 @@
   </div>
 
   <div class="field">
+    <%= f.label :identifier_pattern %><br>
+    <%= f.text_field :identifier_pattern %>
+    <div class="field-tip">
+      Note: URL pattern (with up to one token) for retrieving the identifier link for each record.<br />
+      Example: http://repository.org/oai/records/$1
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :identifier_token %><br>
+    <%= f.select :identifier_token, Provider.possible_identifier_fields, :prompt => "Please select one..." %>
+    <div class="field-tip">
+      Note: Please select the metadata field (first occurrence per record only) to which the first token maps (if one is present in your identifier pattern).
+    </div>
+  </div>
+
+  <div class="field">
     <%= f.label :rights_statement %><br>
     <%= f.text_area :rights_statement %>
     <div class="field-tip">
@@ -168,10 +185,54 @@
   <div class="field-tip">
     <%= t('dpla.thumbnail_warning') %>
   </div>
-
- 
   <% end %>
+  <%= field_set_tag 'Type Mapping Details' do %>
 
+  <div class="field">
+    <%= f.label "Type: Image" %><br>
+    <%= f.text_area :type_image %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "Type: Text" %><br>
+    <%= f.text_area :type_text %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "Type: Sound" %><br>
+    <%= f.text_area :type_sound %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "Type: Moving Image" %><br>
+    <%= f.text_area :type_moving_image %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "Type: Physical Object" %><br>
+    <%= f.text_area :type_physical_object %>
+    <div class="field-tip">
+      Note: Comma-separated values, example: <br />
+      Photo; Still Image; Photograph;
+    </div>
+  </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit ( f.object.new_record? ? "Create OAI Seed" : "Update OAI Seed") %>

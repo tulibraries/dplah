@@ -115,8 +115,8 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name('access_rights', :stored_searchable, type: :string), :label => 'Access Rights'
     config.add_show_field solr_name('rights_holder', :stored_searchable, type: :string), :label => 'Rights Holder'
     config.add_show_field solr_name('contributing_institution', :stored_searchable, type: :string), :label => 'Contributing Institution', :link_to_search => 'contributing_institution_sim'
-    config.add_show_field solr_name('intermediate_provider', :stored_searchable, type: :string), :label => 'Intermediate Provider', :link_to_search => 'intermediate_provider'
-    config.add_show_field solr_name('collection_name', :stored_searchable, type: :string), :label => 'Collection Name', :link_to_search => 'collection_name'
+    config.add_show_field solr_name('intermediate_provider', :stored_searchable, type: :string), :label => 'Intermediate Provider', :link_to_search => 'intermediate_provider_sim'
+    config.add_show_field solr_name('collection_name', :stored_searchable, type: :string), :label => 'Collection Name', :link_to_search => 'collection_name_sim'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

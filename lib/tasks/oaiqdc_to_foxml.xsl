@@ -29,6 +29,14 @@
     <xsl:value-of select="records/manifest/provider_id_prefix" />
   </xsl:variable>
 
+  <xsl:variable name="identifier_pattern">
+    <xsl:value-of select="records/manifest/identifier_pattern" />
+  </xsl:variable>
+
+  <xsl:variable name="identifier_token">
+    <xsl:value-of select="records/manifest/identifier_token" />
+  </xsl:variable>
+
   <xsl:variable name="rights_statement">
     <xsl:value-of select="records/manifest/rights_statement" />
   </xsl:variable>
@@ -227,7 +235,6 @@
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
                   </xsl:for-each>
-
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:coverage'" />
@@ -429,6 +436,14 @@
 
                   <xsl:element name="provider_id_prefix">
                     <xsl:value-of select="$provider_id_prefix" />
+                  </xsl:element>
+
+                  <xsl:element name="identifier_pattern">
+                    <xsl:value-of select="$identifier_pattern" />
+                  </xsl:element>
+
+                  <xsl:element name="identifier_token">
+                    <xsl:value-of select="$identifier_token" />
                   </xsl:element>
 
                   <xsl:element name="rights_statement">

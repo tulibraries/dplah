@@ -39,7 +39,7 @@ module HarvestUtils
   module_function :harvest_action_all
 
   def harvest_all()
-    Provider.all.each do |provider|
+    Provider.find_each(batch_size: 5) do |provider|
       harvest_action(provider)
     end
   end
@@ -314,7 +314,7 @@ module HarvestUtils
     def self.normalize_dates(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.gsub(/[circacaCIRCACA.]/, '').strip!
+        node_value.inner_html = node_value.inner_html.gsub(/[circacaCIRCACA.]/, '').strip
       end
     end
 

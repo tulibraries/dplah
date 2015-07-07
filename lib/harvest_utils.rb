@@ -39,7 +39,7 @@ module HarvestUtils
   module_function :harvest_action_all
 
   def harvest_all()
-    Provider.find_each(:batch_size => 5) do |provider|
+    Provider.all.each do |provider|
       harvest_action(provider)
     end
   end

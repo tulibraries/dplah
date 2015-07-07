@@ -61,6 +61,7 @@ class CatalogController < ApplicationController
     # facet bar
     config.add_facet_field solr_name('subject', :facetable), :label => 'Subject', :collapse => false, :limit => 5
     config.add_facet_field solr_name('type', :facetable), :label => 'Type', :limit => 7
+    config.add_facet_field solr_name('date', :facetable), :label => 'Date', :limit => 7
     config.add_facet_field solr_name('created', :facetable), :label => 'Date Created', :limit => 7
     config.add_facet_field solr_name('issued', :facetable), :label => 'Date Issued', :limit => 7
     config.add_facet_field solr_name('available', :facetable), :label => 'Date Available', :limit => 7

@@ -39,7 +39,7 @@ module HarvestUtils
   module_function :harvest_action_all
 
   def harvest_all()
-    Provider.all.each do |provider|
+    Provider.find_each(:batch_size => 5) do |provider|
       harvest_action(provider)
     end
   end
@@ -156,6 +156,8 @@ module HarvestUtils
       normalize_language(doc, "//language")
       normalize_type(doc, "//type")
       dcmi_types(doc, "//type", provider)
+      strip_brackets(doc, "//language")
+
 
 
       File.open(new_file, 'w') do |f|  
@@ -307,6 +309,13 @@ module HarvestUtils
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.gsub(/[\.]$/, '')
+      end
+    end
+
+    def self.strip_brackets(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.gsub(/[\[\]']+/,'')
       end
     end
 

@@ -39,7 +39,7 @@ module HarvestUtils
   module_function :harvest_action_all
 
   def harvest_all()
-    Provider.all.each do |provider|
+    Provider.find_each(batch_size: 5) do |provider|
       harvest_action(provider)
     end
   end
@@ -152,7 +152,8 @@ module HarvestUtils
       normalize_facets(doc, "//type")
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
-
+      
+      normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
       normalize_type(doc, "//type")
       dcmi_types(doc, "//type", provider)
@@ -309,6 +310,14 @@ module HarvestUtils
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.gsub(/[\.]$/, '')
+      end
+    end
+
+
+    def self.normalize_dates(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.gsub(/[^0-9]/,"").strip
       end
     end
 

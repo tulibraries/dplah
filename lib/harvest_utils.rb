@@ -130,6 +130,7 @@ module HarvestUtils
     xml_files = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
 
     xml_files.each do |xml_file|
+
       xml_content = File.read(xml_file)
       doc = Nokogiri::XML(xml_content)
 
@@ -181,7 +182,11 @@ module HarvestUtils
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
     custom_file_prefixing(file_prefix, provider)
+    
+
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
+ 
+
     contents.each do |file|
       check_if_exists(file)
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
@@ -190,7 +195,7 @@ module HarvestUtils
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
       obj.thumbnail = thumbnail
       obj.assign_rights
-      build_identifier(obj, provider) if provider.identifier_pattern
+      build_identifier(obj, provider) unless provider.identifier_pattern.empty?
       obj.reorg_identifiers
       obj.save
       obj.to_solr

@@ -117,6 +117,7 @@ module HarvestUtils
   module_function :convert
 
   def cleanup(provider)
+
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
@@ -158,14 +159,20 @@ module HarvestUtils
       normalize_type(doc, "//type")
       dcmi_types(doc, "//type", provider)
       strip_brackets(doc, "//language")
-
-
+      remove_fake_identifiers(doc, "//identifier")
 
       File.open(new_file, 'w') do |f|  
           f.print(doc.to_xml)
           File.rename(new_file, xml_file)
           f.close
       end
+
+      if provider.common_repository_type == "Small Institution Omeka"
+        old_pid, new_pid = construct_si_pid(doc, "//identifier", @pid_prefix, provider.provider_id_prefix)
+        replace_pid(xml_file, old_pid, new_pid)
+
+      end
+
     end
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_end') << I18n.t('oai_seed_logs.text_buffer')
@@ -285,18 +292,14 @@ module HarvestUtils
       good_namespace = "xmlns:oai_qdc='http://oclc.org/appqualifieddc/'"
       new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
       fopen = File.open(xml_file)
-
       file_contents = fopen.read
       fopen.close
-
       File.open(new_file, 'w') do |f|
         fc = file_contents.gsub(bad_namespace, good_namespace)
         f.puts fc
         File.rename(new_file, xml_file)
         f.close
       end
-
-
     end
 
     def self.normalize_global(doc, string_to_search)
@@ -397,6 +400,38 @@ module HarvestUtils
       end
     end
 
+    
+    def self.remove_fake_identifiers(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.include?("gamma.library.temple.edu") ? "" : node_value.inner_html
+      end
+    end
+
+    def self.construct_si_pid(doc, string_to_search, pid_prefix, provider_id_prefix)
+      node_update = doc.search(string_to_search)
+      new_pid = ""
+      node_update.each do |node_value|
+        new_pid = "#{pid_prefix}:#{provider_id_prefix}_#{node_value.inner_html}" if node_value.inner_html.exclude?("http") unless node_value.inner_html.blank?
+      end
+      elems = doc.xpath("//*[@PID]")
+      old_pid = elems[0].attr('PID')
+      return old_pid, new_pid
+    end
+
+    def self.replace_pid(xml_file, old_pid, new_pid)
+      new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
+      fopen = File.open(xml_file)
+      file_contents = fopen.read
+      fopen.close
+      File.open(new_file, 'w') do |f|
+        fc = file_contents.gsub(old_pid, new_pid)
+        f.puts fc
+        File.rename(new_file, xml_file)
+        f.close
+      end
+
+    end
 
     def self.dcmi_types(doc, string_to_search, provider)
       

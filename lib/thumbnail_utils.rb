@@ -64,6 +64,8 @@ module ThumbnailUtils
         asset_url = ThumbnailUtils::CommonRepositories::Vudl.asset_url(obj)
       when "Omeka"
         asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)
+      when "Small Institution Omeka"
+        asset_url = define_thumbnail_pattern(obj, provider)
     	else
     		abort "Invalid common repository type - #{provider.common_repository_type}"
   	end
@@ -74,16 +76,14 @@ module ThumbnailUtils
   def define_thumbnail_pattern(obj, provider)
     asset_url = provider.thumbnail_pattern
     if !provider.thumbnail_token_1.blank?
-      token_1 = obj.send(provider.thumbnail_token_1).first
-      
+      token_1 = obj.send(provider.thumbnail_token_1).find {|i| i.exclude?("http")}
       if provider.provider_id_prefix == "UPENNWHE"
         token_1 = token_1.gsub("WHEELER_","wheeler_")
       end
-
       asset_url = asset_url.gsub("$1", token_1)
     end
     if !provider.thumbnail_token_2.blank?
-      token_2 = obj.send(provider.thumbnail_token_2).first
+      token_2 = obj.send(provider.thumbnail_token_1).find {|i| i.exclude?("http")}
       asset_url = asset_url.gsub("$2", token_2)
     end
     asset_url

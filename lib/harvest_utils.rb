@@ -95,6 +95,7 @@ module HarvestUtils
   module_function :harvest 
 
   def convert(provider)
+
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.convert_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
@@ -123,13 +124,11 @@ module HarvestUtils
 
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
+    custom_file_prefixing(file_prefix, provider)
 
-    # little fix for weird nested OAI identifiers in Bepress -- earmarking for potential custom module
-    file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
-    
     xml_files = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
 
-    xml_files.each do |xml_file|
+    xml_files.each do |xml_file|  
 
       xml_content = File.read(xml_file)
       doc = Nokogiri::XML(xml_content)
@@ -175,6 +174,7 @@ module HarvestUtils
   module_function :cleanup
 
   def ingest(provider)
+
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.ingest_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
@@ -183,10 +183,8 @@ module HarvestUtils
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
     custom_file_prefixing(file_prefix, provider)
     
-
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
  
-
     contents.each do |file|
       check_if_exists(file)
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
@@ -560,7 +558,7 @@ module HarvestUtils
     end
 
     def self.build_identifier(obj, provider)
-      token = obj.send(provider.identifier_token).first
+      token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}
       assembled_identifier = provider.identifier_pattern.gsub("$1", token)
       obj.add_identifier(assembled_identifier)
     end
@@ -571,8 +569,12 @@ module HarvestUtils
     def self.custom_file_prefixing(file_prefix, provider)
       # little fix for weird nested OAI identifiers in Bepress
       file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
+      
       # little fix for Villanova's DPLA set
       file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
+
+      file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Small Institution Omeka"
+
     end
 
 end

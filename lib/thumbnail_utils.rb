@@ -4,7 +4,7 @@ require "fileutils"
 
 module ThumbnailUtils
   private
-  
+
   config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
 
   class CommonRepositories
@@ -24,7 +24,7 @@ module ThumbnailUtils
       def self.asset_url(obj)
         asset_url = ''
         obj.description.each do |desc|
-        thumb = desc if desc.include? 'thumbnail.jpg'  
+        thumb = desc if desc.include? 'thumbnail.jpg'
         asset_url = thumb if thumb
       end
         asset_url
@@ -45,7 +45,7 @@ module ThumbnailUtils
   	  def self.asset_url(obj)
         asset_url = ''
         obj.identifier.each do |ident|
-          thumb = ident if ident.include? '/files/thumbnails/'  
+          thumb = ident if ident.include? '/files/thumbnails/'
           asset_url = thumb ? thumb : ''
         end
         asset_url
@@ -83,7 +83,7 @@ module ThumbnailUtils
       asset_url = asset_url.gsub("$1", token_1)
     end
     if !provider.thumbnail_token_2.blank?
-      token_2 = obj.send(provider.thumbnail_token_1).find {|i| i.exclude?("http")}
+      token_2 = obj.send(provider.thumbnail_token_2).find {|i| i.exclude?("http")}
       asset_url = asset_url.gsub("$2", token_2)
     end
     asset_url
@@ -109,7 +109,7 @@ module ThumbnailUtils
     end
     #obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
 
-    
+
   end
 
 end

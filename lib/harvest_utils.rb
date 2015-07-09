@@ -152,12 +152,11 @@ module HarvestUtils
       normalize_facets(doc, "//type")
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
-      
+
+      standardize_formats(doc, "//format")      
       normalize_dates(doc, "//date")
-      normalize_language(doc, "//language")
-      normalize_type(doc, "//type")
       dcmi_types(doc, "//type", provider)
-      strip_brackets(doc, "//language")
+      normalize_language(doc, "//language")
 
 
 
@@ -313,6 +312,10 @@ module HarvestUtils
       end
     end
 
+    def self.strip_brackets(value)
+      value = value.gsub(/[\[\]']+/,'')
+    end
+
 
     def self.normalize_dates(doc, string_to_search)
       node_update = doc.search(string_to_search)
@@ -321,10 +324,33 @@ module HarvestUtils
       end
     end
 
-    def self.strip_brackets(doc, string_to_search)
+    def self.standardize_formats(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.gsub(/[\[\]']+/,'')
+        node_value.inner_html = node_value.inner_html.downcase
+        case node_value.inner_html
+          when /\bjpg\b/, /\bjpeg\b/
+            node_value.inner_html = "image/jpeg"
+          when /\bjp2\b/, /\bjpg2\b/, /\bjpeg2\b/, /\bjpeg2000\b/, /\bjp2000\b/
+            node_value.inner_html = "image/jp2"
+          when /\btif\b/, /\btiff\b/
+            node_value.inner_html = "image/tiff" 
+          when /\bpdf\b/
+            node_value.inner_html = "application/pdf"
+          when /\bmpeg4\b/
+            node_value.inner_html = "video/mpeg"
+          when /\bmp4\b/
+            node_value.inner_html = "video/mp4"
+          when /\bmpeg\b/
+            node_value.inner_html = "video/mpeg"
+          when /\bmpeg3\b/
+            node_value.inner_html = "audio/mpeg"
+          when /\bmp3\b/
+            node_value.inner_html = "audio/mp3"   
+          else  
+            node_value.inner_html = node_value.inner_html  
+          end  
+        normalize_first_case(node_value.inner_html)
       end
     end
 
@@ -336,31 +362,19 @@ module HarvestUtils
             node_value.inner_html = "Amharic" 
           when "Grc"
             node_value.inner_html = "Ancient Greek" 
-          when "Chi"
+          when "Chi","Zho"
             node_value.inner_html = "Chinese" 
-          when "Zho"
-            node_value.inner_html = "Chinese" 
-          when "Cze"
-            node_value.inner_html = "Czech" 
-          when "Ces"
+          when "Cze","Ces"
             node_value.inner_html = "Czech" 
           when "Dan"
             node_value.inner_html = "Danish" 
           when "Dut"  
             node_value.inner_html = "Dutch" 
-          when "Eng"  
-            node_value.inner_html = "English" 
-          when "English (eng)"  
-            node_value.inner_html = "English" 
-          when "En"  
+          when "Eng","English (eng)","En"  
             node_value.inner_html = "English"  
-          when "Fre"  
-            node_value.inner_html = "French" 
-          when "Fra"  
+          when "Fre","Fra"  
             node_value.inner_html = "French"  
-          when "Ger"
-            node_value.inner_html = "German" 
-          when "Deu"
+          when "Ger","Deu"
             node_value.inner_html = "German" 
           when "Gre"
             node_value.inner_html = "Greek" 
@@ -382,16 +396,14 @@ module HarvestUtils
             node_value.inner_html = "Vietnamese" 
           else  
             node_value.inner_html = node_value.inner_html  
-          end  
+          end
+          node_value.inner_html = strip_brackets(node_value.inner_html)  
       end
     end
 
-    def self.normalize_type(doc, string_to_search)
-      node_update = doc.search(string_to_search)
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.downcase
-        node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
-      end
+    def self.normalize_first_case(value)
+      value.downcase
+      value.sub(/^./) { |m| m.upcase }
     end
 
 
@@ -451,7 +463,7 @@ module HarvestUtils
       t_arr.each do |a|
         value = dcmi_type if value == a.to_s 
       end
-      value
+      normalize_first_case(value)
     end
 
     def self.process_record_token(record, full_records, transient_records)

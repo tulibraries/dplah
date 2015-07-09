@@ -68,6 +68,7 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name('temporal', :facetable), :label => 'Temporal Date', :limit => 7
     config.add_facet_field solr_name('spatial', :facetable), :label => 'Spatial Relation', :limit => 7
     config.add_facet_field solr_name('access_rights', :facetable), :label => 'Access Rights', :limit => 7
+    config.add_facet_field solr_name('format', :facetable), :label => 'Format', :limit => 7
     config.add_facet_field solr_name('contributing_institution', :facetable), :label => 'Contributing Institution', :limit => 7
     config.add_facet_field solr_name('intermediate_provider', :facetable), :label => 'Intermediate Provider', :limit => 7
     config.add_facet_field solr_name('collection_name', :facetable), :label => 'Collection Name', :limit => 7

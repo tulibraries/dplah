@@ -6,13 +6,13 @@ require "oai"
 module HarvestUtils
   extend ActionView::Helpers::TranslationHelper
   private
-  
+
   config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
-  @harvest_path = config['harvest_data_directory'] 
+  @harvest_path = config['harvest_data_directory']
   @converted_path = config['converted_foxml_directory']
-  @pid_prefix = config['pid_prefix'] 
-  @partner = config['partner'] 
-  @human_log_path = config['human_log_path'] 
+  @pid_prefix = config['pid_prefix']
+  @partner = config['partner']
+  @human_log_path = config['human_log_path']
 
   def harvest_action(provider)
     create_log_file(provider.name)
@@ -69,7 +69,7 @@ module HarvestUtils
     `rake tmp:cache:clear`
     sleep(5)
 
-    
+
     while(response.resumption_token and not response.resumption_token.empty?)
       full_records = ''
       File.open(@log_file, "a+") do |f|
@@ -92,7 +92,7 @@ module HarvestUtils
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << "#{provider.name}" << I18n.t('oai_seed_logs.text_buffer') << "#{num_files} " << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected') << I18n.t('oai_seed_logs.text_buffer')
     end
   end
-  module_function :harvest 
+  module_function :harvest
 
   def convert(provider)
 
@@ -129,7 +129,7 @@ module HarvestUtils
 
     xml_files = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
 
-    xml_files.each do |xml_file|  
+    xml_files.each do |xml_file|
 
       xml_content = File.read(xml_file)
       doc = Nokogiri::XML(xml_content)
@@ -153,7 +153,8 @@ module HarvestUtils
       normalize_facets(doc, "//type")
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
-      
+
+      standardize_formats(doc, "//format")
       normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
       normalize_type(doc, "//type")
@@ -161,7 +162,7 @@ module HarvestUtils
       strip_brackets(doc, "//language")
       remove_fake_identifiers(doc, "//identifier")
 
-      File.open(new_file, 'w') do |f|  
+      File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
           File.rename(new_file, xml_file)
           f.close
@@ -189,9 +190,9 @@ module HarvestUtils
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
     custom_file_prefixing(file_prefix, provider)
-    
+
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
- 
+
     contents.each do |file|
       check_if_exists(file)
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
@@ -274,7 +275,7 @@ module HarvestUtils
         xml_close = "</records>"
         xml_manifest = get_xml_manifest(:contributing_institution => contributing_institution, :intermediate_provider => intermediate_provider, :set_spec => set_spec, :collection_name => collection_name, :provider_id_prefix => provider_id_prefix, :rights_statement => rights_statement, :common_repository_type => common_repository_type, :endpoint_url => endpoint_url, :pid_prefix => pid_prefix)
         fopen.close
-        File.open(new_file, 'w') do |f|  
+        File.open(new_file, 'w') do |f|
           f.puts xml_heading
           f.puts xml_open
           f.puts xml_manifest
@@ -319,6 +320,10 @@ module HarvestUtils
       end
     end
 
+    def self.strip_brackets(value)
+      value = value.gsub(/[\[\]']+/,'')
+    end
+
 
     def self.normalize_dates(doc, string_to_search)
       node_update = doc.search(string_to_search)
@@ -327,10 +332,33 @@ module HarvestUtils
       end
     end
 
-    def self.strip_brackets(doc, string_to_search)
+    def self.standardize_formats(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.gsub(/[\[\]']+/,'')
+        node_value.inner_html = node_value.inner_html.downcase
+        case node_value.inner_html
+          when /\bjpg\b/, /\bjpeg\b/
+            node_value.inner_html = "image/jpeg"
+          when /\bjp2\b/, /\bjpg2\b/, /\bjpeg2\b/, /\bjpeg2000\b/, /\bjp2000\b/
+            node_value.inner_html = "image/jp2"
+          when /\btif\b/, /\btiff\b/
+            node_value.inner_html = "image/tiff"
+          when /\bpdf\b/
+            node_value.inner_html = "application/pdf"
+          when /\bmpeg4\b/
+            node_value.inner_html = "video/mpeg"
+          when /\bmp4\b/
+            node_value.inner_html = "video/mp4"
+          when /\bmpeg\b/
+            node_value.inner_html = "video/mpeg"
+          when /\bmpeg3\b/
+            node_value.inner_html = "audio/mpeg"
+          when /\bmp3\b/
+            node_value.inner_html = "audio/mp3"
+          else
+            node_value.inner_html = node_value.inner_html
+          end
+        normalize_first_case(node_value.inner_html)
       end
     end
 
@@ -339,68 +367,54 @@ module HarvestUtils
       node_update.each do |node_value|
         case node_value.inner_html
           when "Amh"
-            node_value.inner_html = "Amharic" 
+            node_value.inner_html = "Amharic"
           when "Grc"
-            node_value.inner_html = "Ancient Greek" 
-          when "Chi"
-            node_value.inner_html = "Chinese" 
-          when "Zho"
-            node_value.inner_html = "Chinese" 
-          when "Cze"
-            node_value.inner_html = "Czech" 
-          when "Ces"
-            node_value.inner_html = "Czech" 
+            node_value.inner_html = "Ancient Greek"
+          when "Chi","Zho"
+            node_value.inner_html = "Chinese"
+          when "Cze","Ces"
+            node_value.inner_html = "Czech"
           when "Dan"
-            node_value.inner_html = "Danish" 
-          when "Dut"  
-            node_value.inner_html = "Dutch" 
-          when "Eng"  
-            node_value.inner_html = "English" 
-          when "English (eng)"  
-            node_value.inner_html = "English" 
-          when "En"  
-            node_value.inner_html = "English"  
-          when "Fre"  
-            node_value.inner_html = "French" 
-          when "Fra"  
-            node_value.inner_html = "French"  
-          when "Ger"
-            node_value.inner_html = "German" 
-          when "Deu"
-            node_value.inner_html = "German" 
+            node_value.inner_html = "Danish"
+          when "Dut"
+            node_value.inner_html = "Dutch"
+          when "Eng","English (eng)","En"
+            node_value.inner_html = "English"
+          when "Fre","Fra"
+            node_value.inner_html = "French"
+          when "Ger","Deu"
+            node_value.inner_html = "German"
           when "Gre"
-            node_value.inner_html = "Greek" 
-          when "Ita"  
-            node_value.inner_html = "Italian" 
+            node_value.inner_html = "Greek"
+          when "Ita"
+            node_value.inner_html = "Italian"
           when "Gle"
-            node_value.inner_html = "Irish" 
+            node_value.inner_html = "Irish"
           when "Jpn"
-            node_value.inner_html = "Japanese" 
+            node_value.inner_html = "Japanese"
           when "Kor"
-            node_value.inner_html = "Korean" 
-          when "Lat"  
-            node_value.inner_html = "Latin"  
+            node_value.inner_html = "Korean"
+          when "Lat"
+            node_value.inner_html = "Latin"
           when "Pol"
-            node_value.inner_html = "Polish" 
-          when "Spa"  
-            node_value.inner_html = "Spanish"  
+            node_value.inner_html = "Polish"
+          when "Spa"
+            node_value.inner_html = "Spanish"
           when "Vie"
-            node_value.inner_html = "Vietnamese" 
-          else  
-            node_value.inner_html = node_value.inner_html  
-          end  
+            node_value.inner_html = "Vietnamese"
+          else
+            node_value.inner_html = node_value.inner_html
+          end
+          node_value.inner_html = strip_brackets(node_value.inner_html)
       end
     end
 
-    def self.normalize_type(doc, string_to_search)
-      node_update = doc.search(string_to_search)
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.downcase
-        node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
-      end
+    def self.normalize_first_case(value)
+      value.downcase
+      value.sub(/^./) { |m| m.upcase }
     end
 
-    
+
     def self.remove_fake_identifiers(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
@@ -434,49 +448,49 @@ module HarvestUtils
     end
 
     def self.dcmi_types(doc, string_to_search, provider)
-      
+
       types_ongoing ||= []
 
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
-        if provider.type_sound.present? 
+        if provider.type_sound.present?
           new_val = sort_types("Sound", provider.type_sound, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
 
         end
 
-        if provider.type_text.present? 
+        if provider.type_text.present?
           new_val = sort_types("Text", provider.type_text, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
         end
 
-        if provider.type_image.present? 
+        if provider.type_image.present?
           new_val = sort_types("Image", provider.type_image, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
 
         end
 
-        if provider.type_moving_image.present? 
+        if provider.type_moving_image.present?
           new_val = sort_types("Moving image", provider.type_moving_image, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
         end
 
-        if provider.type_physical_object.present? 
+        if provider.type_physical_object.present?
           new_val = sort_types("Physical object", provider.type_physical_object, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
         end
@@ -487,9 +501,9 @@ module HarvestUtils
     def self.sort_types(dcmi_type, type_array, value)
       t_arr = type_array.split(";")
       t_arr.each do |a|
-        value = dcmi_type if value == a.to_s 
+        value = dcmi_type if value == a.to_s
       end
-      value
+      normalize_first_case(value)
     end
 
     def self.process_record_token(record, full_records, transient_records)
@@ -547,7 +561,7 @@ module HarvestUtils
         end
         abort I18n.t('oai_seed_logs.reindexing_error')
       end
-      
+
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_begin') << I18n.t('oai_seed_logs.delete_remove_by') << "#{reindex_by}" << I18n.t('oai_seed_logs.delete_seed_derived') << "#{model_term}" << I18n.t('oai_seed_logs.text_buffer')
       end
@@ -604,7 +618,7 @@ module HarvestUtils
     def self.custom_file_prefixing(file_prefix, provider)
       # little fix for weird nested OAI identifiers in Bepress
       file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
-      
+
       # little fix for Villanova's DPLA set
       file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
 

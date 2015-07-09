@@ -157,9 +157,7 @@ module HarvestUtils
       standardize_formats(doc, "//format")
       normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
-      normalize_type(doc, "//type")
       dcmi_types(doc, "//type", provider)
-      strip_brackets(doc, "//language")
       remove_fake_identifiers(doc, "//identifier")
 
       File.open(new_file, 'w') do |f|
@@ -201,7 +199,7 @@ module HarvestUtils
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
       obj.thumbnail = thumbnail
       obj.assign_rights
-      build_identifier(obj, provider) unless provider.identifier_pattern.empty?
+      build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
       obj.reorg_identifiers
       obj.save
       obj.to_solr
@@ -365,6 +363,8 @@ module HarvestUtils
     def self.normalize_language(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
+        node_value.inner_html = strip_brackets(node_value.inner_html)
+        normalize_first_case(node_value.inner_html)
         case node_value.inner_html
           when "Amh"
             node_value.inner_html = "Amharic"
@@ -405,7 +405,6 @@ module HarvestUtils
           else
             node_value.inner_html = node_value.inner_html
           end
-          node_value.inner_html = strip_brackets(node_value.inner_html)
       end
     end
 

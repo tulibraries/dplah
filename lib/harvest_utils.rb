@@ -6,13 +6,13 @@ require "oai"
 module HarvestUtils
   extend ActionView::Helpers::TranslationHelper
   private
-  
+
   config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
-  @harvest_path = config['harvest_data_directory'] 
+  @harvest_path = config['harvest_data_directory']
   @converted_path = config['converted_foxml_directory']
-  @pid_prefix = config['pid_prefix'] 
-  @partner = config['partner'] 
-  @human_log_path = config['human_log_path'] 
+  @pid_prefix = config['pid_prefix']
+  @partner = config['partner']
+  @human_log_path = config['human_log_path']
 
   def harvest_action(provider)
     create_log_file(provider.name)
@@ -69,7 +69,7 @@ module HarvestUtils
     `rake tmp:cache:clear`
     sleep(5)
 
-    
+
     while(response.resumption_token and not response.resumption_token.empty?)
       full_records = ''
       File.open(@log_file, "a+") do |f|
@@ -92,9 +92,10 @@ module HarvestUtils
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << "#{provider.name}" << I18n.t('oai_seed_logs.text_buffer') << "#{num_files} " << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected') << I18n.t('oai_seed_logs.text_buffer')
     end
   end
-  module_function :harvest 
+  module_function :harvest
 
   def convert(provider)
+
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.convert_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
@@ -116,6 +117,7 @@ module HarvestUtils
   module_function :convert
 
   def cleanup(provider)
+
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
@@ -123,13 +125,12 @@ module HarvestUtils
 
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
+    custom_file_prefixing(file_prefix, provider)
 
-    # little fix for weird nested OAI identifiers in Bepress -- earmarking for potential custom module
-    file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
-    
     xml_files = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
 
     xml_files.each do |xml_file|
+
       xml_content = File.read(xml_file)
       doc = Nokogiri::XML(xml_content)
 
@@ -153,18 +154,24 @@ module HarvestUtils
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
 
-      standardize_formats(doc, "//format")      
+      standardize_formats(doc, "//format")
       normalize_dates(doc, "//date")
-      dcmi_types(doc, "//type", provider)
       normalize_language(doc, "//language")
+      dcmi_types(doc, "//type", provider)
+      remove_fake_identifiers(doc, "//identifier")
 
-
-
-      File.open(new_file, 'w') do |f|  
+      File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
           File.rename(new_file, xml_file)
           f.close
       end
+
+      if provider.common_repository_type == "Small Institution Omeka"
+        old_pid, new_pid = construct_si_pid(doc, "//identifier", @pid_prefix, provider.provider_id_prefix)
+        replace_pid(xml_file, old_pid, new_pid)
+
+      end
+
     end
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_end') << I18n.t('oai_seed_logs.text_buffer')
@@ -173,6 +180,7 @@ module HarvestUtils
   module_function :cleanup
 
   def ingest(provider)
+
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.ingest_begin') << I18n.t('oai_seed_logs.text_buffer')
       end
@@ -180,7 +188,9 @@ module HarvestUtils
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
     custom_file_prefixing(file_prefix, provider)
+
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
+
     contents.each do |file|
       check_if_exists(file)
       pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
@@ -189,7 +199,7 @@ module HarvestUtils
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
       obj.thumbnail = thumbnail
       obj.assign_rights
-      build_identifier(obj, provider) if provider.identifier_pattern
+      build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
       obj.reorg_identifiers
       obj.save
       obj.to_solr
@@ -263,7 +273,7 @@ module HarvestUtils
         xml_close = "</records>"
         xml_manifest = get_xml_manifest(:contributing_institution => contributing_institution, :intermediate_provider => intermediate_provider, :set_spec => set_spec, :collection_name => collection_name, :provider_id_prefix => provider_id_prefix, :rights_statement => rights_statement, :common_repository_type => common_repository_type, :endpoint_url => endpoint_url, :pid_prefix => pid_prefix)
         fopen.close
-        File.open(new_file, 'w') do |f|  
+        File.open(new_file, 'w') do |f|
           f.puts xml_heading
           f.puts xml_open
           f.puts xml_manifest
@@ -281,18 +291,14 @@ module HarvestUtils
       good_namespace = "xmlns:oai_qdc='http://oclc.org/appqualifieddc/'"
       new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
       fopen = File.open(xml_file)
-
       file_contents = fopen.read
       fopen.close
-
       File.open(new_file, 'w') do |f|
         fc = file_contents.gsub(bad_namespace, good_namespace)
         f.puts fc
         File.rename(new_file, xml_file)
         f.close
       end
-
-
     end
 
     def self.normalize_global(doc, string_to_search)
@@ -334,7 +340,7 @@ module HarvestUtils
           when /\bjp2\b/, /\bjpg2\b/, /\bjpeg2\b/, /\bjpeg2000\b/, /\bjp2000\b/
             node_value.inner_html = "image/jp2"
           when /\btif\b/, /\btiff\b/
-            node_value.inner_html = "image/tiff" 
+            node_value.inner_html = "image/tiff"
           when /\bpdf\b/
             node_value.inner_html = "application/pdf"
           when /\bmpeg4\b/
@@ -346,10 +352,10 @@ module HarvestUtils
           when /\bmpeg3\b/
             node_value.inner_html = "audio/mpeg"
           when /\bmp3\b/
-            node_value.inner_html = "audio/mp3"   
-          else  
-            node_value.inner_html = node_value.inner_html  
-          end  
+            node_value.inner_html = "audio/mp3"
+          else
+            node_value.inner_html = node_value.inner_html
+          end
         normalize_first_case(node_value.inner_html)
       end
     end
@@ -357,47 +363,48 @@ module HarvestUtils
     def self.normalize_language(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
+        node_value.inner_html = strip_brackets(node_value.inner_html)
+        normalize_first_case(node_value.inner_html)
         case node_value.inner_html
           when "Amh"
-            node_value.inner_html = "Amharic" 
+            node_value.inner_html = "Amharic"
           when "Grc"
-            node_value.inner_html = "Ancient Greek" 
+            node_value.inner_html = "Ancient Greek"
           when "Chi","Zho"
-            node_value.inner_html = "Chinese" 
+            node_value.inner_html = "Chinese"
           when "Cze","Ces"
-            node_value.inner_html = "Czech" 
+            node_value.inner_html = "Czech"
           when "Dan"
-            node_value.inner_html = "Danish" 
-          when "Dut"  
-            node_value.inner_html = "Dutch" 
-          when "Eng","English (eng)","En"  
-            node_value.inner_html = "English"  
-          when "Fre","Fra"  
-            node_value.inner_html = "French"  
+            node_value.inner_html = "Danish"
+          when "Dut"
+            node_value.inner_html = "Dutch"
+          when "Eng","English (eng)","En"
+            node_value.inner_html = "English"
+          when "Fre","Fra"
+            node_value.inner_html = "French"
           when "Ger","Deu"
-            node_value.inner_html = "German" 
+            node_value.inner_html = "German"
           when "Gre"
-            node_value.inner_html = "Greek" 
-          when "Ita"  
-            node_value.inner_html = "Italian" 
+            node_value.inner_html = "Greek"
+          when "Ita"
+            node_value.inner_html = "Italian"
           when "Gle"
-            node_value.inner_html = "Irish" 
+            node_value.inner_html = "Irish"
           when "Jpn"
-            node_value.inner_html = "Japanese" 
+            node_value.inner_html = "Japanese"
           when "Kor"
-            node_value.inner_html = "Korean" 
-          when "Lat"  
-            node_value.inner_html = "Latin"  
+            node_value.inner_html = "Korean"
+          when "Lat"
+            node_value.inner_html = "Latin"
           when "Pol"
-            node_value.inner_html = "Polish" 
-          when "Spa"  
-            node_value.inner_html = "Spanish"  
+            node_value.inner_html = "Polish"
+          when "Spa"
+            node_value.inner_html = "Spanish"
           when "Vie"
-            node_value.inner_html = "Vietnamese" 
-          else  
-            node_value.inner_html = node_value.inner_html  
+            node_value.inner_html = "Vietnamese"
+          else
+            node_value.inner_html = node_value.inner_html
           end
-          node_value.inner_html = strip_brackets(node_value.inner_html)  
       end
     end
 
@@ -407,50 +414,82 @@ module HarvestUtils
     end
 
 
+    def self.remove_fake_identifiers(doc, string_to_search)
+      node_update = doc.search(string_to_search)
+      node_update.each do |node_value|
+        node_value.inner_html = node_value.inner_html.include?("gamma.library.temple.edu") ? "" : node_value.inner_html
+      end
+    end
+
+    def self.construct_si_pid(doc, string_to_search, pid_prefix, provider_id_prefix)
+      node_update = doc.search(string_to_search)
+      new_pid = ""
+      node_update.each do |node_value|
+        new_pid = "#{pid_prefix}:#{provider_id_prefix}_#{node_value.inner_html}" if node_value.inner_html.exclude?("http") unless node_value.inner_html.blank?
+      end
+      elems = doc.xpath("//*[@PID]")
+      old_pid = elems[0].attr('PID')
+      return old_pid, new_pid
+    end
+
+    def self.replace_pid(xml_file, old_pid, new_pid)
+      new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
+      fopen = File.open(xml_file)
+      file_contents = fopen.read
+      fopen.close
+      File.open(new_file, 'w') do |f|
+        fc = file_contents.gsub(old_pid, new_pid)
+        f.puts fc
+        File.rename(new_file, xml_file)
+        f.close
+      end
+
+    end
+
     def self.dcmi_types(doc, string_to_search, provider)
-      
+
       types_ongoing ||= []
 
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
-        if provider.type_sound.present? 
+        if provider.type_sound.present?
           new_val = sort_types("Sound", provider.type_sound, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
 
         end
 
-        if provider.type_text.present? 
+        if provider.type_text.present?
           new_val = sort_types("Text", provider.type_text, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
         end
 
-        if provider.type_image.present? 
+        if provider.type_image.present?
           new_val = sort_types("Image", provider.type_image, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
 
         end
 
-        if provider.type_moving_image.present? 
+        if provider.type_moving_image.present?
           new_val = sort_types("Moving image", provider.type_moving_image, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
         end
 
-        if provider.type_physical_object.present? 
+        if provider.type_physical_object.present?
           new_val = sort_types("Physical object", provider.type_physical_object, node_value.inner_html)
           unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val 
+            node_value.inner_html = new_val
             types_ongoing.push(new_val)
           end
         end
@@ -461,7 +500,7 @@ module HarvestUtils
     def self.sort_types(dcmi_type, type_array, value)
       t_arr = type_array.split(";")
       t_arr.each do |a|
-        value = dcmi_type if value == a.to_s 
+        value = dcmi_type if value == a.to_s
       end
       normalize_first_case(value)
     end
@@ -521,7 +560,7 @@ module HarvestUtils
         end
         abort I18n.t('oai_seed_logs.reindexing_error')
       end
-      
+
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_begin') << I18n.t('oai_seed_logs.delete_remove_by') << "#{reindex_by}" << I18n.t('oai_seed_logs.delete_seed_derived') << "#{model_term}" << I18n.t('oai_seed_logs.text_buffer')
       end
@@ -567,7 +606,7 @@ module HarvestUtils
     end
 
     def self.build_identifier(obj, provider)
-      token = obj.send(provider.identifier_token).first
+      token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}
       assembled_identifier = provider.identifier_pattern.gsub("$1", token)
       obj.add_identifier(assembled_identifier)
     end
@@ -578,8 +617,12 @@ module HarvestUtils
     def self.custom_file_prefixing(file_prefix, provider)
       # little fix for weird nested OAI identifiers in Bepress
       file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
+
       # little fix for Villanova's DPLA set
       file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
+
+      file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Small Institution Omeka"
+
     end
 
 end

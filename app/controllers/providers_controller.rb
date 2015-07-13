@@ -1,6 +1,9 @@
 class ProvidersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :harvest_all_by_institution, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
+  
+  #Uncomment this line to turn off provider creation/deletion/edits
+  #before_action :redirect_user, only: [:new, :update, :edit, :destroy]
 
   def index
     @providers = Provider.all.paginate(page: params[:page], per_page: 10).order('name ASC')
@@ -85,6 +88,10 @@ class ProvidersController < ApplicationController
 
     def provider_params
       params.require(:provider).permit(:name, :description, :endpoint_url, :new_endpoint_url, :email, :new_email, :metadata_prefix, :set, :contributing_institution, :new_contributing_institution, :intermediate_provider, :new_intermediate_provider, :collection_name, :in_production, :provider_id_prefix, :new_provider_id_prefix, :identifier_pattern, :identifier_token, :rights_statement, :common_repository_type, :thumbnail_pattern, :thumbnail_token_1, :thumbnail_token_2, :type_image, :type_moving_image, :type_text, :type_sound, :type_physical_object)
+    end
+
+    def redirect_user
+      redirect_to root_path
     end
 
 end

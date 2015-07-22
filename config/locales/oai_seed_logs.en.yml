@@ -41,7 +41,9 @@ en:
     normalize_language: |+
       Converting ISO-639 language codes to full language names
     dcmi_types: |+
-      Matching type fields to DCMI types when used on the per-seed level
+      Matching type fields to DCMI types as specified by the OAI seed settings
+    passthrough_workflow: |+
+      Performing passthrough workflow operations for identifiers 
     normalize_end: |+
       NORMALIZING COMPLETE
     ingest_begin: |+

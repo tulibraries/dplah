@@ -12,9 +12,7 @@ class Provider < ActiveRecord::Base
 	scope :unique_by_email, lambda { select(:email).uniq}
 
 	before_save do
-		self.name = nil if self.name.blank?
-		self.set = nil if self.set.blank?
-		self.metadata_prefix = nil if self.metadata_prefix.blank?
+		default_values
 		self.email = self.new_email unless self.new_email.blank?
 		self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
 		self.intermediate_provider = self.new_intermediate_provider unless self.new_intermediate_provider.blank?
@@ -60,88 +58,33 @@ class Provider < ActiveRecord::Base
 		count
 	end
 
+	def default_values
+	    self.name ||= ''
+	    self.email ||= ''
+	    self.new_email ||= ''
+	    self.metadata_prefix ||= 'oai_dc'
+	    self.contributing_institution ||= ''
+	    self.new_contributing_institution ||= ''
+	    self.intermediate_provider ||= ''
+	    self.new_intermediate_provider ||= ''
+	    self.collection_name ||= ''
+	    self.in_production ||= ''
+	    self.provider_id_prefix ||= ''
+	    self.rights_statement ||= ''
+	    self.common_repository_type ||= ''
+	    self.thumbnail_pattern ||= ''
+	    self.thumbnail_token_1 ||= ''
+	    self.thumbnail_token_2 ||= ''
+	    self.dcmi_mappings ||= false
+	    self.type_image ||= ''
+	    self.type_moving_image ||= ''
+	    self.type_text ||= ''
+	    self.type_sound ||= ''
+	    self.type_physical_object ||= ''
+	end
+
 	def name
 		read_attribute(:name) || endpoint_url
-	end
-
-	def email
-		read_attribute(:email) || ''
-	end
-
-	def new_email
-		read_attribute(:new_email) || ''
-	end
-
-	def metadata_prefix
-		read_attribute(:metadata_prefix) || 'oai_dc'
-	end
-
-	def contributing_institution
-		read_attribute(:contributing_institution) || ''
-	end
-
-	def new_contributing_institution
-		read_attribute(:new_contributing_institution) || ''
-	end
-
-	def intermediate_provider
-		read_attribute(:intermediate_provider) || ''
-	end
-
-	def new_intermediate_provider
-		read_attribute(:new_intermediate_provider) || ''
-	end
-
-	def collection_name
-		read_attribute(:collection_name) || ''
-	end
-
-	def in_production
-		read_attribute(:in_production) || ''
-	end
-
-	def provider_id_prefix
-		read_attribute(:provider_id_prefix) || ''
-	end
-
-	def rights_statement
-		read_attribute(:rights_statement) || ''
-	end
-
-	def common_repository_type
-		read_attribute(:common_repository_type) || ''
-	end
-
-	def thumbnail_pattern
-		read_attribute(:thumbnail_pattern) || ''
-	end
-	
-	def thumbnail_token_1
-		read_attribute(:thumbnail_token_1) || ''
-	end
-
-	def thumbnail_token_2
-		read_attribute(:thumbnail_token_2) || ''
-	end
-
-	def type_image
-		read_attribute(:type_image) || ''
-	end
-
-	def type_moving_image
-		read_attribute(:type_moving_image) || ''
-	end
-
-	def type_text
-		read_attribute(:type_text) || ''
-	end
-
-	def type_sound
-		read_attribute(:type_sound) || ''
-	end
-
-	def type_physical_object
-		read_attribute(:type_physical_object) || ''
 	end
 
 	def next_harvest_at

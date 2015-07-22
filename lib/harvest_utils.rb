@@ -148,6 +148,7 @@ module HarvestUtils
       normalize_global(doc, "//relation")
       normalize_global(doc, "//coverage")
       normalize_global(doc, "//rights")
+      
 
       normalize_facets(doc, "//subject")
       normalize_facets(doc, "//type")
@@ -155,10 +156,16 @@ module HarvestUtils
       normalize_facets(doc, "//publisher")
 
       standardize_formats(doc, "//format")
+      
       normalize_dates(doc, "//date")
+
       normalize_language(doc, "//language")
+
       dcmi_types(doc, "//type", provider)
-      remove_fake_identifiers(doc, "//identifier")
+
+
+
+
 
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
@@ -167,14 +174,21 @@ module HarvestUtils
       end
 
       if provider.common_repository_type == "Small Institution Omeka"
+        remove_fake_identifiers(doc, "//identifier")
         old_pid, new_pid = construct_si_pid(doc, "//identifier", @pid_prefix, provider.provider_id_prefix)
         replace_pid(xml_file, old_pid, new_pid)
-
       end
 
     end
+
     File.open(@log_file, "a+") do |f|
-      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_end') << I18n.t('oai_seed_logs.text_buffer')
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_global')
+      f << I18n.t('oai_seed_logs.normalize_facets')
+      f << I18n.t('oai_seed_logs.standardize_formats')
+      f << I18n.t('oai_seed_logs.normalize_dates')
+      f << I18n.t('oai_seed_logs.normalize_language')
+      f << I18n.t('oai_seed_logs.dcmi_types')
+      f << I18n.t('oai_seed_logs.normalize_end') << I18n.t('oai_seed_logs.text_buffer')
     end
   end
   module_function :cleanup

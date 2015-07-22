@@ -2,6 +2,7 @@ class Provider < ActiveRecord::Base
 
 	validate :clean_data
 	validate :endpoint_url_is_valid_and_present
+	validate :dcmi_mappings_settings
 	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}, :allow_blank => true
 	validates_length_of :new_provider_id_prefix, :maximum => 8
 
@@ -122,6 +123,12 @@ class Provider < ActiveRecord::Base
 			end
 		    self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
 		    errors.add :endpoint_url, " must begin with http/https" unless self.endpoint_url =~ /^https?/
+		end
+
+		def dcmi_mappings_settings
+			unless self.type_sound.blank? && self.type_text.blank? && self.type_image.blank? && self.type_physical_object.blank? && self.type_moving_image.blank?
+			    self.dcmi_mappings = true
+			end
 		end
 
 		def clean_data

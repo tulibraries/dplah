@@ -151,7 +151,6 @@ module HarvestUtils
       normalize_global(doc, "//relation")
       normalize_global(doc, "//coverage")
       normalize_global(doc, "//rights")
-      
 
       normalize_facets(doc, "//subject")
       normalize_facets(doc, "//type")
@@ -159,16 +158,9 @@ module HarvestUtils
       normalize_facets(doc, "//publisher")
 
       standardize_formats(doc, "//format")
-      
       normalize_dates(doc, "//date")
-
       normalize_language(doc, "//language")
-
-      utilize = dcmi_types(doc, "//type", provider)
-
-
-
-
+      dcmi_types(doc, "//type", provider) if provider.dcmi_mappings
 
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
@@ -190,7 +182,7 @@ module HarvestUtils
       f << I18n.t('oai_seed_logs.standardize_formats')
       f << I18n.t('oai_seed_logs.normalize_dates')
       f << I18n.t('oai_seed_logs.normalize_language')
-      f << I18n.t('oai_seed_logs.dcmi_types') if utilize
+      f << I18n.t('oai_seed_logs.dcmi_types') if provider.dcmi_mappings
       f << I18n.t('oai_seed_logs.passthrough_workflow') if provider.common_repository_type == "Small Institution Omeka"
       f << I18n.t('oai_seed_logs.normalize_end') << I18n.t('oai_seed_logs.text_buffer')
     end
@@ -466,13 +458,11 @@ module HarvestUtils
 
     def self.dcmi_types(doc, string_to_search, provider)
       
-      utilize = false
       types_ongoing ||= []
 
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
         if provider.type_sound.present?
-          utilize = true
           new_val = sort_types("Sound", provider.type_sound, node_value.inner_html)
           unless types_ongoing.include?(new_val)
             node_value.inner_html = new_val
@@ -482,7 +472,6 @@ module HarvestUtils
         end
 
         if provider.type_text.present?
-          utilize = true
           new_val = sort_types("Text", provider.type_text, node_value.inner_html)
           unless types_ongoing.include?(new_val)
             node_value.inner_html = new_val
@@ -491,7 +480,6 @@ module HarvestUtils
         end
 
         if provider.type_image.present?
-          utilize = true
           new_val = sort_types("Image", provider.type_image, node_value.inner_html)
           unless types_ongoing.include?(new_val)
             node_value.inner_html = new_val
@@ -501,7 +489,6 @@ module HarvestUtils
         end
 
         if provider.type_moving_image.present?
-          utilize = true
           new_val = sort_types("Moving image", provider.type_moving_image, node_value.inner_html)
           unless types_ongoing.include?(new_val)
             node_value.inner_html = new_val
@@ -510,7 +497,6 @@ module HarvestUtils
         end
 
         if provider.type_physical_object.present?
-          utilize = true
           new_val = sort_types("Physical object", provider.type_physical_object, node_value.inner_html)
           unless types_ongoing.include?(new_val)
             node_value.inner_html = new_val
@@ -519,7 +505,6 @@ module HarvestUtils
         end
 
       end
-      utilize
     end
 
     def self.sort_types(dcmi_type, type_array, value)

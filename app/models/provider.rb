@@ -115,7 +115,7 @@ class Provider < ActiveRecord::Base
 	def thumbnail_pattern
 		read_attribute(:thumbnail_pattern) || ''
 	end
-	
+
 	def thumbnail_token_1
 		read_attribute(:thumbnail_token_1) || ''
 	end
@@ -155,9 +155,9 @@ class Provider < ActiveRecord::Base
 	def interval
 		(read_attribute(:interval) || 1.day).seconds
 	end
-	
+
 	protected
-	
+
 		def oai_client_options
 			options = {}
 			options[:set] = set unless set.blank?
@@ -191,7 +191,7 @@ class Provider < ActiveRecord::Base
 	private
 
 	    def self.common_repositories
-          common_repositories = [['CONTENTdm', 'CONTENTdm'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Small Institution Omeka', 'Small Institution Omeka'], ['VuDL', 'VuDL']]
+          common_repositories = [['CONTENTdm', 'CONTENTdm'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Passthrough Workflow', 'Passthrough Workflow'], ['VuDL', 'VuDL']]
 	    end
 
 	    def self.possible_thumbnail_fields

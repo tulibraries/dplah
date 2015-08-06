@@ -5,7 +5,7 @@ class OaiRec < ActiveFedora::Base
  #    end
 
 	has_metadata 'descMetadata', type: Datastreams::OaiRecMetadata
-	
+
 	# Just your basic DC OAI-PMH
 	has_attributes :title, datastream: 'descMetadata', multiple: true
 	has_attributes :creator, datastream: 'descMetadata', multiple: true
@@ -41,7 +41,7 @@ class OaiRec < ActiveFedora::Base
 	has_attributes :intermediate_provider, datastream: 'descMetadata', multiple: false
 	has_attributes :collection_name, datastream: 'descMetadata', multiple: false
 	has_attributes :partner, datastream: 'descMetadata', multiple: false
-    
+
     #specifically to allow dump/reindex by set
 	has_attributes :set_spec, datastream: 'descMetadata', multiple: false
 	has_attributes :provider_id_prefix, datastream: 'descMetadata', multiple: false
@@ -54,7 +54,7 @@ class OaiRec < ActiveFedora::Base
 			if ident.start_with?('http')
 				pos = f.index(ident)
 				f.insert(0,f.delete_at(pos))
-			end  
+			end
 		end
 		self.identifier = f
 	end
@@ -64,12 +64,21 @@ class OaiRec < ActiveFedora::Base
 		j = f.push("#{new_identifier}")
 		self.update_attributes({"identifier" => j})
 		self.save
-        self.to_solr
+    self.to_solr
 		self.update_index
 	end
 
 	def assign_rights
 	  self.rights = self.rights_statement unless self.rights_statement.blank?
-    end
+  end
+
+	def assign_contributing_institution
+		case self.contributing_institution
+		when "DC Field: Source"
+			self.contributing_institution = self.source
+		else
+			self.contributing_institution = self.contributing_institution
+		end
+  end
 
 end

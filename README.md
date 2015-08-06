@@ -26,7 +26,7 @@ cd dplah
 
 ##Configuration
 
-To use this head, create a file under "`config/dpla.yml`" (you may copy the example file, "`config.dpla.yml.example`" and add the following:
+To use this head, create a file under "`config/dpla.yml`" (you may copy the example file, "`config/dpla.yml.example`" and add the following:
 
 ```yaml
 harvest_data_directory: "/path/to/metadata/from/contributors"

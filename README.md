@@ -10,9 +10,23 @@ DPLAH is a proof-of-concept aggregator for OAI-PMH metadata with additional feat
 * [tcl](http://www.tcl.tk/) for supporting make test in Redis
 * [Apache](http://httpd.apache.org/) for serving harvesting logs in the browser, and for later production deployment
 
+##Clone the source files
+
+Clone the Hydra head from the Git repository:
+
+```bash
+git clone https://github.com/tulibraries/dplah.git
+```
+
+Execute the remaining tasks from the Hydra head application directory:
+
+```bash
+cd dplah
+```
+
 ##Configuration
 
-To use this head, create a file under "config/dpla.yml" and add the following:
+To use this head, create a file under "`config/dpla.yml`" (you may copy the example file, "`config/dpla.yml.example`" and add the following:
 
 ```yaml
 harvest_data_directory: "/path/to/metadata/from/contributors"
@@ -41,14 +55,34 @@ Substitute your own values as follows for the YML fields:
 
 To start up locally, be sure that your pid_prefix as defined in `config/dpla.yml` matches the pid prefix in your `fedora.fcfg` file under `fedora_conf/`.
 
-Also be sure you have jetty installed and configured, and all tables are migrated (can use the following commands if needed):
+Install the Ruby necessary gems:
 
+```bash
+bundle install
 ```
+
+Ensure you have jetty installed and configured, and all tables are migrated (can use the following commands if needed):
+
+```bash
 rake db:migrate
 rails g hydra:jetty
 rake jetty:config
+```
+
+Start the jetty server:
+
+```bash
 rake jetty:start
 ```
+
+Give jetty time to start up (about 10-30 seconds) before starting the Rails application:
+
+```bash
+rails server -d -b 127.0.0.1
+```
+
+On your web browser, go to `http://localhost:3000` to verify that hydra head is up and running. If you get a SOLR connection error, wait a few more seconds for Jetty to complete its startup and try again.
+
 
 ##Redis and Resque
 
@@ -56,10 +90,10 @@ Harvest and delete jobs are backgrounded once assigned through the dashboard, wi
 * [Tutorial on installing/configuring Redis on Ubuntu and CentOS from projecthydra-labs hydradam](https://github.com/projecthydra-labs/hydradam/wiki/Installation:-Redis)
 * This Hydra head uses the resque-pool gem to make configuration of queues easier.  See the `config/resque-pool.yml` file for the default configuration.  It is recommended that users configure two queues for instances of this application, one for Harvest jobs and one for DumpReindex jobs.  These are set and allocate two workers per job by default.  Adjust the number of workers as needed for your application.
 * To initialize a resque pool's workers, issue the following command at the terminal:
-```
+```bash
 env TERM_CHILD=1 VVERBOSE=1 COUNT='NUM' QUEUE=NAME_OF_QUEUE bundle exec rake resque:workers
 ```
-**NOTE:** 
+**NOTE:**
 * `NUM` refers to the number of workers you want to activate in this pool
 * `NAME_OF_QUEUE` refers to the name of the queue you are initializing (ie, harvest)
 
@@ -75,7 +109,7 @@ env TERM_CHILD=1 VVERBOSE=1 COUNT='NUM' QUEUE=NAME_OF_QUEUE bundle exec rake res
 * To begin harvesting, go to the relative path "/providers" (the "Manage OAI Seeds" dashboard -- you will need to create a devise user account first if using the default setup) and input data for an OAI-PMH harvestable repository (see "OAI Resources" below for tips on getting started)
 * Save the provider.
 * From the dashboard, click the "Harvest from OAI Source" button in the OAI seeds table.  You should see the ajax spinner and a prompt to check the harvesting logs.  Click this link to go to the directory listing page of OAI management logs.  These are textual logs created every time an OAI seed action is performed from within the dashboard (that is, harvest, delete, etc).  Harvesting/ingesting and deleting from the index can take a while, especially for seeds with many records, so you can monitor the progress of an ingest by refreshing the textual log periodically.  
-* Go to your Hydra head in the browser to see if the metadata was harvested and has been made discoverable. 
+* Go to your Hydra head in the browser to see if the metadata was harvested and has been made discoverable.
 
 ####More Actions for OAI Seeds
 * From the dashboard, you may delete all records from a collection, from an institution, or delete all records in the aggregator.  You can also re-harvest records from seeds (not deleting before doing so will result in the older ones being overwritten), and harvest everything available from all seeds via the actions underneath the OAI seeds table.  The "harvest all" and "delete all" tasks will take a while if you have many seeds, and many records in the index respectively.
@@ -84,10 +118,10 @@ env TERM_CHILD=1 VVERBOSE=1 COUNT='NUM' QUEUE=NAME_OF_QUEUE bundle exec rake res
 
 * To harvest just the raw OAI from a specific OAI seed in the application, run the following in the terminal:
 ```
-rake oai:harvest[NUM] 
+rake oai:harvest[NUM]
 ```
-**NOTE:** 
-* `NUM` = the ID of the provider/OAI seed that you are attempting to harvest 
+**NOTE:**
+* `NUM` = the ID of the provider/OAI seed that you are attempting to harvest
 
 This will harvest the raw OAI available from the seed, save as XML (broken into separate files on the resumption token), and place in the directory defined by "harvest_data_directory" in `config/dpla.yml`.  This can be handy if you are trying to troubleshoot XML-related issues with a seed's OAI content as it is being delivered to the hub.
 
@@ -105,15 +139,15 @@ You should see a message displaying the absolute path to your harvested XML, sta
 
 * To harvest and ingest all records from all OAI seeds present in the application, run the following in the terminal:
 ```
-rake oai:harvest_ingest_all 
+rake oai:harvest_ingest_all
 ```
 This will harvest, convert, normalize, and ingest all OAI-PMH records from all OAI seeds in the Hydra head into the repository.
 
 * To remove all records from the aggregator index, run the following in the terminal:
 ```
-rake oai:delete_all 
+rake oai:delete_all
 ```
-This will delete all harvested records from the local repository. 
+This will delete all harvested records from the local repository.
 
 ##Tests
 From within the root of your Rails application, run the following:
@@ -149,4 +183,3 @@ Some code in this project (and much research) is based on the talented Chris Bee
 This software has been developed by and is brought to you by the Hydra community. Learn more at the [Project Hydra website](http://projecthydra.org/).
 
 ![Powered by Hydra with Hydra logo](https://github.com/uvalib/libra-oa/raw/a6564a9e5c13b7873dc883367f5e307bf715d6cf/public/images/powered_by_hydra.png?raw=true)
-

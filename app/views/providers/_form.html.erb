@@ -52,7 +52,7 @@
 
   <div class="field">
     <%= f.label :contributing_institution %><br>
-    <%= f.collection_select :contributing_institution, Provider.unique_by_contributing_institution, :contributing_institution, :contributing_institution, :prompt => "Please select one from this list or enter below"%>
+    <%= f.collection_select :contributing_institution, Provider.unique_by_contributing_institution, :contributing_institution, :contributing_institution, :prompt => "Please select one from this list or enter below", :include_blank => true%>
     <div class="field-tip">
       Note: For end user display
     </div>
@@ -76,7 +76,7 @@
 
   <div class="field">
     <%= f.label :intermediate_provider %><br>
-    <%= f.collection_select :intermediate_provider, Provider.unique_by_intermediate_provider, :intermediate_provider, :intermediate_provider, :prompt => "Please select one from this list or enter below" %>
+    <%= f.collection_select :intermediate_provider, Provider.unique_by_intermediate_provider, :intermediate_provider, :intermediate_provider, :prompt => "Please select one from this list or enter below", :include_blank => true %>
     <div class="field-tip">
       Note: For end user display
     </div>
@@ -92,7 +92,7 @@
 
   <div class="field">
     <%= f.label :provider_id_prefix %><br>
-    <%= f.collection_select :provider_id_prefix, Provider.unique_by_provider_id_prefix, :provider_id_prefix, :provider_id_prefix, :prompt => "Please select one from this list or enter below" %>
+    <%= f.collection_select :provider_id_prefix, Provider.unique_by_provider_id_prefix, :provider_id_prefix, :provider_id_prefix, :prompt => "Please select one from this list or enter below", :include_blank => true%>
     <div class="field-tip">
       Note: For use in creating the unique identifier URL for this object -- this should reflect the contributing institution and (if no set spec is provided by the seed), the collection or set and should be 1 - 8 characters long.
     </div>
@@ -117,7 +117,7 @@
 
   <div class="field">
     <%= f.label :identifier_token %><br>
-    <%= f.select :identifier_token, Provider.possible_identifier_fields, :prompt => "Please select one..." %>
+    <%= f.select :identifier_token, Provider.possible_identifier_fields, :prompt => "Please select one...", :include_blank => true %>
     <div class="field-tip">
       Note: Please select the metadata field (first occurrence per record only) to which the first token maps (if one is present in your identifier pattern).
     </div>
@@ -133,7 +133,7 @@
 
  <div class="field">
     <%= f.label :email %><br>
-    <%= f.collection_select :email, Provider.unique_by_email, :email, :email, :prompt => "Please select one from this list or enter below" %>
+    <%= f.collection_select :email, Provider.unique_by_email, :email, :email, :prompt => "Please select one from this list or enter below", :include_blank => true%>
     <div class="field-tip">
       Note: Contact information for OAI seed
     </div>
@@ -159,7 +159,7 @@
 
   <div class="field">
     <%= f.label :common_repository_type%><br>
-    <%= f.select :common_repository_type, Provider.common_repositories, :include_blank => true, :prompt => "Please select one from this list if applicable" %>
+    <%= f.select :common_repository_type, Provider.common_repositories, :prompt => "Please select one from this list if applicable", :include_blank => true%>
     <div class="field-tip">
       Note: if you use one of these systems but have modified it outside of the standard installation, the standard method for thumbnail retrieval may not work.
     </div>
@@ -176,7 +176,7 @@
 
   <div class="field">
     <%= f.label :thumbnail_token_1 %><br>
-    <%= f.select :thumbnail_token_1, Provider.possible_thumbnail_fields, :prompt => "Please select one..." %>
+    <%= f.select :thumbnail_token_1, Provider.possible_thumbnail_fields, :prompt => "Please select one...", :include_blank => true %>
     <div class="field-tip">
       Note: Please select the metadata field (first occurrence per record only) to which the first token maps (if one is present in your thumbnail retrieval pattern).
     </div>
@@ -184,7 +184,7 @@
 
   <div class="field">
     <%= f.label :thumbnail_token_2 %><br>
-    <%= f.select :thumbnail_token_2, Provider.possible_thumbnail_fields, :prompt => "Please select one..." %>
+    <%= f.select :thumbnail_token_2, Provider.possible_thumbnail_fields, :prompt => "Please select one...", :include_blank => true%>
     <div class="field-tip">
       Note: Please select the metadata field (first occurrence per record only) to which the second token maps (if one is present in your thumbnail retrieval pattern).
     </div>

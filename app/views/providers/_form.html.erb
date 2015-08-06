@@ -60,7 +60,7 @@
 
   <div class="field">
     <%= f.label :contributing_institution_dc_field %><br>
-    <%= f.select :contributing_institution_dc_field, Provider.possible_ci_fields, :allow_blank => true, :prompt => "Please select one..." %>
+    <%= f.select :contributing_institution_dc_field, Provider.possible_ci_fields, :prompt => "Please select one if applicable...", :include_blank => true %>
     <div class="field-tip">
       Note: Please select the metadata field (first occurrence per record only) to which the Contributing Institution maps (if the Contributing Institution is mapped this way).
     </div>

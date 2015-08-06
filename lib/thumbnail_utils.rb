@@ -64,6 +64,8 @@ module ThumbnailUtils
         asset_url = ThumbnailUtils::CommonRepositories::Vudl.asset_url(obj)
       when "Omeka"
         asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)
+      when "Small Institution Omeka"
+        asset_url = check_for_thumbnail(obj)
     	else
     		abort "Invalid common repository type - #{provider.common_repository_type}"
   	end
@@ -101,6 +103,18 @@ module ThumbnailUtils
   end
   module_function :define_thumbnail
 
+  def check_for_thumbnail(obj)
+    thumbnail = ""
+    f = obj.identifier
+    f.each do |thumb|
+      if thumb.start_with?('http') && thumb.end_with?(*(OaiRec.thumbnail_extensions))
+        thumbnail = thumb
+      end
+    end
+    thumbnail
+  end
+  module_function :check_for_thumbnail
+
   def self.set_thumbnail(asset_url)
     if !asset_url.blank?
       thumbnail = (asset_url)
@@ -109,17 +123,5 @@ module ThumbnailUtils
     end
     #obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
   end
-
-  def self.check_for_thumbnail(obj)
-    thumbnail = ""
-    f = obj.identifier
-    f.each do |thumb|
-      if thumb.start_with?('http') && thumb.end_with?(*(OaiRec.thumbnail_extensions))
-        thumbnail = f
-      end
-    end
-    thumbnail
-  end
-  module_function :check_for_thumbnail
 
 end

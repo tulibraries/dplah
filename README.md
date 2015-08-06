@@ -61,7 +61,7 @@ Install the Ruby necessary gems:
 bundle install
 ```
 
-Insure you have jetty installed and configured, and all tables are migrated (can use the following commands if needed):
+Ensure you have jetty installed and configured, and all tables are migrated (can use the following commands if needed):
 
 ```bash
 rake db:migrate

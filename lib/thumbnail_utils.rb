@@ -108,8 +108,10 @@ module ThumbnailUtils
       thumbnail = "default-thumbnail.png"
     end
     #obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
-
-
   end
+
+  def check_for_thumb_in_identifiers(obj)
+  end
+  module_function :check_for_thumb_in_identifiers
 
 end

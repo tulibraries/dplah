@@ -199,6 +199,7 @@ module HarvestUtils
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
       obj.thumbnail = thumbnail
       obj.assign_rights
+      obj.assign_contributing_institution
       build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
       obj.reorg_identifiers
       obj.save

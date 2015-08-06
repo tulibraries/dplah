@@ -22,7 +22,7 @@
       Note: not for end user display
     </div>
   </div>
-    
+
   <div class="field">
     <%= f.label :endpoint_url %><br>
     <%= f.collection_select :endpoint_url, Provider.unique_by_endpoint_url, :endpoint_url, :endpoint_url, :prompt => "Please select one from this list or enter below" %>
@@ -37,7 +37,7 @@
     <%= f.label :metadata_prefix %><br>
     <%= f.select :metadata_prefix, [['oai_dc', 'oai_dc'], ['oai_qdc', 'oai_qdc']] %>
   </div>
-  
+
   <div class="field">
     <%= f.label :set %><br>
     <%= f.text_field :set %>
@@ -49,7 +49,7 @@
       Note: For end user display
     </div>
   </div>
-    
+
   <div class="field">
     <%= f.label :contributing_institution %><br>
     <%= f.collection_select :contributing_institution, Provider.unique_by_contributing_institution, :contributing_institution, :contributing_institution, :prompt => "Please select one from this list or enter below"%>
@@ -59,10 +59,18 @@
   </div>
 
   <div class="field">
+    <%= f.label :contributing_institution_dc_field %><br>
+    <%= f.select :contributing_institution_dc_field, Provider.possible_ci_fields, :allow_blank => true, :prompt => "Please select one..." %>
+    <div class="field-tip">
+      Note: Please select the metadata field (first occurrence per record only) to which the Contributing Institution maps (if the Contributing Institution is mapped this way).
+    </div>
+  </div>
+
+  <div class="field">
     <%= f.label :new_contributing_institution %><br>
     <%= f.text_field :new_contributing_institution %>
     <div class="field-tip">
-      If not in the list above
+      If not in the list above, or mapped to a specific field
     </div>
   </div>
 
@@ -119,7 +127,7 @@
     <%= f.label :rights_statement %><br>
     <%= f.text_area :rights_statement %>
     <div class="field-tip">
-      If no rights statement exists, or if this rights statement should supersede the rights statement that exists for the object 
+      If no rights statement exists, or if this rights statement should supersede the rights statement that exists for the object
     </div>
   </div>
 

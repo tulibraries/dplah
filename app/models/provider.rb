@@ -5,7 +5,7 @@ class Provider < ActiveRecord::Base
 	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}, :allow_blank => true
 	validates_length_of :new_provider_id_prefix, :maximum => 8
 
-	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq}
+	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq }
 	scope :unique_by_intermediate_provider, lambda { select(:intermediate_provider).uniq}
 	scope :unique_by_provider_id_prefix, lambda { select(:provider_id_prefix).uniq}
 	scope :unique_by_endpoint_url, lambda { select(:endpoint_url).uniq}
@@ -115,7 +115,7 @@ class Provider < ActiveRecord::Base
 	def thumbnail_pattern
 		read_attribute(:thumbnail_pattern) || ''
 	end
-	
+
 	def thumbnail_token_1
 		read_attribute(:thumbnail_token_1) || ''
 	end
@@ -155,9 +155,9 @@ class Provider < ActiveRecord::Base
 	def interval
 		(read_attribute(:interval) || 1.day).seconds
 	end
-	
+
 	protected
-	
+
 		def oai_client_options
 			options = {}
 			options[:set] = set unless set.blank?
@@ -203,4 +203,10 @@ class Provider < ActiveRecord::Base
           oai_dc_fields = [['title','title'],['creator','creator'],['subject','subject'],['contributor','contributor'],['identifier','identifier'],['source','source']]
           oai_dc_fields
 	    end
+
+			def self.possible_ci_fields
+				possible_ci_fields = [['DC Field: Creator','DC Field: Creator'],['DC Field: Publisher','DC Field: Publisher'],['DC Field: Contributor','DC Field: Contributor'],['DC Field: Source','DC Field: Source']]
+				possible_ci_fields
+			end
+
 end

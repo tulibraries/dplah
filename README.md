@@ -45,12 +45,12 @@ harvest_data_directory: "tmp/test/harvest_data"
 converted_foxml_directory: "tmp/test/converted_foxml"
 pid_prefix: "test-prefix"
 partner: "test-partner"
-human_log_path: '/var/www/html/harvest-log'
+human_log_path: '/var/www/html/harvest-logs'
 human_log_url: 'http://0.0.0.0/harvest-log'
 email_sender: "no-reply-libdigital@example.com"
-email_recipient: "username@example.com"
+email_recipient: "to@example.com"
 ```
-If you follow this example, ensure that the directory "`var/www/html/harvest-log`" exists and you substitute a valid email address for the `email_recipient`.
+If you follow this example, ensure that the directory "`/var/www/html/harvest-logs`" exists and you substitute a valid email address for the `email_recipient`.
 
 ##Start up locally
 
@@ -70,20 +70,48 @@ rails g hydra:jetty
 rake jetty:config
 ```
 
+### Running the Processes
+
+
 Start the jetty server:
 
 ```bash
 rake jetty:start
 ```
 
-Give jetty time to start up (about 10-30 seconds) before starting the Rails application:
+On your browser, visit `http://localhost:8983` to verify that the jetty server has started. It may take a few seconds.
+
+Give jetty time to start launching the Rails application:
 
 ```bash
-rails server -d -b 127.0.0.1
+rails server -d
 ```
 
-On your web browser, go to `http://localhost:3000` to verify that hydra head is up and running. If you get a SOLR connection error, wait a few more seconds for Jetty to complete its startup and try again.
+On your web browser, go to `http://localhost:3000` to verify that hydra head is up and running.
 
+Start Redis:
+
+```bash
+redis-service &
+```
+
+Launch the harvest and delete jobs, by opening two other terminal sessions in the DPLAH application directory. In one session, enter:
+
+```bash
+env TERM_CHILD=1 VVERBOSE=1 COUNT=1 QUEUE=harvest bundle exec rake resque:workers
+```
+
+In the other session, enter:
+
+```bash
+env TERM_CHILD=1 VVERBOSE=1 COUNT=1 QUEUE=delete bundle exec rake resque:workers
+```
+
+### Application Usage
+
+From your browser, create an account in `http://localhost:3000/users/sign_up`
+
+To harvest data, visit the "Manage OAI Seed" link in the top navbar to enter provider information and harvest and manage data.
 
 ##Redis and Resque
 

@@ -166,7 +166,7 @@ module HarvestUtils
           f.close
       end
 
-      if provider.common_repository_type == "Small Institution Omeka"
+      if provider.common_repository_type == "Passthrough Workflow"
         old_pid, new_pid = construct_si_pid(doc, "//identifier", @pid_prefix, provider.provider_id_prefix)
         replace_pid(xml_file, old_pid, new_pid)
 
@@ -622,7 +622,7 @@ module HarvestUtils
       # little fix for Villanova's DPLA set
       file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
 
-      file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Small Institution Omeka"
+      file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Passthrough Workflow"
 
     end
 

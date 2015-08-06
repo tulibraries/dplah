@@ -192,7 +192,7 @@ class Provider < ActiveRecord::Base
 	private
 
 	    def self.common_repositories
-          common_repositories = [['CONTENTdm', 'CONTENTdm'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Small Institution Omeka', 'Small Institution Omeka'], ['VuDL', 'VuDL']]
+          common_repositories = [['CONTENTdm', 'CONTENTdm'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Passthrough Workflow', 'Passthrough Workflow'], ['VuDL', 'VuDL']]
 	    end
 
 	    def self.possible_thumbnail_fields

@@ -5,7 +5,7 @@ class OaiRec < ActiveFedora::Base
  #    end
 
 	has_metadata 'descMetadata', type: Datastreams::OaiRecMetadata
-	
+
 	# Just your basic DC OAI-PMH
 	has_attributes :title, datastream: 'descMetadata', multiple: true
 	has_attributes :creator, datastream: 'descMetadata', multiple: true
@@ -41,20 +41,24 @@ class OaiRec < ActiveFedora::Base
 	has_attributes :intermediate_provider, datastream: 'descMetadata', multiple: false
 	has_attributes :collection_name, datastream: 'descMetadata', multiple: false
 	has_attributes :partner, datastream: 'descMetadata', multiple: false
-    
+
     #specifically to allow dump/reindex by set
 	has_attributes :set_spec, datastream: 'descMetadata', multiple: false
 	has_attributes :provider_id_prefix, datastream: 'descMetadata', multiple: false
 
 	#has_model :oai_rec
 
+	def self.thumbnail_extensions
+		%w(jpg png gif)
+	end
+
 	def reorg_identifiers
 		f = self.identifier
 		f.each do |ident|
-			if ident.start_with?('http')
+			if ident.start_with?('http') && !ident.end_with?(*(OaiRec.thumbnail_extensions))
 				pos = f.index(ident)
 				f.insert(0,f.delete_at(pos))
-			end  
+			end
 		end
 		self.identifier = f
 	end

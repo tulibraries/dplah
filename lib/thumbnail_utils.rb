@@ -65,7 +65,7 @@ module ThumbnailUtils
       when "Omeka"
         asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)
       when "Passthrough Workflow"
-        asset_url = define_thumbnail_pattern(obj, provider)
+        asset_url = check_for_thumbnail(obj)
     	else
     		abort "Invalid common repository type - #{provider.common_repository_type}"
   	end
@@ -96,10 +96,24 @@ module ThumbnailUtils
       asset_url = define_thumbnail_common(obj, provider)
     elsif !provider.thumbnail_pattern.blank?
       asset_url = define_thumbnail_pattern(obj, provider)
+    else
+      asset_url = check_for_thumbnail(obj)
     end
     set_thumbnail(asset_url)
   end
   module_function :define_thumbnail
+
+  def check_for_thumbnail(obj)
+    thumbnail = ""
+    f = obj.identifier
+    f.each do |thumb|
+      if thumb.start_with?('http') && thumb.end_with?(*(OaiRec.thumbnail_extensions))
+        thumbnail = thumb
+      end
+    end
+    thumbnail
+  end
+  module_function :check_for_thumbnail
 
   def self.set_thumbnail(asset_url)
     if !asset_url.blank?
@@ -109,9 +123,5 @@ module ThumbnailUtils
     end
     #obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
   end
-
-  def check_for_thumb_in_identifiers(obj)
-  end
-  module_function :check_for_thumb_in_identifiers
 
 end

@@ -48,10 +48,14 @@ class OaiRec < ActiveFedora::Base
 
 	#has_model :oai_rec
 
+	def self.thumbnail_extensions
+		%w(jpg png gif)
+	end
+
 	def reorg_identifiers
 		f = self.identifier
 		f.each do |ident|
-			if ident.start_with?('http')
+			if ident.start_with?('http') && !ident.end_with?(*(OaiRec.thumbnail_extensions))
 				pos = f.index(ident)
 				f.insert(0,f.delete_at(pos))
 			end

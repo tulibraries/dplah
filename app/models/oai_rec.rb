@@ -68,12 +68,21 @@ class OaiRec < ActiveFedora::Base
 		j = f.push("#{new_identifier}")
 		self.update_attributes({"identifier" => j})
 		self.save
-        self.to_solr
+    self.to_solr
 		self.update_index
 	end
 
 	def assign_rights
 	  self.rights = self.rights_statement unless self.rights_statement.blank?
-    end
+  end
+
+	def assign_contributing_institution
+		case self.contributing_institution
+		when "DC Field: Source"
+			self.contributing_institution = self.source
+		else
+			self.contributing_institution = self.contributing_institution
+		end
+  end
 
 end

@@ -64,7 +64,7 @@ module ThumbnailUtils
         asset_url = ThumbnailUtils::CommonRepositories::Vudl.asset_url(obj)
       when "Omeka"
         asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)
-      when "Small Institution Omeka"
+      when "Passthrough Workflow"
         asset_url = check_for_thumbnail(obj)
     	else
     		abort "Invalid common repository type - #{provider.common_repository_type}"

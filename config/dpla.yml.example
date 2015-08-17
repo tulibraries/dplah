@@ -6,3 +6,4 @@ human_log_path: '/abs/path/to/log/files'
 human_log_url: 'http://fullurltologfiles'
 email_sender: "from@example.edu"
 email_recipient: "to@example.edu"
+noharvest_stopword: "string_in_record_metadata_that_signals_not_to_harvest"

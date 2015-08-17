@@ -13,6 +13,7 @@ module HarvestUtils
   @pid_prefix = config['pid_prefix']
   @partner = config['partner']
   @human_log_path = config['human_log_path']
+  @noharvest_stopword = config['noharvest_stopword']
 
   def harvest_action(provider)
     create_log_file(provider.name)
@@ -52,6 +53,7 @@ module HarvestUtils
     end
     num_files = 0
     transient_records = 0
+    noharvest_records = 0
     client = OAI::Client.new provider.endpoint_url
     response = client.list_records
     set = provider.set ? provider.set : ""
@@ -60,7 +62,7 @@ module HarvestUtils
     full_records = ''
     response.each do |record|
         num_files += 1
-        full_records, transient_records = process_record_token(record, full_records,transient_records)
+        full_records, transient_records, noharvest_records = process_record_token(record, full_records,transient_records,noharvest_records)
         File.open(@log_file, "a+") do |f|
           f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
         end
@@ -89,7 +91,7 @@ module HarvestUtils
       sleep(5)
     end
     File.open(@log_file, "a+") do |f|
-      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << "#{provider.name}" << I18n.t('oai_seed_logs.text_buffer') << "#{num_files} " << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected') << I18n.t('oai_seed_logs.text_buffer')
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << "#{provider.name}" << I18n.t('oai_seed_logs.text_buffer') << "#{num_files} " << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected')  << "#{noharvest_records} " << I18n.t('oai_seed_logs.noharvest_records_detected') << I18n.t('oai_seed_logs.text_buffer')
     end
   end
   module_function :harvest
@@ -514,16 +516,18 @@ module HarvestUtils
       normalize_first_case(value)
     end
 
-    def self.process_record_token(record, full_records, transient_records)
-      puts record.metadata
-      identifier_reformed = reform_oai_id(record.header.identifier.to_s)
-      record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
-      full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted"
-      File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
-        transient_records += 1 if record.header.status.to_s == "deleted"
-      end
-      return full_records, transient_records
+    def self.process_record_token(record, full_records, transient_records, noharvest_records)
+        puts record.metadata
+        identifier_reformed = reform_oai_id(record.header.identifier.to_s)
+        record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
+        full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || check_if_noharvest(record)
+        File.open(@log_file, "a+") do |f|
+          f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
+          f << I18n.t('oai_seed_logs.noharvest_detected') if check_if_noharvest(record)
+          transient_records += 1 if record.header.status.to_s == "deleted"
+          noharvest_records += 1 if check_if_noharvest(record)
+        end
+        return full_records, transient_records, noharvest_records
     end
 
     def self.get_xml_manifest(options = {})
@@ -612,6 +616,11 @@ module HarvestUtils
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.duplicate_record_detected') << " #{pid_check}" << I18n.t('oai_seed_logs.text_buffer') if o
       end
+    end
+
+    def self.check_if_noharvest(record)
+      viable = record.metadata.to_s.include?(@noharvest_stopword)
+      viable
     end
 
     def self.build_identifier(obj, provider)

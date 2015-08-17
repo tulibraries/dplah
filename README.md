@@ -37,7 +37,7 @@ human_log_path: '/abs/path/to/log/files'
 human_log_url: 'http://fullurltologfiles'
 email_sender: "from@example.edu"
 email_recipient: "to@example.edu"
-
+noharvest_stopword: "string_in_record_metadata_that_signals_not_to_harvest"
 ```
 
 Substitute your own values as follows for the YML fields:
@@ -50,7 +50,7 @@ Substitute your own values as follows for the YML fields:
 * `human_log_url` refers to the full clickable URL path to the directory on your web server where OAI management logs live
 * `email_sender` refers to the sending address for harvest utility email reports
 * `email_recipient` refers to the recipient address for harvest utility email reports
-
+* `noharvest_stopword` refers to an optional string that the aggregator can use as a signal to skip over any records containing that string in their metadata, excluding it from ingest
 ##Start up locally
 
 To start up locally, be sure that your pid_prefix as defined in `config/dpla.yml` matches the pid prefix in your `fedora.fcfg` file under `fedora_conf/`.

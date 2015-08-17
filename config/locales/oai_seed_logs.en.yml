@@ -19,7 +19,10 @@ en:
        OAI record(s) detected 
     transient_records_detected: |+ 
        transient OAI record(s) detected
+    noharvest_records_detected: |+ 
+       restricted OAI record(s) detected
     single_transient_record_detected: Transient record detected -- 
+    noharvest_detected: Restricted record detected -- 
     resumption_token_detected: |+
       Resumption token detected
     convert_begin: |+

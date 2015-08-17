@@ -366,54 +366,7 @@ module HarvestUtils
       node_update.each do |node_value|
         node_value.inner_html = strip_brackets(node_value.inner_html)
         normalize_first_case(node_value.inner_html)
-        case node_value.inner_html
-          when "Amh"
-            node_value.inner_html = "Amharic"
-          when "Grc"
-            node_value.inner_html = "Ancient Greek"
-          when "Chi","Zho"
-            node_value.inner_html = "Chinese"
-          when "Cze","Ces"
-            node_value.inner_html = "Czech"
-          when "Dan"
-            node_value.inner_html = "Danish"
-          when "Dut"
-            node_value.inner_html = "Dutch"
-          when "Eng","English (eng)","En"
-            node_value.inner_html = "English"
-          when "Fre","Fra"
-            node_value.inner_html = "French"
-          when "Ger","Deu"
-            node_value.inner_html = "German"
-          when "Gre"
-            node_value.inner_html = "Greek"
-          when "Ita"
-            node_value.inner_html = "Italian"
-          when "Gle"
-            node_value.inner_html = "Irish"
-          when "Jpn"
-            node_value.inner_html = "Japanese"
-          when "Kor"
-            node_value.inner_html = "Korean"
-          when "Lat"
-            node_value.inner_html = "Latin"
-          when "Pol"
-            node_value.inner_html = "Polish"
-          when "Spa"
-            node_value.inner_html = "Spanish"
-          when "Bul"
-            node_value.inner_html = "Bulgarian"
-          when "Lao"
-            node_value.inner_html = "Lao"
-          when "Per"
-            node_value.inner_html = "Persian"
-          when "Yid"
-            node_value.inner_html = "Yiddish"
-          when "Vie"
-            node_value.inner_html = "Vietnamese"
-          else
-            node_value.inner_html = node_value.inner_html
-          end
+        node_value.inner_html = Encodings::Constants::LANG_ABBR.include?(node_value.inner_html) ? Encodings::Constants::LANG_ABBR[node_value.inner_html] : node_value.inner_html
       end
     end
 

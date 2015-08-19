@@ -33,6 +33,20 @@ en:
        OAI seeds detected
     normalize_begin: |+
       BEGINNING NORMALIZING
+    normalize_global: |+
+      Sanitizing all metadata terms
+    normalize_facets: |+
+      Sanitizing all facetable terms
+    standardize_formats: |+
+      Standardizing formats to match IANA MIME media types 
+    normalize_dates: |+
+      Removing non-numeric characters from date field
+    normalize_language: |+
+      Converting ISO-639 language codes to full language names
+    dcmi_types: |+
+      Matching type fields to DCMI types as specified by the OAI seed settings
+    passthrough_workflow: |+
+      Performing passthrough workflow operations for identifiers 
     normalize_end: |+
       NORMALIZING COMPLETE
     ingest_begin: |+

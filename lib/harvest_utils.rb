@@ -61,11 +61,13 @@ module HarvestUtils
     response = provider.set ? client.list_records(:metadata_prefix => metadata_prefix, :set => set) : client.list_records(:metadata_prefix => metadata_prefix)
     full_records = ''
     response.each do |record|
+      unless record.header.identifier.include?("fedora-system")
         num_files += 1
         full_records, transient_records, noharvest_records = process_record_token(record, full_records,transient_records,noharvest_records)
         File.open(@log_file, "a+") do |f|
           f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
         end
+      end
     end
     create_harvest_file(provider, full_records, num_files)
     `rake tmp:cache:clear`
@@ -81,7 +83,7 @@ module HarvestUtils
       response = client.list_records :resumption_token => token if token
       response.each do |record|
         num_files += 1
-        full_records, transient_records = process_record_token(record, full_records,transient_records)
+        full_records, transient_records, noharvest_records = process_record_token(record, full_records,transient_records,noharvest_records)
         File.open(@log_file, "a+") do |f|
           f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
         end
@@ -477,17 +479,17 @@ module HarvestUtils
     end
 
     def self.process_record_token(record, full_records, transient_records, noharvest_records)
-        puts record.metadata
-        identifier_reformed = reform_oai_id(record.header.identifier.to_s)
-        record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
-        full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || check_if_noharvest(record)
-        File.open(@log_file, "a+") do |f|
-          f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
-          f << I18n.t('oai_seed_logs.noharvest_detected') if check_if_noharvest(record)
-          transient_records += 1 if record.header.status.to_s == "deleted"
-          noharvest_records += 1 if check_if_noharvest(record)
-        end
-        return full_records, transient_records, noharvest_records
+      puts record.metadata
+      identifier_reformed = reform_oai_id(record.header.identifier.to_s)
+      record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
+      full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || check_if_noharvest(record)
+      File.open(@log_file, "a+") do |f|
+        f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
+        f << I18n.t('oai_seed_logs.noharvest_detected') if check_if_noharvest(record)
+        transient_records += 1 if record.header.status.to_s == "deleted"
+        noharvest_records += 1 if check_if_noharvest(record)
+      end
+      return full_records, transient_records, noharvest_records
     end
 
     def self.get_xml_manifest(options = {})

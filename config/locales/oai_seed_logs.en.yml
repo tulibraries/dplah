@@ -40,7 +40,7 @@ en:
     standardize_formats: |+
       Standardizing formats to match IANA MIME media types 
     normalize_dates: |+
-      Removing non-numeric characters from date field
+      Removing brackets from date field
     normalize_language: |+
       Converting ISO-639 language codes to full language names
     dcmi_types: |+

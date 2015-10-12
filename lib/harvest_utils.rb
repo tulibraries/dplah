@@ -14,6 +14,7 @@ module HarvestUtils
   @partner = config['partner']
   @human_log_path = config['human_log_path']
   @noharvest_stopword = config['noharvest_stopword']
+  @passthrough_url = config['passthrough_url']
 
   def harvest_action(provider)
     create_log_file(provider.name)
@@ -175,7 +176,6 @@ module HarvestUtils
       if provider.common_repository_type == "Passthrough Workflow"
         old_pid, new_pid = construct_si_pid(doc, "//identifier", @pid_prefix, provider.provider_id_prefix)
         replace_pid(xml_file, old_pid, new_pid)
-
       end
 
     end
@@ -392,7 +392,7 @@ module HarvestUtils
     def self.remove_fake_identifiers(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.include?("gamma.library.temple.edu") ? "" : node_value.inner_html
+        node_value.inner_html = node_value.inner_html.include?(@passthrough_url) ? "" : node_value.inner_html
       end
     end
 

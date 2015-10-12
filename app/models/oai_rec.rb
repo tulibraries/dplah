@@ -53,6 +53,7 @@ class OaiRec < ActiveFedora::Base
 	end
 
 	def reorg_identifiers
+		binding.pry()
 		f = self.identifier
 		f.each do |ident|
 			if ident.start_with?('http') && !ident.end_with?(*(OaiRec.thumbnail_extensions))
@@ -68,7 +69,7 @@ class OaiRec < ActiveFedora::Base
 		j = f.push("#{new_identifier}")
 		self.update_attributes({"identifier" => j})
 		self.save
-    self.to_solr
+        self.to_solr
 		self.update_index
 	end
 

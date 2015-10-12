@@ -181,7 +181,7 @@ module HarvestUtils
       f << I18n.t('oai_seed_logs.standardize_formats')
       f << I18n.t('oai_seed_logs.normalize_dates')
       f << I18n.t('oai_seed_logs.normalize_language')
-      f << I18n.t('oai_seed_logs.dcmi_types') if provider.dcmi_mappings
+      f << I18n.t('oai_seed_logs.dcmi_types')
       f << I18n.t('oai_seed_logs.passthrough_workflow') if provider.common_repository_type == "Passthrough Workflow"
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_end') << I18n.t('oai_seed_logs.text_buffer')
     end

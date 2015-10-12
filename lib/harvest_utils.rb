@@ -61,11 +61,13 @@ module HarvestUtils
     response = provider.set ? client.list_records(:metadata_prefix => metadata_prefix, :set => set) : client.list_records(:metadata_prefix => metadata_prefix)
     full_records = ''
     response.each do |record|
+      unless record.header.identifier.include?("fedora-system")
         num_files += 1
         full_records, transient_records, noharvest_records = process_record_token(record, full_records,transient_records,noharvest_records)
         File.open(@log_file, "a+") do |f|
           f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
         end
+      end
     end
     create_harvest_file(provider, full_records, num_files)
     `rake tmp:cache:clear`
@@ -80,10 +82,12 @@ module HarvestUtils
       token = response.resumption_token
       response = client.list_records :resumption_token => token if token
       response.each do |record|
-        num_files += 1
-        full_records, transient_records = process_record_token(record, full_records,transient_records)
-        File.open(@log_file, "a+") do |f|
-          f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
+        unless record.header.identifier.include?("fedora-system")
+          num_files += 1
+          full_records, transient_records, noharvest_records = process_record_token(record, full_records,transient_records,noharvest_records)
+          File.open(@log_file, "a+") do |f|
+            f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
+          end
         end
       end
       create_harvest_file(provider, full_records, num_files)

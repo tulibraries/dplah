@@ -336,7 +336,7 @@ module HarvestUtils
     def self.normalize_dates(doc, string_to_search)
       node_update = doc.search(string_to_search)
       node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.gsub(/[^0-9]/,"").strip
+        node_value.inner_html = node_value.inner_html.gsub(/\[|\]/,"").strip
       end
     end
 

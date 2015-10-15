@@ -5,6 +5,7 @@ class OaiRec < ActiveFedora::Base
  #    end
 
 	has_metadata 'descMetadata', type: Datastreams::OaiRecMetadata
+	has_metadata 'DC', type: ActiveFedora::Datastream
 
 	# Just your basic DC OAI-PMH
 	has_attributes :title, datastream: 'descMetadata', multiple: true
@@ -14,21 +15,31 @@ class OaiRec < ActiveFedora::Base
 	has_attributes :publisher, datastream: 'descMetadata', multiple: true
 	has_attributes :contributor, datastream: 'descMetadata', multiple: true
 	has_attributes :date, datastream: 'descMetadata', multiple: true
-	has_attributes :created, datastream: 'descMetadata', multiple: true
-	has_attributes :issued, datastream: 'descMetadata', multiple: true
-	has_attributes :available, datastream: 'descMetadata', multiple: true
-	has_attributes :temporal, datastream: 'descMetadata', multiple: true
 	has_attributes :type, datastream: 'descMetadata', multiple: true
 	has_attributes :format, datastream: 'descMetadata', multiple: true
-	has_attributes :spatial, datastream: 'descMetadata', multiple: true
 	has_attributes :identifier, datastream: 'descMetadata', multiple: true
 	has_attributes :source, datastream: 'descMetadata', multiple: true
 	has_attributes :language, datastream: 'descMetadata', multiple: true
 	has_attributes :relation, datastream: 'descMetadata', multiple: true
 	has_attributes :coverage, datastream: 'descMetadata', multiple: true
 	has_attributes :rights, datastream: 'descMetadata', multiple: true
-	has_attributes :access_rights, datastream: 'descMetadata', multiple: true
-	has_attributes :rights_holder, datastream: 'descMetadata', multiple: true
+
+
+	has_attributes :title, datastream: 'DC', multiple: true
+	has_attributes :creator, datastream: 'DC', multiple: true
+	has_attributes :subject, datastream: 'DC', multiple: true
+	has_attributes :description, datastream: 'DC', multiple: true
+	has_attributes :publisher, datastream: 'DC', multiple: true
+	has_attributes :contributor, datastream: 'DC', multiple: true
+	has_attributes :date, datastream: 'DC', multiple: true
+	has_attributes :type, datastream: 'DC', multiple: true
+	has_attributes :format, datastream: 'DC', multiple: true
+	has_attributes :identifier, datastream: 'DC', multiple: true
+	has_attributes :source, datastream: 'DC', multiple: true
+	has_attributes :language, datastream: 'DC', multiple: true
+	has_attributes :relation, datastream: 'DC', multiple: true
+	has_attributes :coverage, datastream: 'DC', multiple: true
+	has_attributes :rights, datastream: 'DC', multiple: true
 
 	# Partner-specific
 	has_attributes :common_repository_type, datastream: 'descMetadata', multiple: false
@@ -45,6 +56,24 @@ class OaiRec < ActiveFedora::Base
     #specifically to allow dump/reindex by set
 	has_attributes :set_spec, datastream: 'descMetadata', multiple: false
 	has_attributes :provider_id_prefix, datastream: 'descMetadata', multiple: false
+
+
+
+	# Partner-specific
+	has_attributes :common_repository_type, datastream: 'DC', multiple: false
+	has_attributes :endpoint_url, datastream: 'DC', multiple: false
+	has_attributes :thumbnail, datastream: 'DC', multiple: false
+
+	#DPLA-specific fields
+	has_attributes :contributing_institution, datastream: 'DC', multiple: false
+	has_attributes :rights_statement, datastream: 'DC', multiple: false
+	has_attributes :intermediate_provider, datastream: 'DC', multiple: false
+	has_attributes :collection_name, datastream: 'DC', multiple: false
+	has_attributes :partner, datastream: 'DC', multiple: false
+
+    #specifically to allow dump/reindex by set
+	has_attributes :set_spec, datastream: 'DC', multiple: false
+	has_attributes :provider_id_prefix, datastream: 'DC', multiple: false
 
 	#has_model :oai_rec
 

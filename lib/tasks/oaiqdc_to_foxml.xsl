@@ -188,10 +188,9 @@
                   </xsl:for-each>
 
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:spatial">
-                    <xsl:call-template name="name-tag">
-                      <xsl:with-param name="tag" select="'dcterms:spatial'" />
-                      <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:spatial" />
-                    </xsl:call-template>
+                    <xsl:element name="dc:coverage">
+                      <xsl:value-of select="concat(., ';')" />
+                    </xsl:element>
                   </xsl:for-each>
 
                   <xsl:call-template name="name-tag">
@@ -315,13 +314,6 @@
                     </xsl:call-template>
                   </xsl:for-each>
 
-                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:temporal">
-                    <xsl:call-template name="split-on">
-                      <xsl:with-param name="tag" select="'temporal'" />
-                      <xsl:with-param name="on" select="concat(., ';')" />
-                    </xsl:call-template>
-                  </xsl:for-each>
-
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:type">
                     <xsl:call-template name="split-on">
                       <xsl:with-param name="tag" select="'type'" />
@@ -362,7 +354,7 @@
 
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:spatial">
                     <xsl:call-template name="split-on">
-                      <xsl:with-param name="tag" select="'spatial'" />
+                      <xsl:with-param name="tag" select="'coverage'" />
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
                   </xsl:for-each>

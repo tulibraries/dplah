@@ -211,7 +211,7 @@ module HarvestUtils
       obj = OaiRec.find(pid)
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
       obj.thumbnail = thumbnail
-      #obj.assign_rights
+      obj.assign_rights
       obj.assign_contributing_institution
       obj.save
       obj.to_solr

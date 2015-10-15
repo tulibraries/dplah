@@ -38,6 +38,7 @@ human_log_url: 'http://fullurltologfiles'
 email_sender: "from@example.edu"
 email_recipient: "to@example.edu"
 noharvest_stopword: "string_in_record_metadata_that_signals_not_to_harvest"
+passthrough_url: "sub.example.com"
 ```
 
 Substitute your own values as follows for the YML fields:
@@ -51,6 +52,7 @@ Substitute your own values as follows for the YML fields:
 * `email_sender` refers to the sending address for harvest utility email reports
 * `email_recipient` refers to the recipient address for harvest utility email reports
 * `noharvest_stopword` refers to an optional string that the aggregator can use as a signal to skip over any records containing that string in their metadata, excluding it from ingest
+* `passthrough_url' refers to the URL of a passthrough workflow agent signified in identifiers (no need to use unless utilizing the passthrough workflow)
 ##Start up locally
 
 To start up locally, be sure that your pid_prefix as defined in `config/dpla.yml` matches the pid prefix in your `fedora.fcfg` file under `fedora_conf/`.

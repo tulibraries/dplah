@@ -246,6 +246,10 @@
                     <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dc:rights" />
                   </xsl:call-template>
 
+                  <xsl:element name="dc:rights">
+                    <xsl:value-of select="$rights_statement" />
+                  </xsl:element>
+
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dcterms:accessRights'" />
                     <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:accessRights" />
@@ -446,7 +450,7 @@
                     <xsl:value-of select="$identifier_token" />
                   </xsl:element>
 
-                  <xsl:element name="rights_statement">
+                  <xsl:element name="rights">
                     <xsl:value-of select="$rights_statement" />
                   </xsl:element>
 

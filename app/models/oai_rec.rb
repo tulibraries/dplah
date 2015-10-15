@@ -88,9 +88,9 @@ class OaiRec < ActiveFedora::Base
 	def add_identifier(new_identifier)
 		f = self.identifier
 		j = f.push("#{new_identifier}")
-		add_ident = "<dc:identifier>#{new_identifier}</dc:identifier>\n  "
+		add_ident = "<dc:identifier>#{new_identifier}</dc:identifier>\n"
 		self.update_attributes({"identifier" => j})
-		self.DC.content=self.DC.content.gsub("</dc:identifier>\n  ","</dc:identifier>\n  <dc:identifier>#{add_ident}</dc:identifier>\n  ")
+		self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","#{add_ident}\n</oai_dc:dc>\n")
 		self.save
 	end
 

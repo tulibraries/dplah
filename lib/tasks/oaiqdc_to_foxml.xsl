@@ -163,7 +163,7 @@
 
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:created">
                     <xsl:call-template name="name-tag">
-                      <xsl:with-param name="tag" select="'dcterms:created'" />
+                      <xsl:with-param name="tag" select="'dc:date'" />
                       <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:created" />
                     </xsl:call-template>
                   </xsl:for-each>
@@ -319,7 +319,7 @@
 
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:created">
                     <xsl:call-template name="split-on">
-                      <xsl:with-param name="tag" select="'created'" />
+                      <xsl:with-param name="tag" select="'date'" />
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
                   </xsl:for-each>

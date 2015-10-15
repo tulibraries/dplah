@@ -198,12 +198,9 @@
                     <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dc:identifier" />
                   </xsl:call-template>
 
-                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:source">
-                    <xsl:call-template name="split-on">
-                      <xsl:with-param name="tag" select="'dc:source'" />
-                      <xsl:with-param name="on" select="concat(., ';')" />
-                    </xsl:call-template>
-                  </xsl:for-each>
+                  <xsl:element name="dc:source">
+                    <xsl:value-of select="$intermediate_provider" />
+                  </xsl:element>
 
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:language">
                     <xsl:call-template name="split-on">
@@ -327,10 +324,9 @@
                     <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dc:identifier" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'source'" />
-                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dc:source" />
-                  </xsl:call-template>
+                  <xsl:element name="source">
+                    <xsl:value-of select="$intermediate_provider" />
+                  </xsl:element>
 
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:language">
                     <xsl:call-template name="split-on">

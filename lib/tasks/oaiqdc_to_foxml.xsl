@@ -212,9 +212,13 @@
                     </xsl:call-template>
                   </xsl:for-each>
 
+                  <xsl:element name="dc:relation">
+                    <xsl:value-of select="$collection_name" />
+                  </xsl:element>
+
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:relation">
                     <xsl:call-template name="split-on">
-                      <xsl:with-param name="tag" select="'relation'" />
+                      <xsl:with-param name="tag" select="'dc:relation'" />
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
                   </xsl:for-each>
@@ -232,16 +236,6 @@
                   <xsl:element name="dc:rights">
                     <xsl:value-of select="$rights_statement" />
                   </xsl:element>
-
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'dcterms:accessRights'" />
-                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:accessRights" />
-                  </xsl:call-template>
-
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'dcterms:rightsHolder'" />
-                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:rightsHolder" />
-                  </xsl:call-template>
 
                 </oai_qdc:qualifieddc>
               </foxml:xmlContent>
@@ -345,6 +339,10 @@
                     </xsl:call-template>
                   </xsl:for-each>
 
+                  <xsl:element name="relation">
+                    <xsl:value-of select="$collection_name" />
+                  </xsl:element>
+
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:relation">
                     <xsl:call-template name="split-on">
                       <xsl:with-param name="tag" select="'relation'" />
@@ -367,16 +365,6 @@
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'rights'" />
                     <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dc:rights" />
-                  </xsl:call-template>
-
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'access_rights'" />
-                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:accessRights" />
-                  </xsl:call-template>
-
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'rights_holder'" />
-                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:rightsHolder" />
                   </xsl:call-template>
 
                   <xsl:element name="contributing_institution">

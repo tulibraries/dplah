@@ -53,31 +53,24 @@ class OaiRec < ActiveFedora::Base
 	end
 
 	def reorg_identifiers
-		f = self.identifier
-		f.each do |ident|
-			if ident.start_with?('http') && !ident.end_with?(*(OaiRec.thumbnail_extensions))
-				pos = f.index(ident)
-				f.insert(0,f.delete_at(pos))
-			end
-		end
-		self.identifier = f
-	end
-
-	def add_identifier(new_identifier)
-		f = self.identifier
-		j = f.push("#{new_identifier}")
-		self.update_attributes({"identifier" => j})
+		self.identifier = self.identifier.delete_if{|a| !a.starts_with?("http")}
 	end
 
 	def assign_rights
-	  self.rights = self.rights_statement unless self.rights_statement.blank?
+		unless self.rights_statement.blank?
+			self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","<dc:rights>#{rights_statement}</dc:rights>\n</oai_dc:dc>\n")
+	    self.rights = self.rights_statement unless self.rights_statement.blank?
+			self.save
+	  end
   end
 
 	def assign_contributing_institution
 		case self.contributing_institution
-		when "DC Field: Source"
-			self.contributing_institution = self.source
-		else
+		  when "DC Field: Source"
+		  	self.contributing_institution = self.source
+				self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","<dc:contributor>#{self.source}</dc:contributor>\n</oai_dc:dc>\n")
+				self.save
+		  else
 			self.contributing_institution = self.contributing_institution
 		end
   end

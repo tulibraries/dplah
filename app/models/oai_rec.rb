@@ -109,16 +109,22 @@ class OaiRec < ActiveFedora::Base
 	end
 
 	def assign_rights
-	  self.rights = self.rights_statement unless self.rights_statement.blank?
-    end
+		unless self.rights_statement.blank?
+			self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","<dc:rights>#{rights_statement}</dc:rights>\n</oai_dc:dc>\n")
+	    self.rights = self.rights_statement unless self.rights_statement.blank?
+			self.save
+	  end
+  end
 
 	def assign_contributing_institution
 		case self.contributing_institution
 		  when "DC Field: Source"
 		  	self.contributing_institution = self.source
+				self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","<dc:contributor>#{self.source}</dc:contributor>\n</oai_dc:dc>\n")
+				self.save
 		  else
 			self.contributing_institution = self.contributing_institution
 		end
-    end
+  end
 
 end

@@ -156,16 +156,40 @@ module HarvestUtils
       normalize_global(doc, "//coverage")
       normalize_global(doc, "//rights")
 
+      normalize_global(doc, "//dc:title")
+      normalize_global(doc, "//dc:creator")
+      normalize_global(doc, "//dc:subject")
+      normalize_global(doc, "//dc:description")
+      normalize_global(doc, "//dc:publisher")
+      normalize_global(doc, "//dc:contributor")
+      normalize_global(doc, "//dc:date")
+      normalize_global(doc, "//dc:type")
+      normalize_global(doc, "//dc:format")
+      normalize_global(doc, "//dc:source")
+      normalize_global(doc, "//dc:language")
+      normalize_global(doc, "//dc:relation")
+      normalize_global(doc, "//dc:coverage")
+      normalize_global(doc, "//dc:rights")
+
       normalize_facets(doc, "//subject")
       normalize_facets(doc, "//type")
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
 
+      normalize_facets(doc, "//dc:subject")
+      normalize_facets(doc, "//dc:type")
+      normalize_facets(doc, "//dc:language")
+      normalize_facets(doc, "//dc:publisher")
+
       standardize_formats(doc, "//format")
       normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
       dcmi_types(doc, "//type", provider)
-      remove_fake_identifiers(doc, "//identifier")
+
+      standardize_formats(doc, "//dc:format")
+      normalize_dates(doc, "//dc:date")
+      normalize_language(doc, "//dc:language")
+      dcmi_types(doc, "//dc:type", provider)
 
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
@@ -214,8 +238,9 @@ module HarvestUtils
       obj.assign_rights
       obj.assign_contributing_institution
       build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
+      obj.remove_fake_identifiers_oaidc(@passthrough_url)
       obj.reorg_identifiers
-      obj.add_identifier(thumbnail)
+      obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow"
       obj.save
       obj.to_solr
       obj.update_index
@@ -317,7 +342,7 @@ module HarvestUtils
     end
 
     def self.normalize_global(doc, string_to_search)
-      node_update = doc.search(string_to_search)
+      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
       node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
         node_value.inner_html = node_value.inner_html.gsub(/[\,;]$/, '')
@@ -327,7 +352,7 @@ module HarvestUtils
     end
 
     def self.normalize_facets(doc, string_to_search)
-      node_update = doc.search(string_to_search)
+      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
       node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.gsub(/[\.]$/, '')
       end
@@ -339,14 +364,14 @@ module HarvestUtils
 
 
     def self.normalize_dates(doc, string_to_search)
-      node_update = doc.search(string_to_search)
+      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
       node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.gsub(/\[|\]/,"").strip
       end
     end
 
     def self.standardize_formats(doc, string_to_search)
-      node_update = doc.search(string_to_search)
+      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
       node_update.each do |node_value|
         node_value.inner_html = node_value.inner_html.downcase
         case node_value.inner_html
@@ -376,7 +401,7 @@ module HarvestUtils
     end
 
     def self.normalize_language(doc, string_to_search)
-      node_update = doc.search(string_to_search)
+      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
       node_update.each do |node_value|
         node_value.inner_html = strip_brackets(node_value.inner_html)
         normalize_first_case(node_value.inner_html)
@@ -387,14 +412,6 @@ module HarvestUtils
     def self.normalize_first_case(value)
       value.downcase
       value.sub(/^./) { |m| m.upcase }
-    end
-
-
-    def self.remove_fake_identifiers(doc, string_to_search)
-      node_update = doc.search(string_to_search)
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.include?(@passthrough_url) ? "" : node_value.inner_html
-      end
     end
 
     def self.construct_si_pid(doc, string_to_search, pid_prefix, provider_id_prefix)
@@ -426,7 +443,8 @@ module HarvestUtils
 
       types_ongoing ||= []
 
-      node_update = doc.search(string_to_search)
+      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+
       node_update.each do |node_value|
         if provider.type_sound.present?
           new_val = sort_types("Sound", provider.type_sound, node_value.inner_html)

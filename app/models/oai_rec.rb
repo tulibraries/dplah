@@ -82,6 +82,12 @@ class OaiRec < ActiveFedora::Base
 	end
 
 	def reorg_identifiers
+		g = self.identifier.select {|a| !a.include?("http")}
+		g.each {|f|
+      h = "<dc:identifier>#{f}</dc:identifier>"
+      self.DC.content=self.DC.content.gsub(h,"")
+      self.save
+		}
 		self.identifier = self.identifier.delete_if{|a| !a.starts_with?("http")}
 	end
 
@@ -92,6 +98,14 @@ class OaiRec < ActiveFedora::Base
 		self.update_attributes({"identifier" => j})
 		self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","#{add_ident}\n</oai_dc:dc>\n")
 		self.save
+	end
+
+	def remove_fake_identifiers_oaidc(passthrough_url)
+		g = self.identifier.select {|b| b.include?(passthrough_url)}
+		h = "<dc:identifier>#{g[0]}</dc:identifier>"
+		self.DC.content=self.DC.content.gsub(h,"")
+		self.save
+		self.identifier = self.identifier.delete_if{|a| a.include?(passthrough_url)}
 	end
 
 	def assign_rights

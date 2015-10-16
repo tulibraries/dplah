@@ -165,7 +165,6 @@ module HarvestUtils
       normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
       dcmi_types(doc, "//type", provider)
-      remove_fake_identifiers(doc, "//identifier")
 
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
@@ -214,8 +213,9 @@ module HarvestUtils
       obj.assign_rights
       obj.assign_contributing_institution
       build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
+      obj.remove_fake_identifiers_oaidc(@passthrough_url)
       obj.reorg_identifiers
-      obj.add_identifier(thumbnail)
+      obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow"
       obj.save
       obj.to_solr
       obj.update_index
@@ -387,14 +387,6 @@ module HarvestUtils
     def self.normalize_first_case(value)
       value.downcase
       value.sub(/^./) { |m| m.upcase }
-    end
-
-
-    def self.remove_fake_identifiers(doc, string_to_search)
-      node_update = doc.search(string_to_search)
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.include?(@passthrough_url) ? "" : node_value.inner_html
-      end
     end
 
     def self.construct_si_pid(doc, string_to_search, pid_prefix, provider_id_prefix)

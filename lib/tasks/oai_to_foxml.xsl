@@ -153,6 +153,10 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
 
+                  <xsl:element name="dc:publisher">
+                    <xsl:value-of select="$contributing_institution" />
+                  </xsl:element>
+
                   <xsl:for-each select="metadata/oai_dc:dc/dc:publisher">
                     <xsl:call-template name="split-on">
                       <xsl:with-param name="tag" select="'dc:publisher'" />
@@ -193,12 +197,9 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:identifier" />
                   </xsl:call-template>
 
-                  <xsl:for-each select="metadata/oai_dc:dc/dc:source">
-                    <xsl:call-template name="split-on">
-                      <xsl:with-param name="tag" select="'dc:source'" />
-                      <xsl:with-param name="on" select="concat(., ';')" />
-                    </xsl:call-template>
-                  </xsl:for-each>
+                  <xsl:element name="dc:source">
+                    <xsl:value-of select="$intermediate_provider" />
+                  </xsl:element>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:language">
                     <xsl:call-template name="split-on">
@@ -207,9 +208,13 @@
                     </xsl:call-template>
                   </xsl:for-each>
 
+                  <xsl:element name="dc:relation">
+                    <xsl:value-of select="$collection_name" />
+                  </xsl:element>
+
                   <xsl:for-each select="metadata/oai_dc:dc/dc:relation">
                     <xsl:call-template name="split-on">
-                      <xsl:with-param name="tag" select="'relation'" />
+                      <xsl:with-param name="tag" select="'dc:relation'" />
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
                   </xsl:for-each>
@@ -223,6 +228,10 @@
                     <xsl:with-param name="tag" select="'dc:rights'" />
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:rights" />
                   </xsl:call-template>
+
+                  <xsl:element name="dc:rights">
+                    <xsl:value-of select="$rights_statement" />
+                  </xsl:element>
 
                 </oai_dc:dc>
               </foxml:xmlContent>
@@ -259,6 +268,10 @@
                     <xsl:with-param name="tag" select="'description'" />
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
+
+                  <xsl:element name="publisher">
+                    <xsl:value-of select="$contributing_institution" />
+                  </xsl:element>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:publisher">
                     <xsl:call-template name="split-on">
@@ -300,10 +313,9 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:identifier" />
                   </xsl:call-template>
 
-                  <xsl:call-template name="name-tag">
-                    <xsl:with-param name="tag" select="'source'" />
-                    <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:source" />
-                  </xsl:call-template>
+                  <xsl:element name="source">
+                    <xsl:value-of select="$intermediate_provider" />
+                  </xsl:element>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:language">
                     <xsl:call-template name="split-on">
@@ -311,6 +323,10 @@
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
                   </xsl:for-each>
+
+                  <xsl:element name="relation">
+                    <xsl:value-of select="$collection_name" />
+                  </xsl:element>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:relation">
                     <xsl:call-template name="split-on">
@@ -369,7 +385,7 @@
                     <xsl:value-of select="$identifier_token" />
                   </xsl:element>
 
-                  <xsl:element name="rights_statement">
+                  <xsl:element name="rights">
                     <xsl:value-of select="$rights_statement" />
                   </xsl:element>
 

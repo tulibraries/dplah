@@ -464,12 +464,7 @@ module HarvestUtils
         end
 
         if provider.type_image.present?
-          new_val = sort_types("Image", provider.type_image, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
-
+          node_value.inner_html = transform_types("Image", provider.type_image, types_ongoing, node_value.inner_html)
         end
 
         if provider.type_moving_image.present?
@@ -497,6 +492,18 @@ module HarvestUtils
         value = dcmi_type if value == a.to_s
       end
       normalize_first_case(value)
+    end
+
+    def self.transform_types(dcmi_type, provider_type, types_ongoing, field_value)
+      if provider_type.present?
+          new_val = sort_types(dcmi_type, provider_type, field_value)
+          if !types_ongoing.include?(new_val)
+            field_value = new_val
+            types_ongoing.push(new_val)
+          else
+            field_value = "" 
+          end
+        end
     end
 
     def self.process_record_token(record, full_records, transient_records, noharvest_records)

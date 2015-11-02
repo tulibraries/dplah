@@ -85,7 +85,11 @@ class OaiRec < ActiveFedora::Base
 		g = self.identifier.select {|a| !a.include?("http")}
 		g.each {|f|
       h = "<dc:identifier>#{f}</dc:identifier>"
-      self.DC.content=self.DC.content.gsub(h,"")
+      begin
+	    self.DC.content=self.DC.content.gsub(h,"")
+	  rescue
+        fail "oh no #{self.DC.content}"
+	  end
       self.save
 		}
 		self.identifier = self.identifier.delete_if{|a| !a.starts_with?("http")}

@@ -153,10 +153,6 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
 
-                  <xsl:element name="dc:publisher">
-                    <xsl:value-of select="$contributing_institution" />
-                  </xsl:element>
-
                   <xsl:for-each select="metadata/oai_dc:dc/dc:publisher">
                     <xsl:call-template name="split-on">
                       <xsl:with-param name="tag" select="'dc:publisher'" />
@@ -268,10 +264,6 @@
                     <xsl:with-param name="tag" select="'description'" />
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
-
-                  <xsl:element name="publisher">
-                    <xsl:value-of select="$contributing_institution" />
-                  </xsl:element>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:publisher">
                     <xsl:call-template name="split-on">

@@ -464,7 +464,8 @@ module HarvestUtils
         end
 
         if provider.type_image.present?
-          node_value.inner_html = transform_types("Image", provider.type_image, types_ongoing, node_value.inner_html)
+          new_val = transform_types("Image", provider.type_image, types_ongoing, node_value.inner_html)
+          node_value.inner_html = new_val
         end
 
         if provider.type_moving_image.present?
@@ -504,6 +505,7 @@ module HarvestUtils
             field_value = "" 
           end
         end
+        field_value
     end
 
     def self.process_record_token(record, full_records, transient_records, noharvest_records)

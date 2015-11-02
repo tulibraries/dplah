@@ -440,50 +440,29 @@ module HarvestUtils
     end
 
     def self.dcmi_types(doc, string_to_search, provider)
-
       types_ongoing ||= []
-
       node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
-
       node_update.each do |node_value|
         if provider.type_sound.present?
-          new_val = sort_types("Sound", provider.type_sound, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
-
+          new_val = transform_types("Sound", provider.type_sound, types_ongoing, node_value.inner_html)
+          node_value.inner_html = new_val
         end
-
         if provider.type_text.present?
-          new_val = sort_types("Text", provider.type_text, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
+          new_val = transform_types("Text", provider.type_text, types_ongoing, node_value.inner_html)
+          node_value.inner_html = new_val
         end
-
         if provider.type_image.present?
           new_val = transform_types("Image", provider.type_image, types_ongoing, node_value.inner_html)
           node_value.inner_html = new_val
         end
-
         if provider.type_moving_image.present?
-          new_val = sort_types("Moving image", provider.type_moving_image, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
+          new_val = transform_types("Moving image", provider.type_moving_image, types_ongoing, node_value.inner_html)
+          node_value.inner_html = new_val
         end
-
         if provider.type_physical_object.present?
-          new_val = sort_types("Physical object", provider.type_physical_object, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
+          new_val = transform_types("Physical object", provider.type_physical_object, types_ongoing, node_value.inner_html)
+          node_value.inner_html = new_val
         end
-
       end
     end
 

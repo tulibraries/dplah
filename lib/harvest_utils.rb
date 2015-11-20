@@ -286,6 +286,10 @@ module HarvestUtils
 
   def self.create_log_file(log_name)
     @log_file = "#{@human_log_path}/#{log_name}.#{Time.now.to_i}.txt"
+    File.open(@log_file, "a+") do |f|
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('dpla.application_name')<< I18n.t('oai_seed_logs.text_buffer')
+    end
+
     FileUtils.touch(@log_file)
   end
 
@@ -481,7 +485,7 @@ module HarvestUtils
             field_value = new_val
             types_ongoing.push(new_val)
           else
-            field_value = "" 
+            field_value = ""
           end
         end
         field_value

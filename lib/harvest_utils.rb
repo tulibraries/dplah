@@ -127,6 +127,7 @@ module HarvestUtils
   module_function :convert
 
   def cleanup(provider)
+    types_ongoing ||= []
 
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_begin') << I18n.t('oai_seed_logs.text_buffer')
@@ -187,12 +188,10 @@ module HarvestUtils
       standardize_formats(doc, "//format")
       normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
-      dcmi_types(doc, "//type", provider)
 
       standardize_formats(doc, "//dc:format")
       normalize_dates(doc, "//dc:date")
       normalize_language(doc, "//dc:language")
-      dcmi_types(doc, "//dc:type", provider)
 
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
@@ -240,6 +239,7 @@ module HarvestUtils
       obj.thumbnail = thumbnail
       obj.assign_rights
       obj.assign_contributing_institution
+      obj.add_type(provider)
       build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
       obj.remove_fake_identifiers_oaidc(@passthrough_url)
       obj.reorg_identifiers
@@ -308,7 +308,6 @@ module HarvestUtils
         f << I18n.t('oai_seed_logs.text_buffer') << "#{@human_catalog_url}/#{@pid_prefix}:#{provider.provider_id_prefix}_#{ident}" << I18n.t('oai_seed_logs.text_buffer')
       end
     end
-    #binding.pry()
   end
 
   def self.add_xml_formatting(xml_file, options = {})
@@ -479,10 +478,11 @@ module HarvestUtils
           new_val = transform_types("Physical object", provider.type_physical_object, types_ongoing, node_value.inner_html)
         end
       end
-      new_val
+      types_ongoing.push(new_val)
     end
 
     def self.sort_types(dcmi_type, type_array, value)
+      binding.pry
       t_arr = type_array.split(";")
       t_arr.each do |a|
         value = dcmi_type if value == a.to_s

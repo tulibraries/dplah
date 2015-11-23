@@ -1,4 +1,5 @@
 class OaiRec < ActiveFedora::Base
+	include HarvestUtils
 
 	# def self.to_class_uri
  #      'info:fedora/afmodel:OaiRec'
@@ -104,6 +105,43 @@ class OaiRec < ActiveFedora::Base
 		self.save
 	end
 
+	def add_type(provider)
+		f = self.type
+		types_ongoing ||= []
+		unless self.type.empty?
+			self.type.each do |a|
+				if provider.type_sound.present?
+				  new_val = HarvestUtils.transform_types("Sound", provider.type_sound, types_ongoing, a)
+				end
+				if provider.type_text.present?
+				  new_val = HarvestUtils.transform_types("Text", provider.type_sound, types_ongoing, a)
+				end
+				if provider.type_image.present?
+				  new_val = HarvestUtils.transform_types("Image", provider.type_sound, types_ongoing, a)
+				end
+				if provider.type_moving_image.present?
+				  new_val = HarvestUtils.transform_types("Moving image", provider.type_sound, types_ongoing, a)
+				end
+				if provider.type_physical_object.present?
+				  new_val = HarvestUtils.transform_types("Physical object", provider.type_sound, types_ongoing, a)
+				end
+				types_ongoing.push(a, new_val)
+	        end 
+	        self.type ||= []
+	        types_ongoing.uniq!
+	        types_ongoing.reject! { |item| item.blank? }
+	        types_ongoing.each do |new_type|
+				j = f.push("#{new_type}")
+				add_type = "<dc:type>#{new_type}</dc:type>\n"
+				j.uniq!
+	            j.reject! { |item| item.blank? }
+				self.update_attributes({"type" => j})
+				self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","#{add_type}\n</oai_dc:dc>\n")
+			end
+			self.save
+		end
+	end
+
 	def remove_fake_identifiers_oaidc(passthrough_url)
 		g = self.identifier.select {|b| b.include?(passthrough_url)}
 		h = "<dc:identifier>#{g[0]}</dc:identifier>"
@@ -115,20 +153,20 @@ class OaiRec < ActiveFedora::Base
 	def assign_rights
 		unless self.rights_statement.blank?
 			self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","<dc:rights>#{rights_statement}</dc:rights>\n</oai_dc:dc>\n")
-	    self.rights = self.rights_statement unless self.rights_statement.blank?
+			self.rights = self.rights_statement unless self.rights_statement.blank?
 			self.save
-	  end
-  end
+		end
+	end
 
 	def assign_contributing_institution
 		case self.contributing_institution
-		  when "DC Field: Source"
-		  	self.contributing_institution = self.source
+			when "DC Field: Source"
+				self.contributing_institution = self.source
 				self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","<dc:contributor>#{self.source}</dc:contributor>\n</oai_dc:dc>\n")
 				self.save
-		  else
-			self.contributing_institution = self.contributing_institution
+			else
+				self.contributing_institution = self.contributing_institution
 		end
-  end
+	end
 
 end

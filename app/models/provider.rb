@@ -5,20 +5,20 @@ class Provider < ActiveRecord::Base
 	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}, :allow_blank => true
 	validates_length_of :new_provider_id_prefix, :maximum => 8
 
-	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq }
-	scope :unique_by_intermediate_provider, lambda { select(:intermediate_provider).uniq}
-	scope :unique_by_provider_id_prefix, lambda { select(:provider_id_prefix).uniq}
-	scope :unique_by_endpoint_url, lambda { select(:endpoint_url).uniq}
-	scope :unique_by_email, lambda { select(:email).uniq}
+	scope :unique_by_contributing_institution, lambda { select(:contributing_institution).uniq.order('contributing_institution ASC') }
+	scope :unique_by_intermediate_provider, lambda { select(:intermediate_provider).uniq.order('intermediate_provider ASC') }
+	scope :unique_by_provider_id_prefix, lambda { select(:provider_id_prefix).uniq.order('provider_id_prefix ASC') }
+	scope :unique_by_endpoint_url, lambda { select(:endpoint_url).uniq.order('endpoint_url ASC') }
+	scope :unique_by_email, lambda { select(:email).uniq.order('email ASC') }
 
 	before_save do
-		self.name = nil if self.name.blank?
-		self.set = nil if self.set.blank?
-		self.metadata_prefix = nil if self.metadata_prefix.blank?
-		self.email = self.new_email unless self.new_email.blank?
-		self.contributing_institution = self.contributing_institution_dc_field unless self.contributing_institution_dc_field.blank?
-		self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
-		self.intermediate_provider = self.new_intermediate_provider unless self.new_intermediate_provider.blank?
+	  self.name = nil if self.name.blank?
+	  self.set = nil if self.set.blank?
+	  self.metadata_prefix = nil if self.metadata_prefix.blank?
+	  self.email = self.new_email unless self.new_email.blank?
+	  self.contributing_institution = self.contributing_institution_dc_field unless self.contributing_institution_dc_field.blank?
+	  self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
+	  self.intermediate_provider = self.new_intermediate_provider unless self.new_intermediate_provider.blank?
 	  self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?
 	  self.provider_id_prefix = self.new_provider_id_prefix unless self.new_provider_id_prefix.blank?
 	end

@@ -16,6 +16,7 @@ en:
     harvest_end: |+
       HARVEST COMPLETE FOR
     rights_missing_header: |+
+    
       RIGHTS MISSING REPORT FOR 
     records_count: |+
        OAI record(s) detected

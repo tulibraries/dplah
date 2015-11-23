@@ -305,7 +305,7 @@ module HarvestUtils
     File.open(@rights_log, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.text_buffer') << I18n.t('dpla.application_name') << I18n.t('oai_seed_logs.rights_missing_header') << provider.name << I18n.t('oai_seed_logs.text_buffer')
       noharvest_records.each do |ident|
-        f << I18n.t('oai_seed_logs.text_buffer') << "#{@human_catalog_url}/#{@pid_prefix}/#{ident}" << I18n.t('oai_seed_logs.text_buffer')
+        f << I18n.t('oai_seed_logs.text_buffer') << "#{@human_catalog_url}/#{@pid_prefix}:#{provider.provider_id_prefix}_#{ident}" << I18n.t('oai_seed_logs.text_buffer')
       end
     end
     #binding.pry()
@@ -508,7 +508,7 @@ module HarvestUtils
         identifier_reformed = reform_oai_id(record.header.identifier.to_s)
         record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
         check_rights_statement = check_if_rights(record)
-        full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || check_if_noharvest(record) || check_rights_statement.blank?
+        full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || check_if_noharvest(record)
         File.open(@log_file, "a+") do |f|
           f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
           f << I18n.t('oai_seed_logs.noharvest_detected') if check_if_noharvest(record)

@@ -482,7 +482,6 @@ module HarvestUtils
     end
 
     def self.sort_types(dcmi_type, type_array, value)
-      binding.pry
       t_arr = type_array.split(";")
       t_arr.each do |a|
         value = dcmi_type if value == a.to_s

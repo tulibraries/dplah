@@ -114,16 +114,16 @@ class OaiRec < ActiveFedora::Base
 				  new_val = HarvestUtils.transform_types("Sound", provider.type_sound, types_ongoing, a)
 				end
 				if provider.type_text.present?
-				  new_val = HarvestUtils.transform_types("Text", provider.type_sound, types_ongoing, a)
+				  new_val = HarvestUtils.transform_types("Text", provider.type_text, types_ongoing, a)
 				end
 				if provider.type_image.present?
-				  new_val = HarvestUtils.transform_types("Image", provider.type_sound, types_ongoing, a)
+				  new_val = HarvestUtils.transform_types("Image", provider.type_image, types_ongoing, a)
 				end
 				if provider.type_moving_image.present?
-				  new_val = HarvestUtils.transform_types("Moving image", provider.type_sound, types_ongoing, a)
+				  new_val = HarvestUtils.transform_types("Moving image", provider.type_moving_image, types_ongoing, a)
 				end
 				if provider.type_physical_object.present?
-				  new_val = HarvestUtils.transform_types("Physical object", provider.type_sound, types_ongoing, a)
+				  new_val = HarvestUtils.transform_types("Physical object", provider.type_physical_object, types_ongoing, a)
 				end
 				types_ongoing.push(a, new_val)
 	        end 

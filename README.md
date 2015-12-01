@@ -35,6 +35,7 @@ pid_prefix: "changeme"
 partner: "Name of hub"
 human_log_path: '/abs/path/to/log/files'
 human_log_url: 'http://fullurltologfiles'
+human_catalog_url: 'http://fullurltocatalog'
 email_sender: "from@example.edu"
 email_recipient: "to@example.edu"
 noharvest_stopword: "string_in_record_metadata_that_signals_not_to_harvest"
@@ -49,6 +50,7 @@ Substitute your own values as follows for the YML fields:
 * `partner` refers to the name of the DPLA Partner hub
 * `human_log_path` refers to the absolute path on the file system where the OAI management logs should go
 * `human_log_url` refers to the full clickable URL path to the directory on your web server where OAI management logs live
+* `human_log_url` refers to the full clickable URL path to the Blacklight catalog on your web server
 * `email_sender` refers to the sending address for harvest utility email reports
 * `email_recipient` refers to the recipient address for harvest utility email reports
 * `noharvest_stopword` refers to an optional string that the aggregator can use as a signal to skip over any records containing that string in their metadata, excluding it from ingest

@@ -13,6 +13,7 @@ module HarvestUtils
   @pid_prefix = config['pid_prefix']
   @partner = config['partner']
   @human_log_path = config['human_log_path']
+  @human_catalog_url = config['human_catalog_url']
   @noharvest_stopword = config['noharvest_stopword']
   @passthrough_url = config['passthrough_url']
 
@@ -55,6 +56,7 @@ module HarvestUtils
     num_files = 0
     transient_records = 0
     noharvest_records = 0
+    norights_records ||= []
     client = OAI::Client.new provider.endpoint_url
     response = client.list_records
     set = provider.set ? provider.set : ""
@@ -64,7 +66,7 @@ module HarvestUtils
     response.each do |record|
       unless record.header.identifier.include?("fedora-system")
         num_files += 1
-        full_records, transient_records, noharvest_records = process_record_token(record, full_records,transient_records,noharvest_records)
+        full_records, transient_records, noharvest_records = process_record_token(record, full_records,transient_records,noharvest_records,norights_records)
         File.open(@log_file, "a+") do |f|
           f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
         end
@@ -85,7 +87,7 @@ module HarvestUtils
       response.each do |record|
         unless record.header.identifier.include?("fedora-system")
           num_files += 1
-          full_records, transient_records, noharvest_records = process_record_token(record, full_records,transient_records,noharvest_records)
+          full_records, transient_records, noharvest_records = process_record_token(record, full_records,transient_records,noharvest_records,norights_records)
           File.open(@log_file, "a+") do |f|
             f << "#{num_files} " << I18n.t('oai_seed_logs.records_count')
           end
@@ -98,6 +100,7 @@ module HarvestUtils
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.harvest_end') << "#{provider.name}" << I18n.t('oai_seed_logs.text_buffer') << "#{num_files} " << I18n.t('oai_seed_logs.records_count') << "#{transient_records} " << I18n.t('oai_seed_logs.transient_records_detected')  << "#{noharvest_records} " << I18n.t('oai_seed_logs.noharvest_records_detected') << I18n.t('oai_seed_logs.text_buffer')
     end
+    create_rights_log(provider, norights_records) if norights_records.any?
   end
   module_function :harvest
 
@@ -124,6 +127,7 @@ module HarvestUtils
   module_function :convert
 
   def cleanup(provider)
+    types_ongoing ||= []
 
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_begin') << I18n.t('oai_seed_logs.text_buffer')
@@ -184,12 +188,10 @@ module HarvestUtils
       standardize_formats(doc, "//format")
       normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
-      dcmi_types(doc, "//type", provider)
 
       standardize_formats(doc, "//dc:format")
       normalize_dates(doc, "//dc:date")
       normalize_language(doc, "//dc:language")
-      dcmi_types(doc, "//dc:type", provider)
 
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
@@ -237,6 +239,7 @@ module HarvestUtils
       obj.thumbnail = thumbnail
       obj.assign_rights
       obj.assign_contributing_institution
+      obj.add_type(provider)
       build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
       obj.remove_fake_identifiers_oaidc(@passthrough_url)
       obj.reorg_identifiers
@@ -286,11 +289,25 @@ module HarvestUtils
 
   def self.create_log_file(log_name)
     @log_file = "#{@human_log_path}/#{log_name}.#{Time.now.to_i}.txt"
+    File.open(@log_file, "a+") do |f|
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('dpla.application_name')<< I18n.t('oai_seed_logs.text_buffer')
+    end
+
     FileUtils.touch(@log_file)
   end
 
   def self.get_log_file
     @log_file
+  end
+
+  def self.create_rights_log(provider, noharvest_records)
+    @rights_log = "#{@human_log_path}/rights_missing.#{provider.name}.#{Time.now.to_i}.txt"
+    File.open(@rights_log, "a+") do |f|
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.text_buffer') << I18n.t('dpla.application_name') << I18n.t('oai_seed_logs.rights_missing_header') << provider.name << I18n.t('oai_seed_logs.text_buffer')
+      noharvest_records.each do |ident|
+        f << I18n.t('oai_seed_logs.text_buffer') << "#{@human_catalog_url}/#{@pid_prefix}:#{provider.provider_id_prefix}_#{ident}" << I18n.t('oai_seed_logs.text_buffer')
+      end
+    end
   end
 
   def self.add_xml_formatting(xml_file, options = {})
@@ -440,55 +457,28 @@ module HarvestUtils
     end
 
     def self.dcmi_types(doc, string_to_search, provider)
-
       types_ongoing ||= []
-
+      new_val = ""
       node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
-
       node_update.each do |node_value|
+        types_ongoing.push(node_value.inner_html)
         if provider.type_sound.present?
-          new_val = sort_types("Sound", provider.type_sound, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
-
+          new_val= transform_types("Sound", provider.type_sound, types_ongoing, node_value.inner_html)
         end
-
         if provider.type_text.present?
-          new_val = sort_types("Text", provider.type_text, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
+          new_val= transform_types("Text", provider.type_text, types_ongoing, node_value.inner_html)
         end
-
         if provider.type_image.present?
-          new_val = sort_types("Image", provider.type_image, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
-
+          new_val= transform_types("Image", provider.type_image, types_ongoing, node_value.inner_html)
         end
-
         if provider.type_moving_image.present?
-          new_val = sort_types("Moving image", provider.type_moving_image, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
+          new_val= transform_types("Moving image", provider.type_moving_image, types_ongoing, node_value.inner_html)
         end
-
         if provider.type_physical_object.present?
-          new_val = sort_types("Physical object", provider.type_physical_object, node_value.inner_html)
-          unless types_ongoing.include?(new_val)
-            node_value.inner_html = new_val
-            types_ongoing.push(new_val)
-          end
+          new_val = transform_types("Physical object", provider.type_physical_object, types_ongoing, node_value.inner_html)
         end
-
       end
+      types_ongoing.push(new_val)
     end
 
     def self.sort_types(dcmi_type, type_array, value)
@@ -499,18 +489,34 @@ module HarvestUtils
       normalize_first_case(value)
     end
 
-    def self.process_record_token(record, full_records, transient_records, noharvest_records)
+    def self.transform_types(dcmi_type, provider_type, types_ongoing, field_value)
+      if provider_type.present?
+          new_val = sort_types(dcmi_type, provider_type, field_value)
+          if !types_ongoing.include?(new_val)
+            field_value = new_val
+            types_ongoing.push(new_val)
+          else
+            field_value = ""
+          end
+        end
+        field_value
+    end
+
+    def self.process_record_token(record, full_records, transient_records, noharvest_records, norights_records)
         puts record.metadata
         identifier_reformed = reform_oai_id(record.header.identifier.to_s)
         record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
+        check_rights_statement = check_if_rights(record)
         full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || check_if_noharvest(record)
         File.open(@log_file, "a+") do |f|
           f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
           f << I18n.t('oai_seed_logs.noharvest_detected') if check_if_noharvest(record)
+          f << I18n.t('oai_seed_logs.no_rights_detected') << identifier_reformed if check_rights_statement.blank? && record.header.status.to_s != "deleted"
           transient_records += 1 if record.header.status.to_s == "deleted"
           noharvest_records += 1 if check_if_noharvest(record)
+          norights_records.push(identifier_reformed) if check_rights_statement.blank? && record.header.status.to_s != "deleted"
         end
-        return full_records, transient_records, noharvest_records
+        return full_records, transient_records, noharvest_records, norights_records
     end
 
     def self.get_xml_manifest(options = {})
@@ -599,6 +605,12 @@ module HarvestUtils
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.duplicate_record_detected') << " #{pid_check}" << I18n.t('oai_seed_logs.text_buffer') if o
       end
+    end
+
+    def self.check_if_rights(record)
+      statement = ""
+      statement = record.metadata.to_s[/<dc:rights>(.*?)<\/dc:rights>/, 1]
+      statement
     end
 
     def self.check_if_noharvest(record)

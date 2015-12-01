@@ -6,23 +6,28 @@ en:
       ===========================================
 
     current_time: |+
-      Current time -  
+      Current time -
     log_begin: |+
       Ingestion process beginning -- this log will update throughout this process.
 
-    harvest_begin: |+ 
+    harvest_begin: |+
 
       BEGINNING HARVEST FOR
     harvest_end: |+
       HARVEST COMPLETE FOR
+    rights_missing_header: |+
+    
+      RIGHTS MISSING REPORT FOR 
     records_count: |+
-       OAI record(s) detected 
-    transient_records_detected: |+ 
+       OAI record(s) detected
+    transient_records_detected: |+
        transient OAI record(s) detected
-    noharvest_records_detected: |+ 
+    noharvest_records_detected: |+
        restricted OAI record(s) detected
-    single_transient_record_detected: Transient record detected -- 
-    noharvest_detected: Restricted record detected -- 
+    no_rights_detected: |+
+       No rights detected for record --
+    single_transient_record_detected: Transient record detected --
+    noharvest_detected: Restricted record detected --
     resumption_token_detected: |+
       Resumption token detected
     convert_begin: |+
@@ -38,7 +43,7 @@ en:
     normalize_facets: |+
       Sanitizing all facetable terms
     standardize_formats: |+
-      Standardizing formats to match IANA MIME media types 
+      Standardizing formats to match IANA MIME media types
     normalize_dates: |+
       Removing brackets from date field
     normalize_language: |+
@@ -46,7 +51,7 @@ en:
     dcmi_types: |+
       Matching type fields to DCMI types as specified by the OAI seed settings
     passthrough_workflow: |+
-      Performing passthrough workflow operations for identifiers 
+      Performing passthrough workflow operations for identifiers
     normalize_end: |+
       NORMALIZING COMPLETE
     ingest_begin: |+
@@ -55,20 +60,20 @@ en:
     ingest_end: |+
       INGESTION COMPLETE
     ingest_count: |+
-      records ingested 
+      records ingested
     log_end: |+
       HARVEST AND INGEST COMPLETE FOR
     log_end_processed: |+
-       OAI record(s) processed: 
+       OAI record(s) processed:
     delete_begin: |+
       INITIATING DELETE OF RECORDS FROM AGGREGATOR WITH THE FOLLOWING PARAMETERS
     delete_remove_by: |+
-      
+
       remove by
     delete_seed_derived: |+
-      
-      OAI record(s) derived from 
-    delete_count: |+ 
+
+      OAI record(s) derived from
+    delete_count: |+
       OAI record(s) deleted from aggregator
     delete_end: |+
        RECORDS DELETED FROM AGGREGATOR

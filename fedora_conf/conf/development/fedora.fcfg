@@ -346,7 +346,7 @@
             number of results is greater than maxResults (as specified by the
             server [above] or the client [in the search request]).</comment>
     </param>
-    <param name="maxResults" value="100">
+    <param name="maxResults" value="500">
       <comment>(required, must be &gt; 0) 
             The maximum number of records to 
             return as the result of a search. Even if a client requests more 
@@ -389,11 +389,11 @@
   </module>
   <module role="org.fcrepo.oai.OAIProvider" class="org.fcrepo.server.oai.FedoraOAIProviderModule">
     <comment>Description: Exposes the repository for OAI harvesters.</comment>
-    <param name="maxRecords" value="100"/>
+    <param name="maxRecords" value="500"/>
     <param name="friends" value="http://arXiv.org/oai2 http://memory.loc.gov/cgi-bin/oai2_0"/>
     <param name="adminEmails" value="admin@example.org"/>
     <param name="repositoryDomainName" value="example.org"/>
-    <param name="maxHeaders" value="100"/>
+    <param name="maxHeaders" value="500"/>
     <param name="repositoryName" value="Example Aggregator"/>
   </module>
   <module role="org.fcrepo.server.storage.translation.DOTranslator" class="org.fcrepo.server.storage.translation.DOTranslatorModule">

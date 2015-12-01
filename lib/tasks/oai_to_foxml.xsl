@@ -87,7 +87,7 @@
         <xsl:value-of select="concat($pid_prefix, $pid_local)" />
       </xsl:variable>
 
-      <exsl:document method="xml" href="{$converted_path}/file_{$pid_local}.foxml.xml">        
+      <exsl:document method="xml" href="{$converted_path}/file_{$pid_local}.foxml.xml">
         <xsl:element name="foxml:digitalObject"
           xmlns:foxml="info:fedora/fedora-system:def/foxml#"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -103,7 +103,7 @@
           <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE=""/>
           <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="{$current_time}"/>
           <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE=""/>
-        </foxml:objectProperties>    
+        </foxml:objectProperties>
 
         <foxml:datastream ID="partner" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
           <foxml:datastreamVersion ID="partner.0" LABEL="Partner supplied metadata" MIMETYPE="text/xml">
@@ -116,7 +116,7 @@
               </fields>
             </foxml:xmlContent>
           </foxml:datastreamVersion>
-        </foxml:datastream>                                               
+        </foxml:datastream>
 
           <foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X"
             VERSIONABLE="true">
@@ -127,7 +127,7 @@
               FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/"
               SIZE="342">
               <foxml:xmlContent>
-                <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"> 
+                <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:title'" />
@@ -146,16 +146,12 @@
                       <xsl:with-param name="tag" select="'dc:subject'" />
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
-                  </xsl:for-each> 
+                  </xsl:for-each>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'dc:description'" />
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
-
-                  <xsl:element name="dc:publisher">
-                    <xsl:value-of select="$contributing_institution" />
-                  </xsl:element>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:publisher">
                     <xsl:call-template name="split-on">
@@ -262,16 +258,12 @@
                       <xsl:with-param name="tag" select="'subject'" />
                       <xsl:with-param name="on" select="concat(., ';')" />
                     </xsl:call-template>
-                  </xsl:for-each> 
+                  </xsl:for-each>
 
                   <xsl:call-template name="name-tag">
                     <xsl:with-param name="tag" select="'description'" />
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:description" />
                   </xsl:call-template>
-
-                  <xsl:element name="publisher">
-                    <xsl:value-of select="$contributing_institution" />
-                  </xsl:element>
 
                   <xsl:for-each select="metadata/oai_dc:dc/dc:publisher">
                     <xsl:call-template name="split-on">
@@ -393,10 +385,10 @@
               </foxml:xmlContent>
             </foxml:datastreamVersion>
           </foxml:datastream>
-          
+
         </xsl:element>
       </exsl:document>
-    
+
     </xsl:copy>
   </xsl:template>
 
@@ -420,7 +412,7 @@
     <xsl:if test="$on != ''">
       <xsl:element name="{$tag}">
         <xsl:value-of select="substring-before(normalize-space($on), ';')" />
-      </xsl:element> 
+      </xsl:element>
       <xsl:call-template name="split-on">
         <xsl:with-param name="on" select="substring-after(normalize-space($on), ';')" />
         <xsl:with-param name="tag" select="$tag" />
@@ -435,7 +427,7 @@
       <xsl:element name="{$tag}">
         <xsl:value-of select="normalize-space(.)" />
       </xsl:element>
-    </xsl:for-each> 
+    </xsl:for-each>
   </xsl:template>
 
 </xsl:stylesheet>

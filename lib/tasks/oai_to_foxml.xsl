@@ -167,6 +167,10 @@
                     </xsl:call-template>
                   </xsl:for-each>
 
+                  <xsl:element name="dc:contributor">
+                    <xsl:value-of select="$contributing_institution" />
+                  </xsl:element>
+
                   <xsl:for-each select="metadata/oai_dc:dc/dc:date">
                     <xsl:call-template name="split-on">
                       <xsl:with-param name="tag" select="'dc:date'" />

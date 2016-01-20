@@ -154,6 +154,10 @@
                     </xsl:call-template>
                   </xsl:for-each>
 
+                  <xsl:element name="dc:contributor">
+                    <xsl:value-of select="$contributing_institution" />
+                  </xsl:element>
+
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:date">
                     <xsl:call-template name="split-on">
                       <xsl:with-param name="tag" select="'dc:date'" />
@@ -287,7 +291,7 @@
                     </xsl:call-template>
                   </xsl:for-each>
 
-                  <xsl:element name="dc:contributor">
+                  <xsl:element name="contributor">
                     <xsl:value-of select="$contributing_institution" />
                   </xsl:element>
 
@@ -442,14 +446,23 @@
   <xsl:template name="split-on">
     <xsl:param name="tag" />
     <xsl:param name="on" />
-    <xsl:if test="$on != ''">
-      <xsl:element name="{$tag}">
-        <xsl:value-of select="substring-before(normalize-space($on), ';')" />
-      </xsl:element> 
-      <xsl:call-template name="split-on">
-        <xsl:with-param name="on" select="substring-after(normalize-space($on), ';')" />
-        <xsl:with-param name="tag" select="$tag" />
-      </xsl:call-template>
+    <xsl:if test="$on != '' and not($on = ';')">
+      <xsl:choose>
+        <xsl:when test="contains($on, ';') = 'true'">
+          <xsl:element name="{$tag}">
+            <xsl:value-of select="substring-before(normalize-space($on), ';')" />
+          </xsl:element>
+          <xsl:call-template name="split-on">
+            <xsl:with-param name="on" select="substring-after(normalize-space($on), ';')" />
+            <xsl:with-param name="tag" select="$tag" />
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:element name="{$tag}">
+            <xsl:value-of select="normalize-space($on)" />
+          </xsl:element>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
 

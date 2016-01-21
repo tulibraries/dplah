@@ -600,10 +600,14 @@ module HarvestUtils
       xml_contents = fopen.read
       doc = Nokogiri::XML(xml_contents)
       pid_check = doc.child.attribute('PID').value
-      o = OaiRec.find(pid_check) if ActiveFedora::Base.exists?(pid_check)
-      o.delete if o
-      File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.duplicate_record_detected') << " #{pid_check}" << I18n.t('oai_seed_logs.text_buffer') if o
+      begin
+        o = OaiRec.find(pid_check)
+        o.delete if o
+        File.open(@log_file, "a+") do |f|
+          f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.duplicate_record_detected') << " #{pid_check}" << I18n.t('oai_seed_logs.text_buffer') if o
+        end
+      rescue
+
       end
     end
 

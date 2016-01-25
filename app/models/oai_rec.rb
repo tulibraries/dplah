@@ -105,39 +105,35 @@ class OaiRec < ActiveFedora::Base
 		self.save
 	end
 
-	def add_type(provider)
-		f = self.type
+	def reconcile_type_to_dcmi(provider)
 		types_ongoing ||= []
 		unless self.type.empty?
-			self.type.each do |a|
+			self.type.each do |type_to_check|
 				if provider.type_sound.present?
-				  new_val = HarvestUtils.transform_types("Sound", provider.type_sound, types_ongoing, a)
+				  reconciled_type_term = HarvestUtils.reconcile_type("Sound", provider.type_sound, type_to_check)
 				end
 				if provider.type_text.present?
-				  new_val = HarvestUtils.transform_types("Text", provider.type_text, types_ongoing, a)
+					reconciled_type_term = HarvestUtils.recncile_type("Text", provider.type_text, type_to_check)
 				end
 				if provider.type_image.present?
-				  new_val = HarvestUtils.transform_types("Image", provider.type_image, types_ongoing, a)
+					reconciled_type_term = HarvestUtils.reconcile_type("Image", provider.type_image, type_to_check)
 				end
 				if provider.type_moving_image.present?
-				  new_val = HarvestUtils.transform_types("Moving image", provider.type_moving_image, types_ongoing, a)
+					reconciled_type_term = HarvestUtils.reconcile_type("Moving image", provider.type_moving_image, type_to_check)
 				end
 				if provider.type_physical_object.present?
-				  new_val = HarvestUtils.transform_types("Physical object", provider.type_physical_object, types_ongoing, a)
+					reconciled_type_term = HarvestUtils.reconcile_type("Physical object", provider.type_physical_object, type_to_check)
 				end
-				types_ongoing.push(a, new_val)
-	        end 
-	        self.type ||= []
-	        types_ongoing.uniq!
-	        types_ongoing.reject! { |item| item.blank? }
-	        types_ongoing.each do |new_type|
-				j = f.push("#{new_type}")
+				types_ongoing.push(reconciled_type_term) if reconciled_type_term
+			end
+
+			types_ongoing.uniq!
+			types_ongoing.reject! { |item| item.blank? }
+			types_ongoing.each do |new_type|
 				add_type = "<dc:type>#{new_type}</dc:type>\n"
-				j.uniq!
-	            j.reject! { |item| item.blank? }
-				self.update_attributes({"type" => j})
 				self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","#{add_type}\n</oai_dc:dc>\n")
 			end
+			self.update_attributes({:type => types_ongoing})
 			self.save
 		end
 	end

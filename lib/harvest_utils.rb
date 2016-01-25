@@ -239,7 +239,7 @@ module HarvestUtils
       obj.thumbnail = thumbnail
       obj.assign_rights
       obj.assign_contributing_institution
-      obj.add_type(provider)
+      obj.reconcile_type_to_dcmi(provider)
       build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
       obj.remove_fake_identifiers_oaidc(@passthrough_url)
       obj.reorg_identifiers
@@ -456,50 +456,15 @@ module HarvestUtils
 
     end
 
-    def self.dcmi_types(doc, string_to_search, provider)
-      types_ongoing ||= []
-      new_val = ""
-      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
-      node_update.each do |node_value|
-        types_ongoing.push(node_value.inner_html)
-        if provider.type_sound.present?
-          new_val= transform_types("Sound", provider.type_sound, types_ongoing, node_value.inner_html)
-        end
-        if provider.type_text.present?
-          new_val= transform_types("Text", provider.type_text, types_ongoing, node_value.inner_html)
-        end
-        if provider.type_image.present?
-          new_val= transform_types("Image", provider.type_image, types_ongoing, node_value.inner_html)
-        end
-        if provider.type_moving_image.present?
-          new_val= transform_types("Moving image", provider.type_moving_image, types_ongoing, node_value.inner_html)
-        end
-        if provider.type_physical_object.present?
-          new_val = transform_types("Physical object", provider.type_physical_object, types_ongoing, node_value.inner_html)
-        end
-      end
-      types_ongoing.push(new_val)
+
+    def self.type_maps_to_dcmi?(provider_types, value)
+      provider_types.split(';').include? value
     end
 
-    def self.sort_types(dcmi_type, type_array, value)
-      t_arr = type_array.split(";")
-      t_arr.each do |a|
-        value = dcmi_type if value == a.to_s
+    def self.reconcile_type(dcmi_type, provider_types, field_value)
+      if provider_types.present?
+        dcmi_type if type_maps_to_dcmi?(provider_types, field_value)
       end
-      normalize_first_case(value)
-    end
-
-    def self.transform_types(dcmi_type, provider_type, types_ongoing, field_value)
-      if provider_type.present?
-          new_val = sort_types(dcmi_type, provider_type, field_value)
-          if !types_ongoing.include?(new_val)
-            field_value = new_val
-            types_ongoing.push(new_val)
-          else
-            field_value = ""
-          end
-        end
-        field_value
     end
 
     def self.process_record_token(record, full_records, transient_records, noharvest_records, norights_records)

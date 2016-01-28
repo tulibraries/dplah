@@ -128,7 +128,7 @@ class OaiRec < ActiveFedora::Base
 			end
 
 			dcmi_terms_to_add.uniq!
-			dcmi_terms_to_add = reject! { |item| item.blank? }
+			dcmi_terms_to_add.reject! { |item| item.blank? }
 			dcmi_terms_to_add.each do |dcmi_term|
 				add_type = "<dc:type>#{dcmi_term}</dc:type>\n"
 				self.DC.content = self.DC.content.gsub("\n</oai_dc:dc>\n","#{add_type}\n</oai_dc:dc>\n") unless self.DC.content.include? add_type

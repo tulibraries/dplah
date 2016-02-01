@@ -469,17 +469,20 @@ module HarvestUtils
 
     def self.process_record_token(record, full_records, transient_records, noharvest_records, norights_records)
         puts record.metadata
+        do_not_harvest =  has_noharvest_stopword?(record)
         identifier_reformed = reform_oai_id(record.header.identifier.to_s)
         record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
-        check_rights_statement = check_if_rights(record)
-        full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || check_if_noharvest(record)
+        has_rights_statement = has_rights?(record)
+        full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || do_not_harvest
         File.open(@log_file, "a+") do |f|
           f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
-          f << I18n.t('oai_seed_logs.noharvest_detected') if check_if_noharvest(record)
-          f << I18n.t('oai_seed_logs.no_rights_detected') << identifier_reformed if check_rights_statement.blank? && record.header.status.to_s != "deleted"
+          f << I18n.t('oai_seed_logs.noharvest_detected') if do_not_harvest
+          if !has_rights_statement && !do_not_harvest && record.header.status.to_s != "deleted"
+            f << I18n.t('oai_seed_logs.no_rights_detected') + identifier_reformed
+          end
           transient_records += 1 if record.header.status.to_s == "deleted"
-          noharvest_records += 1 if check_if_noharvest(record)
-          norights_records.push(identifier_reformed) if check_rights_statement.blank? && record.header.status.to_s != "deleted"
+          noharvest_records += 1 if do_not_harvest
+          norights_records.push(identifier_reformed) if !has_rights_statement && !do_not_harvest && record.header.status.to_s != "deleted"
         end
         return full_records, transient_records, noharvest_records, norights_records
     end
@@ -576,15 +579,13 @@ module HarvestUtils
       end
     end
 
-    def self.check_if_rights(record)
-      statement = ""
-      statement = record.metadata.to_s[/<dc:rights>(.*?)<\/dc:rights>/, 1]
-      statement
+    def self.has_rights?(record)
+      !!(record.metadata.to_s =~ /<dc:rights>(.*?)<\/dc:rights>|<dcterms:license>(.*?)<\/dcterms:license>|<dcterms:RightsStatement>(.*?)<\/dcterms:RightsStatement>/)
     end
 
-    def self.check_if_noharvest(record)
-      viable = record.metadata.to_s.include?(@noharvest_stopword)
-      viable
+    def self.has_noharvest_stopword?(record)
+      record.metadata.to_s.include? @noharvest_stopword
+
     end
 
     def self.build_identifier(obj, provider)

@@ -303,10 +303,6 @@
                     </xsl:call-template>
                   </xsl:for-each>
 
-                  <xsl:element name="contributor">
-                    <xsl:value-of select="$contributing_institution" />
-                  </xsl:element>
-
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:date">
                     <xsl:call-template name="split-on">
                       <xsl:with-param name="tag" select="'date'" />
@@ -362,12 +358,6 @@
                     <xsl:value-of select="$collection_name" />
                   </xsl:element>
 
-                  <xsl:for-each select="metadata/oai_qdc:qualifieddc/dc:relation">
-                    <xsl:call-template name="split-on">
-                      <xsl:with-param name="tag" select="'relation'" />
-                      <xsl:with-param name="on" select="concat(., ';')" />
-                    </xsl:call-template>
-                  </xsl:for-each>
 
                   <xsl:for-each select="metadata/oai_qdc:qualifieddc/dcterms:spatial">
                     <xsl:call-template name="split-on">

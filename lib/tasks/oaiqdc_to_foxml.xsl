@@ -237,9 +237,21 @@
                     <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dc:rights" />
                   </xsl:call-template>
 
-                  <xsl:element name="dc:rights">
-                    <xsl:value-of select="$rights_statement" />
-                  </xsl:element>
+                  <xsl:call-template name="name-tag">
+                    <xsl:with-param name="tag" select="'dc:rights'" />
+                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:RightsStatement" />
+                  </xsl:call-template>
+
+                  <xsl:call-template name="name-tag">
+                    <xsl:with-param name="tag" select="'dc:rights'" />
+                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:license" />
+                  </xsl:call-template>
+
+                  <xsl:if test="normalize-space($rights_statement) != ''">
+                    <xsl:element name="dc:rights">
+                      <xsl:value-of select="$rights_statement" />
+                    </xsl:element>
+                  </xsl:if>
 
                 </oai_qdc:qualifieddc>
               </foxml:xmlContent>
@@ -374,6 +386,22 @@
                     <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dc:rights" />
                   </xsl:call-template>
 
+                  <xsl:call-template name="name-tag">
+                    <xsl:with-param name="tag" select="'rights'" />
+                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:RightsStatement" />
+                  </xsl:call-template>
+
+                  <xsl:call-template name="name-tag">
+                    <xsl:with-param name="tag" select="'rights'" />
+                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:license" />
+                  </xsl:call-template>
+
+                  <xsl:call-template name="name-tag">
+                    <xsl:with-param name="tag" select="'Access Rights'" />
+                    <xsl:with-param name="values" select="metadata/oai_qdc:qualifieddc/dcterms:accessRights" />
+                  </xsl:call-template>
+
+
                   <xsl:element name="contributing_institution">
                     <xsl:value-of select="$contributing_institution" />
                   </xsl:element>
@@ -470,10 +498,13 @@
     <xsl:param name="tag" />
     <xsl:param name="values" />
     <xsl:for-each select="$values">
-      <xsl:element name="{$tag}">
-        <xsl:value-of select="normalize-space(.)" />
-      </xsl:element>
-    </xsl:for-each> 
+      <xsl:if test="normalize-space(.) != ''">
+        <xsl:element name="{$tag}">
+          <xsl:value-of select="normalize-space(.)" />
+        </xsl:element>
+      </xsl:if>
+    </xsl:for-each>
+
   </xsl:template>
 
 </xsl:stylesheet>

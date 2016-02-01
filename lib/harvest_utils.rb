@@ -239,7 +239,7 @@ module HarvestUtils
       obj.thumbnail = thumbnail
       obj.assign_rights
       obj.assign_contributing_institution
-      obj.reconcile_type_to_dcmi(provider)
+      obj.add_dcmi_terms_to_type(provider)
       build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
       obj.remove_fake_identifiers_oaidc(@passthrough_url)
       obj.reorg_identifiers
@@ -458,12 +458,12 @@ module HarvestUtils
 
 
     def self.type_maps_to_dcmi?(provider_types, value)
-      provider_types.split(';').include? value
+      provider_types.split(';').map(&:downcase).include? value.downcase
     end
 
-    def self.reconcile_type(dcmi_type, provider_types, field_value)
+    def self.map_type_term_to_dcmi(dcmi_type, provider_types, field_value)
       if provider_types.present?
-        dcmi_type if type_maps_to_dcmi?(provider_types, field_value)
+        dcmi_type if type_maps_to_dcmi?(provider_types, field_value) else field_value
       end
     end
 

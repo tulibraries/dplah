@@ -105,35 +105,35 @@ class OaiRec < ActiveFedora::Base
 		self.save
 	end
 
-	def reconcile_type_to_dcmi(provider)
-		types_ongoing ||= []
+	def add_dcmi_terms_to_type(provider)
+		dcmi_terms_to_add = []
 		unless self.type.empty?
 			self.type.each do |type_to_check|
 				if provider.type_sound.present?
-				  reconciled_type_term = HarvestUtils.reconcile_type("Sound", provider.type_sound, type_to_check)
+				  dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Sound", provider.type_sound, type_to_check)
 				end
 				if provider.type_text.present?
-					reconciled_type_term = HarvestUtils.recncile_type("Text", provider.type_text, type_to_check)
+					dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Text", provider.type_text, type_to_check)
 				end
 				if provider.type_image.present?
-					reconciled_type_term = HarvestUtils.reconcile_type("Image", provider.type_image, type_to_check)
+					dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Image", provider.type_image, type_to_check)
 				end
 				if provider.type_moving_image.present?
-					reconciled_type_term = HarvestUtils.reconcile_type("Moving image", provider.type_moving_image, type_to_check)
+					dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Moving image", provider.type_moving_image, type_to_check)
 				end
 				if provider.type_physical_object.present?
-					reconciled_type_term = HarvestUtils.reconcile_type("Physical object", provider.type_physical_object, type_to_check)
+					dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Physical object", provider.type_physical_object, type_to_check)
 				end
-				types_ongoing.push(reconciled_type_term) if reconciled_type_term
+				dcmi_terms_to_add.push(dcmi_type_term) if dcmi_type_term
 			end
 
-			types_ongoing.uniq!
-			types_ongoing.reject! { |item| item.blank? }
-			types_ongoing.each do |new_type|
-				add_type = "<dc:type>#{new_type}</dc:type>\n"
-				self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","#{add_type}\n</oai_dc:dc>\n")
+			dcmi_terms_to_add.uniq!
+			dcmi_terms_to_add.reject! { |item| item.blank? }
+			dcmi_terms_to_add.each do |dcmi_term|
+				add_type = "<dc:type>#{dcmi_term}</dc:type>\n"
+				self.DC.content = self.DC.content.gsub("\n</oai_dc:dc>\n","#{add_type}\n</oai_dc:dc>\n") unless self.DC.content.include? add_type
 			end
-			self.update_attributes({:type => types_ongoing})
+			self.update_attributes({:type => self.type.push(dcmi_terms_to_add)})
 			self.save
 		end
 	end

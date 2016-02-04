@@ -110,21 +110,20 @@ class OaiRec < ActiveFedora::Base
 		unless self.type.empty?
 			self.type.each do |type_to_check|
 				if provider.type_sound.present?
-				  dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Sound", provider.type_sound, type_to_check)
+					dcmi_terms_to_add.push(HarvestUtils.map_type_term_to_dcmi("Sound", provider.type_sound, type_to_check))
 				end
 				if provider.type_text.present?
-					dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Text", provider.type_text, type_to_check)
+					dcmi_terms_to_add.push(HarvestUtils.map_type_term_to_dcmi("Text", provider.type_text, type_to_check))
 				end
 				if provider.type_image.present?
-					dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Image", provider.type_image, type_to_check)
+					dcmi_terms_to_add.push(HarvestUtils.map_type_term_to_dcmi("Image", provider.type_image, type_to_check))
 				end
 				if provider.type_moving_image.present?
-					dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Moving image", provider.type_moving_image, type_to_check)
+					dcmi_terms_to_add.push(HarvestUtils.map_type_term_to_dcmi("Moving image", provider.type_moving_image, type_to_check))
 				end
 				if provider.type_physical_object.present?
-					dcmi_type_term = HarvestUtils.map_type_term_to_dcmi("Physical object", provider.type_physical_object, type_to_check)
+					dcmi_terms_to_add.push(HarvestUtils.map_type_term_to_dcmi("Physical object", provider.type_physical_object, type_to_check))
 				end
-				dcmi_terms_to_add.push(dcmi_type_term) if dcmi_type_term
 			end
 
 			dcmi_terms_to_add.uniq!
@@ -133,7 +132,7 @@ class OaiRec < ActiveFedora::Base
 				add_type = "<dc:type>#{dcmi_term}</dc:type>\n"
 				self.DC.content = self.DC.content.gsub("\n</oai_dc:dc>\n","#{add_type}\n</oai_dc:dc>\n") unless self.DC.content.include? add_type
 			end
-			self.update_attributes({:type => self.type.push(dcmi_terms_to_add)})
+			self.update_attributes({:type => self.type.push(dcmi_terms_to_add).uniq })
 			self.save
 		end
 	end

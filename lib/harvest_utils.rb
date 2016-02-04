@@ -458,7 +458,7 @@ module HarvestUtils
 
 
     def self.type_maps_to_dcmi?(provider_types, value)
-      provider_types.split(';').map(&:downcase).include? value.downcase
+      provider_types.split(';').map(&:downcase).map(&:strip).include? value.downcase
     end
 
     def self.map_type_term_to_dcmi(dcmi_type, provider_types, field_value)

@@ -77,9 +77,7 @@ module ThumbnailUtils
     asset_url = provider.thumbnail_pattern
     if !provider.thumbnail_token_1.blank?
       token_1 = obj.send(provider.thumbnail_token_1).find {|i| i.exclude?("http")}
-      if provider.provider_id_prefix == "UPENNWHL"
-        token_1 = token_1.gsub("WHEELER_","wheeler_")
-      end
+      token_1 = custom_thumbnail_prefixing(token_1, provider)
       asset_url = asset_url.gsub("$1", token_1)
     end
     if !provider.thumbnail_token_2.blank?
@@ -123,5 +121,20 @@ module ThumbnailUtils
     end
     #obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
   end
+
+  def custom_thumbnail_prefixing(token, provider)
+    case provider.endpoint_url
+      when "http://dla.library.upenn.edu/dla/wheeler/oai-pmh.xml"
+        token = token.gsub("WHEELER_","wheeler_")
+      when "http://dla.library.upenn.edu/dla/holyland/oai-pmh.xml"
+        token = token.gsub("HOLYLAND_","")
+      when "http://dla.library.upenn.edu/dla/archives/oai-pmh.xml"
+        token = token.gsub("ARCHIVES_","archives_")
+      else
+        return
+      end
+      return token
+  end
+  module_function :custom_thumbnail_prefixing
 
 end

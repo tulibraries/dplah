@@ -117,9 +117,8 @@ module ThumbnailUtils
     if !asset_url.blank?
       thumbnail = (asset_url)
     else
-      thumbnail = "default-thumbnail.png"
+      thumbnail = nil
     end
-    #obj.thumbnail = (Faraday.head(asset_url).status == 200) ? asset_url : ''
   end
 
   def custom_thumbnail_prefixing(token, provider)

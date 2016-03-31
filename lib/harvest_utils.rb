@@ -601,6 +601,12 @@ module HarvestUtils
       # little fix for weird nested OAI identifiers in Bepress
       file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
 
+      # little fix for additional weirdness in Bepress for PCOM
+      file_prefix.slice!("do_") if provider.common_repository_type == "Bepress" && provider.endpoint_url == "http://digitalcommons.pcom.edu/do/oai/" && provider.set == "publication:do_yearbooks"
+
+      # little fix for CPP Omeka instance where sets are not in headers
+      file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Omeka" && provider.endpoint_url == "http://www.cppdigitallibrary.org/oai-pmh-repository/request"
+
       # little fix for Villanova's DPLA set
       file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
 

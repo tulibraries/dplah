@@ -236,14 +236,14 @@ module HarvestUtils
       ActiveFedora::FixtureLoader.index(pid)
       obj = OaiRec.find(pid)
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
-      obj.thumbnail = thumbnail
+      obj.thumbnail = thumbnail if thumbnail
       obj.assign_rights
       obj.assign_contributing_institution
       obj.add_dcmi_terms_to_type(provider)
       build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
       obj.remove_fake_identifiers_oaidc(@passthrough_url)
       obj.reorg_identifiers
-      obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow"
+      obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow" || thumbnail.nil?
       obj.save
       obj.to_solr
       obj.update_index

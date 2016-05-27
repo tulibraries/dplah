@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
 
   root :to => "catalog#index"
+
+  get 'csv' => "csv#index"
   
   post "harvest_all_providers"=>"application#harvest_all_providers"
   post "dump_whole_index"=>"application#dump_whole_index"

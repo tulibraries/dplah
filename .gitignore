@@ -21,6 +21,11 @@
 /samples
 
 /config/dpla.yml
+/config/database.yml
+/config/fedora.yml
+/config/jetty.yml
+/config/secrets.yml
+/config/solr.yml
 
 /coverage
 

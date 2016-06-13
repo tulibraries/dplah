@@ -24,6 +24,7 @@
 /config/database.yml
 /config/fedora.yml
 /config/jetty.yml
+/config/resque-pool.yml
 /config/secrets.yml
 /config/solr.yml
 

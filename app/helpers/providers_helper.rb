@@ -17,4 +17,10 @@ module ProvidersHelper
 	def oai_action_disabled_class(attribute_check)
 		return attribute_check.present? ? "oai-actions btn-provider" : "oai-actions"
 	end
+
+	def human_readable_time(time_value)
+		rendered_time = time_value.present? ? time_value.to_time.strftime('%B %d, %Y at %H:%M:%S %Z') : "N/A"
+		return rendered_time
+	end
+
 end

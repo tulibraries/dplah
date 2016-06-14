@@ -8,18 +8,18 @@ RSpec.describe Provider, :type => :model do
 
   context "endpoint_url validation" do
     it "is valid" do
-      provider = Provider.new(endpoint_url: valid_url) 
+      provider = Provider.new(endpoint_url: valid_url)
       expect(provider).to be_valid
     end
 
     it "is not valid" do
-      provider = Provider.new(endpoint_url: "InvalidURL") 
+      provider = Provider.new(endpoint_url: "InvalidURL")
       expect(provider).to_not be_valid
     end
   end
 
   context "initialized attributes" do
-  
+
     let(:p) { FactoryGirl.build(:provider) }
     let!(:provider) {
       Provider.new(
@@ -29,7 +29,7 @@ RSpec.describe Provider, :type => :model do
         metadata_prefix: p.metadata_prefix,
         set: p.set,
         contributing_institution: p.contributing_institution
-      ) 
+      )
     }
 
 
@@ -109,7 +109,7 @@ RSpec.describe Provider, :type => :model do
     it "is a pending example"
   end
 
-  describe "last_harvested" do
+  describe "consumed_at" do
     it "is a pending example"
   end
 

@@ -20,6 +20,8 @@ module HarvestUtils
   def harvest_action(provider)
     create_log_file(provider.name)
     harvest(provider)
+    provider.last_harvested = Time.now
+    provider.save!
     sleep(5)
     convert(provider)
     cleanup(provider)

@@ -17,7 +17,6 @@
       <th>Base url</th>
       <th>Set</th>
       <th>Collection Name</th>
-      <th>Last Harvested</th>
       <th>Contributing Institution</th>
       <th>Common Repository Type (if applicable)</th>
       <th>Provider ID Prefix</th>
@@ -33,7 +32,6 @@
         <td><%= auto_link(provider.endpoint_url) %></td>
         <td><%= provider.set %></td>
         <td><%= provider.collection_name %></td>
-        <td><%= provider.last_harvested.to_time.strftime('%B %d, %Y at %H:%M:%S %Z') %></td>
         <td><%= provider.contributing_institution %></td>
         <td><%= provider.common_repository_type %></td>
         <td><%= provider.provider_id_prefix %></td>

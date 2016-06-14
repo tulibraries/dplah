@@ -109,7 +109,7 @@ RSpec.describe Provider, :type => :model do
     it "is a pending example"
   end
 
-  describe "last_harvested" do
+  describe "consumed_at" do
     it "is a pending example"
   end
 

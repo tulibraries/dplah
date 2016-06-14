@@ -20,8 +20,6 @@ module HarvestUtils
   def harvest_action(provider)
     create_log_file(provider.name)
     harvest(provider)
-    provider.last_harvested = Time.now
-    provider.save!
     sleep(5)
     convert(provider)
     cleanup(provider)
@@ -77,6 +75,8 @@ module HarvestUtils
     create_harvest_file(provider, full_records, num_files)
     `rake tmp:cache:clear`
     sleep(5)
+
+
     while(response.resumption_token and not response.resumption_token.empty?)
       full_records = ''
       File.open(@log_file, "a+") do |f|

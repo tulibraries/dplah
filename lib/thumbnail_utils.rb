@@ -8,15 +8,26 @@ module ThumbnailUtils
   config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
 
   class CommonRepositories
-  	class Contentdm
+    class Contentdm
   		def self.asset_url(obj)
   		  endpoint_url = obj.endpoint_url
-  		  g = endpoint_url.slice!('/oai/oai.php')
   		  set = obj.set_spec
   		  p = obj.pid
   		  p = p.split("_").last
   		  asset_url = "#{endpoint_url}/utils/getthumbnail/collection/#{set}/id/#{p}"
   		  asset_url
+  		end
+  	end
+
+    class ContentdmSsl
+  		def self.asset_url(obj)
+  		  endpoint_url = obj.endpoint_url
+  		  set = obj.set_spec
+  		  p = obj.pid
+  		  p = p.split("_").last
+        url = URI.parse(endpoint_url)
+        asset_url = "#{url.scheme}://#{url.host}/utils/getthumbnail/collection/#{set}/id/#{p}"
+        asset_url
   		end
   	end
 
@@ -58,6 +69,8 @@ module ThumbnailUtils
   	case provider.common_repository_type
     	when "CONTENTdm"
     		asset_url = ThumbnailUtils::CommonRepositories::Contentdm.asset_url(obj)
+      when "CONTENTdm SSL"
+        asset_url = ThumbnailUtils::CommonRepositories::ContentdmSsl.asset_url(obj)
       when "Bepress"
         asset_url = ThumbnailUtils::CommonRepositories::Bepress.asset_url(obj)
     	when "VuDL"

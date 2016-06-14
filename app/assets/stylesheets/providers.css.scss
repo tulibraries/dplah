@@ -48,19 +48,6 @@ table.oai-seeds, .oai-seeds td, .oai-seeds th {
   text-shadow:0px 1px 0px #283466;
   cursor:pointer;
 }
-
-.oai-actions span.disabled-harvest-all-intermediate-provider {
-  background-color:#e5e5e5;
-  -moz-border-radius:20px;
-  -webkit-border-radius:20px;
-  border-radius:20px;
-  border:1px solid #c7c7c7;
-  display:inline-block;
-  color:#666666;
-  font-size: 12px;
-  padding:10px 10px;
-}
-
 .btn-provider:hover {
   background-color:#1838ba;
 }
@@ -73,3 +60,4 @@ table.oai-seeds, .oai-seeds td, .oai-seeds th {
 #new_provider fieldset{
   margin-top: 30px;
 }
+        

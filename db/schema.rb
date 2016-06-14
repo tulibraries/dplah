@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150806171401) do
+ActiveRecord::Schema.define(version: 20160609122158) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",       null: false
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20150806171401) do
     t.string   "type_sound"
     t.string   "type_physical_object"
     t.string   "contributing_institution_dc_field"
+    t.string   "last_harvested"
   end
 
   create_table "searches", force: true do |t|

@@ -6,8 +6,7 @@ Rails.application.routes.draw do
   resources :providers do
     member do
       post :harvest
-      post :harvest_all_selective_contributing_institution
-      post :harvest_all_selective_intermediate_provider
+      post :harvest_all_by_institution
       post :dump_and_reindex_by_institution
       post :dump_and_reindex_by_set
     end
@@ -17,12 +16,12 @@ Rails.application.routes.draw do
   root :to => "catalog#index"
 
   get 'csv' => "csv#index"
-
+  
   post "harvest_all_providers"=>"application#harvest_all_providers"
   post "dump_whole_index"=>"application#dump_whole_index"
 
   get 'about' => 'high_voltage/pages#show', id: 'about'
-
+  
   blacklight_for :catalog
   devise_for :users
 

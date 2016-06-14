@@ -183,7 +183,7 @@ RSpec.describe ProvidersController, :type => :controller do
       @provider = Provider.create! valid_attributes
       sso = stdout_to_null
       VCR.use_cassette "provider_controller/harvest_small_collection" do
-        post :harvest_all_selective, {:id => @provider.to_param}, valid_session
+        post :harvest_all_by_institution, {:id => @provider.to_param}, valid_session
       end
       $stdout = sso
       expect(Harvest).to have_queue_size_of(1)

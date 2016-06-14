@@ -322,7 +322,7 @@ RSpec.describe HarvestUtils do
         # Harvest the collection
         sso = stdout_to_null
         VCR.use_cassette "harvest_utils/provider_small_collection" do
-          HarvestUtils::harvest_all_selective(provider_small_collection)
+          HarvestUtils::harvest_action_all(provider_small_collection)
         end
         $stdout = sso
 

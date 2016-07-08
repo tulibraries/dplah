@@ -9,15 +9,16 @@ module ThumbnailUtils
 
   class CommonRepositories
     class Contentdm
-  		def self.asset_url(obj)
-  		  endpoint_url = obj.endpoint_url
-  		  set = obj.set_spec
-  		  p = obj.pid
-  		  p = p.split("_").last
-  		  asset_url = "#{endpoint_url}/utils/getthumbnail/collection/#{set}/id/#{p}"
-  		  asset_url
-  		end
-  	end
+      def self.asset_url(obj)
+        endpoint_url = obj.endpoint_url
+        endpoint_url.slice! '/oai/oai.php'
+        set = obj.set_spec
+        p = obj.pid
+        p = p.split("_").last
+        asset_url = "#{endpoint_url}/utils/getthumbnail/collection/#{set}/id/#{p}"
+        asset_url
+      end
+    end
 
     class ContentdmSsl
   		def self.asset_url(obj)

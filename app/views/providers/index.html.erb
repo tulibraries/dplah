@@ -17,6 +17,7 @@
       <th>Base url</th>
       <th>Set</th>
       <th>Collection Name</th>
+      <th>Last Harvested</th>
       <th>Contributing Institution</th>
       <th>Common Repository Type (if applicable)</th>
       <th>Provider ID Prefix</th>
@@ -32,12 +33,14 @@
         <td><%= auto_link(provider.endpoint_url) %></td>
         <td><%= provider.set %></td>
         <td><%= provider.collection_name %></td>
+        <td><%= human_readable_time(provider.last_harvested) %></td>
         <td><%= provider.contributing_institution %></td>
         <td><%= provider.common_repository_type %></td>
         <td><%= provider.provider_id_prefix %></td>
         <td><%= provider.in_production %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Harvest from OAI Source', harvest_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while for OAI seeds with many items.  Are you sure?' } %></td>
-        <td class="oai-actions btn-provider"><%= link_to 'Harvest all OAI Seeds from this Institution', harvest_all_by_institution_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while for institutions with many OAI seeds. Are you sure?' } %></td>
+        <td class="oai-actions btn-provider"><%= link_to 'Harvest all OAI Seeds from this Institution', harvest_all_selective_contributing_institution_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'This may take a while for institutions with many OAI seeds. Are you sure?' } %></td>
+        <td class="<%= oai_action_disabled_class(provider.intermediate_provider) %>"><%= render_harvest_all_intermediate_provider(provider) %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Remove this Institution from Aggregator Index', dump_and_reindex_by_institution_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure?' } %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Remove this Collection from Aggregator Index', dump_and_reindex_by_set_provider_path(provider), method: :post, class: :triggerWaiting, data: { confirm: 'Are you sure?' } %></td>
         <td class="oai-actions btn-provider"><%= link_to 'Edit Seed', edit_provider_path(provider) %></td>

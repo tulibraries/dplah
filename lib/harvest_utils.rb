@@ -20,6 +20,8 @@ module HarvestUtils
   def harvest_action(provider)
     create_log_file(provider.name)
     harvest(provider)
+    provider.last_harvested = Time.now
+    provider.save!
     sleep(5)
     convert(provider)
     cleanup(provider)
@@ -33,13 +35,13 @@ module HarvestUtils
   end
   module_function :harvest_action
 
-  def harvest_action_all(provider)
-    seeds = Provider.where(:contributing_institution => "#{provider.contributing_institution}")
+  def harvest_all_selective(provider, criteria)
+    seeds = Provider.where(criteria.to_sym => "#{provider.send(criteria)}")
     seeds.each do |ci|
       harvest_action(ci)
     end
   end
-  module_function :harvest_action_all
+  module_function :harvest_all_selective
 
   def harvest_all()
     Provider.find_each(batch_size: 5) do |provider|
@@ -75,8 +77,6 @@ module HarvestUtils
     create_harvest_file(provider, full_records, num_files)
     `rake tmp:cache:clear`
     sleep(5)
-
-
     while(response.resumption_token and not response.resumption_token.empty?)
       full_records = ''
       File.open(@log_file, "a+") do |f|

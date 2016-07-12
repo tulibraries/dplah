@@ -465,6 +465,9 @@ GEM
       crack (>= 0.3.2)
     will_paginate (3.0.7)
     xml-simple (1.1.5)
+    yaml_db (0.3.0)
+      rails (>= 3.0, < 4.3)
+      rake (>= 0.8.7)
 
 PLATFORMS
   ruby
@@ -504,3 +507,7 @@ DEPENDENCIES
   vcr
   webmock
   will_paginate (~> 3.0.6)
+  yaml_db
+
+BUNDLED WITH
+   1.11.2

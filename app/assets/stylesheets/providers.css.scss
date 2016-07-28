@@ -18,7 +18,7 @@ table.oai-seeds, .oai-seeds td, .oai-seeds th {
 }
 
 .loading{
-  background: url('/assets/ajax-load.gif') no-repeat scroll center bottom transparent;
+  background: asset-data-url('ajax-load.gif') no-repeat scroll center bottom transparent;
   text-align: center;
   font-size: 12px;
   width: 300px;

@@ -9,7 +9,7 @@
 /* Just for differentiating hubs -- this is for test */
 
 body{
-  background-color: #ddeffe;
+  background-color: <%= ENV['DPLAH_BACKGROUND_COLOR'] ? "#{ENV['DPLAH_BACKGROUND_COLOR']}" : 'ddeffe' %>;
 }
 
 .panel{

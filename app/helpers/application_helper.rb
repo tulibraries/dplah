@@ -16,4 +16,9 @@ module ApplicationHelper
 		return array_languages
 	end
 
+	def background_color
+		config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
+		config[:background_color] ? config[:background_color] : "#ddeffe"
+	end
+
 end

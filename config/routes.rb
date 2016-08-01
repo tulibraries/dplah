@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   post "dump_whole_index"=>"application#dump_whole_index"
 
   get 'about' => 'high_voltage/pages#show', id: 'about'
+  get 'sponsors' => 'high_voltage/pages#show', id: 'sponsors'
 
   blacklight_for :catalog
   devise_for :users

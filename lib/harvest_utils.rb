@@ -244,6 +244,7 @@ module HarvestUtils
       obj.remove_fake_identifiers_oaidc(@passthrough_url)
       obj.reorg_identifiers
       obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow" || thumbnail.nil?
+      obj.clean_iso8601_date_field
       obj.save
       obj.to_solr
       obj.update_index

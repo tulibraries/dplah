@@ -16,8 +16,8 @@ en:
     harvest_end: |+
       HARVEST COMPLETE FOR
     rights_missing_header: |+
-    
-      RIGHTS MISSING REPORT FOR 
+
+      RIGHTS MISSING REPORT FOR
     records_count: |+
        OAI record(s) detected
     transient_records_detected: |+
@@ -57,6 +57,7 @@ en:
     ingest_begin: |+
       INGESTION BEGINNING
     duplicate_record_detected: DUPLICATE RECORD DETECTED -- GIVING PRECEDENCE TO INCOMING RECORD -- IDENTIFIER
+    problem_record_detected: RECORD COULD NOT BE INGESTED, SKIPPING -- FILE HAS BEEN QUARANTINED AT
     ingest_end: |+
       INGESTION COMPLETE
     ingest_count: |+

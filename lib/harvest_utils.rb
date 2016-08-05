@@ -10,6 +10,7 @@ module HarvestUtils
   config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
   @harvest_path = config['harvest_data_directory']
   @converted_path = config['converted_foxml_directory']
+  @quarantined_path = config['quarantined_foxml_directory']
   @pid_prefix = config['pid_prefix']
   @partner = config['partner']
   @human_log_path = config['human_log_path']
@@ -232,8 +233,13 @@ module HarvestUtils
 
     contents.each do |file|
       check_if_exists(file)
-      pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
-      ActiveFedora::FixtureLoader.index(pid)
+      begin
+        pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
+        ActiveFedora::FixtureLoader.index(pid)
+      rescue
+        quarantine_and_report(file)
+        next
+      end
       obj = OaiRec.find(pid)
       thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
       obj.thumbnail = thumbnail if thumbnail
@@ -577,6 +583,14 @@ module HarvestUtils
         end
       rescue
 
+      end
+    end
+
+    def self.quarantine_and_report(record)
+      destination = "#{@quarantined_path}/#{Time.now.to_i}_#{File.basename(record)}"
+      FileUtils.mv(record, destination)
+      File.open(@log_file, "a+") do |f|
+        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.problem_record_detected') << " #{destination}" << I18n.t('oai_seed_logs.text_buffer')
       end
     end
 

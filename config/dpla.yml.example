@@ -1,5 +1,6 @@
 harvest_data_directory: "tmp/harvest"
 converted_foxml_directory: "tmp/converted"
+quarantined_foxml_directory: "/tmp/quarantined"
 pid_prefix: "changeme"
 partner: "Name of hub"
 human_log_path: '/abs/path/to/log/files'

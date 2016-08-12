@@ -19,7 +19,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     expect(HarvestMailer.default[:to]).to eq config['email_recipient']
   end
   
-  it "is expected to deliver harvested all OAI seeds email" do
+  xit "is expected to deliver harvested all OAI seeds email" do
     mail = HarvestMailer.harvest_complete_email(provider, logfile).deliver
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(provider.email)
@@ -37,7 +37,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     expect(mail.attachments.first.filename).to eq File.basename(logfile)
   end
   
-  it "should deliver a successful dump and reindex by institution email" do
+  xit "should deliver a successful dump and reindex by institution email" do
     mail = HarvestMailer.dump_and_reindex_by_institution_email(provider, logfile).deliver
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(provider.email)
@@ -46,7 +46,7 @@ RSpec.describe HarvestMailer, type: :mailer do
     expect(mail.attachments.first.filename).to eq File.basename(logfile)
   end
   
-  it "should deliver a successful dump and reindex by collection email" do
+  xit "should deliver a successful dump and reindex by collection email" do
     mail = HarvestMailer.dump_and_reindex_by_collection_email(provider, logfile).deliver
     expect(ActionMailer::Base.deliveries.size).to eq 1  
     expect(mail.to).to include(provider.email)

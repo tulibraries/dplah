@@ -17,27 +17,27 @@ FactoryGirl.define do
   end
 
   factory :provider_small_collection, class: Provider do
-    name "Voices of Lycoming"
-    collection_name "Voices of Lycoming"
+    name "SCRC Ephemera"
+    collection_name "SCRC Ephemera"
     description "Collection description"
-    endpoint_url "http://contentdm1.accesspa.org/oai/oai.php"
+    endpoint_url "http://cdm16002.contentdm.oclc.org/oai/oai.php"
     metadata_prefix "oai_dc"
-    set "alycc-voice"
-    provider_id_prefix "lycoming"
-    contributing_institution "POWER Library"
-    email "lycoming@example.com"
+    set "p16002coll6"
+    provider_id_prefix "temple"
+    contributing_institution "Temple University"
+    email "temple@example.com"
   end
 
   factory :edited_provider_small_collection, class: Provider do
-    name "Voices of Lycoming"
-    collection_name "Voices of Lycoming"
+    name "SCRC Ephemera"
+    collection_name "SCRC Ephemera"
     description "Edited collection description"
-    endpoint_url "http://contentdm1.accesspa.org/oai/oai.php"
+    endpoint_url "http://cdm16002.contentdm.oclc.org/oai/oai.php"
     metadata_prefix "oai_dc"
-    set "alycc-voice"
-    provider_id_prefix "lycoming"
-    contributing_institution "POWER Library"
-    email "lycoming@example.com"
+    set "p16002coll6"
+    provider_id_prefix "temple"
+    contributing_institution "Temple University"
+    email "temple@example.com"
   end
 
   factory :provider_transient_records, class: Provider do
@@ -52,27 +52,27 @@ FactoryGirl.define do
   end
 
   factory :multiple_providers, class: Provider do
-    name "Voices of Lycoming"
-    collection_name "Voices of Lycoming"
+    name "SCRC Ephemera"
+    collection_name "SCRC Ephemera"
     description "Collection description"
-    endpoint_url "http://contentdm1.accesspa.org/oai/oai.php"
+    endpoint_url "http://cdm16002.contentdm.oclc.org/oai/oai.php"
     metadata_prefix "oai_dc"
-    set "alycc-voice"
-    sequence(:provider_id_prefix) { |n| "lycoming#{n}" }
-    sequence(:email) { |n| "lycoming#{n}@example.com" }
-    contributing_institution "POWER Library"
+    set "p16002coll6"
+    sequence(:provider_id_prefix) { |n| "temple#{n}" }
+    sequence(:email) { |n| "temple#{n}@example.com" }
+    contributing_institution "Temple University"
   end
 
   factory :invalid_provider, class: Provider do
-    name "Voices of Lycoming"
-    collection_name "Voices of Lycoming"
+    name "SCRC Ephemera"
+    collection_name "SCRC Ephemera"
     description "Collection description"
     endpoint_url ""
     metadata_prefix "oai_dc"
-    set "alycc-voice"
-    provider_id_prefix "lycoming"
-    contributing_institution "POWER Library"
-    email "lycoming@example.com"
+    set "p16002coll6"
+    provider_id_prefix "temple"
+    contributing_institution "Temple University"
+    email "temple@example.com"
   end
 
   factory :provider_resumption_token, class: Provider do

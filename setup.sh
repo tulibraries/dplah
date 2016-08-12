@@ -20,4 +20,4 @@ sleep 10
 
 rails server -d 
 
-resque-pool --daemon 
+RAILS_ENV=development resque-pool --daemon 

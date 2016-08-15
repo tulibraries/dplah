@@ -24,6 +24,13 @@ Execute the remaining tasks from the Hydra head application directory:
 cd dplah
 ```
 
+Then run the Setup script to quickly get your environemnt running
+```bash
+./setup.sh # you may need to `chmod +x` the setup file first"
+```
+
+The full details of configuring the application can be see below in the [Configuration](#configuration) section.
+
 ##Configuration
 
 To use this head, create a file under "`config/dpla.yml`" (you may copy the example file, "`config/dpla.yml.example`" and add the following:

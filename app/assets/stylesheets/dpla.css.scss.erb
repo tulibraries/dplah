@@ -7,9 +7,9 @@
 ******/
 
 /* Just for differentiating hubs -- this is for test */
-
+<% environment.context_class.instance_eval { include ApplicationHelper } %>
 body{
-  background-color: #ddeffe;
+  background-color: <%= background_color %>;
 }
 
 .panel{
@@ -33,6 +33,13 @@ a {
 }
 
 /* End of hub differentiation */
+
+div#header-note{
+  color: #ffffff;
+  float: right;
+  font-size: 24px;
+  padding-top: 35px;
+}
 
 
 #header-navbar .navbar-brand {

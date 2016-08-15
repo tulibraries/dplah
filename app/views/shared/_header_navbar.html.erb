@@ -11,6 +11,9 @@
         <h1><%= link_to t('dpla.application_name'), root_path %></h1>
       </div>
     </div>
+    <div id="header-note">
+      <%= link_to "About this Site","#{about_url}" %>
+    </div>
 
     <div class="collapse navbar-collapse" id="user-util-collapse">
       <%= render :partial=>'/user_util_links' %>

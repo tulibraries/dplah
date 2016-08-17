@@ -7,6 +7,13 @@ command -v xsltproc >/dev/null 2>&1 || { echo >&2 "xsltproc should be available 
 # copy config files into place
 
 cp config/dpla.yml.example config/dpla.yml
+cp config/database.yml.example config/database.yml
+cp config/fedora.yml.example config/fedora.yml
+cp config/jetty.yml.example config/jetty.yml
+cp config/resque-pool.yml.example config/resque-pool.yml
+cp config/secrets.yml.example config/secrets.yml
+cp config/solr.yml.example config/solr.yml
+
 
 bundle install
 

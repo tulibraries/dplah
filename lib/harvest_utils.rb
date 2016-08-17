@@ -159,40 +159,16 @@ module HarvestUtils
       normalize_global(doc, "//language")
       normalize_global(doc, "//relation")
       normalize_global(doc, "//coverage")
-      normalize_global(doc, "//rights")
-
-      normalize_global(doc, "//dc:title")
-      normalize_global(doc, "//dc:creator")
-      normalize_global(doc, "//dc:subject")
-      normalize_global(doc, "//dc:description")
-      normalize_global(doc, "//dc:publisher")
-      normalize_global(doc, "//dc:contributor")
-      normalize_global(doc, "//dc:date")
-      normalize_global(doc, "//dc:type")
-      normalize_global(doc, "//dc:format")
-      normalize_global(doc, "//dc:source")
-      normalize_global(doc, "//dc:language")
-      normalize_global(doc, "//dc:relation")
-      normalize_global(doc, "//dc:coverage")
-      normalize_global(doc, "//dc:rights")
 
       normalize_facets(doc, "//subject")
       normalize_facets(doc, "//type")
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
 
-      normalize_facets(doc, "//dc:subject")
-      normalize_facets(doc, "//dc:type")
-      normalize_facets(doc, "//dc:language")
-      normalize_facets(doc, "//dc:publisher")
-
       standardize_formats(doc, "//format")
       normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
-
-      standardize_formats(doc, "//dc:format")
-      normalize_dates(doc, "//dc:date")
-      normalize_language(doc, "//dc:language")
+      normalize_rights(doc, "//dc:rights")
 
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
@@ -433,6 +409,15 @@ module HarvestUtils
       end
     end
 
+    def self.normalize_rights(doc, string_to_search)
+      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+      node_update.each do |node_value|
+        if node_value.inner_html.downcase.starts_with?("http")
+          node_value.inner_html = node_value.inner_html.downcase
+        end
+      end
+    end
+
     def self.normalize_first_case(value)
       value.downcase
       value.sub(/^./) { |m| m.upcase }
@@ -475,7 +460,6 @@ module HarvestUtils
     end
 
     def self.process_record_token(record, full_records, transient_records, noharvest_records, norights_records)
-        puts record.metadata
         do_not_harvest =  has_noharvest_stopword?(record)
         identifier_reformed = reform_oai_id(record.header.identifier.to_s)
         record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"

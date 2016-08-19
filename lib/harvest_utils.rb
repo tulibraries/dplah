@@ -160,15 +160,41 @@ module HarvestUtils
       normalize_global(doc, "//relation")
       normalize_global(doc, "//coverage")
 
+
+      normalize_global(doc, "//rights")
+      normalize_global(doc, "//dc:title")
+      normalize_global(doc, "//dc:creator")
+      normalize_global(doc, "//dc:subject")
+      normalize_global(doc, "//dc:description")
+      normalize_global(doc, "//dc:publisher")
+      normalize_global(doc, "//dc:contributor")
+      normalize_global(doc, "//dc:date")
+      normalize_global(doc, "//dc:type")
+      normalize_global(doc, "//dc:format")
+      normalize_global(doc, "//dc:source")
+      normalize_global(doc, "//dc:language")
+      normalize_global(doc, "//dc:relation")
+      normalize_global(doc, "//dc:coverage")
+      normalize_global(doc, "//dc:rights")
+
       normalize_facets(doc, "//subject")
       normalize_facets(doc, "//type")
       normalize_facets(doc, "//language")
       normalize_facets(doc, "//publisher")
 
+      normalize_facets(doc, "//dc:subject")
+      normalize_facets(doc, "//dc:type")
+      normalize_facets(doc, "//dc:language")
+      normalize_facets(doc, "//dc:publisher")
+
       standardize_formats(doc, "//format")
       normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
       normalize_rights(doc, "//dc:rights")
+
+      standardize_formats(doc, "//dc:format")
+      normalize_dates(doc, "//dc:date")
+      normalize_language(doc, "//dc:language")
 
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)

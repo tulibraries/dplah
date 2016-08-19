@@ -165,12 +165,12 @@ class OaiRec < ActiveFedora::Base
 	end
 
 	def clean_iso8601_date_field
-		new_dates = []
-		self.date.each do |zdate|
-			if (zdate.include? "T") && (zdate.include? "Z") then
+		new_dates = self.date.dup
+		self.date.each_with_index do |zdate, index|
+			if (zdate.include? "T") && (zdate.include? "Z")
 				begin
 				ymddate = Date.parse(zdate).to_formatted_s(:db)
-				new_dates.push( ymddate )
+				new_dates[index]= ymddate
 				rescue
 					Rails.logger.warn "Malformed iso8601 date, cannot parse #{self.date}"
 				end

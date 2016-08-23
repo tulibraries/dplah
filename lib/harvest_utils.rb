@@ -161,7 +161,6 @@ module HarvestUtils
       normalize_global(doc, "//coverage")
 
 
-      normalize_global(doc, "//rights")
       normalize_global(doc, "//dc:title")
       normalize_global(doc, "//dc:creator")
       normalize_global(doc, "//dc:subject")
@@ -175,7 +174,6 @@ module HarvestUtils
       normalize_global(doc, "//dc:language")
       normalize_global(doc, "//dc:relation")
       normalize_global(doc, "//dc:coverage")
-      normalize_global(doc, "//dc:rights")
 
       normalize_facets(doc, "//subject")
       normalize_facets(doc, "//type")

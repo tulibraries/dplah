@@ -6,6 +6,7 @@ RSpec.describe HarvestUtils do
   let (:pid_prefix) { config['pid_prefix'] }
   let (:download_directory) { config['harvest_data_directory'] }
   let (:convert_directory) { config['converted_foxml_directory'] }
+  let (:harvest_fixtures_directory) { File.join("spec", "fixtures", "harvest_data") }
   let (:schema_url) { "http://www.fedora.info/definitions/1/0/foxml1-1.xsd" }
   let (:log_name) { "harvest_utils_spec" }
 
@@ -99,17 +100,18 @@ RSpec.describe HarvestUtils do
       # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
 
-      # Harvest a file to convert
-      sso = stdout_to_null
-      VCR.use_cassette "harvest_utils/provider_small_collection" do
-        HarvestUtils::harvest(provider_small_collection)
-      end
-      $stdout = sso
+#      # Harvest a file to convert
+#      sso = stdout_to_null
+#      VCR.use_cassette "harvest_utils/provider_small_collection" do
+#        HarvestUtils::harvest(provider_small_collection)
+#      end
+#      $stdout = sso
 
       # Get the schema
       VCR.use_cassette "harvest_utils/XML_schema" do
         @xsd = Nokogiri::XML::Schema(open(schema_url))
       end
+      #HarvestUtils.class_eval { class_variable_set(:@harvester_path, "spec/fixtures/harvest_data") }
 
     end
 
@@ -120,10 +122,13 @@ RSpec.describe HarvestUtils do
 
     it "should convert a collection" do
 
+      provider = instance_double("provider", metadata_prefix: "oai_dc")
+      FileUtils.cp File.join(harvest_fixtures_directory, "harvest_data.xml"), download_directory
+
       # Convert the harvested file
-      sso = stdout_to_null
-      HarvestUtils::convert(provider_small_collection)
-      $stdout = sso
+      #sso = stdout_to_null
+      HarvestUtils::convert(provider)
+      #$stdout = sso
 
       # Expect the file to be valid
       Dir.glob(File.join(convert_directory, '**', '*.xml')).each do |file|

@@ -179,11 +179,23 @@ RSpec.describe ProvidersController, :type => :controller do
       expect(Harvest).to have_queue_size_of(1)
     end
 
-    it "Harvests all of the data by institution" do
+    it "Harvests all of the data by selective contributing institution" do
+      expect(Harvest).to have_queue_size_of(0)
       @provider = Provider.create! valid_attributes
       sso = stdout_to_null
-      VCR.use_cassette "provider_controller/harvest_small_collection" do
-        post :harvest_all_selective, {:id => @provider.to_param}, valid_session
+      VCR.use_cassette "provider_controller/harvest_all_selective_contributing_institution" do
+        post :harvest_all_selective_contributing_institution, {:id => @provider.to_param}, valid_session
+      end
+      $stdout = sso
+      expect(Harvest).to have_queue_size_of(1)
+    end
+
+    it "Harvests all of the data by selective intermediate provider" do
+      expect(Harvest).to have_queue_size_of(0)
+      @provider = Provider.create! valid_attributes
+      sso = stdout_to_null
+      VCR.use_cassette "provider_controller/harvest_all_selective_intermediate_provider" do
+        post :harvest_all_selective_intermediate_provider, {:id => @provider.to_param}, valid_session
       end
       $stdout = sso
       expect(Harvest).to have_queue_size_of(1)

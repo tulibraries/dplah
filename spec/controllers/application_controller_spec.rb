@@ -20,13 +20,13 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     it "Harvests all of the data from all providers" do
-      expect(ActiveFedora::Base.count).to eq 0
+      expect(HarvestAll).to have_queue_size_of(0)
       sso = stdout_to_null
       VCR.use_cassette "application_controller/multiple_providers" do
         post :harvest_all_providers, valid_session
       end
       $stdout = sso
-      expect(ActiveFedora::Base.count).to eq 12 
+      expect(HarvestAll).to have_queue_size_of(1)
       expect(response).to redirect_to(providers_url)
     end
   end
@@ -52,9 +52,9 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     it "deletes the index" do
-      expect(ActiveFedora::Base.count).to eq 12
+      expect(DumpWholeIndex).to have_queue_size_of(0)
       post :dump_whole_index, valid_session
-      expect(ActiveFedora::Base.count).to eq 0
+      expect(DumpWholeIndex).to have_queue_size_of(1)
       expect(response).to redirect_to(providers_url)
     end
   end

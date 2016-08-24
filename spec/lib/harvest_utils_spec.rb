@@ -13,6 +13,7 @@ RSpec.describe HarvestUtils do
 
   context "Harvest Records" do
 
+
     before :each do
       # Make sure sure download directory is empty
       FileUtils.rm Dir.glob "#{download_directory}/*.xml"
@@ -30,7 +31,7 @@ RSpec.describe HarvestUtils do
       FileUtils.rm Dir.glob "#{download_directory}/*.xml"
     end
 
-    it "should harvest a collection" do
+    xit "should harvest a collection" do
       # Harvest the collection
       sso = stdout_to_null
       VCR.use_cassette "harvest_utils/provider_small_collection" do
@@ -81,7 +82,7 @@ RSpec.describe HarvestUtils do
 
     end
 
-    it "should harvest collection with a resumption token" do
+    xit "should harvest collection with a resumption token" do
       # Expect that we've harvest just two files
       file_count = Dir[File.join(download_directory, '*.xml')].count { |file| File.file?(file) }
       expect(file_count).to eq(2)
@@ -150,8 +151,8 @@ RSpec.describe HarvestUtils do
       expect(file_count).to be record_count
     end
 
-#[TODO]    it "should log the conversion"
-#[TODO]    it "should remove the harvested files after conversion"
+    it "should log the conversion"
+    it "should remove the harvested files after conversion"
 
   end
 

@@ -27,11 +27,11 @@ Rails.application.routes.draw do
   blacklight_for :catalog
   devise_for :users, :skip => [:registrations] 
   as :user do
-	  get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-	  put 'users' => 'devise/registrations#update', :as => 'user_registration'
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+    put 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
-  
-	authenticate :user do
+
+  authenticate :user do
     mount Resque::Server.new, at: "/resque"
   end
 

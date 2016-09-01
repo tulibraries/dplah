@@ -71,6 +71,7 @@ GEM
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
     builder (3.2.2)
+    byebug (9.0.5)
     cancancan (1.10.1)
     celluloid (0.16.0)
       timers (~> 4.0.0)
@@ -474,6 +475,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 3.3.1)
+  byebug
   coffee-rails (~> 4.0.0)
   database_cleaner
   devise
@@ -510,4 +512,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.11.2
+   1.12.5

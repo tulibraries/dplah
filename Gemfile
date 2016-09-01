@@ -63,6 +63,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_girl_rails", "~> 4.4.1"
   gem "jettywrapper"
+  gem "byebug"
   gem "pry-rails"
   gem "guard-rspec"
 end

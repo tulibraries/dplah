@@ -510,6 +510,3 @@ DEPENDENCIES
   webmock
   will_paginate (~> 3.0.6)
   yaml_db
-
-BUNDLED WITH
-   1.12.5

@@ -17,24 +17,24 @@ FactoryGirl.define do
   end
 
   factory :provider_small_collection, class: Provider do
-    name "SCRC Ephemera"
-    collection_name "SCRC Ephemera"
+    name "SCRC Photographs"
+    collection_name "SCRC Photographs"
     description "Collection description"
     endpoint_url "http://cdm16002.contentdm.oclc.org/oai/oai.php"
     metadata_prefix "oai_dc"
-    set "p16002coll6"
+    set "p16002coll2"
     provider_id_prefix "temple"
     contributing_institution "Temple University"
     email "temple@example.com"
   end
 
   factory :edited_provider_small_collection, class: Provider do
-    name "SCRC Ephemera"
-    collection_name "SCRC Ephemera"
+    name "SCRC Photographs"
+    collection_name "SCRC Photographs"
     description "Edited collection description"
     endpoint_url "http://cdm16002.contentdm.oclc.org/oai/oai.php"
     metadata_prefix "oai_dc"
-    set "p16002coll6"
+    set "p16002coll2"
     provider_id_prefix "temple"
     contributing_institution "Temple University"
     email "temple@example.com"
@@ -52,24 +52,24 @@ FactoryGirl.define do
   end
 
   factory :multiple_providers, class: Provider do
-    name "SCRC Ephemera"
-    collection_name "SCRC Ephemera"
+    name "SCRC Photographs"
+    collection_name "SCRC Photographs"
     description "Collection description"
     endpoint_url "http://cdm16002.contentdm.oclc.org/oai/oai.php"
     metadata_prefix "oai_dc"
-    set "p16002coll6"
+    set "p16002coll2"
     sequence(:provider_id_prefix) { |n| "temple#{n}" }
     sequence(:email) { |n| "temple#{n}@example.com" }
     contributing_institution "Temple University"
   end
 
   factory :invalid_provider, class: Provider do
-    name "SCRC Ephemera"
-    collection_name "SCRC Ephemera"
+    name "SCRC Photographs"
+    collection_name "SCRC Photographs"
     description "Collection description"
     endpoint_url ""
     metadata_prefix "oai_dc"
-    set "p16002coll6"
+    set "p16002coll2"
     provider_id_prefix "temple"
     contributing_institution "Temple University"
     email "temple@example.com"

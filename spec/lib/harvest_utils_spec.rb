@@ -163,7 +163,7 @@ RSpec.describe HarvestUtils do
       HarvestUtils::create_log_file(log_name)
 
       # Simulate data harvest
-      FileUtils.cp_r File.join(convert_fixtures_directory, "cleanup"), download_directory
+      FileUtils.cp_r File.join(convert_fixtures_directory, "cleanup", "."), download_directory
 
       VCR.use_cassette "harvest_utils/XML_schema" do
         @xsd = Nokogiri::XML::Schema(open(schema_url))
@@ -221,7 +221,7 @@ RSpec.describe HarvestUtils do
   end
 
   context "Ingest Records" do
-    let (:pid) { "dplapa:_alycc_voice_0" }
+    let (:pid) { "test-prefix:temple_p16002coll2_1" }
     before(:each) do
       # Clean out all records
       ActiveFedora::Base.destroy_all
@@ -229,6 +229,9 @@ RSpec.describe HarvestUtils do
       # Make sure conversion directory is empty
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
+      # Simulate data harvest
+      FileUtils.cp_r File.join(convert_fixtures_directory, "ingest", "."), convert_directory
+      
       # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
     end
@@ -239,11 +242,6 @@ RSpec.describe HarvestUtils do
     end
 
     it "Ingests one object" do
-      # Copy ingest test fixture to convert directory
-      Dir.glob(File.join(Rails.root, 'spec', 'fixtures', 'converted_foxml', 'ingest', '*.xml')).each do |file|
-        FileUtils.cp file, File.join(convert_directory, File.basename(file))
-      end
-
       HarvestUtils::ingest(provider_small_collection)
       expect(ActiveFedora::Base.count).to eq 1
       expect(ActiveFedora::Base.first.pid).to eq pid

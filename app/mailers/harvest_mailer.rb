@@ -10,6 +10,7 @@ class HarvestMailer < ActionMailer::Base
   end
 
   def harvest_complete_email(provider, logfile)
+    @provider = provider
     attachments[File.basename(logfile)] = File.read(logfile)
     subject_text = I18n.t('dpla.harvest_mailer.harvest_subject')
     headers = define_headers(subject_text, provider)
@@ -23,6 +24,7 @@ class HarvestMailer < ActionMailer::Base
   end
 
   def dump_and_reindex_by_institution_email(provider, logfile)
+    @provider = provider
     attachments[File.basename(logfile)] = File.read(logfile)
     subject_text = I18n.t('dpla.harvest_mailer.dump_and_reindex_subject')
     headers = define_headers(subject_text, provider)
@@ -30,6 +32,7 @@ class HarvestMailer < ActionMailer::Base
   end
 
   def dump_and_reindex_by_collection_email(provider, logfile)
+    @provider = provider
     attachments[File.basename(logfile)] = File.read(logfile)
     subject_text = I18n.t('dpla.harvest_mailer.dump_and_reindex_subject')
     headers = define_headers(subject_text, provider)

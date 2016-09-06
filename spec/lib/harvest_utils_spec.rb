@@ -288,7 +288,7 @@ RSpec.describe HarvestUtils do
 
     describe "Single harvest action" do
 
-      it "should harvest the collection" do
+      xit "should harvest the collection" do
         # Harvest the collection
         sso = stdout_to_null
         VCR.use_cassette "harvest_utils/provider_small_collection" do
@@ -308,7 +308,7 @@ RSpec.describe HarvestUtils do
         provider_small_collection.save
       end
 
-      it "should harvest a collection" do
+      xit "should harvest a collection" do
         # Harvest the collection
         sso = stdout_to_null
         VCR.use_cassette "harvest_utils/provider_small_collection" do
@@ -331,10 +331,9 @@ RSpec.describe HarvestUtils do
       # Start with fresh Fedora repository
       ActiveFedora::Base.destroy_all
 
-      # Add items to the repository
-      sso = stdout_to_null
-      HarvestUtils::harvest_action(provider_small_collection)
-      $stdout = sso
+      # Simulate data harvest
+      FileUtils.cp_r File.join(convert_fixtures_directory, "ingest", "."), convert_directory
+      HarvestUtils::ingest(provider_small_collection)
 
       @initial_count = ActiveFedora::Base.count
     end

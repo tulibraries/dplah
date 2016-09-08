@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :oai_rec do
-    sequence(:title) { |n| "Record Title #{n}"}
+    sequence(:title) { |n| ["Record Title #{n}"] }
     creator ["Record creator"]
     subject ["Record subject"]
     description ["Record description"]
@@ -11,15 +11,15 @@ FactoryGirl.define do
     date ["2014"]
     type ["Rec%ype"]
     format ["Record format"]
-    identifier ["Record identifier"]
-    source ["Record source"]
+    identifier ["object1"]
+    source ["coll1"]
     language ["Record language"]
     relation ["Record relation"]
     coverage ["Record coverage"]
     rights ["Record rights"]
 	  common_repository_type "Record common repository type"
 	  endpoint_url "http://example.com"
-	  thumbnail "http://example.com/thumbnail.jpg"
+	  thumbnail "http://example.com/oai/collection/thumbnails/thumbnail.jpg"
     contributing_institution "Record contributing institution"
 	  intermediate_provider "Record intermediate provider"
 	  collection_name "Record collection name"
@@ -29,7 +29,7 @@ FactoryGirl.define do
   end
   
   factory :oai_rec_invalid, class: OaiRec do
-    sequence(:title) { |n| "Record Title #{n}"}
+    sequence(:title) { |n| ["Record Title #{n}"] }
     creator ["Record creator"]
     subject ["Record subject"]
     description ["Record description"]
@@ -38,8 +38,8 @@ FactoryGirl.define do
     date ["2014"]
     type ["Rec%ype"]
     format ["Record format"]
-    identifier ["Record identifier"]
-    source ["Record source"]
+    identifier ["object1"]
+    source ["coll1"]
     language ["Record language"]
     relation ["Record relation"]
     coverage ["Record coverage"]

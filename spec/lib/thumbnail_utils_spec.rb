@@ -151,7 +151,6 @@ RSpec.describe ThumbnailUtils do
     let (:custom_thumbnail_url_both) { "http://example.com/oai/coll1/thumbnails/object1.jpg" }
     let (:custom_thumbnail_url_first) { "http://example.com/oai/thumbnails/object1.jpg" }
     let (:custom_thumbnail_url_second) { "http://example.com/oai/thumbnails/object1.jpg" }
-    let (:custom_thumbnail_prefixing_url_penn) { "https://repo.library.upenn.edu/thumbs/object1.jpg" }
     let (:source) { "coll1" }
     let (:identifier) { "object1" }
 
@@ -193,24 +192,27 @@ RSpec.describe ThumbnailUtils do
     end
 
     it "defines a custom thumbnail prefixing with for UPENN Wheeler" do
+      token = "WHEELER_object1"
       provider = FactoryGirl.create(:provider_upenn_wheeler) 
-      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+      new_token = ThumbnailUtils.custom_thumbnail_prefixing(token, provider)
 
-      expect(ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)).to match(custom_thumbnail_prefixing_url_penn)
+      expect(new_token).to match("wheeler_object1")
     end
 
     it "defines a custom thumbnail prefixing with for UPENN Holy Land" do
+      token = "HOLYLAND_object1"
       provider = FactoryGirl.create(:provider_upenn_holyland) 
-      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+      new_token = ThumbnailUtils.custom_thumbnail_prefixing(token, provider)
 
-      expect(ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)).to match(custom_thumbnail_prefixing_url_penn)
+      expect(new_token).to match("object1")
     end
 
     it "defines a custom thumbnail prefixing with for UPENN Archives" do
+      token = "ARCHIVES_object1"
       provider = FactoryGirl.create(:provider_upenn_archives) 
-      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+      new_token = ThumbnailUtils.custom_thumbnail_prefixing(token, provider)
 
-      expect(ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)).to match(custom_thumbnail_prefixing_url_penn)
+      expect(new_token).to match("archives_object1")
     end
 
   end

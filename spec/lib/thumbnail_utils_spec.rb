@@ -257,8 +257,8 @@ RSpec.describe ThumbnailUtils do
     it "returns default thumbnail" do
 
       oai_rec = FactoryGirl.create(:oai_rec)
-      oai_rec.source = ""
-      oai_rec.identifier = ""
+      oai_rec.source << ""
+      oai_rec.identifier << ""
       provider = FactoryGirl.create(:provider) 
       provider.thumbnail_pattern = ""
       provider.thumbnail_token_1 = ""

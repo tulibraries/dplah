@@ -151,16 +151,14 @@ RSpec.describe ThumbnailUtils do
     let (:custom_thumbnail_url_both) { "http://example.com/oai/coll1/thumbnails/object1.jpg" }
     let (:custom_thumbnail_url_first) { "http://example.com/oai/thumbnails/object1.jpg" }
     let (:custom_thumbnail_url_second) { "http://example.com/oai/thumbnails/object1.jpg" }
-    let (:custom_thumbnail_url_wheeler) { "http://example.com/oai/wheeler_coll1/thumbnails/object1.jpg" }
-    let (:provider_id_prefix_wheeler) { "UPENNWHL" }
+    let (:custom_thumbnail_prefixing_url_penn) { "https://repo.library.upenn.edu/thumbs/object1.jpg" }
     let (:source) { "coll1" }
-    let (:source_wheeler) { "WHEELER_coll1" }
     let (:identifier) { "object1" }
 
     let (:oai_rec) {
       obj = FactoryGirl.create(:oai_rec)
-      obj.source = source
-      obj.identifier = identifier
+      obj.source << source
+      obj.identifier << identifier
       obj 
     }
 
@@ -194,16 +192,25 @@ RSpec.describe ThumbnailUtils do
       expect(thumbnail_url).to match(custom_thumbnail_url_second)
     end
 
-    it "defines a thumbnail pattern with for wheeler" do
-      provider = FactoryGirl.create(:provider) 
-      provider.thumbnail_pattern = thumbnail_pattern_wheeler
-      provider.thumbnail_token_1 = thumbnail_token_1
-      provider.thumbnail_token_2 = thumbnail_token_2
-      provider.provider_id_prefix = provider_id_prefix_wheeler
-      oai_rec.source = source_wheeler
+    it "defines a custom thumbnail prefixing with for UPENN Wheeler" do
+      provider = FactoryGirl.create(:provider_upenn_wheeler) 
       thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
 
-      expect(thumbnail_url).to match(custom_thumbnail_url_wheeler)
+      expect(ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)).to match(custom_thumbnail_prefixing_url_penn)
+    end
+
+    it "defines a custom thumbnail prefixing with for UPENN Holy Land" do
+      provider = FactoryGirl.create(:provider_upenn_holyland) 
+      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+
+      expect(ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)).to match(custom_thumbnail_prefixing_url_penn)
+    end
+
+    it "defines a custom thumbnail prefixing with for UPENN Archives" do
+      provider = FactoryGirl.create(:provider_upenn_archives) 
+      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+
+      expect(ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)).to match(custom_thumbnail_prefixing_url_penn)
     end
 
   end

@@ -11,7 +11,7 @@ FactoryGirl.define do
     provider_id_prefix "prvdr"
     contributing_institution "The Contributing Instition"
     email "provider@example.com"
-    thumbnail_pattern "http://repository.org/oai/$1/thumbnails/$2.jpg"
+    thumbnail_pattern "http://example.com/oai/$1/thumbnails/$2.jpg"
     thumbnail_token_1 "thumbnail_token_1"
     thumbnail_token_2 "thumbnail_token_2"
   end
@@ -87,4 +87,48 @@ FactoryGirl.define do
     email "psu@example.com"
   end
 
+  factory :provider_upenn_wheeler, class: Provider do
+    name "UPENN Wheeler Images"
+    collection_name "Wheeler Image Collection"
+    description ""
+    endpoint_url "http://dla.library.upenn.edu/dla/wheeler/oai-pmh.xml"
+    metadata_prefix "oai_dc"
+    set ""
+    provider_id_prefix "UPENNWHL"
+    contributing_institution "University of Pennsylvania"
+    email ""
+    thumbnail_pattern "https://repo.library.upenn.edu/thumbs/$1.jpg"
+    thumbnail_token_1 "identifier"
+    thumbnail_token_2 ""
+  end
+
+  factory :provider_upenn_holyland, class: Provider do
+    name "UPENN Holy Land"
+    collection_name "Holy Land Digital Image Collections"
+    description ""
+    endpoint_url "http://dla.library.upenn.edu/dla/holyland/oai-pmh.xml"
+    metadata_prefix "oai_dc"
+    set ""
+    provider_id_prefix "UPENNHOL"
+    contributing_institution "University of Pennsylvania"
+    email ""
+    thumbnail_pattern "https://repo.library.upenn.edu/thumbs/$1.jpg"
+    thumbnail_token_1 "identifier"
+    thumbnail_token_2 ""
+  end
+
+  factory :provider_upenn_archives, class: Provider do
+    name "UPENN Archives Photos"
+    collection_name "University Archives Digital Image Collection"
+    description ""
+    endpoint_url "http://dla.library.upenn.edu/dla/archives/oai-pmh.xml"
+    metadata_prefix "oai_dc"
+    set ""
+    provider_id_prefix "UPENNARC"
+    contributing_institution "University of Pennsylvania"
+    email ""
+    thumbnail_pattern "https://repo.library.upenn.edu/thumbs/$1.jpg"
+    thumbnail_token_1 "identifier"
+    thumbnail_token_2 ""
+  end
 end

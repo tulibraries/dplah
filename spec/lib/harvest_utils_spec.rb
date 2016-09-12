@@ -6,6 +6,8 @@ RSpec.describe HarvestUtils do
   let (:pid_prefix) { config['pid_prefix'] }
   let (:download_directory) { config['harvest_data_directory'] }
   let (:convert_directory) { config['converted_foxml_directory'] }
+  let (:harvest_fixtures_directory) { File.join("spec", "fixtures", "harvest_data") }
+  let (:convert_fixtures_directory) { File.join("spec", "fixtures", "converted_foxml") }
   let (:schema_url) { "http://www.fedora.info/definitions/1/0/foxml1-1.xsd" }
   let (:log_name) { "harvest_utils_spec" }
 
@@ -99,31 +101,28 @@ RSpec.describe HarvestUtils do
       # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
 
-      # Harvest a file to convert
-      sso = stdout_to_null
-      VCR.use_cassette "harvest_utils/provider_small_collection" do
-        HarvestUtils::harvest(provider_small_collection)
-      end
-      $stdout = sso
-
       # Get the schema
       VCR.use_cassette "harvest_utils/XML_schema" do
         @xsd = Nokogiri::XML::Schema(open(schema_url))
       end
 
+      # Simulate data harvest
+      FileUtils.cp File.join(harvest_fixtures_directory, "harvest_data.xml"), download_directory
     end
 
     after :each do
       # Clean up the conversion directory
-      FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
+      #FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
     end
 
     it "should convert a collection" do
 
+      provider = instance_double("provider", metadata_prefix: "oai_dc")
+
       # Convert the harvested file
-      sso = stdout_to_null
-      HarvestUtils::convert(provider_small_collection)
-      $stdout = sso
+      #sso = stdout_to_null
+      HarvestUtils::convert(provider)
+      #$stdout = sso
 
       # Expect the file to be valid
       Dir.glob(File.join(convert_directory, '**', '*.xml')).each do |file|
@@ -161,22 +160,14 @@ RSpec.describe HarvestUtils do
     before :each do
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
-      sso = stdout_to_null
       HarvestUtils::create_log_file(log_name)
-      VCR.use_cassette "harvest_utils/provider_small_collection" do
-        HarvestUtils::harvest(provider_small_collection)
-      end
-      HarvestUtils::convert(provider_small_collection)
-      $stdout = sso
+
+      # Simulate data harvest
+      FileUtils.cp_r File.join(convert_fixtures_directory, "cleanup", "."), download_directory
 
       VCR.use_cassette "harvest_utils/XML_schema" do
         @xsd = Nokogiri::XML::Schema(open(schema_url))
       end
-
-      sso = stdout_to_null
-      HarvestUtils::convert(provider_small_collection)
-      $stdout = sso
-
     end
 
     after :each do
@@ -230,7 +221,7 @@ RSpec.describe HarvestUtils do
   end
 
   context "Ingest Records" do
-    let (:pid) { "dplapa:_alycc_voice_0" }
+    let (:pid) { "test-prefix:temple_p16002coll2_1" }
     before(:each) do
       # Clean out all records
       ActiveFedora::Base.destroy_all
@@ -238,6 +229,9 @@ RSpec.describe HarvestUtils do
       # Make sure conversion directory is empty
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
 
+      # Simulate data harvest
+      FileUtils.cp_r File.join(convert_fixtures_directory, "ingest", "."), convert_directory
+      
       # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
     end
@@ -248,11 +242,6 @@ RSpec.describe HarvestUtils do
     end
 
     it "Ingests one object" do
-      # Copy ingest test fixture to convert directory
-      Dir.glob(File.join(Rails.root, 'spec', 'fixtures', 'converted_foxml', 'ingest', '*.xml')).each do |file|
-        FileUtils.cp file, File.join(convert_directory, File.basename(file))
-      end
-
       HarvestUtils::ingest(provider_small_collection)
       expect(ActiveFedora::Base.count).to eq 1
       expect(ActiveFedora::Base.first.pid).to eq pid
@@ -299,7 +288,7 @@ RSpec.describe HarvestUtils do
 
     describe "Single harvest action" do
 
-      it "should harvest the collection" do
+      xit "should harvest the collection" do
         # Harvest the collection
         sso = stdout_to_null
         VCR.use_cassette "harvest_utils/provider_small_collection" do
@@ -319,7 +308,7 @@ RSpec.describe HarvestUtils do
         provider_small_collection.save
       end
 
-      it "should harvest a collection" do
+      xit "should harvest a collection" do
         # Harvest the collection
         sso = stdout_to_null
         VCR.use_cassette "harvest_utils/provider_small_collection" do
@@ -342,10 +331,9 @@ RSpec.describe HarvestUtils do
       # Start with fresh Fedora repository
       ActiveFedora::Base.destroy_all
 
-      # Add items to the repository
-      sso = stdout_to_null
-      HarvestUtils::harvest_action(provider_small_collection)
-      $stdout = sso
+      # Simulate data harvest
+      FileUtils.cp_r File.join(convert_fixtures_directory, "ingest", "."), convert_directory
+      HarvestUtils::ingest(provider_small_collection)
 
       @initial_count = ActiveFedora::Base.count
     end

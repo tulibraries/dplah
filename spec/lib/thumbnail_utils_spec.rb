@@ -151,16 +151,13 @@ RSpec.describe ThumbnailUtils do
     let (:custom_thumbnail_url_both) { "http://example.com/oai/coll1/thumbnails/object1.jpg" }
     let (:custom_thumbnail_url_first) { "http://example.com/oai/thumbnails/object1.jpg" }
     let (:custom_thumbnail_url_second) { "http://example.com/oai/thumbnails/object1.jpg" }
-    let (:custom_thumbnail_url_wheeler) { "http://example.com/oai/wheeler_coll1/thumbnails/object1.jpg" }
-    let (:provider_id_prefix_wheeler) { "UPENNWHL" }
     let (:source) { "coll1" }
-    let (:source_wheeler) { "WHEELER_coll1" }
     let (:identifier) { "object1" }
 
     let (:oai_rec) {
       obj = FactoryGirl.create(:oai_rec)
-      obj.source = source
-      obj.identifier = identifier
+      obj.source << source
+      obj.identifier << identifier
       obj 
     }
 
@@ -194,16 +191,28 @@ RSpec.describe ThumbnailUtils do
       expect(thumbnail_url).to match(custom_thumbnail_url_second)
     end
 
-    it "defines a thumbnail pattern with for wheeler" do
-      provider = FactoryGirl.create(:provider) 
-      provider.thumbnail_pattern = thumbnail_pattern_wheeler
-      provider.thumbnail_token_1 = thumbnail_token_1
-      provider.thumbnail_token_2 = thumbnail_token_2
-      provider.provider_id_prefix = provider_id_prefix_wheeler
-      oai_rec.source = source_wheeler
-      thumbnail_url = ThumbnailUtils.define_thumbnail_pattern(oai_rec, provider)
+    it "defines a custom thumbnail prefixing with for UPENN Wheeler" do
+      token = "WHEELER_object1"
+      provider = FactoryGirl.create(:provider_upenn_wheeler) 
+      new_token = ThumbnailUtils.custom_thumbnail_prefixing(token, provider)
 
-      expect(thumbnail_url).to match(custom_thumbnail_url_wheeler)
+      expect(new_token).to match("wheeler_object1")
+    end
+
+    it "defines a custom thumbnail prefixing with for UPENN Holy Land" do
+      token = "HOLYLAND_object1"
+      provider = FactoryGirl.create(:provider_upenn_holyland) 
+      new_token = ThumbnailUtils.custom_thumbnail_prefixing(token, provider)
+
+      expect(new_token).to match("object1")
+    end
+
+    it "defines a custom thumbnail prefixing with for UPENN Archives" do
+      token = "ARCHIVES_object1"
+      provider = FactoryGirl.create(:provider_upenn_archives) 
+      new_token = ThumbnailUtils.custom_thumbnail_prefixing(token, provider)
+
+      expect(new_token).to match("archives_object1")
     end
 
   end
@@ -248,8 +257,8 @@ RSpec.describe ThumbnailUtils do
     it "returns default thumbnail" do
 
       oai_rec = FactoryGirl.create(:oai_rec)
-      oai_rec.source = ""
-      oai_rec.identifier = ""
+      oai_rec.source << ""
+      oai_rec.identifier << ""
       provider = FactoryGirl.create(:provider) 
       provider.thumbnail_pattern = ""
       provider.thumbnail_token_1 = ""

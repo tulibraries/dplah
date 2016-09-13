@@ -243,8 +243,8 @@ RSpec.describe ThumbnailUtils do
 
     it "returns thumbnail with thumbnail pattern type" do
       oai_rec = FactoryGirl.create(:oai_rec)
-      oai_rec.source = source
-      oai_rec.identifier = identifier
+      oai_rec.source << source
+      oai_rec.identifier << identifier
       provider = FactoryGirl.create(:provider) 
       provider.thumbnail_pattern = thumbnail_pattern_both
       provider.thumbnail_token_1 = thumbnail_token_1

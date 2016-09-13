@@ -3,21 +3,21 @@ require 'rails_helper'
 RSpec.describe "oai_recs/show", :type => :view do
   before(:each) do
     @oai_rec = assign(:oai_rec, OaiRec.create!(
-      :title => "Title",
-      :creator => "Creator",
-      :subject => "Subject",
-      :description => "Description",
-      :publisher => "Publisher",
-      :contributor => "Contributor",
-      :date => "Date",
-      :type => "Type",
-      :format => "Format",
-      :identifier => "Identifier",
-      :source => "Source",
-      :language => "Language",
-      :relation => "Relation",
-      :coverage => "Coverage",
-      :rights => "Rights"
+      :title => ["Title"],
+      :creator => ["Creator"],
+      :subject => ["Subject"],
+      :description => ["Description"],
+      :publisher => ["Publisher"],
+      :contributor => ["Contributor"],
+      :date => ["Date"],
+      :type => ["Type"],
+      :format => ["Format"],
+      :identifier => ["Identifier"],
+      :source => ["Source"],
+      :language => ["Language"],
+      :relation => ["Relation"],
+      :coverage => ["Coverage"],
+      :rights => ["Rights"]
     ))
   end
 

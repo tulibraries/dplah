@@ -3,21 +3,21 @@ require 'rails_helper'
 RSpec.describe "oai_recs/edit", :type => :view do
   before(:each) do
     @oai_rec = assign(:oai_rec, OaiRec.create!(
-      :title => "MyString",
-      :creator => "MyString",
-      :subject => "MyString",
-      :description => "MyString",
-      :publisher => "MyString",
-      :contributor => "MyString",
-      :date => "MyString",
-      :type => "",
-      :format => "MyString",
-      :identifier => "MyString",
-      :source => "MyString",
-      :language => "MyString",
-      :relation => "MyString",
-      :coverage => "MyString",
-      :rights => "MyString"
+      :title =>["MyString"],
+      :creator =>["MyString"],
+      :subject =>["MyString"],
+      :description =>["MyString"],
+      :publisher =>["MyString"],
+      :contributor =>["MyString"],
+      :date =>["MyString"],
+      :type =>[""],
+      :format =>["MyString"],
+      :identifier =>["MyString"],
+      :source =>["MyString"],
+      :language =>["MyString"],
+      :relation =>["MyString"],
+      :coverage =>["MyString"],
+      :rights =>["MyString"]
     ))
   end
 

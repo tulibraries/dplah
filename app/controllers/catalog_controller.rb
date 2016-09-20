@@ -59,22 +59,10 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
-    config.add_facet_field solr_name('subject', :facetable), :label => 'Subject', :collapse => false, :limit => 5
-    config.add_facet_field solr_name('type', :facetable), :label => 'Type', :limit => 7
-    config.add_facet_field solr_name('date', :facetable), :label => 'Date', :limit => 7
-    config.add_facet_field solr_name('created', :facetable), :label => 'Date Created', :limit => 7
-    config.add_facet_field solr_name('issued', :facetable), :label => 'Date Issued', :limit => 7
-    config.add_facet_field solr_name('available', :facetable), :label => 'Date Available', :limit => 7
-    config.add_facet_field solr_name('temporal', :facetable), :label => 'Temporal Date', :limit => 7
-    config.add_facet_field solr_name('spatial', :facetable), :label => 'Spatial Relation', :limit => 7
-    config.add_facet_field solr_name('access_rights', :facetable), :label => 'Access Rights', :limit => 7
-    config.add_facet_field solr_name('format', :facetable), :label => 'Format', :limit => 7
-    config.add_facet_field solr_name('contributing_institution', :facetable), :label => 'Contributing Institution', :limit => 7
-    config.add_facet_field solr_name('intermediate_provider', :facetable), :label => 'Intermediate Provider', :limit => 7
-    config.add_facet_field solr_name('collection_name', :facetable), :label => 'Collection Name', :limit => 7
-    config.add_facet_field solr_name('language', :facetable), :label => 'Language', :limit => 7
-    config.add_facet_field solr_name('publisher', :facetable), :label => 'Publisher', :limit => 7
 
+    Rails.configuration.enabled_facets.each do |field_name, field_config|
+      config.add_facet_field solr_name(field_name, :facetable), field_config
+    end
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
     # handler defaults, or have no facets.
@@ -192,9 +180,4 @@ class CatalogController < ApplicationController
     config.spell_max = 5
   end
 
-  
-
-
-
 end
-

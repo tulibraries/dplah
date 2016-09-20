@@ -28,6 +28,7 @@
 /config/resque-pool.yml
 /config/secrets.yml
 /config/solr.yml
+/config/facets.yml
 
 /coverage
 

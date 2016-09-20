@@ -85,6 +85,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
+    config_for (0.2.1)
+      activesupport (>= 3.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.1.9)
@@ -477,6 +479,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.1)
   byebug
   coffee-rails (~> 4.0.0)
+  config_for
   database_cleaner
   devise
   devise-guests (~> 0.3)
@@ -510,3 +513,6 @@ DEPENDENCIES
   webmock
   will_paginate (~> 3.0.6)
   yaml_db
+
+BUNDLED WITH
+   1.12.5

@@ -50,6 +50,7 @@ gem 'spring',        group: :development
 
 gem 'oai', github: 'code4lib/ruby-oai', branch: 'master'
 gem 'libxml-ruby'
+gem 'config_for'
 
 gem "devise"
 gem "devise-guests", "~> 0.3"

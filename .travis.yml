@@ -31,7 +31,7 @@ before_script:
 - cp -n config/resque-pool.yml.example config/resque-pool.yml
 - cp -n config/secrets.yml.example config/secrets.yml
 - cp -n config/solr.yml.example config/solr.yml
-- rails g hydra:jetty
-- rake jetty:config
-- rake jetty:start
-- rake db:migrate
+- bundle exec rails g hydra:jetty
+- bundle exec rake jetty:config
+- bundle exec rake jetty:start
+- bundle exec rake db:migrate

@@ -1,0 +1,36 @@
+language: ruby
+rvm:
+  - 2.2
+  - 2.3
+before_install:
+  - gem install bundler
+  - apt-get install xsltproc
+  -
+
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+notifications:
+  email:
+    recipients:
+      - "tug34268@temple.edu"
+    on_success: "change"
+    on_failure: "always"
+    template:
+      - "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"
+services:
+- redis-server
+
+before_script:
+- jdk_switcher use oraclejdk8
+- cp -n config/dpla.yml.example config/dpla.yml
+- cp -n config/database.yml.example config/database.yml
+- cp -n config/facets.yml.example config/facets.yml
+- cp -n config/fedora.yml.example config/fedora.yml
+- cp -n config/jetty.yml.example config/jetty.yml
+- cp -n config/resque-pool.yml.example config/resque-pool.yml
+- cp -n config/secrets.yml.example config/secrets.yml
+- cp -n config/solr.yml.example config/solr.yml
+- rake jetty:config
+- rake jetty:start
+- rake db:migrate

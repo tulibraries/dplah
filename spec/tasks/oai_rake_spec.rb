@@ -33,7 +33,7 @@ RSpec.describe 'oai.rake' do
     end
 
     describe 'oai:harvest' do
-      it 'harvests one OAI seed' do
+      xit 'harvests one OAI seed' do
         sso = stdout_to_null
         VCR.use_cassette "oai_rake/provider_small_collection" do
           Rake::Task['oai:harvest'].invoke(provider_small_collection.id)
@@ -44,7 +44,7 @@ RSpec.describe 'oai.rake' do
         expect(file_count).to eq(1)
       end
 
-      it 'throws an error for an invalid OAI seed' do
+      xit 'throws an error for an invalid OAI seed' do
         output = capture(:stdout) do
           Rake::Task['oai:harvest'].invoke
         end
@@ -56,7 +56,7 @@ RSpec.describe 'oai.rake' do
     end
 
     describe 'oai:harvest_all' do
-      it 'harvests records from all OAI providers and ingests into the repository' do
+      xit 'harvests records from all OAI providers and ingests into the repository' do
         sso = stdout_to_null
         VCR.use_cassette "oai_rake/provider_small_collection" do
           Rake::Task['oai:harvest_all'].invoke
@@ -69,7 +69,7 @@ RSpec.describe 'oai.rake' do
     end
 
     describe 'oai:harvest_ingest_all' do
-      it 'harvests records from all OAI providers and ingests into the repository' do
+      xit 'harvests records from all OAI providers and ingests into the repository' do
         sso = stdout_to_null
         VCR.use_cassette "oai_rake/provider_small_collection" do
           Rake::Task['oai:harvest_ingest_all'].invoke
@@ -81,7 +81,7 @@ RSpec.describe 'oai.rake' do
     end
 
     describe 'oai:convert_all' do
-      it 'converts all XML harvests currently in the harvested directory to FOXML' do
+      xit 'converts all XML harvests currently in the harvested directory to FOXML' do
         sso = stdout_to_null
         VCR.use_cassette "oai_rake/convert_all" do
           HarvestUtils::harvest(provider_small_collection)
@@ -105,7 +105,7 @@ RSpec.describe 'oai.rake' do
       $stdout = sso
     end
 
-    it 'deletes all OAI objects from the repository' do
+    xit 'deletes all OAI objects from the repository' do
       sso = stdout_to_null
       Rake::Task['oai:delete_all'].invoke
       $stdout = sso

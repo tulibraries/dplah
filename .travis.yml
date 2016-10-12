@@ -8,11 +8,19 @@ before_install:
   - sudo apt-get install xsltproc
 env:
   global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
 
 notifications:
+  email:
+    recipients:
+      - "chad.nelson8@temple.edu"
+      - "steven.ng@temple.edu"
+    on_success: "change"
+    on_failure: "always"
+    template:
+      - "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"
   slack:
-    secure: VB2hA3soxs6rRfldE47R2qSCIhqLHRKm/oB4xPv4GCvProTi0DLPJuo7Ti66gShD3S0UxMyjDlKJ6E+0nc37IBU/OUMgNL84pRtoNvlGgHZSGqfu4zkvlimQa8iyAVBFgP1Og8BjFG4J6to2dsZwkTm60URPKg35kk26tkyzMrc=
+    secure: "VB2hA3soxs6rRfldE47R2qSCIhqLHRKm/oB4xPv4GCvProTi0DLPJuo7Ti66gShD3S0UxMyjDlKJ6E+0nc37IBU/OUMgNL84pRtoNvlGgHZSGqfu4zkvlimQa8iyAVBFgP1Og8BjFG4J6to2dsZwkTm60URPKg35kk26tkyzMrc="
     on_success: change
     on_failure: always
 

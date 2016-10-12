@@ -34,4 +34,5 @@ before_script:
 - bundle exec rails g hydra:jetty
 - bundle exec rake jetty:config
 - bundle exec rake jetty:start
+- sleep 30
 - bundle exec rake db:migrate

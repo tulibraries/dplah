@@ -3,7 +3,7 @@ converted_foxml_directory: "tmp/converted"
 quarantined_foxml_directory: "/tmp/quarantined"
 pid_prefix: "changeme"
 partner: "Name of hub"
-human_log_path: '/tmp/path_to_log_files'
+human_log_path: '/tmp'
 human_log_url: 'http://fullurltologfiles'
 human_catalog_url: 'http://fullurltocatalog/catalog'
 email_sender: "from@example.edu"

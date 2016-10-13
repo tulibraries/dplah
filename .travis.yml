@@ -6,14 +6,15 @@ rvm:
 before_install:
   - gem install bundler
   - sudo apt-get install xsltproc
-
 env:
   global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+
 notifications:
   email:
     recipients:
-      - "tug34268@temple.edu"
+      - "chad.nelson8@temple.edu"
+      - "steven.ng@temple.edu"
     on_success: "change"
     on_failure: "always"
     template:

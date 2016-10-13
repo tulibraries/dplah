@@ -19,6 +19,7 @@
       <th>Collection Name</th>
       <th>Last Harvested</th>
       <th>Contributing Institution</th>
+      <th>Intermediate Provider (if applicable)</th>
       <th>Common Repository Type (if applicable)</th>
       <th>Provider ID Prefix</th>
       <th>In production?</th>
@@ -35,6 +36,7 @@
         <td><%= provider.collection_name %></td>
         <td><%= human_readable_time(provider.last_harvested) %></td>
         <td><%= provider.contributing_institution %></td>
+        <td><%= provider.intermediate_provider %></td>
         <td><%= provider.common_repository_type %></td>
         <td><%= provider.provider_id_prefix %></td>
         <td><%= provider.in_production %></td>
@@ -49,6 +51,7 @@
     <% end %>
   </tbody>
 </table>
+<%= will_paginate @providers %>
 <br>
 <h2>Other Actions</h2>
 <p class="oai-note">

@@ -189,6 +189,7 @@ module HarvestUtils
       normalize_dates(doc, "//date")
       normalize_language(doc, "//language")
       normalize_rights(doc, "//dc:rights")
+      normalize_rights(doc, "//rights")
 
       standardize_formats(doc, "//dc:format")
       normalize_dates(doc, "//dc:date")
@@ -437,10 +438,15 @@ module HarvestUtils
       node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
       node_update.each do |node_value|
         if node_value.inner_html.downcase.starts_with?("http")
-          node_value.inner_html = node_value.inner_html.downcase
+          conform_url node_value
         end
       end
     end
+
+    def self.conform_url(url_string)
+      URI(url_string).to_s
+    end
+
 
     def self.normalize_first_case(value)
       value.downcase

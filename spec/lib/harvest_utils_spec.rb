@@ -174,6 +174,10 @@ RSpec.describe HarvestUtils do
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
     end
 
+    it 'something' do
+
+    end
+
     xit "expect valid XML" do
       HarvestUtils::cleanup(provider_small_collection)
       Dir.glob(File.join(convert_directory, '**', '*.xml')).each do |file|
@@ -354,6 +358,20 @@ RSpec.describe HarvestUtils do
       expect(lambda{HarvestUtils::remove_selective(provider_small_collection, "")}).to raise_error SystemExit
       expect(ActiveFedora::Base.count).to eq(@initial_count)
       expect(ActiveFedora::Base.count).to_not eq(0)
+    end
+
+  end
+
+  describe '#conform_urls' do
+    let(:uppercase_url) {"HTTP://EXAMPLE.COM/SOMEOTHERTHING"}
+    let(:rightsstatement) {"http://rightsstatements.org/vocab/InC-RUU/1.0/"}
+
+    it 'ensure http urls start with lower case protocol' do
+      expect(HarvestUtils::conform_url(uppercase_url)).to start_with 'http'
+    end
+
+    it "doesn't alter url path" do
+      expect(HarvestUtils::conform_url(rightsstatement)).to include "/vocab/InC-RUU/1.0/"
     end
 
   end

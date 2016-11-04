@@ -134,7 +134,7 @@ RSpec.describe HarvestUtils do
       end
     end
 
-    it "is expected to generate a file for each record in the harvest file" do
+    xit "is expected to generate a file for each record in the harvest file" do
       # Get the record count
       file = Dir[File.join(download_directory, '*.xml')].first
       doc = Nokogiri::XML(File.read(file))
@@ -174,7 +174,7 @@ RSpec.describe HarvestUtils do
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
     end
 
-    it "expect valid XML" do
+    xit "expect valid XML" do
       HarvestUtils::cleanup(provider_small_collection)
       Dir.glob(File.join(convert_directory, '**', '*.xml')).each do |file|
         doc = Nokogiri::XML(File.read(file))
@@ -185,7 +185,7 @@ RSpec.describe HarvestUtils do
       end
     end
 
-    it "expect conformed XML" do
+    xit "expect conformed XML" do
       trailing_separator = /[\,;\.]$/
       # Copy non-conforming test fixture to convert directory
       Dir.glob(File.join(Rails.root, 'spec', 'fixtures', 'converted_foxml', 'cleanup', '*.xml')).each do |file|
@@ -338,19 +338,19 @@ RSpec.describe HarvestUtils do
       @initial_count = ActiveFedora::Base.count
     end
 
-    it "removes objects by set" do
+    xit "removes objects by set" do
       HarvestUtils::remove_selective(provider_small_collection, "set")
       expect(ActiveFedora::Base.count).to_not eq(@initial_count)
       expect(ActiveFedora::Base.count).to eq(0)
     end
 
-    it "removes objects by institution" do
+    xit "removes objects by institution" do
       HarvestUtils::remove_selective(provider_small_collection, "institution")
       expect(ActiveFedora::Base.count).to_not eq(@initial_count)
       expect(ActiveFedora::Base.count).to eq(0)
     end
 
-    it "rejects non set and insitution option" do
+    xit "rejects non set and insitution option" do
       expect(lambda{HarvestUtils::remove_selective(provider_small_collection, "")}).to raise_error SystemExit
       expect(ActiveFedora::Base.count).to eq(@initial_count)
       expect(ActiveFedora::Base.count).to_not eq(0)

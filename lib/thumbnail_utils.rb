@@ -138,15 +138,14 @@ module ThumbnailUtils
   def custom_thumbnail_prefixing(token, provider)
     case provider.endpoint_url
       when "http://dla.library.upenn.edu/dla/wheeler/oai-pmh.xml"
-        token = token.gsub("WHEELER_","wheeler_")
+        token.gsub("WHEELER_","wheeler_")
       when "http://dla.library.upenn.edu/dla/holyland/oai-pmh.xml"
-        token = token.gsub("HOLYLAND_","")
+        token.gsub("HOLYLAND_","")
       when "http://dla.library.upenn.edu/dla/archives/oai-pmh.xml"
-        token = token.gsub("ARCHIVES_","archives_")
+        token.gsub("ARCHIVES_","archives_")
       else
-        return
+        token
       end
-      return token
   end
   module_function :custom_thumbnail_prefixing
 

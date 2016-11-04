@@ -174,10 +174,6 @@ RSpec.describe HarvestUtils do
       FileUtils.rm Dir.glob "#{convert_directory}/*.xml"
     end
 
-    it 'something' do
-
-    end
-
     xit "expect valid XML" do
       HarvestUtils::cleanup(provider_small_collection)
       Dir.glob(File.join(convert_directory, '**', '*.xml')).each do |file|

@@ -358,4 +358,18 @@ RSpec.describe HarvestUtils do
 
   end
 
+  describe '#conform_urls' do
+    let(:uppercase_url) {"HTTP://EXAMPLE.COM/SOMEOTHERTHING"}
+    let(:rightsstatement) {"http://rightsstatements.org/vocab/InC-RUU/1.0/"}
+
+    it 'ensure http urls start with lower case protocol' do
+      expect(HarvestUtils::conform_url(uppercase_url)).to start_with 'http'
+    end
+
+    it "doesn't alter url path" do
+      expect(HarvestUtils::conform_url(rightsstatement)).to include "/vocab/InC-RUU/1.0/"
+    end
+
+  end
+
 end

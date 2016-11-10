@@ -438,7 +438,7 @@ module HarvestUtils
       node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
       node_update.each do |node_value|
         if node_value.inner_html.downcase.starts_with?("http")
-          conform_url node_value
+          node_value.inner_html = conform_url node_value
         end
       end
     end

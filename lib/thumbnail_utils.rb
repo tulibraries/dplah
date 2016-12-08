@@ -62,8 +62,20 @@ module ThumbnailUtils
         end
         asset_url
       end
-  	end
+    end
 
+    class Islandora
+      def self.asset_url(obj)
+        asset_url = ''
+        obj.identifier.each do |ident|
+          Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
+          if ident.include? '/object/'
+            asset_url = "#{ident}/datastream/TN/view/"
+          end
+          asset_url
+        end
+      end
+    end
   end
 
   def define_thumbnail_common(obj, provider)
@@ -80,6 +92,8 @@ module ThumbnailUtils
         asset_url = ThumbnailUtils::CommonRepositories::Omeka.asset_url(obj)
       when "Passthrough Workflow"
         asset_url = check_for_thumbnail(obj)
+      when "Islandora"
+        asset_url = ThumbnailUtils::CommonRepositories::Islandora.asset_url(obj)
     	else
     		abort "Invalid common repository type - #{provider.common_repository_type}"
   	end

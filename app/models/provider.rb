@@ -181,7 +181,7 @@ class Provider < ActiveRecord::Base
 	private
 
 	    def self.common_repositories
-          common_repositories = [['CONTENTdm', 'CONTENTdm'], ['CONTENTdm SSL (Redirect Method)', 'CONTENTdm SSL'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Passthrough Workflow', 'Passthrough Workflow'], ['VuDL', 'VuDL']]
+          common_repositories = [['CONTENTdm', 'CONTENTdm'], ['CONTENTdm SSL (Redirect Method)', 'CONTENTdm SSL'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Islandora', 'Islandora'],['Passthrough Workflow', 'Passthrough Workflow'], ['VuDL', 'VuDL']]
 	    end
 
 	    def self.possible_thumbnail_fields

@@ -87,10 +87,16 @@ class OaiRec < ActiveFedora::Base
 		g.each {|f|
       h = "<dc:identifier>#{f}</dc:identifier>"
       begin
-	    self.DC.content=self.DC.content.gsub(h,"")
-	  rescue
-        fail "oh no #{self.DC.content}"
-	  end
+        self.DC.content=self.DC.content.gsub(h,"")
+      rescue => e
+        Rails.logger.tagged("ERROR") { Rails.logger.error "'#{f}' - #{e.message}" }
+        if e.inspect.match "Encoding::CompatibilityError"
+          Rails.logger.tagged("INFO") { Rails.logger.info "'#{f}' - encoding forced to UTF-8" }
+          self.DC.content=self.DC.content.force_encoding("UTF-8").gsub(h,"")
+        else
+          return
+        end
+      end
       self.save
 		}
 		self.identifier = self.identifier.delete_if{|a| !a.starts_with?("http")}

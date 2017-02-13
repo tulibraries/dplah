@@ -623,9 +623,9 @@ module HarvestUtils
     end
 
     def self.remove_unwanted_identifiers(obj, provider)
-      obj.remove_identifier(provider, @passthrough_url) if provider.common_repository_type == 'Passthrough Workflow'
-      obj.remove_identifier(provider, 'viewcontent.cgi?') if provider.common_repository_type == 'Bepress'
-      obj.remove_identifier(provider, '/videos/') if provider.common_repository_type == 'Bepress'
+      obj.remove_identifier(@passthrough_url) if provider.common_repository_type == 'Passthrough Workflow'
+      obj.remove_identifier('viewcontent.cgi?') if provider.common_repository_type == 'Bepress'
+      obj.remove_identifier('/videos/') if provider.common_repository_type == 'Bepress'
     end
 
     ###

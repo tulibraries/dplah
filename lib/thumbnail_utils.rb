@@ -68,7 +68,7 @@ module ThumbnailUtils
       def self.asset_url(obj)
         asset_url = ''
         url = URI.parse(obj.endpoint_url)
-        obj.identifier.each do |ident|
+        obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
           Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
           asset_url = "#{url.scheme}://#{url.host}/islandora/object/#{ident}/datastream/TN/view/"
         end

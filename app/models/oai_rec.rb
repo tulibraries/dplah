@@ -137,12 +137,11 @@ class OaiRec < ActiveFedora::Base
 		end
 	end
 
-	def remove_identifier(search_on_string)
+	def remove_identifier_containing(search_on_string)
 		dc_content = self.DC.content.split("\n")
 		self.DC.content = dc_content.delete_if{|a| a.include?(search_on_string)}.join("\n")
 		self.identifier = self.identifier.delete_if{|a| a.include?(search_on_string)}
 		self.save
-	end
 
 	def assign_rights
 		unless self.rights_statement.blank?

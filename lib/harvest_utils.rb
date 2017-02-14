@@ -248,7 +248,7 @@ module HarvestUtils
       obj.assign_contributing_institution
       obj.add_dcmi_terms_to_type(provider)
       build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
-      obj.remove_fake_identifiers_oaidc(@passthrough_url)
+      remove_unwanted_identifiers(obj, provider)
       obj.reorg_identifiers
       obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow" || thumbnail.nil?
       obj.clean_iso8601_date_field
@@ -614,7 +614,6 @@ module HarvestUtils
 
     def self.has_noharvest_stopword?(record)
       record.metadata.to_s.include? @noharvest_stopword
-
     end
 
     def self.build_identifier(obj, provider)
@@ -623,12 +622,19 @@ module HarvestUtils
       obj.add_identifier(assembled_identifier)
     end
 
+    def self.remove_unwanted_identifiers(obj, provider)
+      obj.remove_identifier(@passthrough_url) if provider.common_repository_type == 'Passthrough Workflow'
+      obj.remove_identifier('viewcontent.cgi?') if provider.common_repository_type == 'Bepress'
+      obj.remove_identifier('/videos/') if provider.common_repository_type == 'Bepress'
+    end
+
     ###
     # special case customizations -- hopefully can be eliminated later
     ###
     def self.custom_file_prefixing(file_prefix, provider)
       # little fix for weird nested OAI identifiers in Bepress
       file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
+
 
       # little fix for additional weirdness in Bepress for PCOM
       file_prefix.slice!("do_") if provider.common_repository_type == "Bepress" && provider.endpoint_url == "http://digitalcommons.pcom.edu/do/oai/" && provider.set == "publication:do_yearbooks"

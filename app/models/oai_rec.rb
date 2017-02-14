@@ -137,12 +137,11 @@ class OaiRec < ActiveFedora::Base
 		end
 	end
 
-	def remove_fake_identifiers_oaidc(passthrough_url)
-		g = self.identifier.select {|b| b.include?(passthrough_url)}
-		h = "<dc:identifier>#{g[0]}</dc:identifier>"
-		self.DC.content=self.DC.content.gsub(h,"")
+	def remove_identifier(search_on_string)
+		dc_content = self.DC.content.split("\n")
+		self.DC.content = dc_content.delete_if{|a| a.include?(search_on_string)}.join("\n")
+		self.identifier = self.identifier.delete_if{|a| a.include?(search_on_string)}
 		self.save
-		self.identifier = self.identifier.delete_if{|a| a.include?(passthrough_url)}
 	end
 
 	def assign_rights

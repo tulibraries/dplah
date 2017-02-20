@@ -228,7 +228,7 @@ module HarvestUtils
     num_files = 1
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
-    custom_file_prefixing(file_prefix, provider)
+    file_prefix = custom_file_prefixing(file_prefix, provider)
 
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
 
@@ -623,9 +623,10 @@ module HarvestUtils
     end
 
     def self.remove_unwanted_identifiers(obj, provider)
-      obj.remove_identifier(@passthrough_url) if provider.common_repository_type == 'Passthrough Workflow'
-      obj.remove_identifier('viewcontent.cgi?') if provider.common_repository_type == 'Bepress'
-      obj.remove_identifier('/videos/') if provider.common_repository_type == 'Bepress'
+      obj.remove_identifier_containing(@passthrough_url) if provider.common_repository_type == 'Passthrough Workflow'
+      obj.remove_identifier_containing('viewcontent.cgi?') if provider.common_repository_type == 'Bepress'
+      obj.remove_identifier_containing('/videos/') if provider.common_repository_type == 'Bepress'
+      obj.remove_identifier_containing(' ')
     end
 
     ###
@@ -641,6 +642,9 @@ module HarvestUtils
 
       # little fix for CPP Omeka instance where sets are not in headers
       file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Omeka" && provider.endpoint_url == "http://www.cppdigitallibrary.org/oai-pmh-repository/request"
+
+      # little fix for Islandora instance where set are not in headers
+      #file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Islandora"
 
       # little fix for Villanova's DPLA set
       file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"

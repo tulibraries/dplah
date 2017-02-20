@@ -87,10 +87,16 @@ class OaiRec < ActiveFedora::Base
 		g.each {|f|
       h = "<dc:identifier>#{f}</dc:identifier>"
       begin
-	    self.DC.content=self.DC.content.gsub(h,"")
-	  rescue
-        fail "oh no #{self.DC.content}"
-	  end
+        self.DC.content=self.DC.content.gsub(h,"")
+      rescue => e
+        Rails.logger.tagged("ERROR") { Rails.logger.error "'#{f}' - #{e.message}" }
+        if e.inspect.match "Encoding::CompatibilityError"
+          Rails.logger.tagged("INFO") { Rails.logger.info "'#{f}' - encoding forced to UTF-8" }
+          self.DC.content=self.DC.content.force_encoding("UTF-8").gsub(h,"")
+        else
+          return
+        end
+      end
       self.save
 		}
 		self.identifier = self.identifier.delete_if{|a| !a.starts_with?("http")}
@@ -137,9 +143,9 @@ class OaiRec < ActiveFedora::Base
 		end
 	end
 
-	def remove_identifier(search_on_string)
-		dc_content = self.DC.content.split("\n")
-		self.DC.content = dc_content.delete_if{|a| a.include?(search_on_string)}.join("\n")
+	def remove_identifier_containing(search_on_string)
+		dc_content = self.DC.content.split("\n").map(&:lstrip)
+		self.DC.content = dc_content.delete_if{|a| a.include?("<dc:identifier>") && a.include?(search_on_string)}.join("\n")
 		self.identifier = self.identifier.delete_if{|a| a.include?(search_on_string)}
 		self.save
 	end

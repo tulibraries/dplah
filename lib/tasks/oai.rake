@@ -21,6 +21,20 @@ namespace :oai do
 		end
 	end
 
+	desc "Harvest records from an OAI seed and ingest into repository"
+	task :harvest_ingest, [:seed] => :environment do |t, args|
+		args.download(:seed => nil)
+		if args[:seed]
+		  oai_seed = Provider.find(args[:seed])
+		  HarvestUtils.create_log_file(oai_seed.name)
+		  rec_count = HarvestUtils.harvest_action(oai_seed)
+		  message = "#{rec_count} records ingested.  Enjoy!"
+		else
+		  message = "No valid OAI Seed model ID entered. To ingest, run rake oai:harvest_ingest[seed id]."
+		end
+		puts message
+	end
+
 	desc "Harvest one OAI seed by OAI Seed model ID (found in interface)"
 	task :harvest, [:seed] => :environment do |t, args|
 		args.download(:seed => nil)

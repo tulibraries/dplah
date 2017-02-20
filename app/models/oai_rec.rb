@@ -144,8 +144,8 @@ class OaiRec < ActiveFedora::Base
 	end
 
 	def remove_identifier_containing(search_on_string)
-		dc_content = self.DC.content.split("\n")
-		self.DC.content = dc_content.delete_if{|a| a.include?(search_on_string)}.join("\n")
+		dc_content = self.DC.content.split("\n").map(&:lstrip)
+		self.DC.content = dc_content.delete_if{|a| a.include?("<dc:identifier>") && a.include?(search_on_string)}.join("\n")
 		self.identifier = self.identifier.delete_if{|a| a.include?(search_on_string)}
 		self.save
 	end

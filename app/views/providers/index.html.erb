@@ -8,7 +8,16 @@
   </ul>
 </div>
 
+<%= form_tag("", method: "get") do %>
+    <%= label_tag(:contributing_institution, "Filter by Providing institution") %>
+    <%= select_tag(:contributing_institution, options_for_select(@contributing_institution, selected_filter(params))) %>
+    <%= submit_tag("Filter ") %>
+<% end %>
+
 <%= will_paginate @providers %>
+
+
+
 <h1>Listing OAI seeds</h1>
 <table class="oai-seeds">
   <thead>

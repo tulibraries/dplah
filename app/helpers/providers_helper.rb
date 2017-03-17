@@ -22,4 +22,8 @@ module ProvidersHelper
 	def oai_action_disabled_class(attribute_check)
 		return attribute_check.present? ? "oai-actions btn-provider" : "oai-actions"
 	end
+
+	def selected_filter(params)
+		params.fetch('contributing_institution', '')
+	end
 end

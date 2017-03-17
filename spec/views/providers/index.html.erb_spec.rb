@@ -20,6 +20,7 @@ RSpec.describe "providers/index", :type => :view do
         :in_production => "No"
       )
     ])
+    @contributing_institution = "Contributor"
   end
 
   it "renders a list of providers" do

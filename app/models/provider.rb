@@ -1,5 +1,7 @@
 class Provider < ActiveRecord::Base
 
+	include Filterable
+
 	validate :clean_data
 	validate :endpoint_url_is_valid_and_present
 	validates :email, :format => { :with => /@/, :message => "must be a valid email address"}, :allow_blank => true
@@ -10,6 +12,9 @@ class Provider < ActiveRecord::Base
 	scope :unique_by_provider_id_prefix, lambda { select(:provider_id_prefix).uniq.order('provider_id_prefix ASC') }
 	scope :unique_by_endpoint_url, lambda { select(:endpoint_url).uniq.order('endpoint_url ASC') }
 	scope :unique_by_email, lambda { select(:email).uniq.order('email ASC') }
+
+	# Scope for Providers drop down filter
+	scope :contributing_institution, -> (contributing_institution) { where("contributing_institution = ?", contributing_institution) }
 
 	before_save do
 	  self.name = nil if self.name.blank?

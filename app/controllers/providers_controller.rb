@@ -3,7 +3,8 @@ class ProvidersController < ApplicationController
   before_action :set_provider, only: [:show, :edit, :update, :destroy, :harvest, :harvest_all_selective_contributing_institution, :harvest_all_selective_intermediate_provider, :dump_and_reindex_by_institution, :dump_and_reindex_by_set]
 
   def index
-    @providers = Provider.all.paginate(page: params[:page], per_page: 10).order('name ASC')
+    #@providers = Provider.all.paginate(page: params[:page], per_page: 10).order('name ASC')
+    @providers = Provider.filter(params.slice(:contributing_institution)).paginate(page: params[:page], per_page: 10).order('name ASC')
   end
 
   def show

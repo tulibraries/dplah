@@ -22,4 +22,13 @@ module ProvidersHelper
 	def oai_action_disabled_class(attribute_check)
 		return attribute_check.present? ? "oai-actions btn-provider" : "oai-actions"
 	end
+
+	def all_contributing_institutions
+		Provider.uniq.pluck(:contributing_institution).sort
+  end
+
+
+	def selected_contributing_institution(params)
+		params.fetch('contributing_institution', '')
+	end
 end

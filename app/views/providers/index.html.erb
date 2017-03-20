@@ -10,8 +10,8 @@
 
 <%= form_tag("", method: "get") do %>
     <%= label_tag(:contributing_institution, "Filter by Providing institution") %>
-    <%= select_tag(:contributing_institution, options_for_select(@contributing_institution, selected_filter(params))) %>
-    <%= submit_tag("Filter") %>
+    <%= select_tag(:contributing_institution, options_for_select(all_contributing_institutions, selected_contributing_institution(params))) %>
+    <%= button_tag "Filter", name: nil  %>
 <% end %>
 
 <%= will_paginate @providers %>

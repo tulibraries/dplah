@@ -23,7 +23,12 @@ module ProvidersHelper
 		return attribute_check.present? ? "oai-actions btn-provider" : "oai-actions"
 	end
 
-	def selected_filter(params)
+	def all_contributing_institutions
+		Provider.uniq.pluck(:contributing_institution).sort
+  end
+
+
+	def selected_contributing_institution(params)
 		params.fetch('contributing_institution', '')
 	end
 end

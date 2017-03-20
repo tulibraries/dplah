@@ -5,8 +5,6 @@ class ProvidersController < ApplicationController
   def index
     #@providers = Provider.all.paginate(page: params[:page], per_page: 10).order('name ASC')
     @providers = Provider.filter(params.slice(:contributing_institution)).paginate(page: params[:page], per_page: 10).order('name ASC')
-    @contributing_institution = Provider.uniq.pluck(:contributing_institution).sort
-
   end
 
   def show

@@ -237,24 +237,24 @@ module HarvestUtils
       begin
         pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
         ActiveFedora::FixtureLoader.index(pid)
+        obj = OaiRec.find(pid)
+        thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
+        obj.thumbnail = thumbnail if thumbnail
+        obj.assign_rights
+        obj.assign_contributing_institution
+        obj.add_dcmi_terms_to_type(provider)
+        build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
+        remove_unwanted_identifiers(obj, provider)
+        obj.reorg_identifiers
+        obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow" || thumbnail.nil?
+        obj.clean_iso8601_date_field
+        obj.save
+        obj.to_solr
+        obj.update_index
       rescue
         quarantine_and_report(file)
         next
       end
-      obj = OaiRec.find(pid)
-      thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
-      obj.thumbnail = thumbnail if thumbnail
-      obj.assign_rights
-      obj.assign_contributing_institution
-      obj.add_dcmi_terms_to_type(provider)
-      build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
-      remove_unwanted_identifiers(obj, provider)
-      obj.reorg_identifiers
-      obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow" || thumbnail.nil?
-      obj.clean_iso8601_date_field
-      obj.save
-      obj.to_solr
-      obj.update_index
       File.delete(file)
       File.open(@log_file, "a+") do |f|
         f << "#{num_files} " << I18n.t('oai_seed_logs.ingest_count')

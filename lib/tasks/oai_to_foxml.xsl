@@ -229,10 +229,6 @@
                     <xsl:with-param name="values" select="metadata/oai_dc:dc/dc:rights" />
                   </xsl:call-template>
 
-                  <xsl:element name="dc:rights">
-                    <xsl:value-of select="$rights_statement" />
-                  </xsl:element>
-
                 </oai_dc:dc>
               </foxml:xmlContent>
             </foxml:datastreamVersion>

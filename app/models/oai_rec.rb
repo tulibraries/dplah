@@ -145,9 +145,10 @@ class OaiRec < ActiveFedora::Base
 	end
 
 	def assign_rights
+	  self.rights.reject!(&:empty?)
 		unless self.rights_statement.blank?
-			self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","<dc:rights>#{rights_statement}</dc:rights>\n</oai_dc:dc>\n")
-			self.rights = self.rights_statement unless self.rights_statement.blank?
+			self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","<dc:rights>#{self.rights_statement}</dc:rights>\n</oai_dc:dc>\n")
+			self.rights = self.rights_statement
 			self.save
 		end
 	end

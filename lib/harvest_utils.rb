@@ -609,7 +609,7 @@ module HarvestUtils
     end
 
     def self.has_rights?(record)
-      !!(record.metadata.to_s =~ /<dc:rights>(.*?)<\/dc:rights>|<dcterms:license>(.*?)<\/dcterms:license>|<dcterms:RightsStatement>(.*?)<\/dcterms:RightsStatement>/)
+      !!(record.metadata.to_s =~ /<dc:rights(.*?)<\/dc:rights>|<dcterms:license(.*?)<\/dcterms:license>|<dcterms:RightsStatement(.*?)<\/dcterms:RightsStatement>/)
     end
 
     def self.has_noharvest_stopword?(record)

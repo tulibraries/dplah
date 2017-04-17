@@ -2,6 +2,8 @@ require "active-fedora"
 require "open-uri"
 require "fileutils"
 require "oai"
+require "awesome_print"
+require "logger" if Rails.env.development?
 
 module HarvestUtils
   extend ActionView::Helpers::TranslationHelper
@@ -244,9 +246,12 @@ module HarvestUtils
         obj.assign_contributing_institution
         obj.add_dcmi_terms_to_type(provider)
         build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
+        build_identifier(obj, provider) if provider.common_repository_type == "Islandora"
         remove_unwanted_identifiers(obj, provider)
         obj.reorg_identifiers
-        obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow" || thumbnail.nil?
+        unless provider.common_repository_type == "Islandora"
+          obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow" || thumbnail.nil?
+        end
         obj.clean_iso8601_date_field
         obj.save
         obj.to_solr
@@ -617,8 +622,18 @@ module HarvestUtils
     end
 
     def self.build_identifier(obj, provider)
-      token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}
-      assembled_identifier = provider.identifier_pattern.gsub("$1", token)
+      if (provider.common_repository_type == "Islandora")
+        assembled_identifier = ''
+        url = URI.parse(obj.endpoint_url)
+        obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
+          Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
+          assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
+        end
+        assembled_identifier
+      else  
+        token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}
+        assembled_identifier = provider.identifier_pattern.gsub("$1", token)
+      end
       obj.add_identifier(assembled_identifier)
     end
 

@@ -2,7 +2,6 @@ require "active-fedora"
 require "open-uri"
 require "fileutils"
 require "oai"
-require "awesome_print"
 require "logger" if Rails.env.development?
 
 module HarvestUtils
@@ -626,11 +625,10 @@ module HarvestUtils
         assembled_identifier = ''
         url = URI.parse(obj.endpoint_url)
         obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
-          Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
           assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
         end
         assembled_identifier
-      else  
+      else
         token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}
         assembled_identifier = provider.identifier_pattern.gsub("$1", token)
       end

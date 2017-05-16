@@ -5,6 +5,6 @@
     <%= render :partial => 'sort_widget' %>
     <%= render :partial => 'per_page_widget' %>
     <%= render :partial => 'view_type_group' %>
-    <%= render :partial => 'export_as' %>
+    <%= render :partial => 'export_as' if user_signed_in? %>
   </div>
 </div>

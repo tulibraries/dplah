@@ -136,7 +136,6 @@ module HarvestUtils
     when "DC Field: Publisher" then contributing_institution = doc.css("publisher").text
     when "DC Field: Contributor" then contributing_institution = doc.css("contributor").text
     when "DC Field: Source" then contributing_institution = doc.css("source").text
-    else contributing_institution = "Unknown"
     end
          
     node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")

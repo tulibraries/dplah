@@ -341,10 +341,6 @@ module HarvestUtils
 
   def self.add_xml_formatting(xml_file, options = {})
       contributing_institution = options[:contributing_institution] || ''
-
-      File.open(@log_file, "a+") do |f|
-        f << "CI: #{contributing_institution}"
-      end
       intermediate_provider = options[:intermediate_provider] || ''
       set_spec = options[:set_spec] || ''
       collection_name = options[:collection_name] || ''
@@ -526,7 +522,7 @@ module HarvestUtils
           if !has_rights_statement && !do_not_harvest && record.header.status.to_s != "deleted"
             f << I18n.t('oai_seed_logs.no_rights_detected') + identifier_reformed
           end
-          transient_records += 2 if record.header.status.to_s == "deleted"
+          transient_records += 1 if record.header.status.to_s == "deleted"
           noharvest_records += 1 if do_not_harvest
           norights_records.push(identifier_reformed) if !has_rights_statement && !do_not_harvest && record.header.status.to_s != "deleted"
         end

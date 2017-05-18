@@ -1,9 +1,5 @@
-require 'logger'
 class OaiRec < ActiveFedora::Base
 	include HarvestUtils
-
-  logger = Logger.new("/Users/tuf73699/Projects/hydra/dpla/dplah-vm/dplah/oai.log")
-  logger.info "Starting up"
 
 	# def self.to_class_uri
  #      'info:fedora/afmodel:OaiRec'
@@ -164,13 +160,10 @@ class OaiRec < ActiveFedora::Base
 	end
 
 	def assign_contributing_institution
-    logger.info "assign_contributing_institution #{self.contributing_institution}"
-    logger.info "self.DC.content before: #{self.DC.content}"
 		case self.contributing_institution
 			when "DC Field: Source"
 				self.contributing_institution = self.source
 				self.DC.content=self.DC.content.gsub("\n</oai_dc:dc>\n","<dc:contributor>#{self.source}</dc:contributor>\n</oai_dc:dc>\n")
-        logger.info "self.DC.content after: #{self.DC.content}"
 				self.save
 			else
 				self.contributing_institution = self.contributing_institution

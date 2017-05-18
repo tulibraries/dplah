@@ -18,10 +18,8 @@ module HarvestUtils
   @human_catalog_url = config['human_catalog_url']
   @noharvest_stopword = config['noharvest_stopword']
   @passthrough_url = config['passthrough_url']
-  @dbg_logger ||= Logger.new("debug.log")
 
   def harvest_action(provider)
-    @dbg_logger.info "harvest_action: contributing_institution #{provider.contributing_institution}"
     create_log_file(provider.name)
     harvest(provider)
     provider.last_harvested = Time.now
@@ -42,7 +40,6 @@ module HarvestUtils
   def harvest_all_selective(provider, criteria)
     seeds = Provider.where(criteria.to_sym => "#{provider.send(criteria)}")
     seeds.each do |ci|
-      @dbg_logger.info "harvest_action_selective: contributing_institution #{ci.contributing_institution}"
       harvest_action(ci)
     end
   end
@@ -57,7 +54,6 @@ module HarvestUtils
 
 
   def harvest(provider)
-    @dbg_logger.info "harvest: contributing_institution #{provider.contributing_institution}"
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_begin') << I18n.t('oai_seed_logs.current_time') << Time.current.utc.iso8601 << I18n.t('oai_seed_logs.harvest_begin') << provider.name << I18n.t('oai_seed_logs.text_buffer')
     end
@@ -132,6 +128,23 @@ module HarvestUtils
   end
   module_function :convert
 
+  def self.customize_dc_field(doc, string_to_search, provider)
+    dc_fields = Provider.possible_ci_fields.map { |f| f.last }
+  
+    case provider.contributing_institution_dc_field
+    when "DC Field: Creator" then contributing_institution = doc.css("creator").text
+    when "DC Field: Publisher" then contributing_institution = doc.css("publisher").text
+    when "DC Field: Contributor" then contributing_institution = doc.css("contributor").text
+    when "DC Field: Source" then contributing_institution = doc.css("source").text
+    else contributing_institution = "Unknown"
+    end
+         
+    node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+    node_update.each do |node_value|
+      node_value.content = contributing_institution
+    end
+  end
+
   def cleanup(provider)
     types_ongoing ||= []
 
@@ -157,6 +170,7 @@ module HarvestUtils
       normalize_global(doc, "//description")
       normalize_global(doc, "//publisher")
       normalize_global(doc, "//contributor")
+      customize_dc_field(doc, "//contributing_institution", provider) unless provider.contributing_institution_dc_field.to_s.blank?
       normalize_global(doc, "//date")
       normalize_global(doc, "//type")
       normalize_global(doc, "//format")
@@ -327,7 +341,6 @@ module HarvestUtils
   end
 
   def self.add_xml_formatting(xml_file, options = {})
-      @dbg_logger.info "add_xml_formatting: options[:contributing_institution] #{options[:contributing_institution]}"
       contributing_institution = options[:contributing_institution] || ''
 
       File.open(@log_file, "a+") do |f|
@@ -527,8 +540,6 @@ module HarvestUtils
       partner_s = @partner.to_s
 
       contributing_institution = options[:contributing_institution] || ''
-      @dbg_logger.info "get_xml_manifest: options[:contributing_institution] #{options[:contributing_institution]}"
-      @dbg_logger.info "get_xml_manifest: contributing_institution #{contributing_institution}"
       intermediate_provider = options[:intermediate_provider] || ''
       set_spec = options[:set_spec] || ''
       collection_name = options[:collection_name] || ''
@@ -595,7 +606,6 @@ module HarvestUtils
       f_name_full = Rails.root + @harvest_path + f_name
       FileUtils::mkdir_p @harvest_path
       File.open(f_name_full, "w") { |file| file.puts full_records }
-      @dbg_logger.info "create_harvest_file: provider.contributing_institution #{provider.contributing_institution}"
       add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :intermediate_provider => provider.intermediate_provider, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix, :rights_statement => provider.rights_statement, :common_repository_type => provider.common_repository_type, :endpoint_url => provider.endpoint_url, :pid_prefix => @pid_prefix)
       remove_bad_namespaces(f_name_full)
     end

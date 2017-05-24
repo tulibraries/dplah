@@ -36,9 +36,8 @@ module ThumbnailUtils
       def self.asset_url(obj)
         asset_url = ''
         obj.description.each do |desc|
-        thumb = desc if desc.include? 'thumbnail.jpg'
-        asset_url = thumb if thumb
-      end
+          asset_url = desc if desc.include? 'thumbnail.jpg'
+        end
         asset_url
       end
     end
@@ -96,7 +95,7 @@ module ThumbnailUtils
     	else
     		abort "Invalid common repository type - #{provider.common_repository_type}"
   	end
-    asset_url
+    asset_url.downcase
   end
   module_function :define_thumbnail_common
 

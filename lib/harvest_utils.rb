@@ -649,7 +649,6 @@ module HarvestUtils
       # little fix for weird nested OAI identifiers in Bepress
       file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
 
-
       # little fix for additional weirdness in Bepress for PCOM
       file_prefix.slice!("do_") if provider.common_repository_type == "Bepress" && provider.endpoint_url == "http://digitalcommons.pcom.edu/do/oai/" && provider.set == "publication:do_yearbooks"
 

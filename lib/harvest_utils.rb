@@ -30,8 +30,8 @@ module HarvestUtils
     sleep(5)
     rec_count = ingest(provider)
     File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_end') << "#{provider.name} " << I18n.t('oai_seed_logs.log_end_processed') << " #{rec_count}" << I18n.t('oai_seed_logs.text_buffer')
-      end
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.log_end') << "#{provider.name} " << I18n.t('oai_seed_logs.log_end_processed') << " #{rec_count}" << I18n.t('oai_seed_logs.text_buffer')
+    end
     HarvestMailer.harvest_complete_email(provider, HarvestUtils.get_log_file).deliver
     rec_count
   end
@@ -108,23 +108,23 @@ module HarvestUtils
 
   def convert(provider)
 
-      File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.convert_begin') << I18n.t('oai_seed_logs.text_buffer')
-      end
+    File.open(@log_file, "a+") do |f|
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.convert_begin') << I18n.t('oai_seed_logs.text_buffer')
+    end
 
-      xslt_file = provider.metadata_prefix == "oai_qdc" ? "oaiqdc_to_foxml" : "oai_to_foxml"
+    xslt_file = provider.metadata_prefix == "oai_qdc" ? "oaiqdc_to_foxml" : "oai_to_foxml"
 
-      xslt_path = Rails.root.join("lib", "tasks", "#{xslt_file}.xsl")
-      u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
-      File.open(@log_file, "a+") do |f|
+    xslt_path = Rails.root.join("lib", "tasks", "#{xslt_file}.xsl")
+    u_files = Dir.glob("#{@harvest_path}/*").select { |fn| File.file?(fn) }
+    File.open(@log_file, "a+") do |f|
 
-        f << "#{u_files.length} "<< I18n.t('oai_seed_logs.convert_count')
-      end
-      u_files.length.times do |i|
-        puts "Contents of #{u_files[i]} transformed"
-        `xsltproc #{xslt_path} #{u_files[i]}`
-        File.delete(u_files[i])
-      end
+      f << "#{u_files.length} "<< I18n.t('oai_seed_logs.convert_count')
+    end
+    u_files.length.times do |i|
+      puts "Contents of #{u_files[i]} transformed"
+      `xsltproc #{xslt_path} #{u_files[i]}`
+      File.delete(u_files[i])
+    end
   end
   module_function :convert
 
@@ -133,7 +133,7 @@ module HarvestUtils
 
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.normalize_begin') << I18n.t('oai_seed_logs.text_buffer')
-      end
+    end
     new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
 
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
@@ -197,9 +197,9 @@ module HarvestUtils
       normalize_language(doc, "//dc:language")
 
       File.open(new_file, 'w') do |f|
-          f.print(doc.to_xml)
-          File.rename(new_file, xml_file)
-          f.close
+        f.print(doc.to_xml)
+        File.rename(new_file, xml_file)
+        f.close
       end
 
       if provider.common_repository_type == "Passthrough Workflow"
@@ -222,10 +222,9 @@ module HarvestUtils
   module_function :cleanup
 
   def ingest(provider)
-
     File.open(@log_file, "a+") do |f|
       f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.ingest_begin') << I18n.t('oai_seed_logs.text_buffer')
-      end
+    end
     num_files = 1
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
@@ -235,7 +234,13 @@ module HarvestUtils
 
     contents.each do |file|
       check_if_exists(file)
+
       begin
+        unless has_required_fields(file)
+          binding.pry
+          quarantine_and_report(file)
+          next
+        end
         pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
         ActiveFedora::FixtureLoader.index(pid)
         obj = OaiRec.find(pid)
@@ -323,222 +328,222 @@ module HarvestUtils
   end
 
   def self.add_xml_formatting(xml_file, options = {})
-      contributing_institution = options[:contributing_institution] || ''
-      intermediate_provider = options[:intermediate_provider] || ''
-      set_spec = options[:set_spec] || ''
-      collection_name = options[:collection_name] || ''
-      provider_id_prefix = options[:provider_id_prefix] || ''
-      rights_statement = options[:rights_statement] || ''
-      common_repository_type = options[:common_repository_type] || ''
-      endpoint_url = options[:endpoint_url] || ''
-      pid_prefix = options[:pid_prefix] || ''
+    contributing_institution = options[:contributing_institution] || ''
+    intermediate_provider = options[:intermediate_provider] || ''
+    set_spec = options[:set_spec] || ''
+    collection_name = options[:collection_name] || ''
+    provider_id_prefix = options[:provider_id_prefix] || ''
+    rights_statement = options[:rights_statement] || ''
+    common_repository_type = options[:common_repository_type] || ''
+    endpoint_url = options[:endpoint_url] || ''
+    pid_prefix = options[:pid_prefix] || ''
 
-      new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
-      xml_heading = '<?xml version="1.0" encoding="UTF-8"?>'
-      unless File.open(xml_file).each_line.any?{|line| line.include?(xml_heading)}
-        fopen = File.open(xml_file)
-        xml_file_contents = fopen.read
-        xml_open = "<records>"
-        xml_close = "</records>"
-        xml_manifest = get_xml_manifest(:contributing_institution => contributing_institution, :intermediate_provider => intermediate_provider, :set_spec => set_spec, :collection_name => collection_name, :provider_id_prefix => provider_id_prefix, :rights_statement => rights_statement, :common_repository_type => common_repository_type, :endpoint_url => endpoint_url, :pid_prefix => pid_prefix)
-        fopen.close
-        File.open(new_file, 'w') do |f|
-          f.puts xml_heading
-          f.puts xml_open
-          f.puts xml_manifest
-          f.puts xml_file_contents
-          f.puts xml_close
-          File.rename(new_file, xml_file)
-          f.close
-        end
-      end
-
-    end
-
-    def self.remove_bad_namespaces(xml_file)
-      bad_namespace = "xmlns:oai_qdc='http://worldcat.org/xmlschemas/qdc-1.0/'"
-      good_namespace = "xmlns:oai_qdc='http://oclc.org/appqualifieddc/'"
-      new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
+    new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
+    xml_heading = '<?xml version="1.0" encoding="UTF-8"?>'
+    unless File.open(xml_file).each_line.any?{|line| line.include?(xml_heading)}
       fopen = File.open(xml_file)
-      file_contents = fopen.read
+      xml_file_contents = fopen.read
+      xml_open = "<records>"
+      xml_close = "</records>"
+      xml_manifest = get_xml_manifest(:contributing_institution => contributing_institution, :intermediate_provider => intermediate_provider, :set_spec => set_spec, :collection_name => collection_name, :provider_id_prefix => provider_id_prefix, :rights_statement => rights_statement, :common_repository_type => common_repository_type, :endpoint_url => endpoint_url, :pid_prefix => pid_prefix)
       fopen.close
       File.open(new_file, 'w') do |f|
-        fc = file_contents.gsub(bad_namespace, good_namespace)
-        f.puts fc
+        f.puts xml_heading
+        f.puts xml_open
+        f.puts xml_manifest
+        f.puts xml_file_contents
+        f.puts xml_close
         File.rename(new_file, xml_file)
         f.close
       end
     end
 
-    def self.normalize_global(doc, string_to_search)
-      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
-        node_value.inner_html = node_value.inner_html.gsub(/[\,;]$/, '')
-        node_value.inner_html = node_value.inner_html.gsub(/^\s+/, "")
-        node_value.inner_html = node_value.inner_html.gsub(/\s+$/, "")
+  end
+
+  def self.remove_bad_namespaces(xml_file)
+    bad_namespace = "xmlns:oai_qdc='http://worldcat.org/xmlschemas/qdc-1.0/'"
+    good_namespace = "xmlns:oai_qdc='http://oclc.org/appqualifieddc/'"
+    new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
+    fopen = File.open(xml_file)
+    file_contents = fopen.read
+    fopen.close
+    File.open(new_file, 'w') do |f|
+      fc = file_contents.gsub(bad_namespace, good_namespace)
+      f.puts fc
+      File.rename(new_file, xml_file)
+      f.close
+    end
+  end
+
+  def self.normalize_global(doc, string_to_search)
+    node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+    node_update.each do |node_value|
+      node_value.inner_html = node_value.inner_html.sub(/^./) { |m| m.upcase }
+      node_value.inner_html = node_value.inner_html.gsub(/[\,;]$/, '')
+      node_value.inner_html = node_value.inner_html.gsub(/^\s+/, "")
+      node_value.inner_html = node_value.inner_html.gsub(/\s+$/, "")
+    end
+  end
+
+  def self.normalize_facets(doc, string_to_search)
+    node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+    node_update.each do |node_value|
+      node_value.inner_html = node_value.inner_html.gsub(/[\.]$/, '')
+    end
+  end
+
+  def self.strip_brackets(value)
+    value = value.gsub(/[\[\]']+/,'')
+  end
+
+
+  def self.normalize_dates(doc, string_to_search)
+    node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+    node_update.each do |node_value|
+      node_value.inner_html = node_value.inner_html.gsub(/\[|\]/,"").strip
+    end
+  end
+
+  def self.standardize_formats(doc, string_to_search)
+    node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+    node_update.each do |node_value|
+      node_value.inner_html = node_value.inner_html.downcase
+      case node_value.inner_html
+        when /\bjpg\b/, /\bjpeg\b/
+          node_value.inner_html = "image/jpeg"
+        when /\bjp2\b/, /\bjpg2\b/, /\bjpeg2\b/, /\bjpeg2000\b/, /\bjp2000\b/
+          node_value.inner_html = "image/jp2"
+        when /\btif\b/, /\btiff\b/
+          node_value.inner_html = "image/tiff"
+        when /\bpdf\b/
+          node_value.inner_html = "application/pdf"
+        when /\bmpeg4\b/
+          node_value.inner_html = "video/mpeg"
+        when /\bmp4\b/
+          node_value.inner_html = "video/mp4"
+        when /\bmpeg\b/
+          node_value.inner_html = "video/mpeg"
+        when /\bmpeg3\b/
+          node_value.inner_html = "audio/mpeg"
+        when /\bmp3\b/
+          node_value.inner_html = "audio/mp3"
+        else
+          node_value.inner_html = node_value.inner_html
+      end
+      normalize_first_case(node_value.inner_html)
+    end
+  end
+
+  def self.normalize_language(doc, string_to_search)
+    node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+    node_update.each do |node_value|
+      node_value.inner_html = strip_brackets(node_value.inner_html)
+      normalize_first_case(node_value.inner_html)
+      node_value.inner_html = Encodings::Constants::LANG_ABBR.include?(node_value.inner_html) ? Encodings::Constants::LANG_ABBR[node_value.inner_html] : node_value.inner_html
+    end
+  end
+
+  def self.normalize_rights(doc, string_to_search)
+    node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+    node_update.each do |node_value|
+      if node_value.inner_html.downcase.starts_with?("http")
+        node_value.inner_html = conform_url node_value
       end
     end
+  end
 
-    def self.normalize_facets(doc, string_to_search)
-      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.gsub(/[\.]$/, '')
+  def self.conform_url(url_string)
+    URI(url_string).to_s
+  end
+
+
+  def self.normalize_first_case(value)
+    value.downcase
+    value.sub(/^./) { |m| m.upcase }
+  end
+
+  def self.construct_si_pid(doc, string_to_search, pid_prefix, provider_id_prefix)
+    node_update = doc.search(string_to_search)
+    new_pid = ""
+    node_update.each do |node_value|
+      new_pid = "#{pid_prefix}:#{provider_id_prefix}_#{node_value.inner_html}" if node_value.inner_html.exclude?("http") unless node_value.inner_html.blank?
+    end
+    elems = doc.xpath("//*[@PID]")
+    old_pid = elems[0].attr('PID')
+    return old_pid, new_pid
+  end
+
+  def self.replace_pid(xml_file, old_pid, new_pid)
+    new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
+    fopen = File.open(xml_file)
+    file_contents = fopen.read
+    fopen.close
+    File.open(new_file, 'w') do |f|
+      fc = file_contents.gsub(old_pid, new_pid)
+      f.puts fc
+      File.rename(new_file, xml_file)
+      f.close
+    end
+
+  end
+
+
+  def self.type_maps_to_dcmi?(provider_types, value)
+    provider_types.split(';').map(&:downcase).map(&:strip).include? value.downcase
+  end
+
+  def self.map_type_term_to_dcmi(dcmi_type, provider_types, field_value)
+    if provider_types.present?
+      dcmi_type if type_maps_to_dcmi?(provider_types, field_value) else field_value
+    end
+  end
+
+  def self.process_record_token(record, full_records, transient_records, noharvest_records, norights_records)
+    do_not_harvest =  has_noharvest_stopword?(record)
+    identifier_reformed = reform_oai_id(record.header.identifier.to_s)
+    record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
+    has_rights_statement = has_rights?(record)
+    full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || do_not_harvest
+    File.open(@log_file, "a+") do |f|
+      f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
+      f << I18n.t('oai_seed_logs.noharvest_detected') if do_not_harvest
+      if !has_rights_statement && !do_not_harvest && record.header.status.to_s != "deleted"
+        f << I18n.t('oai_seed_logs.no_rights_detected') + identifier_reformed
       end
+      transient_records += 1 if record.header.status.to_s == "deleted"
+      noharvest_records += 1 if do_not_harvest
+      norights_records.push(identifier_reformed) if !has_rights_statement && !do_not_harvest && record.header.status.to_s != "deleted"
     end
+    return full_records, transient_records, noharvest_records, norights_records
+  end
 
-    def self.strip_brackets(value)
-      value = value.gsub(/[\[\]']+/,'')
-    end
+  def self.get_xml_manifest(options = {})
+    harvest_s = @harvest_path.to_s
+    converted_s = @converted_path.to_s
+    partner_s = @partner.to_s
 
+    contributing_institution = options[:contributing_institution] || ''
+    intermediate_provider = options[:intermediate_provider] || ''
+    set_spec = options[:set_spec] || ''
+    collection_name = options[:collection_name] || ''
+    provider_id_prefix = options[:provider_id_prefix] || ''
+    rights_statement = options[:rights_statement] || ''
+    common_repository_type = options[:common_repository_type] || ''
+    endpoint_url = options[:endpoint_url] || ''
+    pid_prefix = options[:pid_prefix] || ''
 
-    def self.normalize_dates(doc, string_to_search)
-      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.gsub(/\[|\]/,"").strip
-      end
-    end
+    xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><intermediate_provider>#{intermediate_provider}</intermediate_provider><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><common_repository_type>#{common_repository_type}</common_repository_type><endpoint_url>#{endpoint_url}</endpoint_url><provider_id_prefix>#{provider_id_prefix}</provider_id_prefix><rights_statement>#{rights_statement}</rights_statement><pid_prefix>#{pid_prefix}</pid_prefix><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
+    return xml_manifest
+  end
 
-    def self.standardize_formats(doc, string_to_search)
-      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
-      node_update.each do |node_value|
-        node_value.inner_html = node_value.inner_html.downcase
-        case node_value.inner_html
-          when /\bjpg\b/, /\bjpeg\b/
-            node_value.inner_html = "image/jpeg"
-          when /\bjp2\b/, /\bjpg2\b/, /\bjpeg2\b/, /\bjpeg2000\b/, /\bjp2000\b/
-            node_value.inner_html = "image/jp2"
-          when /\btif\b/, /\btiff\b/
-            node_value.inner_html = "image/tiff"
-          when /\bpdf\b/
-            node_value.inner_html = "application/pdf"
-          when /\bmpeg4\b/
-            node_value.inner_html = "video/mpeg"
-          when /\bmp4\b/
-            node_value.inner_html = "video/mp4"
-          when /\bmpeg\b/
-            node_value.inner_html = "video/mpeg"
-          when /\bmpeg3\b/
-            node_value.inner_html = "audio/mpeg"
-          when /\bmp3\b/
-            node_value.inner_html = "audio/mp3"
-          else
-            node_value.inner_html = node_value.inner_html
-          end
-        normalize_first_case(node_value.inner_html)
-      end
-    end
+  def self.reform_oai_id(id_string)
+    local_id = id_string.split(":").last
+    local_id = local_id.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
+  end
 
-    def self.normalize_language(doc, string_to_search)
-      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
-      node_update.each do |node_value|
-        node_value.inner_html = strip_brackets(node_value.inner_html)
-        normalize_first_case(node_value.inner_html)
-        node_value.inner_html = Encodings::Constants::LANG_ABBR.include?(node_value.inner_html) ? Encodings::Constants::LANG_ABBR[node_value.inner_html] : node_value.inner_html
-      end
-    end
-
-    def self.normalize_rights(doc, string_to_search)
-      node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
-      node_update.each do |node_value|
-        if node_value.inner_html.downcase.starts_with?("http")
-          node_value.inner_html = conform_url node_value
-        end
-      end
-    end
-
-    def self.conform_url(url_string)
-      URI(url_string).to_s
-    end
-
-
-    def self.normalize_first_case(value)
-      value.downcase
-      value.sub(/^./) { |m| m.upcase }
-    end
-
-    def self.construct_si_pid(doc, string_to_search, pid_prefix, provider_id_prefix)
-      node_update = doc.search(string_to_search)
-      new_pid = ""
-      node_update.each do |node_value|
-        new_pid = "#{pid_prefix}:#{provider_id_prefix}_#{node_value.inner_html}" if node_value.inner_html.exclude?("http") unless node_value.inner_html.blank?
-      end
-      elems = doc.xpath("//*[@PID]")
-      old_pid = elems[0].attr('PID')
-      return old_pid, new_pid
-    end
-
-    def self.replace_pid(xml_file, old_pid, new_pid)
-      new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
-      fopen = File.open(xml_file)
-      file_contents = fopen.read
-      fopen.close
-      File.open(new_file, 'w') do |f|
-        fc = file_contents.gsub(old_pid, new_pid)
-        f.puts fc
-        File.rename(new_file, xml_file)
-        f.close
-      end
-
-    end
-
-
-    def self.type_maps_to_dcmi?(provider_types, value)
-      provider_types.split(';').map(&:downcase).map(&:strip).include? value.downcase
-    end
-
-    def self.map_type_term_to_dcmi(dcmi_type, provider_types, field_value)
-      if provider_types.present?
-        dcmi_type if type_maps_to_dcmi?(provider_types, field_value) else field_value
-      end
-    end
-
-    def self.process_record_token(record, full_records, transient_records, noharvest_records, norights_records)
-        do_not_harvest =  has_noharvest_stopword?(record)
-        identifier_reformed = reform_oai_id(record.header.identifier.to_s)
-        record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
-        has_rights_statement = has_rights?(record)
-        full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || do_not_harvest
-        File.open(@log_file, "a+") do |f|
-          f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
-          f << I18n.t('oai_seed_logs.noharvest_detected') if do_not_harvest
-          if !has_rights_statement && !do_not_harvest && record.header.status.to_s != "deleted"
-            f << I18n.t('oai_seed_logs.no_rights_detected') + identifier_reformed
-          end
-          transient_records += 1 if record.header.status.to_s == "deleted"
-          noharvest_records += 1 if do_not_harvest
-          norights_records.push(identifier_reformed) if !has_rights_statement && !do_not_harvest && record.header.status.to_s != "deleted"
-        end
-        return full_records, transient_records, noharvest_records, norights_records
-    end
-
-    def self.get_xml_manifest(options = {})
-      harvest_s = @harvest_path.to_s
-      converted_s = @converted_path.to_s
-      partner_s = @partner.to_s
-
-      contributing_institution = options[:contributing_institution] || ''
-      intermediate_provider = options[:intermediate_provider] || ''
-      set_spec = options[:set_spec] || ''
-      collection_name = options[:collection_name] || ''
-      provider_id_prefix = options[:provider_id_prefix] || ''
-      rights_statement = options[:rights_statement] || ''
-      common_repository_type = options[:common_repository_type] || ''
-      endpoint_url = options[:endpoint_url] || ''
-      pid_prefix = options[:pid_prefix] || ''
-
-      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><intermediate_provider>#{intermediate_provider}</intermediate_provider><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><common_repository_type>#{common_repository_type}</common_repository_type><endpoint_url>#{endpoint_url}</endpoint_url><provider_id_prefix>#{provider_id_prefix}</provider_id_prefix><rights_statement>#{rights_statement}</rights_statement><pid_prefix>#{pid_prefix}</pid_prefix><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
-      return xml_manifest
-    end
-
-    def self.reform_oai_id(id_string)
-      local_id = id_string.split(":").last
-      local_id = local_id.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
-    end
-
-    def self.remove_selective(provider, reindex_by)
-      rec_count = 0
-      case reindex_by
+  def self.remove_selective(provider, reindex_by)
+    rec_count = 0
+    case reindex_by
       when "set"
 
         solr_term = (provider.set) ? 'set_spec_si' : 'provider_id_prefix_si'
@@ -554,116 +559,125 @@ module HarvestUtils
           f << I18n.t('oai_seed_logs.reindexing_error')
         end
         abort I18n.t('oai_seed_logs.reindexing_error')
-      end
+    end
 
-      File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_begin') << I18n.t('oai_seed_logs.delete_remove_by') << "#{reindex_by}" << I18n.t('oai_seed_logs.delete_seed_derived') << "#{model_term}" << I18n.t('oai_seed_logs.text_buffer')
-      end
+    File.open(@log_file, "a+") do |f|
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.delete_begin') << I18n.t('oai_seed_logs.delete_remove_by') << "#{reindex_by}" << I18n.t('oai_seed_logs.delete_seed_derived') << "#{model_term}" << I18n.t('oai_seed_logs.text_buffer')
+    end
 
-      ActiveFedora::Base.find_each({solr_term=>model_term}, batch_size: 2000) do |o|
-        delete_from_aggregator(o)
-        File.open(@log_file, "a+") do |f|
-          rec_count += 1
-          f << I18n.t('oai_seed_logs.text_buffer') << "#{rec_count} " << I18n.t('oai_seed_logs.delete_count') << I18n.t('oai_seed_logs.text_buffer')
-        end
-      end
+    ActiveFedora::Base.find_each({solr_term=>model_term}, batch_size: 2000) do |o|
+      delete_from_aggregator(o)
       File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << "#{model_term} " << I18n.t('oai_seed_logs.delete_end') << I18n.t('oai_seed_logs.text_buffer')
+        rec_count += 1
+        f << I18n.t('oai_seed_logs.text_buffer') << "#{rec_count} " << I18n.t('oai_seed_logs.delete_count') << I18n.t('oai_seed_logs.text_buffer')
       end
-      case reindex_by
+    end
+    File.open(@log_file, "a+") do |f|
+      f << I18n.t('oai_seed_logs.text_buffer') << "#{model_term} " << I18n.t('oai_seed_logs.delete_end') << I18n.t('oai_seed_logs.text_buffer')
+    end
+    case reindex_by
       when "set"
         HarvestMailer.dump_and_reindex_by_collection_email(provider, @log_file).deliver
       when "institution"
         HarvestMailer.dump_and_reindex_by_institution_email(provider, @log_file).deliver
-      end
-      rec_count
     end
+    rec_count
+  end
 
-    def self.create_harvest_file(provider, full_records, num_files)
-      f_name = provider.provider_id_prefix.gsub(/\s+/, "") +  (provider.set ? provider.set : "") + "_" + "#{num_files}" + "_" + Time.current.utc.iso8601.to_i.to_s + ".xml"
-      f_name_full = Rails.root + @harvest_path + f_name
-      FileUtils::mkdir_p @harvest_path
-      File.open(f_name_full, "w") { |file| file.puts full_records }
-      add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :intermediate_provider => provider.intermediate_provider, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix, :rights_statement => provider.rights_statement, :common_repository_type => provider.common_repository_type, :endpoint_url => provider.endpoint_url, :pid_prefix => @pid_prefix)
-      remove_bad_namespaces(f_name_full)
-    end
+  def self.create_harvest_file(provider, full_records, num_files)
+    f_name = provider.provider_id_prefix.gsub(/\s+/, "") +  (provider.set ? provider.set : "") + "_" + "#{num_files}" + "_" + Time.current.utc.iso8601.to_i.to_s + ".xml"
+    f_name_full = Rails.root + @harvest_path + f_name
+    FileUtils::mkdir_p @harvest_path
+    File.open(f_name_full, "w") { |file| file.puts full_records }
+    add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :intermediate_provider => provider.intermediate_provider, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix, :rights_statement => provider.rights_statement, :common_repository_type => provider.common_repository_type, :endpoint_url => provider.endpoint_url, :pid_prefix => @pid_prefix)
+    remove_bad_namespaces(f_name_full)
+  end
 
-    def self.check_if_exists(file)
-      fopen = File.open(file)
-      xml_contents = fopen.read
-      doc = Nokogiri::XML(xml_contents)
-      pid_check = doc.child.attribute('PID').value
-      begin
-        o = OaiRec.find(pid_check)
-        o.delete if o
-        File.open(@log_file, "a+") do |f|
-          f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.duplicate_record_detected') << " #{pid_check}" << I18n.t('oai_seed_logs.text_buffer') if o
-        end
-      rescue
-
-      end
-    end
-
-    def self.quarantine_and_report(record)
-      destination = "#{@quarantined_path}/#{Time.now.to_i}_#{File.basename(record)}"
-      FileUtils.mv(record, destination)
+  def self.check_if_exists(file)
+    fopen = File.open(file)
+    xml_contents = fopen.read
+    doc = Nokogiri::XML(xml_contents)
+    pid_check = doc.child.attribute('PID').value
+    begin
+      o = OaiRec.find(pid_check)
+      o.delete if o
       File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.problem_record_detected') << " #{destination}" << I18n.t('oai_seed_logs.text_buffer')
+        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.duplicate_record_detected') << " #{pid_check}" << I18n.t('oai_seed_logs.text_buffer') if o
       end
-    end
+    rescue
 
-    def self.has_rights?(record)
-      !!(record.metadata.to_s =~ /<dc:rights(.*?)<\/dc:rights>|<dcterms:license(.*?)<\/dcterms:license>|<dcterms:RightsStatement(.*?)<\/dcterms:RightsStatement>/)
     end
+  end
 
-    def self.has_noharvest_stopword?(record)
-      record.metadata.to_s.include? @noharvest_stopword
+  def self.quarantine_and_report(record)
+    destination = "#{@quarantined_path}/#{Time.now.to_i}_#{File.basename(record)}"
+    FileUtils.mv(record, destination)
+    File.open(@log_file, "a+") do |f|
+      f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.problem_record_detected') << " #{destination}" << I18n.t('oai_seed_logs.text_buffer')
     end
+  end
 
-    def self.build_identifier(obj, provider)
-      if (provider.common_repository_type == "Islandora")
-        assembled_identifier = ''
-        url = URI.parse(obj.endpoint_url)
-        obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
-          assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
-        end
-        assembled_identifier
-      else
-        token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}
-        assembled_identifier = provider.identifier_pattern.gsub("$1", token)
+  def self.has_rights?(record)
+    !!(record.metadata.to_s =~ /<dc:rights(.*?)<\/dc:rights>|<dcterms:license(.*?)<\/dcterms:license>|<dcterms:RightsStatement(.*?)<\/dcterms:RightsStatement>/)
+  end
+
+  def self.has_noharvest_stopword?(record)
+    record.metadata.to_s.include? @noharvest_stopword
+  end
+
+  def self.build_identifier(obj, provider)
+    if (provider.common_repository_type == "Islandora")
+      assembled_identifier = ''
+      url = URI.parse(obj.endpoint_url)
+      obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
+        assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
       end
-      obj.add_identifier(assembled_identifier)
+      assembled_identifier
+    else
+      token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}
+      assembled_identifier = provider.identifier_pattern.gsub("$1", token)
     end
+    obj.add_identifier(assembled_identifier)
+  end
 
-    def self.remove_unwanted_identifiers(obj, provider)
-      obj.remove_identifier_containing(@passthrough_url) if provider.common_repository_type == 'Passthrough Workflow'
-      obj.remove_identifier_containing('viewcontent.cgi?') if provider.common_repository_type == 'Bepress'
-      obj.remove_identifier_containing('/videos/') if provider.common_repository_type == 'Bepress'
-      obj.remove_identifier_containing(' ')
+  def self.remove_unwanted_identifiers(obj, provider)
+    obj.remove_identifier_containing(@passthrough_url) if provider.common_repository_type == 'Passthrough Workflow'
+    obj.remove_identifier_containing('viewcontent.cgi?') if provider.common_repository_type == 'Bepress'
+    obj.remove_identifier_containing('/videos/') if provider.common_repository_type == 'Bepress'
+    obj.remove_identifier_containing(' ')
+  end
+
+  def has_required_fields(file)
+    valid = true
+    %w[dc:title dc:rights dc:identifier].each do |field|
+      valid = File.readlines(file).any?{|x| x.include?(field)}
     end
+    valid
+  end
+  module_function :has_required_fields
 
-    ###
-    # special case customizations -- hopefully can be eliminated later
-    ###
-    def self.custom_file_prefixing(file_prefix, provider)
-      # little fix for weird nested OAI identifiers in Bepress
-      file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
+  ###
+  # special case customizations -- hopefully can be eliminated later
+  ###
+  def self.custom_file_prefixing(file_prefix, provider)
+    # little fix for weird nested OAI identifiers in Bepress
+    file_prefix.slice!("publication_") if provider.common_repository_type == "Bepress"
 
 
-      # little fix for additional weirdness in Bepress for PCOM
-      file_prefix.slice!("do_") if provider.common_repository_type == "Bepress" && provider.endpoint_url == "http://digitalcommons.pcom.edu/do/oai/" && provider.set == "publication:do_yearbooks"
+    # little fix for additional weirdness in Bepress for PCOM
+    file_prefix.slice!("do_") if provider.common_repository_type == "Bepress" && provider.endpoint_url == "http://digitalcommons.pcom.edu/do/oai/" && provider.set == "publication:do_yearbooks"
 
-      # little fix for CPP Omeka instance where sets are not in headers
-      file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Omeka" && provider.endpoint_url == "http://www.cppdigitallibrary.org/oai-pmh-repository/request"
+    # little fix for CPP Omeka instance where sets are not in headers
+    file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Omeka" && provider.endpoint_url == "http://www.cppdigitallibrary.org/oai-pmh-repository/request"
 
-      # little fix for Islandora instance where set are not in headers
-      #file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Islandora"
+    # little fix for Islandora instance where set are not in headers
+    #file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Islandora"
 
-      # little fix for Villanova's DPLA set
-      file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
+    # little fix for Villanova's DPLA set
+    file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"
 
-      file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Passthrough Workflow"
+    file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Passthrough Workflow"
 
-    end
+  end
 
 end

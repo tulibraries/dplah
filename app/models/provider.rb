@@ -21,7 +21,7 @@ class Provider < ActiveRecord::Base
 	  self.set = nil if self.set.blank?
 	  self.metadata_prefix = nil if self.metadata_prefix.blank?
 	  self.email = self.new_email unless self.new_email.blank?
-	  self.contributing_institution = self.contributing_institution_dc_field unless self.contributing_institution_dc_field.blank?
+	  self.contributing_institution_dc_field = self.contributing_institution_dc_field unless self.contributing_institution_dc_field.to_s.blank?
 	  self.contributing_institution = self.new_contributing_institution unless self.new_contributing_institution.blank?
 	  self.intermediate_provider = self.new_intermediate_provider unless self.new_intermediate_provider.blank?
 	  self.endpoint_url = self.new_endpoint_url unless self.new_endpoint_url.blank?

@@ -128,6 +128,22 @@ module HarvestUtils
   end
   module_function :convert
 
+  def self.customize_dc_field(doc, string_to_search, provider)
+    dc_fields = Provider.possible_ci_fields.map { |f| f.last }
+  
+    case provider.contributing_institution_dc_field
+    when "DC Field: Creator" then contributing_institution = doc.css("creator").text
+    when "DC Field: Publisher" then contributing_institution = doc.css("publisher").text
+    when "DC Field: Contributor" then contributing_institution = doc.css("contributor").text
+    when "DC Field: Source" then contributing_institution = doc.css("source").text
+    end
+         
+    node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
+    node_update.each do |node_value|
+      node_value.content = contributing_institution
+    end
+  end
+
   def cleanup(provider)
     types_ongoing ||= []
 
@@ -153,6 +169,7 @@ module HarvestUtils
       normalize_global(doc, "//description")
       normalize_global(doc, "//publisher")
       normalize_global(doc, "//contributor")
+      customize_dc_field(doc, "//contributing_institution", provider) unless provider.contributing_institution_dc_field.to_s.blank?
       normalize_global(doc, "//date")
       normalize_global(doc, "//type")
       normalize_global(doc, "//format")

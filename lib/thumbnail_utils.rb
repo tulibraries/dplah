@@ -36,10 +36,9 @@ module ThumbnailUtils
       def self.asset_url(obj)
         asset_url = ''
         obj.description.each do |desc|
-        thumb = desc if desc.include? 'thumbnail.jpg'
-        asset_url = thumb if thumb
-      end
-        asset_url
+          asset_url = desc if desc.include? 'thumbnail.jpg'
+        end
+        asset_url.downcase
       end
     end
 

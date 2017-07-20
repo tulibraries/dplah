@@ -237,7 +237,6 @@ module HarvestUtils
 
       begin
         unless has_required_fields(file)
-          binding.pry
           quarantine_and_report(file)
           next
         end

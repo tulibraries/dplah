@@ -382,6 +382,24 @@ RSpec.describe HarvestUtils do
 
     end
 
+    context 'when the file has no dc:rights field' do
+      let(:file) { File.join(RSpec.configuration.fixture_path,'required_fields','no_rights.xml')}
+
+      it 'returns false' do
+        expect(HarvestUtils::has_required_fields(file)).to be false
+      end
+
+    end
+
+    context 'when the file has no dc:identifier field' do
+      let(:file) { File.join(RSpec.configuration.fixture_path,'required_fields','no_identifier.xml')}
+
+      it 'returns false' do
+        expect(HarvestUtils::has_required_fields(file)).to be false
+      end
+
+    end
+
 
 
   end

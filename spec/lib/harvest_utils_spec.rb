@@ -231,7 +231,7 @@ RSpec.describe HarvestUtils do
 
       # Simulate data harvest
       FileUtils.cp_r File.join(convert_fixtures_directory, "ingest", "."), convert_directory
-      
+
       # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
     end
@@ -369,6 +369,20 @@ RSpec.describe HarvestUtils do
     it "doesn't alter url path" do
       expect(HarvestUtils::conform_url(rightsstatement)).to include "/vocab/InC-RUU/1.0/"
     end
+
+  end
+
+  describe '#has_required_fields' do
+    context 'when the file has no dc:title field' do
+      let(:file) { File.join(RSpec.configuration.fixture_path,'required_fields','no_title.xml')}
+
+      it 'returns false' do
+        expect(HarvestUtils::has_required_fields(file)).to be false
+      end
+
+    end
+
+
 
   end
 

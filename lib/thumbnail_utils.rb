@@ -9,13 +9,19 @@ module ThumbnailUtils
 
   class CommonRepositories
     class Contentdm
+
+      THUMBNAIL_SCALE = { 'small' => 10,
+                          'medium' => 35,
+                          'large' => 50 }
+
       def self.asset_url(obj)
         endpoint_url = obj.endpoint_url
         endpoint_url.slice! '/oai/oai.php'
+        source_scale = THUMBNAIL_SCALE.include?(obj.source_scale) ? THUMBNAIL_SCALE[obj.source_scale] : 10
         set = obj.set_spec
         p = obj.pid
         p = p.split("_").last
-        asset_url = "#{endpoint_url}/utils/getthumbnail/collection/#{set}/id/#{p}"
+        asset_url = "#{endpoint_url}/utils/ajaxhelper/?CISOROOT=#{set}&CISOPTR=#{p}&action=2&DMSCALE=#{source_scale}&DMWIDTH=3000&DMHEIGHT=3000"
         asset_url
       end
     end

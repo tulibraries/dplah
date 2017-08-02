@@ -166,6 +166,14 @@
   </div>
 
   <div class="field">
+    <%= f.label :source_scale%><br>
+    <%= f.select :source_scale, Provider.source_scale_selections, :prompt => "Please specify if applicable", :include_blank => true%>
+    <div class="field-tip">
+      Currently in beta for CONTENTdm and CONTENTdm SSL only
+    </div>
+  </div>
+
+  <div class="field">
     <%= f.label :thumbnail_pattern %><br>
     <%= f.text_field :thumbnail_pattern %>
     <div class="field-tip">

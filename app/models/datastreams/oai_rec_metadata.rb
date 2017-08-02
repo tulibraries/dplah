@@ -25,6 +25,7 @@ class Datastreams::OaiRecMetadata < ActiveFedora::OmDatastream
     t.collection_name(:index_as=>[:facetable, :stored_searchable], :type=>:string)
     t.partner(:index_as=>[:facetable, :sortable, :stored_searchable], :type=>:string)
     t.common_repository_type(:index_as=>[:stored_searchable], :type=>:string)
+    t.source_scale(:index_as=>[:displayable], :type=>:string)
     t.endpoint_url(:index_as=>[:stored_searchable], :type=>:string)
     t.thumbnail(:index_as=>[:stored_searchable], :type=>:string)
   end

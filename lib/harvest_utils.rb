@@ -331,6 +331,7 @@ module HarvestUtils
       rights_statement = options[:rights_statement] || ''
       common_repository_type = options[:common_repository_type] || ''
       endpoint_url = options[:endpoint_url] || ''
+      source_scale = options[:source_scale] || ''
       pid_prefix = options[:pid_prefix] || ''
 
       new_file = "#{Rails.root.join('tmp')}/xml_hold_file.xml"
@@ -340,7 +341,7 @@ module HarvestUtils
         xml_file_contents = fopen.read
         xml_open = "<records>"
         xml_close = "</records>"
-        xml_manifest = get_xml_manifest(:contributing_institution => contributing_institution, :intermediate_provider => intermediate_provider, :set_spec => set_spec, :collection_name => collection_name, :provider_id_prefix => provider_id_prefix, :rights_statement => rights_statement, :common_repository_type => common_repository_type, :endpoint_url => endpoint_url, :pid_prefix => pid_prefix)
+        xml_manifest = get_xml_manifest(:contributing_institution => contributing_institution, :intermediate_provider => intermediate_provider, :set_spec => set_spec, :collection_name => collection_name, :provider_id_prefix => provider_id_prefix, :rights_statement => rights_statement, :common_repository_type => common_repository_type, :endpoint_url => endpoint_url, :source_scale => source_scale, :pid_prefix => pid_prefix)
         fopen.close
         File.open(new_file, 'w') do |f|
           f.puts xml_heading
@@ -525,9 +526,9 @@ module HarvestUtils
       rights_statement = options[:rights_statement] || ''
       common_repository_type = options[:common_repository_type] || ''
       endpoint_url = options[:endpoint_url] || ''
+      source_scale = options[:source_scale] || ''
       pid_prefix = options[:pid_prefix] || ''
-
-      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><intermediate_provider>#{intermediate_provider}</intermediate_provider><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><common_repository_type>#{common_repository_type}</common_repository_type><endpoint_url>#{endpoint_url}</endpoint_url><provider_id_prefix>#{provider_id_prefix}</provider_id_prefix><rights_statement>#{rights_statement}</rights_statement><pid_prefix>#{pid_prefix}</pid_prefix><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
+      xml_manifest = "<manifest><partner>#{partner_s}</partner><contributing_institution>#{contributing_institution}</contributing_institution><intermediate_provider>#{intermediate_provider}</intermediate_provider><set_spec>#{set_spec}</set_spec><collection_name>#{collection_name}</collection_name><common_repository_type>#{common_repository_type}</common_repository_type><endpoint_url>#{endpoint_url}</endpoint_url><source_scale>#{source_scale}</source_scale><provider_id_prefix>#{provider_id_prefix}</provider_id_prefix><rights_statement>#{rights_statement}</rights_statement><pid_prefix>#{pid_prefix}</pid_prefix><harvest_data_directory>#{harvest_s}</harvest_data_directory><converted_foxml_directory>#{converted_s}</converted_foxml_directory></manifest>"
       return xml_manifest
     end
 
@@ -584,7 +585,7 @@ module HarvestUtils
       f_name_full = Rails.root + @harvest_path + f_name
       FileUtils::mkdir_p @harvest_path
       File.open(f_name_full, "w") { |file| file.puts full_records }
-      add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :intermediate_provider => provider.intermediate_provider, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix, :rights_statement => provider.rights_statement, :common_repository_type => provider.common_repository_type, :endpoint_url => provider.endpoint_url, :pid_prefix => @pid_prefix)
+      add_xml_formatting(f_name_full, :contributing_institution => provider.contributing_institution, :intermediate_provider => provider.intermediate_provider, :set_spec => provider.set, :collection_name => provider.collection_name, :provider_id_prefix => provider.provider_id_prefix, :rights_statement => provider.rights_statement, :common_repository_type => provider.common_repository_type, :endpoint_url => provider.endpoint_url, :source_scale => provider.source_scale, :pid_prefix => @pid_prefix)
       remove_bad_namespaces(f_name_full)
     end
 

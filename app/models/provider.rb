@@ -185,23 +185,24 @@ class Provider < ActiveRecord::Base
 		end
 	private
 
-	    def self.common_repositories
-          common_repositories = [['CONTENTdm', 'CONTENTdm'], ['CONTENTdm SSL (Redirect Method)', 'CONTENTdm SSL'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Islandora', 'Islandora'],['Passthrough Workflow', 'Passthrough Workflow'], ['VuDL', 'VuDL']]
-	    end
+		def self.common_repositories
+			[['CONTENTdm', 'CONTENTdm'], ['CONTENTdm SSL (Redirect Method)', 'CONTENTdm SSL'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Islandora', 'Islandora'],['Passthrough Workflow', 'Passthrough Workflow'], ['VuDL', 'VuDL']]
+		end
 
-	    def self.possible_thumbnail_fields
-          oai_dc_fields = [['OAI seed set','set'],['title','title'],['creator','creator'],['subject','subject'],['description','description'],['publisher','publisher'],['contributor','contributor'],['date','date'],['type','type'],['format','format'],['identifier','identifier'],['source','source'],['language','language'],['relation','relation'],['coverage','coverage'],['rights','rights']]
-          oai_dc_fields
-	    end
+	  def self.source_scale_selections
+		  [['small', 'small'], ['medium', 'medium'], ['large', 'large']]
+	  end
 
-	    def self.possible_identifier_fields
-          oai_dc_fields = [['title','title'],['creator','creator'],['subject','subject'],['contributor','contributor'],['identifier','identifier'],['source','source']]
-          oai_dc_fields
-	    end
+		def self.possible_thumbnail_fields
+			[['OAI seed set','set'],['title','title'],['creator','creator'],['subject','subject'],['description','description'],['publisher','publisher'],['contributor','contributor'],['date','date'],['type','type'],['format','format'],['identifier','identifier'],['source','source'],['language','language'],['relation','relation'],['coverage','coverage'],['rights','rights']]
+		end
 
-			def self.possible_ci_fields
-				possible_ci_fields = [['DC Field: Creator','DC Field: Creator'],['DC Field: Publisher','DC Field: Publisher'],['DC Field: Contributor','DC Field: Contributor'],['DC Field: Source','DC Field: Source']]
-				possible_ci_fields
-			end
+		def self.possible_identifier_fields
+			[['title','title'],['creator','creator'],['subject','subject'],['contributor','contributor'],['identifier','identifier'],['source','source']]
+		end
+
+		def self.possible_ci_fields
+			[['DC Field: Creator','DC Field: Creator'],['DC Field: Publisher','DC Field: Publisher'],['DC Field: Contributor','DC Field: Contributor'],['DC Field: Source','DC Field: Source']]
+		end
 
 end

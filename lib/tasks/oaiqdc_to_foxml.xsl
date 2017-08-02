@@ -53,6 +53,10 @@
     <xsl:value-of select="records/manifest/common_repository_type" />
   </xsl:variable>
 
+  <xsl:variable name="source_scale">
+    <xsl:value-of select="records/manifest/source_scale" />
+  </xsl:variable>
+
   <xsl:variable name="endpoint_url">
     <xsl:value-of select="records/manifest/endpoint_url" />
   </xsl:variable>
@@ -423,6 +427,10 @@
 
                   <xsl:element name="common_repository_type">
                     <xsl:value-of select="$common_repository_type" />
+                  </xsl:element>
+
+                  <xsl:element name="source_scale">
+                    <xsl:value-of select="$source_scale" />
                   </xsl:element>
 
                   <xsl:element name="endpoint_url">

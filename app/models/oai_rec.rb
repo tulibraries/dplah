@@ -44,6 +44,7 @@ class OaiRec < ActiveFedora::Base
 
 	# Partner-specific
 	has_attributes :common_repository_type, datastream: 'descMetadata', multiple: false
+	has_attributes :source_scale, datastream: 'descMetadata', multiple: false
 	has_attributes :endpoint_url, datastream: 'descMetadata', multiple: false
 	has_attributes :thumbnail, datastream: 'descMetadata', multiple: false
 

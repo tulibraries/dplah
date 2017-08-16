@@ -22,7 +22,7 @@ namespace :dpla do
     local_pids = {}
     ActiveFedora::RubydoraConnection.new(ActiveFedora.config.credentials).connection.search(nil) do |object|
       next if object.pid.start_with?('fedora-system:')
-      local_pids[DplaUtils.id_minter(object.pid, prefix).to_str] = object.pid
+      local_pids["#{prefix}#{object.pid}"] = object.pid
     end
 
     pids_not_in_dpla = local_pids.keys - dpla_ids

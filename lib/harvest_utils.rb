@@ -258,7 +258,7 @@ module HarvestUtils
         obj = OaiRec.find(pid)
         thumbnail = ThumbnailUtils.define_thumbnail(obj, provider)
         obj.thumbnail = thumbnail if thumbnail
-        obj.assign_rights
+        obj.assign_rights unless has_rights?(obj.DC.content)
         obj.assign_contributing_institution
         obj.add_dcmi_terms_to_type(provider)
         build_identifier(obj, provider) unless provider.identifier_pattern.blank? || provider.identifier_pattern.empty?
@@ -311,6 +311,11 @@ module HarvestUtils
     HarvestMailer.dumped_whole_index_email(@log_file).deliver
   end
   module_function :delete_all
+
+  def has_rights?(blob)
+    !!(blob =~ /<dc:rights(.*?)<\/dc:rights>|<dcterms:license(.*?)<\/dcterms:license>|<dcterms:RightsStatement(.*?)<\/dcterms:RightsStatement>/)
+  end
+  module_function :has_rights?
 
   def self.delete_from_aggregator(o)
     o.delete if o.pid.starts_with?(@pid_prefix + ':')
@@ -514,7 +519,7 @@ module HarvestUtils
         do_not_harvest =  has_noharvest_stopword?(record)
         identifier_reformed = reform_oai_id(record.header.identifier.to_s)
         record_header = "<record><header><identifier>#{identifier_reformed}</identifier><datestamp>#{record.header.datestamp.to_s}</datestamp></header>#{record.metadata.to_s}</record>"
-        has_rights_statement = has_rights?(record)
+        has_rights_statement = has_rights?(record.metadata.to_s)
         full_records += record_header + record.metadata.to_s unless record.header.status.to_s == "deleted" || do_not_harvest
         File.open(@log_file, "a+") do |f|
           f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
@@ -627,10 +632,6 @@ module HarvestUtils
       File.open(@log_file, "a+") do |f|
         f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.problem_record_detected') << " #{destination}" << I18n.t('oai_seed_logs.text_buffer')
       end
-    end
-
-    def self.has_rights?(record)
-      !!(record.metadata.to_s =~ /<dc:rights(.*?)<\/dc:rights>|<dcterms:license(.*?)<\/dcterms:license>|<dcterms:RightsStatement(.*?)<\/dcterms:RightsStatement>/)
     end
 
     def self.has_noharvest_stopword?(record)

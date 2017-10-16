@@ -55,7 +55,7 @@ class ProvidersController < ApplicationController
     queue_name = "harvest"
     workers = "workers"
     Resque.enqueue(Harvest, @provider)
-    redirect_to providers_url, notice: "Seed for \"#{@provider.name}\" is being harvested in the background. Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
+    redirect_to :back, notice: "Seed for \"#{@provider.name}\" is being harvested in the background. Currently at position ##{Resque.size(queue_name) + Resque.working.size} in the queue. #{Resque.working.size} #{workers.pluralize(Resque.working.size)} currently working on a task."
   end
 
   def harvest_all_selective_contributing_institution

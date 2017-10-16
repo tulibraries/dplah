@@ -231,7 +231,7 @@ RSpec.describe HarvestUtils do
 
       # Simulate data harvest
       FileUtils.cp_r File.join(convert_fixtures_directory, "ingest", "."), convert_directory
-      
+
       # Create the harvest log file
       HarvestUtils::create_log_file(log_name)
     end
@@ -368,6 +368,18 @@ RSpec.describe HarvestUtils do
 
     it "doesn't alter url path" do
       expect(HarvestUtils::conform_url(rightsstatement)).to include "/vocab/InC-RUU/1.0/"
+    end
+
+  end
+
+  describe '#custom_file_prefixing' do
+    context "when Islandora is the repository type" do
+      let(:provider) { FactoryGirl.build(:provider_islandora) }
+      it 'strips out set name from the custom prefix' do
+        prefix = "PITTSYMP_pitt_collection_150"
+        HarvestUtils::custom_file_prefixing(prefix, provider)
+        expect(prefix).to eql "PITTSYMP"
+      end
     end
 
   end

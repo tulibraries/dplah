@@ -130,14 +130,14 @@ module HarvestUtils
 
   def self.customize_dc_field(doc, string_to_search, provider)
     dc_fields = Provider.possible_ci_fields.map { |f| f.last }
-  
+
     case provider.contributing_institution_dc_field
     when "DC Field: Creator" then contributing_institution = doc.css("creator").text
     when "DC Field: Publisher" then contributing_institution = doc.css("publisher").text
     when "DC Field: Contributor" then contributing_institution = doc.css("contributor").text
     when "DC Field: Source" then contributing_institution = doc.css("source").text
     end
-         
+
     node_update = doc.search(string_to_search, "dc" => "http://purl.org/dc/elements/1.1/")
     node_update.each do |node_value|
       node_value.content = contributing_institution
@@ -673,7 +673,7 @@ module HarvestUtils
       file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Omeka" && provider.endpoint_url == "http://www.cppdigitallibrary.org/oai-pmh-repository/request"
 
       # little fix for Islandora instance where set are not in headers
-      #file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Islandora"
+      file_prefix.slice!("_#{provider.set.gsub(/([\/:.-])/,'_').gsub(/\s+/, '')}") if provider.common_repository_type == "Islandora"
 
       # little fix for Villanova's DPLA set
       file_prefix.slice!("dpla") if provider.contributing_institution == "Villanova University" && provider.common_repository_type == "VuDL"

@@ -131,4 +131,37 @@ FactoryGirl.define do
     thumbnail_token_1 "identifier"
     thumbnail_token_2 ""
   end
+
+  factory :provider_bepress, class: Provider do
+    name "Bepress"
+    common_repository_type "Bepress"
+  end
+
+  factory :provider_bepress_pcom_yearbooks, class: Provider do
+    name "Bepress PCOM"
+    common_repository_type "Bepress"
+    endpoint_url "http://digitalcommons.pcom.edu/do/oai/"
+    set "publication:do_yearbooks"
+  end
+
+  factory :provider_cpp, class: Provider do
+    name "CPP Omeka"
+    common_repository_type "Omeka"
+    endpoint_url "http://www.cppdigitallibrary.org/oai-pmh-repository/request"
+  end
+
+  factory :provider_islandora, class: Provider do
+    name "Islandora"
+    common_repository_type "Islandora"
+    endpoint_url "http://historicpittsburgh.org/oai2/oai.php"
+    set "pitt_collection.150"
+  end
+
+
+  factory :provider_vudl, class: Provider do
+    name "Villanova VuDL"
+    contributing_institution "Villanova University"
+    common_repository_type "VuDL"
+  end
+
 end

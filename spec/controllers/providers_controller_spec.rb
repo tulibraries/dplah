@@ -211,12 +211,12 @@ RSpec.describe ProvidersController, :type => :controller do
       # Create initial provider
       @provider = Provider.create! valid_attributes
       # Harvest data
+      request.env["HTTP_REFERER"] = "somewhere"
       sso = stdout_to_null
       VCR.use_cassette "provider_controller/harvest_small_collection" do
         post :harvest, {:id => @provider.to_param}, valid_session
       end
       $stdout = sso
-      request.env["HTTP_REFERER"] = "where_i_came_from"
     end
 
     it "Dumps and reindexes by institution" do

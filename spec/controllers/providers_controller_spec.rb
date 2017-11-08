@@ -216,20 +216,21 @@ RSpec.describe ProvidersController, :type => :controller do
         post :harvest, {:id => @provider.to_param}, valid_session
       end
       $stdout = sso
+      request.env["HTTP_REFERER"] = "where_i_came_from"
     end
 
     it "Dumps and reindexes by institution" do
       provider = Provider.create! valid_attributes
       put :dump_and_reindex_by_institution, {:id => provider.to_param, :provider => valid_attributes}, valid_session
       expect(DumpReindex).to have_queue_size_of(1)
-      expect(response).to redirect_to(providers_url)
+      expect(response).to redirect_to("somewhere")
     end
 
     it "Dumps and reindexes by set" do
       provider = Provider.create! valid_attributes
       put :dump_and_reindex_by_set, {:id => provider.to_param, :provider => valid_attributes}, valid_session
       expect(DumpReindex).to have_queue_size_of(1)
-      expect(response).to redirect_to(providers_url)
+      expect(response).to redirect_to("somewhere")
     end
   end
 

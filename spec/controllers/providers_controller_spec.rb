@@ -211,6 +211,7 @@ RSpec.describe ProvidersController, :type => :controller do
       # Create initial provider
       @provider = Provider.create! valid_attributes
       # Harvest data
+      request.env["HTTP_REFERER"] = "somewhere"
       sso = stdout_to_null
       VCR.use_cassette "provider_controller/harvest_small_collection" do
         post :harvest, {:id => @provider.to_param}, valid_session

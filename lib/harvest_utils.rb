@@ -651,6 +651,7 @@ module HarvestUtils
         assembled_identifier = provider.identifier_pattern.gsub("$1", token)
       end
       obj.add_identifier(assembled_identifier)
+      obj.add_identifier(obj.thumbnail) if (provider.common_repository_type == "Islandora")
     end
 
     def self.remove_unwanted_identifiers(obj, provider)

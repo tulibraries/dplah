@@ -24,8 +24,7 @@ en:
        transient OAI record(s) detected
     noharvest_records_detected: |+
        restricted OAI record(s) detected
-    no_rights_detected: |+
-       No rights detected for record --
+    no_rights_detected: No rights detected for record --
     single_transient_record_detected: Transient record detected --
     noharvest_detected: Restricted record detected --
     resumption_token_detected: |+

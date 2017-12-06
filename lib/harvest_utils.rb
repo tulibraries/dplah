@@ -247,9 +247,7 @@ module HarvestUtils
     file_prefix = (provider.set) ? "#{provider.provider_id_prefix}_#{provider.set}" : "#{provider.provider_id_prefix}"
     file_prefix = file_prefix.gsub(/([\/:.-])/,"_").gsub(/\s+/, "")
     custom_file_prefixing(file_prefix, provider)
-
     contents = @converted_path ? Dir.glob(File.join(@converted_path, "file_#{file_prefix}*.xml")) : Dir.glob("spec/fixtures/fedora/file_#{file_prefix}*.xml")
-
     contents.each do |file|
       check_if_exists(file)
       begin
@@ -525,7 +523,7 @@ module HarvestUtils
           f << I18n.t('oai_seed_logs.single_transient_record_detected') if record.header.status.to_s == "deleted"
           f << I18n.t('oai_seed_logs.noharvest_detected') if do_not_harvest
           if !has_rights_statement && !do_not_harvest && record.header.status.to_s != "deleted"
-            f << I18n.t('oai_seed_logs.no_rights_detected') + identifier_reformed
+            f << I18n.t('oai_seed_logs.no_rights_detected') + "[[#{identifier_reformed}]]\n"
           end
           transient_records += 1 if record.header.status.to_s == "deleted"
           noharvest_records += 1 if do_not_harvest
@@ -672,7 +670,7 @@ module HarvestUtils
       file_prefix.slice!("do_") if provider.common_repository_type == "Bepress" && provider.endpoint_url == "http://digitalcommons.pcom.edu/do/oai/" && provider.set == "publication:do_yearbooks"
 
       # little fix for CPP Omeka instance where sets are not in headers
-      file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Omeka" && provider.endpoint_url == "http://www.cppdigitallibrary.org/oai-pmh-repository/request"
+      file_prefix.slice!("_#{provider.set}") if provider.common_repository_type == "Omeka"
 
       # little fix for Islandora instance where set are not in headers
       file_prefix.slice!("_#{provider.set.gsub(/([\/:.-])/,'_').gsub(/\s+/, '')}") if provider.common_repository_type == "Islandora"

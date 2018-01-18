@@ -19,13 +19,13 @@ cp -n config/solr.yml.example config/solr.yml
 bundle install
 
 bundle exec rake db:migrate
-bundle exec rails g hydra:jetty
+bundle exec rails g jetty
 bundle exec rake jetty:config
 
 bundle exec rake jetty:start
 
 sleep 10
 
-rails server -d 
+rails server -d
 
-RAILS_ENV=development resque-pool --daemon 
+RAILS_ENV=development resque-pool --daemon

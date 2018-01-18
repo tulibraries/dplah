@@ -32,7 +32,7 @@ before_script:
 - cp -n config/resque-pool.yml.example config/resque-pool.yml
 - cp -n config/secrets.yml.example config/secrets.yml
 - cp -n config/solr.yml.example config/solr.yml
-- bundle exec rails g hydra:jetty
+- bundle exec rails g jetty
 - bundle exec rake jetty:config
 - bundle exec rake jetty:start
 - sleep 30

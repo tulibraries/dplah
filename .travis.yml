@@ -33,7 +33,7 @@ before_script:
 - cp -n config/secrets.yml.example config/secrets.yml
 - cp -n config/solr.yml.example config/solr.yml
 - bundle exec rails g jetty
-- bundle exec rake jetty:config
-- bundle exec rake jetty:start
+- bundle exec rake dplah:jetty:config
+- bundle exec rake dplah:jetty:start
 - sleep 30
 - bundle exec rake db:migrate

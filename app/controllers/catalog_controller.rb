@@ -4,29 +4,33 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
-  include Hydra::Controller::ControllerBehavior
+  #include Hydra::Controller::ControllerBehavior
   # These before_filters apply the hydra access controls
   #before_filter :enforce_show_permissions, :only=>:show
   # This applies appropriate access controls to all solr queries
   #CatalogController.solr_search_params_logic += [:add_access_controls_to_solr_params]
 
+  def self.solr_name(name, *opts)
+    ActiveFedora::SolrService.solr_name(name, *opts)
+  end
+
 
   configure_blacklight do |config|
     config.default_solr_params = {
       :qf => 'title_tesim
-              creator_tesim 
-              subject_tesim 
-              description_tesim 
-              publisher_tesim 
-              contributor_tesim 
-              date_tesim 
-              type_tesim 
-              format_tesim 
-              identifier_tesim 
-              source_tesim 
-              language_tesim 
-              relation_tesim 
-              coverage_tesim 
+              creator_tesim
+              subject_tesim
+              description_tesim
+              publisher_tesim
+              contributor_tesim
+              date_tesim
+              type_tesim
+              format_tesim
+              identifier_tesim
+              source_tesim
+              language_tesim
+              relation_tesim
+              coverage_tesim
               rights_tesim
               contributing_institution_tesim
               partner_tesim',

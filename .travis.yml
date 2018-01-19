@@ -36,3 +36,6 @@ before_script:
 - bundle exec rake dplah:jetty:config
 - bundle exec rake jetty:start
 - sleep 30
+
+after_failure:
+  - cat jetty/fedora/default/server/logs/fedora.log

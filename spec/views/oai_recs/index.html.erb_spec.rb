@@ -45,20 +45,20 @@ RSpec.describe "oai_recs/index", :type => :view do
 
   it "renders a list of oai_recs" do
     render
-    assert_select "tr>td", :text => "[&quot;#{item_record[:title].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:creator].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:subject].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:description].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:publisher].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:contributor].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:date].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:type].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:format].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:identifier].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:source].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:language].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:relation].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:coverage].first}&quot;]".to_s, :count => 2
-    assert_select "tr>td", :text => "[&quot;#{item_record[:rights].first}&quot;]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:title].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:creator].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:subject].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:description].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:publisher].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:contributor].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:date].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:type].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:format].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:identifier].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:source].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:language].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:relation].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:coverage].first}\"]".to_s, :count => 2
+    assert_select "tr>td", :text => "[\"#{item_record[:rights].first}\"]".to_s, :count => 2
   end
 end

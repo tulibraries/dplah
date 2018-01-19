@@ -22,7 +22,7 @@ bundle exec rake db:migrate
 bundle exec rails g jetty
 bundle exec rake dplah:jetty:config
 
-bundle exec rake dplah:jetty:start
+bundle exec rake jetty:start
 
 sleep 10
 

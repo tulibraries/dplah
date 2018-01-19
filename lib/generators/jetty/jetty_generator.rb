@@ -9,6 +9,7 @@ Requires system('unzip... ') to work, probably won't work on Windows.
 """
 
   def download_jetty
+    Jettywrapper.hydra_jetty_version = "v7.0.0"
     Jettywrapper.unzip
   end
 

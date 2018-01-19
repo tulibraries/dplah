@@ -38,4 +38,5 @@ before_script:
 - sleep 30
 
 after_failure:
+  - cat log/test.log
   - cat jetty/fedora/default/server/logs/fedora.log

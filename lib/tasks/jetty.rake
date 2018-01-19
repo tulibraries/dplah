@@ -2,9 +2,11 @@
 APP_ROOT= File.expand_path(File.join(File.dirname(__FILE__),"../.."))
 require 'jettywrapper'
 
+
 namespace :dplah do
   namespace :jetty do
     desc "Copies the default Solr & Fedora configs into the bundled Hydra Testing Server"
+    Jettywrapper.hydra_jetty_version = "v7.0.0"
     task :config => ['jetty:stop', 'jetty:clean'] do
       Rake::Task["dplah:jetty:config_fedora"].reenable
       Rake::Task["dplah:jetty:config_fedora"].invoke

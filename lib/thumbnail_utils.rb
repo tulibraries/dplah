@@ -131,7 +131,7 @@ module ThumbnailUtils
     thumbnail = ""
     f = obj.identifier
     f.each do |thumb|
-      if thumb.start_with?('http') && thumb.end_with?(*(OaiRec.thumbnail_extensions))
+      if thumb.start_with?('http') && (thumb.end_with?(*(OaiRec.thumbnail_extensions)) || thumb.include?('archive.org/services/img'))
         thumbnail = thumb
       end
     end

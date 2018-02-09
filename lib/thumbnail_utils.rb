@@ -67,19 +67,11 @@ module ThumbnailUtils
       def self.asset_url(obj)
         asset_url = ''
         url = URI.parse(obj.endpoint_url)
-        if ident.provider_id_prefix == "PRESBY"
-          ident = obj.pid.sub(/dplasng:PRESBY_/, "").sub("_", ":")
-          puts "ISLANDORA_IDENTIFIER IS #{ident}"
+        obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
+          ident = /[[:alnum:]]:PRESBY_(.*)/.match(obj.pid)[1].gsub("_",":") if obj.provider_id_prefix == "PRESBY"
           Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
           asset_url = "#{url.scheme}://#{url.host}/islandora/object/#{ident}/datastream/TN/view/"
-        else
-          obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
-            puts "ISLANDORA_IDENTIFIER IS #{ident}"
-            Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
-            asset_url = "#{url.scheme}://#{url.host}/islandora/object/#{ident}/datastream/TN/view/"
-          end
         end
-        puts asset_url
         asset_url
       end
     end

@@ -643,6 +643,11 @@ module HarvestUtils
         obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
           assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
         end
+        # Fixes APS obj where the identifier field is empty
+        if assembled_identifier == ""
+          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":") 
+          assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
+        end
         assembled_identifier
       else
         token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}

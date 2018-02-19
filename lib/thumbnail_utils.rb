@@ -73,6 +73,11 @@ module ThumbnailUtils
           Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
           asset_url = "#{url.scheme}://#{url.host}/islandora/object/#{ident}/datastream/TN/view/"
         end
+        if asset_url == ""
+          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":") 
+          Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
+          asset_url = "#{url.scheme}://#{url.host}/islandora/object/#{ident}/datastream/TN/view/"
+        end
         asset_url
       end
     end

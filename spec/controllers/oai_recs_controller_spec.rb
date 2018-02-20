@@ -45,7 +45,8 @@ RSpec.describe OaiRecsController, :type => :controller do
   end
 
   describe "GET index" do
-    xit "assigns all oai_recs as @oai_recs" do
+    it "assigns all oai_recs as @oai_recs" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
       oai_rec = OaiRec.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:oai_recs)).to eq([oai_rec])
@@ -53,7 +54,8 @@ RSpec.describe OaiRecsController, :type => :controller do
   end
 
   describe "GET show" do
-    xit "assigns the requested oai_rec as @oai_rec" do
+    it "assigns the requested oai_rec as @oai_rec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
       oai_rec = OaiRec.create! valid_attributes
       get :show, {:id => oai_rec.to_param}, valid_session
       expect(assigns(:oai_rec)).to eq(oai_rec)
@@ -61,14 +63,16 @@ RSpec.describe OaiRecsController, :type => :controller do
   end
 
   describe "GET new" do
-    xit "assigns a new oai_rec as @oai_rec" do
+    it "assigns a new oai_rec as @oai_rec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
       get :new, {}, valid_session
       expect(assigns(:oai_rec)).to be_a_new(OaiRec)
     end
   end
 
   describe "GET edit" do
-    xit "assigns the requested oai_rec as @oai_rec" do
+    it "assigns the requested oai_rec as @oai_rec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
       oai_rec = OaiRec.create! valid_attributes
       get :edit, {:id => oai_rec.to_param}, valid_session
       expect(assigns(:oai_rec)).to eq(oai_rec)
@@ -77,19 +81,22 @@ RSpec.describe OaiRecsController, :type => :controller do
 
   describe "POST create" do
     describe "with valid params" do
-      xit "creates a new OaiRec" do
+      it "creates a new OaiRec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
         expect {
           post :create, {:oai_rec => valid_attributes}, valid_session
         }.to change(OaiRec, :count).by(1)
       end
 
-      xit "assigns a newly created oai_rec as @oai_rec" do
+      it "assigns a newly created oai_rec as @oai_rec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
         post :create, {:oai_rec => valid_attributes}, valid_session
         expect(assigns(:oai_rec)).to be_a(OaiRec)
         expect(assigns(:oai_rec)).to be_persisted
       end
 
-      xit "redirects to the created oai_rec" do
+      it "redirects to the created oai_rec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
         post :create, {:oai_rec => valid_attributes}, valid_session
         expect(response).to redirect_to(OaiRec.last)
       end
@@ -114,20 +121,23 @@ RSpec.describe OaiRecsController, :type => :controller do
         skip("Add a hash of attributes valid for your model")
       }
 
-      xit "updates the requested oai_rec" do
+      it "updates the requested oai_rec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
         oai_rec = OaiRec.create! valid_attributes
         put :update, {:id => oai_rec.to_param, :oai_rec => new_attributes}, valid_session
         oai_rec.reload
         skip("Add assertions for updated state")
       end
 
-      xit "assigns the requested oai_rec as @oai_rec" do
+      it "assigns the requested oai_rec as @oai_rec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
         oai_rec = OaiRec.create! valid_attributes
         put :update, {:id => oai_rec.to_param, :oai_rec => valid_attributes}, valid_session
         expect(assigns(:oai_rec)).to eq(oai_rec)
       end
 
-      xit "redirects to the oai_rec" do
+      it "redirects to the oai_rec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
         oai_rec = OaiRec.create! valid_attributes
         put :update, {:id => oai_rec.to_param, :oai_rec => valid_attributes}, valid_session
         expect(response).to redirect_to(oai_rec)
@@ -150,14 +160,16 @@ RSpec.describe OaiRecsController, :type => :controller do
   end
 
   describe "DELETE destroy" do
-    xit "destroys the requested oai_rec" do
+    it "destroys the requested oai_rec" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
       oai_rec = OaiRec.create! valid_attributes
       expect {
         delete :destroy, {:id => oai_rec.to_param}, valid_session
       }.to change(OaiRec, :count).by(-1)
     end
 
-    xit "redirects to the oai_recs list" do
+    it "redirects to the oai_recs list" do
+      skip "Fails Travis-CI: 503 Service Unavailable"
       oai_rec = OaiRec.create! valid_attributes
       delete :destroy, {:id => oai_rec.to_param}, valid_session
       expect(response).to redirect_to(oai_recs_url)

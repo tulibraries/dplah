@@ -45,7 +45,7 @@ RSpec.describe OaiRecsController, :type => :controller do
   end
 
   describe "GET index" do
-    it "assigns all oai_recs as @oai_recs" do
+    xit "assigns all oai_recs as @oai_recs" do
       oai_rec = OaiRec.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:oai_recs)).to eq([oai_rec])
@@ -53,7 +53,7 @@ RSpec.describe OaiRecsController, :type => :controller do
   end
 
   describe "GET show" do
-    it "assigns the requested oai_rec as @oai_rec" do
+    xit "assigns the requested oai_rec as @oai_rec" do
       oai_rec = OaiRec.create! valid_attributes
       get :show, {:id => oai_rec.to_param}, valid_session
       expect(assigns(:oai_rec)).to eq(oai_rec)
@@ -61,14 +61,14 @@ RSpec.describe OaiRecsController, :type => :controller do
   end
 
   describe "GET new" do
-    it "assigns a new oai_rec as @oai_rec" do
+    xit "assigns a new oai_rec as @oai_rec" do
       get :new, {}, valid_session
       expect(assigns(:oai_rec)).to be_a_new(OaiRec)
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested oai_rec as @oai_rec" do
+    xit "assigns the requested oai_rec as @oai_rec" do
       oai_rec = OaiRec.create! valid_attributes
       get :edit, {:id => oai_rec.to_param}, valid_session
       expect(assigns(:oai_rec)).to eq(oai_rec)
@@ -77,19 +77,19 @@ RSpec.describe OaiRecsController, :type => :controller do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new OaiRec" do
+      xit "creates a new OaiRec" do
         expect {
           post :create, {:oai_rec => valid_attributes}, valid_session
         }.to change(OaiRec, :count).by(1)
       end
 
-      it "assigns a newly created oai_rec as @oai_rec" do
+      xit "assigns a newly created oai_rec as @oai_rec" do
         post :create, {:oai_rec => valid_attributes}, valid_session
         expect(assigns(:oai_rec)).to be_a(OaiRec)
         expect(assigns(:oai_rec)).to be_persisted
       end
 
-      it "redirects to the created oai_rec" do
+      xit "redirects to the created oai_rec" do
         post :create, {:oai_rec => valid_attributes}, valid_session
         expect(response).to redirect_to(OaiRec.last)
       end
@@ -114,20 +114,20 @@ RSpec.describe OaiRecsController, :type => :controller do
         skip("Add a hash of attributes valid for your model")
       }
 
-      it "updates the requested oai_rec" do
+      xit "updates the requested oai_rec" do
         oai_rec = OaiRec.create! valid_attributes
         put :update, {:id => oai_rec.to_param, :oai_rec => new_attributes}, valid_session
         oai_rec.reload
         skip("Add assertions for updated state")
       end
 
-      it "assigns the requested oai_rec as @oai_rec" do
+      xit "assigns the requested oai_rec as @oai_rec" do
         oai_rec = OaiRec.create! valid_attributes
         put :update, {:id => oai_rec.to_param, :oai_rec => valid_attributes}, valid_session
         expect(assigns(:oai_rec)).to eq(oai_rec)
       end
 
-      it "redirects to the oai_rec" do
+      xit "redirects to the oai_rec" do
         oai_rec = OaiRec.create! valid_attributes
         put :update, {:id => oai_rec.to_param, :oai_rec => valid_attributes}, valid_session
         expect(response).to redirect_to(oai_rec)
@@ -150,14 +150,14 @@ RSpec.describe OaiRecsController, :type => :controller do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested oai_rec" do
+    xit "destroys the requested oai_rec" do
       oai_rec = OaiRec.create! valid_attributes
       expect {
         delete :destroy, {:id => oai_rec.to_param}, valid_session
       }.to change(OaiRec, :count).by(-1)
     end
 
-    it "redirects to the oai_recs list" do
+    xit "redirects to the oai_recs list" do
       oai_rec = OaiRec.create! valid_attributes
       delete :destroy, {:id => oai_rec.to_param}, valid_session
       expect(response).to redirect_to(oai_recs_url)

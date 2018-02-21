@@ -144,7 +144,9 @@ class Provider < ActiveRecord::Base
 	end
 
 	def last_harvested
-		read_attribute(:last_harvested) || ''
+		last_harvested_s = read_attribute(:last_harvested)
+		last_harvested_s = "0000-01-01" if last_harvested_s.blank?
+	  DateTime.parse(last_harvested_s)
 	end
 
 	def interval

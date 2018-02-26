@@ -35,4 +35,4 @@ vendor/bundle/*
 
 dump.rdb
 .idea
-
+/.byebug_history

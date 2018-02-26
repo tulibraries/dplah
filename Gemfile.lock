@@ -8,6 +8,17 @@ GIT
       faraday
       faraday_middleware
 
+PATH
+  remote: vendor/blacklight
+  specs:
+    blacklight (5.15.0)
+      bootstrap-sass (~> 3.2)
+      deprecation
+      kaminari (>= 0.15)
+      nokogiri (~> 1.6)
+      rails (>= 3.2.6, < 5)
+      rsolr (~> 1.0.11)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -69,13 +80,6 @@ GEM
     bcp47 (0.3.3)
       i18n
     bcrypt (3.1.11)
-    blacklight (5.15.0)
-      bootstrap-sass (~> 3.2)
-      deprecation
-      kaminari (>= 0.15)
-      nokogiri (~> 1.6)
-      rails (>= 3.2.6, < 5)
-      rsolr (~> 1.0.11)
     bootstrap-sass (3.3.4.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
@@ -497,7 +501,7 @@ PLATFORMS
 
 DEPENDENCIES
   active-fedora (= 7.1.2)
-  blacklight (= 5.15)
+  blacklight!
   bootstrap-sass (~> 3.3.4.1)
   byebug
   coffee-rails (~> 4.0.0)

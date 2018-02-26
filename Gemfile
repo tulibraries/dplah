@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer',  platforms: :ruby
 #gem 'hydra', '7.1.0'
 gem 'active-fedora', '7.1.2'
-gem 'blacklight', '5.15'
+gem 'blacklight', path: "vendor/blacklight"
 
 gem 'nokogiri', '~> 1.6.0'
 gem 'nom-xml', '~> 0.5.1'

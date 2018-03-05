@@ -185,3 +185,46 @@ class CatalogController < ApplicationController
   end
 
 end
+#
+# module Blacklight
+#   # These are methods that are used at both the view helper and controller layers
+#   # They are only dependent on `blacklight_config` and `@response`
+#   #
+#   module Facet
+#     def facet_paginator(field_config, display_facet)
+#       blacklight_config.facet_paginator_class.new(
+#         display_facet.items,
+#         sort: display_facet.sort,
+#         offset: display_facet.offset,
+#         limit: this_facet_limit_for(field_config.key)
+#       )
+#     end
+#
+#     DEFAULT_FACET_LIMIT = 10
+#
+#     # Look up facet limit for given facet_field. Will look at config, and
+#     # if config is 'true' will look up from Solr @response if available. If
+#     # no limit is avaialble, returns nil. Used from #add_facetting_to_solr
+#     # to supply f.fieldname.facet.limit values in solr request (no @response
+#     # available), and used in display (with @response available) to create
+#     # a facet paginator with the right limit.
+#     def this_facet_limit_for(facet_field)
+#       facet = blacklight_config.facet_fields[facet_field]
+#       return if facet.blank?
+#
+#       if facet.limit and @response and @response.aggregations[facet_field]
+#         limit = @response.aggregations[facet_field].limit
+#
+#         if limit.nil? # we didn't get or a set a limit, so infer one.
+#           facet.limit if facet.limit != true
+#         elsif limit == -1 # limit -1 is solr-speak for unlimited
+#           nil
+#         else
+#           limit.to_i - 1 # we added 1 to find out if we needed to paginate
+#         end
+#       elsif facet.limit
+#         facet.limit == true ? DEFAULT_FACET_LIMIT : facet.limit
+#       end
+#     end
+#   end
+# end

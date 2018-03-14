@@ -14,60 +14,60 @@
 ActiveRecord::Schema.define(version: 20160609122158) do
 
   create_table "bookmarks", force: :cascade do |t|
-    t.integer  "user_id",                   null: false
-    t.string   "user_type",     limit: 255
-    t.string   "document_id",   limit: 255
-    t.string   "title",         limit: 255
+    t.integer  "user_id",       null: false
+    t.string   "user_type"
+    t.string   "document_id"
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "document_type", limit: 255
+    t.string   "document_type"
   end
 
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id"
 
   create_table "providers", force: :cascade do |t|
-    t.string   "name",                              limit: 255
+    t.string   "name"
     t.text     "description"
-    t.string   "endpoint_url",                      limit: 255
-    t.string   "metadata_prefix",                   limit: 255
-    t.string   "set",                               limit: 255
-    t.string   "contributing_institution",          limit: 255
-    t.string   "collection_name",                   limit: 255
+    t.string   "endpoint_url"
+    t.string   "metadata_prefix"
+    t.string   "set"
+    t.string   "contributing_institution"
+    t.string   "collection_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "set_spec",                          limit: 255
-    t.string   "in_production",                     limit: 255
-    t.string   "new_contributing_institution",      limit: 255
-    t.string   "email",                             limit: 255
-    t.string   "provider_id_prefix",                limit: 255
-    t.string   "new_provider_id_prefix",            limit: 255
-    t.string   "new_endpoint_url",                  limit: 255
-    t.string   "common_repository_type",            limit: 255
-    t.string   "thumbnail_pattern",                 limit: 255
-    t.string   "thumbnail_token_1",                 limit: 255
-    t.string   "thumbnail_token_2",                 limit: 255
-    t.string   "thumbnail_explanation",             limit: 255
-    t.string   "common_transformation",             limit: 255
-    t.string   "intermediate_provider",             limit: 255
-    t.string   "new_intermediate_provider",         limit: 255
-    t.string   "new_email",                         limit: 255
-    t.string   "rights_statement",                  limit: 255
-    t.string   "identifier_pattern",                limit: 255
-    t.string   "identifier_token",                  limit: 255
-    t.string   "types_mapping",                     limit: 255
-    t.string   "type_image",                        limit: 255
-    t.string   "type_text",                         limit: 255
-    t.string   "type_moving_image",                 limit: 255
-    t.string   "type_sound",                        limit: 255
-    t.string   "type_physical_object",              limit: 255
-    t.string   "contributing_institution_dc_field", limit: 255
-    t.string   "last_harvested",                    limit: 255
+    t.string   "set_spec"
+    t.string   "in_production"
+    t.string   "new_contributing_institution"
+    t.string   "email"
+    t.string   "provider_id_prefix"
+    t.string   "new_provider_id_prefix"
+    t.string   "new_endpoint_url"
+    t.string   "common_repository_type"
+    t.string   "thumbnail_pattern"
+    t.string   "thumbnail_token_1"
+    t.string   "thumbnail_token_2"
+    t.string   "thumbnail_explanation"
+    t.string   "common_transformation"
+    t.string   "intermediate_provider"
+    t.string   "new_intermediate_provider"
+    t.string   "new_email"
+    t.string   "rights_statement"
+    t.string   "identifier_pattern"
+    t.string   "identifier_token"
+    t.string   "types_mapping"
+    t.string   "type_image"
+    t.string   "type_text"
+    t.string   "type_moving_image"
+    t.string   "type_sound"
+    t.string   "type_physical_object"
+    t.string   "contributing_institution_dc_field"
+    t.string   "last_harvested"
   end
 
   create_table "searches", force: :cascade do |t|
     t.text     "query_params"
     t.integer  "user_id"
-    t.string   "user_type",    limit: 255
+    t.string   "user_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -75,19 +75,19 @@ ActiveRecord::Schema.define(version: 20160609122158) do
   add_index "searches", ["user_id"], name: "index_searches_on_user_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "",    null: false
-    t.string   "encrypted_password",     limit: 255, default: "",    null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0,     null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "guest",                              default: false
+    t.boolean  "guest",                  default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

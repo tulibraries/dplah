@@ -64,6 +64,10 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
+    #
+    # set :index_range to true if you want the facet pagination view to have facet prefix-based navigation
+    #  (useful when user clicks "more" on a large facet and wants to navigate alphabetically across a large set of results)
+    # :index_range can be an array or range of prefixes that will be used to create the navigation (note: It is case sensitive when searching values)
 
     Rails.configuration.enabled_facets.each do |field_name, field_config|
       config.add_facet_field solr_name(field_name, :facetable), field_config
@@ -157,6 +161,9 @@ class CatalogController < ApplicationController
       }
     end
 
+    # Specifying a :qt only to show it's possible, and so our internal automated
+    # tests can test it. In this case it's the same as
+    # config[:default_solr_parameters][:qt], so isn't actually neccesary.
     config.add_search_field('subject') do |field|
       field.qt = 'search'
       field.solr_local_parameters = {

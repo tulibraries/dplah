@@ -13,8 +13,8 @@ Rails.application.routes.draw do
     end
   end
 
-
-  root :to => "catalog#index"
+  root to: "catalog#index"
+    concern :searchable, Blacklight::Routes::Searchable.new
 
   get 'csv' => "csv#index"
 
@@ -24,11 +24,26 @@ Rails.application.routes.draw do
   get 'about' => 'high_voltage/pages#show', id: 'about'
   get 'sponsors' => 'high_voltage/pages#show', id: 'sponsors'
 
-  blacklight_for :catalog
-  devise_for :users, :skip => [:registrations] 
-  as :user do
-    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+  mount Blacklight::Engine => '/'
+  Blacklight::Marc.add_routes(self)
+
+  resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+    concerns :searchable
+  end
+
+  devise_for :users
+  concern :exportable, Blacklight::Routes::Exportable.new
+
+  resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
+    concerns :exportable
+  end
+
+  resources :bookmarks do
+    concerns :exportable
+
+    collection do
+      delete 'clear'
+    end
   end
 
   authenticate :user do

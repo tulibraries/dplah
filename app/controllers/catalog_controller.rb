@@ -1,9 +1,10 @@
-# -*- encoding : utf-8 -*-
-require 'blacklight/catalog'
+# frozen_string_literal: true
+# -*- encoding : utf-8 -*-kj
 
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
+  include Blacklight::Marc::Catalog
   #include Hydra::Controller::ControllerBehavior
   # These before_filters apply the hydra access controls
   #before_filter :enforce_show_permissions, :only=>:show
@@ -17,25 +18,25 @@ class CatalogController < ApplicationController
 
   configure_blacklight do |config|
     config.default_solr_params = {
-      :qf => 'title_tesim
-              creator_tesim
-              subject_tesim
-              description_tesim
-              publisher_tesim
-              contributor_tesim
-              date_tesim
-              type_tesim
-              format_tesim
-              identifier_tesim
-              source_tesim
-              language_tesim
-              relation_tesim
-              coverage_tesim
-              rights_tesim
-              contributing_institution_tesim
-              partner_tesim',
-      :qt => 'search',
-      :rows => 10
+      qf: 'title_tesim
+           creator_tesim
+           subject_tesim
+           description_tesim
+           publisher_tesim
+           contributor_tesim
+           date_tesim
+           type_tesim
+           format_tesim
+           identifier_tesim
+           source_tesim
+           language_tesim
+           relation_tesim
+           coverage_tesim
+           rights_tesim
+           contributing_institution_tesim
+           partner_tesim',
+      qt: 'search',
+      rows: 10
     }
 
     # solr field configuration for search results/index views
@@ -51,7 +52,7 @@ class CatalogController < ApplicationController
     # * If left unset, then all facet values returned by solr will be displayed.
     # * If set to an integer, then "f.somefield.facet.limit" will be added to
     # solr request, with actual solr request being +1 your configured limit --
-    # you configure the number of items you actually want _tsimed_ in a page.
+    # you configure the number of items you actually want _displayed_ in a page.
     # * If set to 'true', then no additional parameters will be sent to solr,
     # but any 'sniffed' request limit parameters will be used for paging, with
     # paging at requested limit -1. Can sniff from facet.limit or
@@ -70,10 +71,7 @@ class CatalogController < ApplicationController
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
     # handler defaults, or have no facets.
-    config.default_solr_params[:'facet.field'] = config.facet_fields.keys
-    #use this instead if you don't want to query facets marked :show=>false
-    #config.default_solr_params[:'facet.field'] = config.facet_fields.select{ |k, v| v[:show] != false}.keys
-
+    config.add_facet_fields_to_solr_request!
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
@@ -138,35 +136,32 @@ class CatalogController < ApplicationController
     # of Solr search fields.
 
     config.add_search_field('title') do |field|
-      # :solr_local_parameters will be sent using Solr LocalParams
-      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
-      # Solr parameter de-referencing like $title_qf.
-      # See: http://wiki.apache.org/solr/LocalParams
+      # solr_parameters hash are sent to Solr as ordinary url query params.
       field.solr_local_parameters = {
-        :qf => '$title_qf',
-        :pf => '$title_pf'
+        qf: '${title_qf}',
+        pf: '${title_pf}'
       }
     end
 
     config.add_search_field('creator') do |field|
       field.solr_local_parameters = {
-        :qf => '$creator_qf',
-        :pf => '$creator_pf'
+        qf: '${author_qf}',
+        pf: '${author_pf}'
       }
     end
 
     config.add_search_field('contributing_institution') do |field|
       field.solr_local_parameters = {
-        :qf => '$contributing_institution_qf',
-        :pf => '$contributing_institution_pf'
+        qf: '$contributing_institution_qf',
+        pf: '$contributing_institution_pf'
       }
     end
 
     config.add_search_field('subject') do |field|
       field.qt = 'search'
       field.solr_local_parameters = {
-        :qf => '$subject_qf',
-        :pf => '$subject_pf'
+        qf: '${subject_qf}',
+        pf: '${subject_pf}'
       }
     end
 

@@ -25,7 +25,6 @@ Rails.application.routes.draw do
   get 'sponsors' => 'high_voltage/pages#show', id: 'sponsors'
 
   mount Blacklight::Engine => '/'
-  Blacklight::Marc.add_routes(self)
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
     concerns :searchable

@@ -88,4 +88,3 @@ group :development do
 end
 
 gem 'rsolr', '>= 1.0'
-gem 'blacklight-marc', '~> 6.1'

@@ -18,4 +18,4 @@ test: &test
   url: <%= ENV['SOLR_URL'] || "http://127.0.0.1:#{ENV['TEST_JETTY_PORT'] || 8983}/solr/test" %>
 production:
   adapter: solr
-  url: http://your.production.server:8080/bl_solr/core0
+  url: http://localhost:8983/solr/prod

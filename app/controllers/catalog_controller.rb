@@ -1,5 +1,5 @@
-# -*- encoding : utf-8 -*-
-require 'blacklight/catalog'
+# frozen_string_literal: true
+# -*- encoding : utf-8 -*-kj
 
 class CatalogController < ApplicationController
 
@@ -17,25 +17,25 @@ class CatalogController < ApplicationController
 
   configure_blacklight do |config|
     config.default_solr_params = {
-      :qf => 'title_tesim
-              creator_tesim
-              subject_tesim
-              description_tesim
-              publisher_tesim
-              contributor_tesim
-              date_tesim
-              type_tesim
-              format_tesim
-              identifier_tesim
-              source_tesim
-              language_tesim
-              relation_tesim
-              coverage_tesim
-              rights_tesim
-              contributing_institution_tesim
-              partner_tesim',
-      :qt => 'search',
-      :rows => 10
+      qf: 'title_tesim
+           creator_tesim
+           subject_tesim
+           description_tesim
+           publisher_tesim
+           contributor_tesim
+           date_tesim
+           type_tesim
+           format_tesim
+           identifier_tesim
+           source_tesim
+           language_tesim
+           relation_tesim
+           coverage_tesim
+           rights_tesim
+           contributing_institution_tesim
+           partner_tesim',
+      qt: 'search',
+      rows: 10
     }
 
     # solr field configuration for search results/index views
@@ -51,7 +51,7 @@ class CatalogController < ApplicationController
     # * If left unset, then all facet values returned by solr will be displayed.
     # * If set to an integer, then "f.somefield.facet.limit" will be added to
     # solr request, with actual solr request being +1 your configured limit --
-    # you configure the number of items you actually want _tsimed_ in a page.
+    # you configure the number of items you actually want _displayed_ in a page.
     # * If set to 'true', then no additional parameters will be sent to solr,
     # but any 'sniffed' request limit parameters will be used for paging, with
     # paging at requested limit -1. Can sniff from facet.limit or
@@ -63,6 +63,10 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
+    #
+    # set :index_range to true if you want the facet pagination view to have facet prefix-based navigation
+    #  (useful when user clicks "more" on a large facet and wants to navigate alphabetically across a large set of results)
+    # :index_range can be an array or range of prefixes that will be used to create the navigation (note: It is case sensitive when searching values)
 
     Rails.configuration.enabled_facets.each do |field_name, field_config|
       config.add_facet_field solr_name(field_name, :facetable), field_config
@@ -70,10 +74,7 @@ class CatalogController < ApplicationController
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
     # handler defaults, or have no facets.
-    config.default_solr_params[:'facet.field'] = config.facet_fields.keys
-    #use this instead if you don't want to query facets marked :show=>false
-    #config.default_solr_params[:'facet.field'] = config.facet_fields.select{ |k, v| v[:show] != false}.keys
-
+    config.add_facet_fields_to_solr_request!
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
@@ -138,35 +139,35 @@ class CatalogController < ApplicationController
     # of Solr search fields.
 
     config.add_search_field('title') do |field|
-      # :solr_local_parameters will be sent using Solr LocalParams
-      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
-      # Solr parameter de-referencing like $title_qf.
-      # See: http://wiki.apache.org/solr/LocalParams
+      # solr_parameters hash are sent to Solr as ordinary url query params.
       field.solr_local_parameters = {
-        :qf => '$title_qf',
-        :pf => '$title_pf'
+        qf: '${title_qf}',
+        pf: '${title_pf}'
       }
     end
 
     config.add_search_field('creator') do |field|
       field.solr_local_parameters = {
-        :qf => '$creator_qf',
-        :pf => '$creator_pf'
+        qf: '${author_qf}',
+        pf: '${author_pf}'
       }
     end
 
     config.add_search_field('contributing_institution') do |field|
       field.solr_local_parameters = {
-        :qf => '$contributing_institution_qf',
-        :pf => '$contributing_institution_pf'
+        qf: '$contributing_institution_qf',
+        pf: '$contributing_institution_pf'
       }
     end
 
+    # Specifying a :qt only to show it's possible, and so our internal automated
+    # tests can test it. In this case it's the same as
+    # config[:default_solr_parameters][:qt], so isn't actually neccesary.
     config.add_search_field('subject') do |field|
       field.qt = 'search'
       field.solr_local_parameters = {
-        :qf => '$subject_qf',
-        :pf => '$subject_pf'
+        qf: '${subject_qf}',
+        pf: '${subject_pf}'
       }
     end
 

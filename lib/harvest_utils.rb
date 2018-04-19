@@ -121,7 +121,7 @@ module HarvestUtils
         f << "#{u_files.length} "<< I18n.t('oai_seed_logs.convert_count')
       end
       u_files.length.times do |i|
-        puts "Contents of #{u_files[i]} transformed"
+        puts "Transforming contents of #{u_files[i]}"
         `xsltproc #{xslt_path} #{u_files[i]}`
         File.delete(u_files[i])
       end
@@ -270,7 +270,17 @@ module HarvestUtils
         obj.save
         obj.to_solr
         obj.update_index
-      rescue
+      rescue Exception
+        log_message = [I18n.t('oai_seed_logs.text_buffer'),
+                       pid,
+                       $!.message,
+                       I18n.t('oai_seed_logs.ingest_error'),
+                       "Backtrace:",
+                       $@[0..2]].join("\n")
+        Rails.logger.error log_message
+        File.open(@log_file, "a+") do |f|
+          f << I18n.t('oai_seed_logs.ingest_error') << "#{pid}"
+        end
         quarantine_and_report(file)
         next
       end
@@ -626,9 +636,19 @@ module HarvestUtils
 
     def self.quarantine_and_report(record)
       destination = "#{@quarantined_path}/#{Time.now.to_i}_#{File.basename(record)}"
-      FileUtils.mv(record, destination)
-      File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.problem_record_detected') << " #{destination}" << I18n.t('oai_seed_logs.text_buffer')
+      begin
+        FileUtils.mv(record, destination)
+        File.open(@log_file, "a+") do |f|
+          f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.problem_record_detected') << " #{destination}" << I18n.t('oai_seed_logs.text_buffer')
+        end
+      rescue Exception
+        Rails.logger.error [I18n.t('oai_seed_logs.text_buffer'),
+                            $!.message,
+                            [I18n.t('oai_seed_logs.quarantine_error'),
+                             @quarantined_path,
+                             I18n.t('oai_seed_logs.quarantine_end')].join(" "),
+                            I18n.t('oai_seed_logs.text_buffer')
+                            ].join("\n")
       end
     end
 
@@ -640,12 +660,12 @@ module HarvestUtils
       if (provider.common_repository_type == "Islandora")
         assembled_identifier = ''
         url = URI.parse(obj.endpoint_url)
-        obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
+        obj.identifier.select{|id| id.match(/[[:space:]]/).nil?}.each do |ident|
           assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
         end
         # Fixes APS obj where the identifier field is empty
         if assembled_identifier == ""
-          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":") 
+          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":")
           assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
         end
         assembled_identifier

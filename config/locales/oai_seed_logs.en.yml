@@ -83,3 +83,9 @@ en:
       ALL OAI RECORDS DELETED FROM AGGREGATOR
     reindexing_error: |+
       ERROR - No reindexing option specified.
+    ingest_error: |+
+      ERROR - Ingest Failed.
+    quarantine_error: |+
+      ERROR - Quarantine Directory error. Ensure
+    quarantine_end: |+
+      exists.

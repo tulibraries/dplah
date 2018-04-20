@@ -85,6 +85,7 @@ class OaiRec < ActiveFedora::Base
 	def reorg_identifiers
 		g = self.identifier.select {|a| !a.include?("http")}
 		g.each {|f|
+      f = f.gsub(/[[:space:]]/,"")
       h = "<dc:identifier>#{f}</dc:identifier>"
       begin
         self.DC.content=self.DC.content.gsub(h,"")

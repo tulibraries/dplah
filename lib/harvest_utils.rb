@@ -276,7 +276,7 @@ module HarvestUtils
                        $!.message,
                        I18n.t('oai_seed_logs.ingest_error'),
                        "Backtrace:",
-                       $@[0..2]].join("\n")
+                       $@[0..5]].join("\n")
         Rails.logger.error log_message
         File.open(@log_file, "a+") do |f|
           f << I18n.t('oai_seed_logs.ingest_error') << "#{pid}"
@@ -647,6 +647,8 @@ module HarvestUtils
                             [I18n.t('oai_seed_logs.quarantine_error'),
                              @quarantined_path,
                              I18n.t('oai_seed_logs.quarantine_end')].join(" "),
+                             "Backtrace:",
+                             $@[0..5].join("\n"),
                             I18n.t('oai_seed_logs.text_buffer')
                             ].join("\n")
       end
@@ -660,7 +662,7 @@ module HarvestUtils
       if (provider.common_repository_type == "Islandora")
         assembled_identifier = ''
         url = URI.parse(obj.endpoint_url)
-        obj.identifier.select{|id| id.match(/[[:space:]]/).nil?}.each do |ident|
+        obj.identifier.select{|id| id.extend(StringHelpers); !id.match?(/[[:space:]]/)}.each do |ident|
           assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
         end
         # Fixes APS obj where the identifier field is empty
@@ -673,8 +675,9 @@ module HarvestUtils
         token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}
         assembled_identifier = provider.identifier_pattern.gsub("$1", token)
       end
+      thumbnail = obj.thumbnail.gsub(/[[:space:]]/,"") if (provider.intermediate_provider == "Historic Pittsburgh")
       obj.add_identifier(assembled_identifier)
-      obj.add_identifier(obj.thumbnail) if (provider.common_repository_type == "Islandora")
+      obj.add_identifier(thumbnail) if (provider.common_repository_type == "Islandora")
     end
 
     def self.remove_unwanted_identifiers(obj, provider)

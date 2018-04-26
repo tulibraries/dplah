@@ -5,7 +5,7 @@ class CsvController < CatalogController
 
   def index
     params[:per_page] = 100
-    (@response, @document_list) = get_search_results
+    (@response, @document_list) = search_results(params)
     @rows = @response[:responseHeader][:params][:rows]
     @start = @response[:response][:start]
     @num_return = @response[:response][:numFound]

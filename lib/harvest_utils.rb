@@ -684,7 +684,7 @@ module HarvestUtils
       obj.remove_identifier_containing(@passthrough_url) if provider.common_repository_type == 'Passthrough Workflow'
       obj.remove_identifier_containing('viewcontent.cgi?') if provider.common_repository_type == 'Bepress'
       obj.remove_identifier_containing('/videos/') if provider.common_repository_type == 'Bepress'
-      obj.remove_identifier_containing(' ')
+      obj.remove_identifier_containing(/[[:space:]]/)
     end
 
     ###

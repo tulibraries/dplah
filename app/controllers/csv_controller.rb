@@ -29,7 +29,7 @@ class CsvController < CatalogController
           csv << show_fields.map { |field| doc.fetch(field[:solr_name], nil).to_a.join(" ; ") }
         end
         @start += @rows.to_i
-        (@response, @document_list) = search_results(params, {start: @start}) if @start < @num_return
+        (@response, @document_list) = search_results(params.merge({start: @start})) if @start < @num_return
       end
     end
   end

@@ -4,13 +4,20 @@ class CsvController < CatalogController
 
 
   def index
+
     params[:per_page] = 100
     (@response, @document_list) = search_results(params)
     @rows = @response[:responseHeader][:params][:rows]
     @start = @response[:response][:start]
     @num_return = @response[:response][:numFound]
-    send_data render_search_results_as_csv, filename: "#{csv_file_name}.csv"
-
+    respond_to do |format|
+      format.csv do
+        send_data render_search_results_as_csv,
+          filename: "#{csv_file_name}.csv",
+          disposition: "attachment",
+          type: "text/csv"
+      end
+    end
   end
 
   def csv_file_name

@@ -123,7 +123,7 @@ module HarvestUtils
       u_files.length.times do |i|
         puts "Transforming contents of #{u_files[i]}"
         `xsltproc #{xslt_path} #{u_files[i]}`
-        File.delete(u_files[i])
+        #File.delete(u_files[i])
       end
   end
   module_function :convert
@@ -238,6 +238,17 @@ module HarvestUtils
   end
   module_function :cleanup
 
+  def foxml_remove_unwanted_identifiers(file)
+    doc = File.open(file) { |f| Nokogiri::XML(f) }
+    doc.xpath("//dc:identifier", "dc" => "http://purl.org/dc/elements/1.1/").each do |node|
+      identifier = node.text
+      identifier.extend(StringHelpers)
+      node.remove if identifier.match?(/[[:space:]]/)
+    end
+    File.open(file, "w") do |f| doc.write_xml_to(f) end
+  end
+  module_function :foxml_remove_unwanted_identifiers
+
   def ingest(provider)
 
     File.open(@log_file, "a+") do |f|
@@ -251,6 +262,7 @@ module HarvestUtils
     contents.each do |file|
       check_if_exists(file)
       begin
+        foxml_remove_unwanted_identifiers(file) if provider.intermediate_provider == "Historic Pittsburgh"
         pid = ActiveFedora::FixtureLoader.import_to_fedora(file)
         ActiveFedora::FixtureLoader.index(pid)
         obj = OaiRec.find(pid)
@@ -277,6 +289,7 @@ module HarvestUtils
                        I18n.t('oai_seed_logs.ingest_error'),
                        "Backtrace:",
                        $@[0..5]].join("\n")
+        puts log_message
         Rails.logger.error log_message
         File.open(@log_file, "a+") do |f|
           f << I18n.t('oai_seed_logs.ingest_error') << "#{pid}"

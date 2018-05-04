@@ -483,7 +483,8 @@ module HarvestUtils
       doc.xpath("//dc:identifier", "dc" => "http://purl.org/dc/elements/1.1/").each do |node|
         identifier = node.text
         identifier.extend(StringHelpers)
-        node.remove if identifier.match?(/[[:space:]]/)
+        node.content = identifier.gsub(/[[:space:]]/, "")
+        node.remove unless identifier.starts_with?("http:", "https:")
       end
     end
 

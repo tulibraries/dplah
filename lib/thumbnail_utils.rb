@@ -3,6 +3,8 @@ require "open-uri"
 require "fileutils"
 
 module ThumbnailUtils
+  using StringRefinements
+
   private
 
   config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
@@ -67,7 +69,7 @@ module ThumbnailUtils
       def self.asset_url(obj)
         asset_url = ''
         url = URI.parse(obj.endpoint_url)
-        obj.identifier.select{|id| id.extend(StringHelpers); id.match?(/[[:space:]]/)}.each do |ident|
+        obj.identifier.select{|id| id.match?(/[[:space:]]/)}.each do |ident|
           special_handling = ["PRESBY", "APS"]
           ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":") if special_handling.include? obj.provider_id_prefix
           Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"

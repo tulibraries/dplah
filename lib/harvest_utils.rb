@@ -6,6 +6,8 @@ require "logger" if Rails.env.development?
 
 module HarvestUtils
   extend ActionView::Helpers::TranslationHelper
+  using StringRefinements
+
   private
 
   config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
@@ -482,7 +484,6 @@ module HarvestUtils
     def self.remove_invalid_identifiers(doc)
       doc.xpath("//dc:identifier", "dc" => "http://purl.org/dc/elements/1.1/").each do |node|
         identifier = node.text
-        identifier.extend(StringHelpers)
         node.content = identifier.gsub(/[[:space:]]/, "")
         node.remove unless identifier.starts_with?("http:", "https:")
       end
@@ -673,7 +674,7 @@ module HarvestUtils
       if (provider.common_repository_type == "Islandora")
         assembled_identifier = ''
         url = URI.parse(obj.endpoint_url)
-        obj.identifier.select{|id| id.extend(StringHelpers); !id.match?(/[[:space:]]/)}.each do |ident|
+        obj.identifier.select{|id| !id.match?(/[[:space:]]/)}.each do |ident|
           assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
         end
         # Fixes APS obj where the identifier field is empty

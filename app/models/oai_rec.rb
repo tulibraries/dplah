@@ -1,5 +1,6 @@
 class OaiRec < ActiveFedora::Base
 	include HarvestUtils
+  using StringRefinements
 
 	# def self.to_class_uri
  #      'info:fedora/afmodel:OaiRec'
@@ -146,8 +147,8 @@ class OaiRec < ActiveFedora::Base
 
 	def remove_identifier_containing(search_on_string)
 		dc_content = self.DC.content.split("\n").map(&:lstrip)
-		self.DC.content = dc_content.delete_if{|a|  a.extend(StringHelpers); a.match?("<dc:identifier>") && a.match?(search_on_string)}.join("\n")
-		self.identifier = self.identifier.delete_if{|a| a.extend(StringHelpers); a.match?(search_on_string)}
+		self.DC.content = dc_content.delete_if{|a| a.match?("<dc:identifier>") && a.match?(search_on_string)}.join("\n")
+		self.identifier = self.identifier.delete_if{|a| a.match?(search_on_string)}
 		self.save
 	end
 

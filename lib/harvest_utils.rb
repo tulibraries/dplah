@@ -64,7 +64,6 @@ module HarvestUtils
     noharvest_records = 0
     norights_records ||= []
     client = OAI::Client.new provider.endpoint_url
-    response = client.list_records
     set = provider.set ? provider.set : ""
     metadata_prefix = provider.metadata_prefix ? provider.metadata_prefix : "oai_dc"
     response = provider.set ? client.list_records(:metadata_prefix => metadata_prefix, :set => set) : client.list_records(:metadata_prefix => metadata_prefix)

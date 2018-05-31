@@ -22,6 +22,12 @@ module ThumbnailUtils
       end
     end
 
+    class SciHi
+      def self.asset_url(obj)
+        (obj.identifier.select {|id| id.include? "download_redirect"} || []).first
+      end
+    end
+
     class ContentdmSsl
   		def self.asset_url(obj)
   		  endpoint_url = obj.endpoint_url
@@ -77,7 +83,7 @@ module ThumbnailUtils
           asset_url.gsub!(/[[:space:]]/, "")
         end
         if asset_url == ""
-          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":") 
+          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":")
           Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
           asset_url = "#{url.scheme}://#{url.host}/islandora/object/#{ident}/datastream/TN/view/"
         end
@@ -102,6 +108,8 @@ module ThumbnailUtils
         asset_url = check_for_thumbnail(obj)
       when "Islandora"
         asset_url = ThumbnailUtils::CommonRepositories::Islandora.asset_url(obj)
+      when "SciHi"
+        asset_url = ThumbnailUtils::CommonRepositories::SciHi.asset_url(obj)
     	else
     		abort "Invalid common repository type - #{provider.common_repository_type}"
   	end

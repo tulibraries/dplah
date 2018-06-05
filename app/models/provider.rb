@@ -144,7 +144,9 @@ class Provider < ActiveRecord::Base
 	end
 
 	def last_harvested
-		read_attribute(:last_harvested) || ''
+		last_harvested_s = read_attribute(:last_harvested)
+		last_harvested_s = "0000-01-01" if last_harvested_s.blank?
+	  DateTime.parse(last_harvested_s)
 	end
 
 	def interval
@@ -186,7 +188,7 @@ class Provider < ActiveRecord::Base
 	private
 
 	    def self.common_repositories
-          common_repositories = [['CONTENTdm', 'CONTENTdm'], ['CONTENTdm SSL (Redirect Method)', 'CONTENTdm SSL'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Islandora', 'Islandora'],['Passthrough Workflow', 'Passthrough Workflow'], ['VuDL', 'VuDL']]
+          common_repositories = [['CONTENTdm', 'CONTENTdm'], ['CONTENTdm SSL (Redirect Method)', 'CONTENTdm SSL'],['Bepress', 'Bepress'],['Omeka', 'Omeka'], ['Islandora', 'Islandora'],['Passthrough Workflow', 'Passthrough Workflow'], ['SciHi', 'SciHi'],['VuDL', 'VuDL']]
 	    end
 
 	    def self.possible_thumbnail_fields

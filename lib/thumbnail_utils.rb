@@ -3,6 +3,8 @@ require "open-uri"
 require "fileutils"
 
 module ThumbnailUtils
+  using StringRefinements
+
   private
 
   config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
@@ -17,6 +19,12 @@ module ThumbnailUtils
         p = p.split("_").last
         asset_url = "#{endpoint_url}/utils/getthumbnail/collection/#{set}/id/#{p}"
         asset_url
+      end
+    end
+
+    class SciHi
+      def self.asset_url(obj)
+        (obj.identifier.select {|id| id.include? "download_redirect"} || []).first
       end
     end
 
@@ -67,14 +75,15 @@ module ThumbnailUtils
       def self.asset_url(obj)
         asset_url = ''
         url = URI.parse(obj.endpoint_url)
-        obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
+        obj.identifier.select{|id| id.match?(/[[:space:]]/)}.each do |ident|
           special_handling = ["PRESBY", "APS"]
           ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":") if special_handling.include? obj.provider_id_prefix
           Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
           asset_url = "#{url.scheme}://#{url.host}/islandora/object/#{ident}/datastream/TN/view/"
+          asset_url.gsub!(/[[:space:]]/, "")
         end
         if asset_url == ""
-          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":") 
+          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":")
           Rails.logger.info "ISLANDORA_IDENTIFIER IS #{ident}"
           asset_url = "#{url.scheme}://#{url.host}/islandora/object/#{ident}/datastream/TN/view/"
         end
@@ -99,6 +108,8 @@ module ThumbnailUtils
         asset_url = check_for_thumbnail(obj)
       when "Islandora"
         asset_url = ThumbnailUtils::CommonRepositories::Islandora.asset_url(obj)
+      when "SciHi"
+        asset_url = ThumbnailUtils::CommonRepositories::SciHi.asset_url(obj)
     	else
     		abort "Invalid common repository type - #{provider.common_repository_type}"
   	end

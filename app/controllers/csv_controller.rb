@@ -4,13 +4,20 @@ class CsvController < CatalogController
 
 
   def index
+
     params[:per_page] = 100
-    (@response, @document_list) = get_search_results
+    (@response, @document_list) = search_results(params)
     @rows = @response[:responseHeader][:params][:rows]
     @start = @response[:response][:start]
     @num_return = @response[:response][:numFound]
-    send_data render_search_results_as_csv, filename: "#{csv_file_name}.csv"
-
+    respond_to do |format|
+      format.csv do
+        send_data render_search_results_as_csv,
+          filename: "#{csv_file_name}.csv",
+          disposition: "attachment",
+          type: "text/csv"
+      end
+    end
   end
 
   def csv_file_name
@@ -29,7 +36,7 @@ class CsvController < CatalogController
           csv << show_fields.map { |field| doc.fetch(field[:solr_name], nil).to_a.join(" ; ") }
         end
         @start += @rows.to_i
-        (@response, @document_list) = get_search_results(params, {start: @start}) if @start < @num_return
+        (@response, @document_list) = search_results(params.merge({start: @start})) if @start < @num_return
       end
     end
   end

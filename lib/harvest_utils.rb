@@ -6,6 +6,8 @@ require "logger" if Rails.env.development?
 
 module HarvestUtils
   extend ActionView::Helpers::TranslationHelper
+  using StringRefinements
+
   private
 
   config = YAML.load_file(File.expand_path("#{Rails.root}/config/dpla.yml", __FILE__))
@@ -62,7 +64,6 @@ module HarvestUtils
     noharvest_records = 0
     norights_records ||= []
     client = OAI::Client.new provider.endpoint_url
-    response = client.list_records
     set = provider.set ? provider.set : ""
     metadata_prefix = provider.metadata_prefix ? provider.metadata_prefix : "oai_dc"
     response = provider.set ? client.list_records(:metadata_prefix => metadata_prefix, :set => set) : client.list_records(:metadata_prefix => metadata_prefix)
@@ -121,7 +122,7 @@ module HarvestUtils
         f << "#{u_files.length} "<< I18n.t('oai_seed_logs.convert_count')
       end
       u_files.length.times do |i|
-        puts "Contents of #{u_files[i]} transformed"
+        puts "Transforming contents of #{u_files[i]}"
         `xsltproc #{xslt_path} #{u_files[i]}`
         File.delete(u_files[i])
       end
@@ -213,6 +214,8 @@ module HarvestUtils
       normalize_dates(doc, "//dc:date")
       normalize_language(doc, "//dc:language")
 
+      remove_invalid_identifiers(doc) if provider.intermediate_provider == "Historic Pittsburgh"
+
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
           File.rename(new_file, xml_file)
@@ -270,7 +273,17 @@ module HarvestUtils
         obj.save
         obj.to_solr
         obj.update_index
-      rescue
+      rescue Exception
+        log_message = [I18n.t('oai_seed_logs.text_buffer'),
+                       pid,
+                       $!.message,
+                       I18n.t('oai_seed_logs.ingest_error'),
+                       "Backtrace:",
+                       $@[0..5]].join("\n")
+        Rails.logger.error log_message
+        File.open(@log_file, "a+") do |f|
+          f << I18n.t('oai_seed_logs.ingest_error') << "#{pid}"
+        end
         quarantine_and_report(file)
         next
       end
@@ -467,6 +480,14 @@ module HarvestUtils
       end
     end
 
+    def self.remove_invalid_identifiers(doc)
+      doc.xpath("//dc:identifier", "dc" => "http://purl.org/dc/elements/1.1/").each do |node|
+        identifier = node.text
+        node.content = identifier.gsub(/[[:space:]]/, "")
+        node.remove unless identifier.starts_with?("http:", "https:")
+      end
+    end
+
     def self.conform_url(url_string)
       URI(url_string).to_s
     end
@@ -626,9 +647,21 @@ module HarvestUtils
 
     def self.quarantine_and_report(record)
       destination = "#{@quarantined_path}/#{Time.now.to_i}_#{File.basename(record)}"
-      FileUtils.mv(record, destination)
-      File.open(@log_file, "a+") do |f|
-        f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.problem_record_detected') << " #{destination}" << I18n.t('oai_seed_logs.text_buffer')
+      begin
+        FileUtils.mv(record, destination)
+        File.open(@log_file, "a+") do |f|
+          f << I18n.t('oai_seed_logs.text_buffer') << I18n.t('oai_seed_logs.problem_record_detected') << " #{destination}" << I18n.t('oai_seed_logs.text_buffer')
+        end
+      rescue Exception
+        Rails.logger.error [I18n.t('oai_seed_logs.text_buffer'),
+                            $!.message,
+                            [I18n.t('oai_seed_logs.quarantine_error'),
+                             @quarantined_path,
+                             I18n.t('oai_seed_logs.quarantine_end')].join(" "),
+                             "Backtrace:",
+                             $@[0..5].join("\n"),
+                            I18n.t('oai_seed_logs.text_buffer')
+                            ].join("\n")
       end
     end
 
@@ -640,12 +673,12 @@ module HarvestUtils
       if (provider.common_repository_type == "Islandora")
         assembled_identifier = ''
         url = URI.parse(obj.endpoint_url)
-        obj.identifier.select{|id| !id.include?(' ')}.each do |ident|
+        obj.identifier.select{|id| !id.match?(/[[:space:]]/)}.each do |ident|
           assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
         end
         # Fixes APS obj where the identifier field is empty
         if assembled_identifier == ""
-          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":") 
+          ident = /[[:alnum:]]:#{obj.provider_id_prefix}_(.*)/.match(obj.pid)[1].gsub("_",":")
           assembled_identifier = "#{url.scheme}://#{url.host}/islandora/object/#{ident}"
         end
         assembled_identifier
@@ -653,15 +686,16 @@ module HarvestUtils
         token = obj.send(provider.identifier_token).find {|i| i.exclude?("http")}
         assembled_identifier = provider.identifier_pattern.gsub("$1", token)
       end
+      thumbnail = obj.thumbnail.gsub(/[[:space:]]/,"") if (provider.intermediate_provider == "Historic Pittsburgh")
       obj.add_identifier(assembled_identifier)
-      obj.add_identifier(obj.thumbnail) if (provider.common_repository_type == "Islandora")
+      obj.add_identifier(thumbnail) if (provider.common_repository_type == "Islandora")
     end
 
     def self.remove_unwanted_identifiers(obj, provider)
       obj.remove_identifier_containing(@passthrough_url) if provider.common_repository_type == 'Passthrough Workflow'
       obj.remove_identifier_containing('viewcontent.cgi?') if provider.common_repository_type == 'Bepress'
       obj.remove_identifier_containing('/videos/') if provider.common_repository_type == 'Bepress'
-      obj.remove_identifier_containing(' ')
+      obj.remove_identifier_containing(/[[:space:]]/)
     end
 
     ###

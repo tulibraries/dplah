@@ -214,8 +214,6 @@ module HarvestUtils
       normalize_dates(doc, "//dc:date")
       normalize_language(doc, "//dc:language")
 
-      remove_invalid_identifiers(doc) if provider.intermediate_provider == "Historic Pittsburgh"
-
       File.open(new_file, 'w') do |f|
           f.print(doc.to_xml)
           File.rename(new_file, xml_file)
@@ -477,14 +475,6 @@ module HarvestUtils
         if node_value.inner_html.downcase.starts_with?("http")
           node_value.inner_html = conform_url node_value
         end
-      end
-    end
-
-    def self.remove_invalid_identifiers(doc)
-      doc.xpath("//dc:identifier", "dc" => "http://purl.org/dc/elements/1.1/").each do |node|
-        identifier = node.text
-        node.content = identifier.gsub(/[[:space:]]/, "")
-        node.remove unless identifier.starts_with?("http:", "https:")
       end
     end
 

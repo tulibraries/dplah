@@ -266,9 +266,7 @@ module HarvestUtils
         build_identifier(obj, provider) if provider.common_repository_type == "Islandora"
         remove_unwanted_identifiers(obj, provider)
         obj.reorg_identifiers
-        unless provider.common_repository_type == "Islandora"
-          obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow" || thumbnail.nil?
-        end
+        obj.add_identifier(thumbnail) unless provider.common_repository_type == "Passthrough Workflow" || thumbnail.nil?
         obj.clean_iso8601_date_field
         obj.save
         obj.to_solr

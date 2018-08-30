@@ -29,14 +29,15 @@ class CsvController < CatalogController
 
     csv_result = CSV.generate(headers: true) do |csv|
       csv << show_fields.map { |field| field[:label] }
-
+      page = 1
       #Loop through all results, not just first page
       while (@start < @num_return )
         @document_list.each do |doc|
           csv << show_fields.map { |field| doc.fetch(field[:solr_name], nil).to_a.join(" ; ") }
         end
         @start += @rows.to_i
-        (@response, @document_list) = search_results(params.merge({start: @start})) if @start < @num_return
+        page += 1
+        (@response, @document_list) = search_results(params.merge({page: page})) if @start < @num_return
       end
     end
   end

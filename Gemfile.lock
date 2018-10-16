@@ -265,7 +265,7 @@ GEM
       method_source (~> 0.9.0)
     pry-rails (0.3.6)
       pry (>= 0.10.4)
-    public_suffix (3.0.2)
+    public_suffix (3.0.3)
     rack (1.6.10)
     rack-protection (1.5.5)
       rack
@@ -496,7 +496,7 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
-    webmock (3.3.0)
+    webmock (3.4.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff

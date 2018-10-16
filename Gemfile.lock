@@ -237,7 +237,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.3.0)
     minitest (5.11.3)
     mono_logger (1.1.0)
     multi_json (1.13.1)
@@ -245,8 +245,8 @@ GEM
     nenv (0.3.0)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    nokogiri (1.6.8.1)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.5)
+      mini_portile2 (~> 2.3.0)
     nom-xml (0.5.4)
       activesupport (>= 3.2.18)
       i18n
@@ -528,7 +528,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   libxml-ruby
-  nokogiri (~> 1.6.0)
+  nokogiri (~> 1.8.5)
   nom-xml (~> 0.5.1)
   oai!
   om (~> 3.1.0)

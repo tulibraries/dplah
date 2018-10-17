@@ -15,7 +15,7 @@ gem 'coffee-rails', '~> 4.2.2'
 
 gem 'therubyracer',  platforms: :ruby
 
-gem 'active-fedora', '7.1.2'
+gem 'active-fedora', '9.9.1'
 gem 'blacklight', '>= 6.1'
 
 gem 'nokogiri', '~> 1.8.5'

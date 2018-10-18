@@ -156,7 +156,7 @@ GEM
     haml (4.0.7)
       tilt
     hashdiff (0.3.7)
-    high_voltage (2.2.1)
+    high_voltage (3.1.0)
     hooks (0.3.6)
       uber (~> 0.0.4)
     htmlentities (4.3.4)
@@ -518,7 +518,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.4.1)
   foreman
   guard-rspec
-  high_voltage (~> 2.2.1)
+  high_voltage (~> 3.1.0)
   jbuilder (~> 2.0)
   jettywrapper
   jquery-rails

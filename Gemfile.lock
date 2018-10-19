@@ -100,7 +100,7 @@ GEM
       safe_yaml (~> 1.0.0)
     crass (1.0.4)
     daemons (1.2.6)
-    database_cleaner (1.6.2)
+    database_cleaner (1.7.0)
     debug_inspector (0.0.3)
     deprecation (0.99.0)
       activesupport

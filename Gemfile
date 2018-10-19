@@ -19,7 +19,7 @@ gem 'active-fedora', '7.1.2'
 gem 'blacklight', '>= 6.1'
 
 gem 'nokogiri', '~> 1.8.5'
-gem 'nom-xml', '~> 0.5.1'
+gem 'nom-xml', '~> 1.0.0'
 gem 'om', '~> 3.1.0'
 gem 'rubydora', '~> 1.8.0'
 gem 'solrizer', '~> 3.4.1'

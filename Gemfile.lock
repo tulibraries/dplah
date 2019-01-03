@@ -123,10 +123,10 @@ GEM
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
     execjs (2.7.0)
-    factory_girl (4.4.0)
+    factory_girl (4.9.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.4.1)
-      factory_girl (~> 4.4.0)
+    factory_girl_rails (4.9.0)
+      factory_girl (~> 4.9.0)
       railties (>= 3.0.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
@@ -515,7 +515,7 @@ DEPENDENCIES
   database_cleaner
   devise
   devise-guests (~> 0.6)
-  factory_girl_rails (~> 4.4.1)
+  factory_girl_rails (~> 4.9.0)
   foreman
   guard-rspec
   high_voltage (~> 3.1.0)

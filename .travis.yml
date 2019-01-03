@@ -3,7 +3,7 @@ sudo: true
 rvm:
   - 2.3
 before_install:
-  - gem install bundler
+  - 'gem install bundler -v "< 2"'
   - sudo apt-get install xsltproc
 env:
   global:

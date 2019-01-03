@@ -132,7 +132,6 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
-    fastercsv (1.5.5)
     ffi (1.9.25)
     foreman (0.85.0)
       thor (~> 0.19.1)
@@ -158,8 +157,8 @@ GEM
       tilt
     hashdiff (0.3.8)
     high_voltage (3.1.0)
-    hooks (0.3.6)
-      uber (~> 0.0.4)
+    hooks (0.4.1)
+      uber (~> 0.0.14)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -399,13 +398,12 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     ruby_dep (1.5.0)
-    rubydora (1.8.1)
+    rubydora (1.9.1)
       activemodel
       activesupport
       deprecation
       equivalent-xml
-      fastercsv
-      hooks (~> 0.3.0)
+      hooks (~> 0.3)
       mime-types
       nokogiri
       rest-client
@@ -536,7 +534,7 @@ DEPENDENCIES
   resque_spec
   rsolr (>= 1.0)
   rspec-rails
-  rubydora (~> 1.8.0)
+  rubydora (~> 1.9.1)
   sass-rails (~> 5.0.0)
   sdoc (~> 1.0.0)
   simplecov

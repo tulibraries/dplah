@@ -30,7 +30,7 @@ gem 'will_paginate', '~> 3.1.6'
 gem "resque"
 gem "resque-pool"
 
-gem 'bootstrap-sass', '~> 3.3.7'
+gem 'bootstrap-sass', '~> 3.4.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

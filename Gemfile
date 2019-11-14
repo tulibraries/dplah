@@ -54,7 +54,7 @@ gem 'libxml-ruby'
 gem 'config_for'
 
 gem "devise"
-gem "devise-guests", "~> 0.6"
+gem "devise-guests", "~> 0.7"
 gem 'yaml_db'
 
 group :development do

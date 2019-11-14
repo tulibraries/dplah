@@ -22,7 +22,7 @@ services:
 - redis-server
 
 before_script:
-- jdk_switcher use oraclejdk8
+- jdk_switcher use oraclejdk9
 - cp -n config/dpla.yml.example config/dpla.yml
 - cp -n config/database.yml.example config/database.yml
 - cp -n config/facets.yml.example config/facets.yml

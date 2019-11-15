@@ -54,6 +54,7 @@ gem 'libxml-ruby'
 gem 'config_for'
 
 gem "devise"
+gem "responders", "2.4.1"
 gem "devise-guests", "~> 0.7"
 gem 'yaml_db'
 

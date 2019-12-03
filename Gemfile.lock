@@ -534,6 +534,7 @@ DEPENDENCIES
   pry-rails
   rails (~> 4.2)
   rails_autolink
+  responders (= 2.4.1)
   resque
   resque-pool
   resque_spec
@@ -555,4 +556,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.16.1
+   1.17.3

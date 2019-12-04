@@ -24,7 +24,10 @@ services:
 - redis-server
 
 jdk:
-- oraclejdk9
+- oraclejdk11
+
+script:
+  - RAILS_ENV=test xvfb-run -a bundle exec rake parallel:spec
 
 before_script:
 - cp -n config/dpla.yml.example config/dpla.yml
@@ -35,7 +38,8 @@ before_script:
 - cp -n config/resque-pool.yml.example config/resque-pool.yml
 - cp -n config/secrets.yml.example config/secrets.yml
 - cp -n config/solr.yml.example config/solr.yml
-- bundle exec rake db:migrate
+- RAILS_ENV=development bundle exec rake db:create db:migrate
+- bundle exec rake parallel:create parallel:load_schema parallel:prepare
 - bundle exec rails g jetty
 - bundle exec rake dplah:jetty:config
 - bundle exec rake jetty:start

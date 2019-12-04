@@ -11,7 +11,7 @@ RSpec.describe HarvestUtils do
   let (:schema_url) { "http://www.fedora.info/definitions/1/0/foxml1-1.xsd" }
   let (:log_name) { "harvest_utils_spec" }
 
-  let(:provider_small_collection) { FactoryGirl.build(:provider_small_collection) }
+  let(:provider_small_collection) { FactoryBot.build(:provider_small_collection) }
 
   context "Harvest Records" do
 
@@ -57,7 +57,7 @@ RSpec.describe HarvestUtils do
   end
 
   context "Harvest with Resumption Token" do
-    let(:provider_resumption_token) { FactoryGirl.build(:provider_resumption_token) }
+    let(:provider_resumption_token) { FactoryBot.build(:provider_resumption_token) }
 
     before :each do
       # Make sure sure download directory is empty
@@ -243,7 +243,7 @@ RSpec.describe HarvestUtils do
     end
 
     it "Ingests one object" do
-      skip "Travis-CI Fails: No such file or directory @ rb_file_s_rename - (tmp/converted/file_temple_p16002coll2_1.foxml.xml, /tmp/quarantined/1519152606_file_temple_p16002coll2_1.foxml.xml)" 
+      skip "Travis-CI Fails: No such file or directory @ rb_file_s_rename - (tmp/converted/file_temple_p16002coll2_1.foxml.xml, /tmp/quarantined/1519152606_file_temple_p16002coll2_1.foxml.xml)"
       HarvestUtils::ingest(provider_small_collection)
       expect(ActiveFedora::Base.count).to eq 1
       expect(ActiveFedora::Base.first.pid).to eq pid
@@ -376,7 +376,7 @@ RSpec.describe HarvestUtils do
 
   describe '#custom_file_prefixing' do
     context "when Islandora is the repository type" do
-      let(:provider) { FactoryGirl.build(:provider_islandora) }
+      let(:provider) { FactoryBot.build(:provider_islandora) }
       it 'strips out set name from the custom prefix' do
         prefix = "PITTSYMP_pitt_collection_150"
         HarvestUtils::custom_file_prefixing(prefix, provider)

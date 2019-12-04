@@ -174,7 +174,7 @@ This will run the whole test suite, which may take several minutes, especially t
 
 This application currently tests baseline functionality of Providers and OAI Records.  Additional code for scheduled harvests and less-easily-tested features of XML conversion are pending, so there should be 160 examples, 30 pending, 0 failures out of the box, if all system dependencies are up and running.
 
-The test suite uses [rspec](https://github.com/rspec/rspec-rails), [factory_girl](https://github.com/thoughtbot/factory_girl), [vcr](https://github.com/vcr/vcr), and [resque_spec](https://github.com/leshill/resque_spec).
+The test suite uses [rspec](https://github.com/rspec/rspec-rails), [factory_bot](https://github.com/thoughtbot/factory_bot), [vcr](https://github.com/vcr/vcr), and [resque_spec](https://github.com/leshill/resque_spec).
 
 ##OAI-PMH Resources
 * [OAI-PMH for Beginners Tutorial](http://www.oaforum.org/tutorial/)

@@ -24,11 +24,11 @@ RSpec.describe ProvidersController, :type => :controller do
   # Provider. As you add validations to Provider, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-   FactoryGirl.build(:provider_small_collection).attributes
+   FactoryBot.build(:provider_small_collection).attributes
   }
 
   let(:invalid_attributes) {
-    FactoryGirl.build(:invalid_provider).attributes
+    FactoryBot.build(:invalid_provider).attributes
   }
 
   # This should return the minimal set of values that should be in the session
@@ -37,7 +37,7 @@ RSpec.describe ProvidersController, :type => :controller do
   let(:valid_session) { {} }
 
   before (:each) do
-    sign_in FactoryGirl.create(:user)
+    sign_in FactoryBot.create(:user)
   end
 
   describe "GET index" do
@@ -107,7 +107,7 @@ RSpec.describe ProvidersController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        FactoryGirl.build(:edited_provider_small_collection).attributes
+        FactoryBot.build(:edited_provider_small_collection).attributes
       }
 
       it "updates the requested provider" do

@@ -6,7 +6,7 @@ RSpec.describe DumpReindex, type: :job do
   end
 
   it "adds DumpReindex.perform to the DumpReindex queue" do
-    provider = FactoryGirl.create(:provider_small_collection).attributes
+    provider = FactoryBot.create(:provider_small_collection).attributes
     option = "institution"
     rec_count = 0
     VCR.use_cassette "jobs/DumpReindex" do

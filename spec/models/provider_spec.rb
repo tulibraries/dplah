@@ -8,19 +8,19 @@ RSpec.describe Provider, :type => :model do
 
   context "endpoint_url validation" do
     it "is valid" do
-      provider = Provider.new(endpoint_url: valid_url) 
+      provider = Provider.new(endpoint_url: valid_url)
       expect(provider).to be_valid
     end
 
     it "is not valid" do
-      provider = Provider.new(endpoint_url: "InvalidURL") 
+      provider = Provider.new(endpoint_url: "InvalidURL")
       expect(provider).to_not be_valid
     end
   end
 
   context "initialized attributes" do
-  
-    let(:p) { FactoryGirl.build(:provider) }
+
+    let(:p) { FactoryBot.build(:provider) }
     let!(:provider) {
       Provider.new(
         name: p.name,
@@ -29,7 +29,7 @@ RSpec.describe Provider, :type => :model do
         metadata_prefix: p.metadata_prefix,
         set: p.set,
         contributing_institution: p.contributing_institution
-      ) 
+      )
     }
 
 
@@ -84,7 +84,7 @@ RSpec.describe Provider, :type => :model do
   end
 
   describe "client method" do
-    let(:client) { FactoryGirl.build(:provider).client }
+    let(:client) { FactoryBot.build(:provider).client }
 
     it "gets a client object" do
       expect(client.class.to_s).to eq("OAI::Client")
@@ -117,13 +117,13 @@ RSpec.describe Provider, :type => :model do
 #  describe "record_class" do
 #    it "returns the default record class name" do
 #      pending "As implemented, returns nil value. TBD: Verify desired behavior"
-#      provider = FactoryGirl.build(:provider)
+#      provider = FactoryBot.build(:provider)
 #      expect(provider.record_class).to eq("#{default_metadata_prefix}_document")
 #    end
 #  end
 #
 #	it "default_record_class_name" do
-#    provider = FactoryGirl.build(:provider)
+#    provider = FactoryBot.build(:provider)
 #    expect(provider.default_record_class_name).to eq("#{default_metadata_prefix}_document")
 #	end
 #

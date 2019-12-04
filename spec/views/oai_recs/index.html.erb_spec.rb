@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "oai_recs/index", :type => :view do
 
   skip "Travis-CI Fail: 503 Service Unavailable" do
-  let (:item_record) { FactoryGirl.create(:oai_rec) }
+  let (:item_record) { FactoryBot.create(:oai_rec) }
 
   before(:each) do
     assign(:oai_recs, [

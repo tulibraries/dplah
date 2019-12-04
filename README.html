@@ -984,7 +984,7 @@ rake jetty:start
 <li>To harvest just the raw OAI from a specific OAI seed in the application, run the following in the terminal:</li>
 </ul>
 
-<pre><code>rake oai:harvest[NUM] 
+<pre><code>rake oai:harvest[NUM]
 </code></pre>
 
 <p><strong>NOTE:</strong> </p>
@@ -1018,7 +1018,7 @@ rake jetty:start
 <li>To harvest and ingest all records from all OAI seeds present in the application, run the following in the terminal:</li>
 </ul>
 
-<pre><code>rake oai:harvest_ingest_all 
+<pre><code>rake oai:harvest_ingest_all
 </code></pre>
 
 <p>This will harvest, convert, normalize, and ingest all OAI-PMH records from all OAI seeds in the Hydra head into the repository.</p>
@@ -1027,7 +1027,7 @@ rake jetty:start
 <li>To remove all records from the aggregator index, run the following in the terminal:</li>
 </ul>
 
-<pre><code>rake oai:delete_all 
+<pre><code>rake oai:delete_all
 </code></pre>
 
 <p>This will delete all harvested records from the local repository. </p>
@@ -1047,7 +1047,7 @@ rake spec
 
 <p>This application currently tests baseline functionality of Providers and OAI Records.  Additional code for scheduled harvests and less-easily-tested features of XML conversion are pending, so there should be 160 examples, 30 pending, 0 failures out of the box, if all system dependencies are up and running.</p>
 
-<p>The test suite uses <a href="https://github.com/rspec/rspec-rails">rspec</a>, <a href="https://github.com/thoughtbot/factory_girl">factory_girl</a>, <a href="https://github.com/vcr/vcr">vcr</a>, and <a href="https://github.com/leshill/resque_spec">resque_spec</a>.</p>
+<p>The test suite uses <a href="https://github.com/rspec/rspec-rails">rspec</a>, <a href="https://github.com/thoughtbot/factory_bot">factory_bot</a>, <a href="https://github.com/vcr/vcr">vcr</a>, and <a href="https://github.com/leshill/resque_spec">resque_spec</a>.</p>
 
 <h2>
 <a id="user-content-oai-pmh-resources" class="anchor" href="#oai-pmh-resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>OAI-PMH Resources</h2>

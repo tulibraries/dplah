@@ -23,8 +23,10 @@ notifications:
 services:
 - redis-server
 
+jdk:
+- oraclejdk9
+
 before_script:
-- jdk_switcher use oraclejdk8
 - cp -n config/dpla.yml.example config/dpla.yml
 - cp -n config/database.yml.example config/database.yml
 - cp -n config/facets.yml.example config/facets.yml

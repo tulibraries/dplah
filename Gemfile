@@ -19,7 +19,7 @@ gem 'active-fedora', '7.1.2'
 gem 'blacklight', '>= 6.1'
 
 gem 'nokogiri', '~> 1.8.5'
-gem 'nom-xml', '~> 0.5.1'
+gem 'nom-xml', '~> 0.6.0'
 gem 'om', '~> 3.1.0'
 gem 'rubydora', '~> 1.8.0'
 gem 'solrizer', '~> 3.4.1'
@@ -30,7 +30,7 @@ gem 'will_paginate', '~> 3.1.6'
 gem "resque"
 gem "resque-pool"
 
-gem 'bootstrap-sass', '~> 3.3.7'
+gem 'bootstrap-sass', '~> 3.4.1'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -54,7 +54,8 @@ gem 'libxml-ruby'
 gem 'config_for'
 
 gem "devise"
-gem "devise-guests", "~> 0.6"
+gem "responders", "2.4.1"
+gem "devise-guests", "~> 0.7"
 gem 'yaml_db'
 
 group :development do

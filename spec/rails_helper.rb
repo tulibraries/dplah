@@ -52,10 +52,10 @@ RSpec.configure do |config|
 
   # Custom helpers
   config.include Devise::TestHelpers, :type => :controller
-  
+
 end
 
-# Send output to null device to clean up rspec 
+# Send output to null device to clean up rspec
 # To use:
 #   orig_stdout = stdout_to_null
 #   # code that generates a lot of console output goes here
@@ -70,5 +70,21 @@ VCR.configure do |c|
   # Don't record transactions with local Jetty and rails servers
   c.ignore_localhost = true
 end
+
+if RUBY_VERSION>='2.6.0'
+  if Rails.version < '5'
+    class ActionController::TestResponse < ActionDispatch::TestResponse
+      def recycle!
+        # hack to avoid MonitorMixin double-initialize error:
+        @mon_mutex_owner_object_id = nil
+        @mon_mutex = nil
+        initialize
+      end
+    end
+  else
+    puts "Monkeypatch for ActionController::TestResponse no longer needed"
+  end
+end
+
 
 #WebMock.disable_net_connect!(:allow_localhost => true)

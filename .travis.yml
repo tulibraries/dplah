@@ -1,7 +1,9 @@
 language: ruby
 sudo: true
+dist: trusty
 rvm:
   - 2.3
+  - 2.6
 before_install:
   - 'gem install bundler -v "< 2"'
   - sudo apt-get install xsltproc

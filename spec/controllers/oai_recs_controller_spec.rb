@@ -25,14 +25,14 @@ skip "TRAVIS-CI Fails: 503 Service Unavailable" do
   # OaiRec. As you add validations to OaiRec, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    rec = FactoryGirl.build(:oai_rec).attributes
+    rec = FactoryBot.build(:oai_rec).attributes
     # There is no id field in oai_rec
     rec.delete('id') if rec.has_key?('id')
     rec
   }
 
   let(:invalid_attributes) {
-    rec = FactoryGirl.build(:oai_rec_invalid).attributes
+    rec = FactoryBot.build(:oai_rec_invalid).attributes
   }
 
   # This should return the minimal set of values that should be in the session

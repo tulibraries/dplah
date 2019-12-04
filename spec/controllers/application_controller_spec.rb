@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
   let(:provider1) {
-   FactoryGirl.build(:multiple_providers).attributes
+   FactoryBot.build(:multiple_providers).attributes
   }
   let(:provider2) {
-   FactoryGirl.build(:multiple_providers).attributes
+   FactoryBot.build(:multiple_providers).attributes
   }
 
   let(:valid_session) { {} }

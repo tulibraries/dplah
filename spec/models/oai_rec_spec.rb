@@ -38,7 +38,7 @@ RSpec.describe OaiRec, :type => :model do
 
     before(:all) do
       OaiRec.destroy_all
-      @o = FactoryGirl.build(:oai_rec)
+      @o = FactoryBot.build(:oai_rec)
       oaiRec = OaiRec.create(title: @o.title,
                              creator: @o.creator,
                              subject: @o.subject,

@@ -8,7 +8,7 @@ RSpec.describe 'oai.rake' do
   let (:download_directory) { config['harvest_data_directory'] }
   let (:convert_directory) { config['converted_foxml_directory'] }
   let (:log_name) { "harvest_utils_spec" }
-  let (:provider_small_collection) { FactoryGirl.build(:provider_small_collection) }
+  let (:provider_small_collection) { FactoryBot.build(:provider_small_collection) }
 
   before :each do
     Rake.application.rake_require "tasks/oai"

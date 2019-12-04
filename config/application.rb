@@ -8,10 +8,10 @@ Bundler.require(*Rails.groups)
 
 module DplaBl
   class Application < Rails::Application
-    
+
     config.generators do |g|
       g.test_framework :rspec, :spec => true
-      g.fixture_replacement :factory_girl, dir: "spec/factories"
+      g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
 
     config.autoload_paths += %W(#{config.root}/lib)

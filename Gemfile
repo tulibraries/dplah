@@ -18,7 +18,7 @@ gem 'therubyracer',  platforms: :ruby
 gem 'active-fedora', '7.1.2'
 gem 'blacklight', '>= 6.1'
 
-gem 'nokogiri', '~> 1.8.5'
+gem 'nokogiri', '~> 1.10.7'
 gem 'nom-xml', '~> 0.6.0'
 gem 'om', '~> 3.1.0'
 gem 'rubydora', '~> 1.8.0'

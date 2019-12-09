@@ -165,9 +165,8 @@ GEM
       domain_name (~> 0.5)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.8.0)
+    jbuilder (2.9.1)
       activesupport (>= 4.2.0)
-      multi_json (>= 1.2)
     jettywrapper (2.0.5)
       activesupport (>= 3.0.0)
       childprocess
@@ -518,7 +517,7 @@ DEPENDENCIES
   foreman
   guard-rspec
   high_voltage (~> 3.1.2)
-  jbuilder (~> 2.0)
+  jbuilder (~> 2.9)
   jettywrapper
   jquery-rails
   launchy

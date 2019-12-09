@@ -157,7 +157,7 @@ GEM
       temple (>= 0.8.0)
       tilt
     hashdiff (0.3.8)
-    high_voltage (3.1.0)
+    high_voltage (3.1.2)
     hooks (0.3.6)
       uber (~> 0.0.4)
     htmlentities (4.3.4)
@@ -517,7 +517,7 @@ DEPENDENCIES
   factory_bot_rails
   foreman
   guard-rspec
-  high_voltage (~> 3.1.0)
+  high_voltage (~> 3.1.2)
   jbuilder (~> 2.0)
   jettywrapper
   jquery-rails

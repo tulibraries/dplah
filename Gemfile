@@ -24,7 +24,7 @@ gem 'om', '~> 3.1.0'
 gem 'rubydora', '~> 1.8.0'
 gem 'solrizer', '~> 3.4.1'
 gem 'rails_autolink'
-gem 'high_voltage', '~> 3.1.0'
+gem 'high_voltage', '~> 3.1.2'
 gem 'will_paginate', '~> 3.1.6'
 
 gem "resque"

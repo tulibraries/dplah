@@ -495,7 +495,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    will_paginate (3.1.6)
+    will_paginate (3.2.1)
     xml-simple (1.1.5)
     yaml_db (0.7.0)
       rails (>= 3.0)
@@ -548,7 +548,7 @@ DEPENDENCIES
   vcr
   web-console (~> 3.3)
   webmock
-  will_paginate (~> 3.1.6)
+  will_paginate (~> 3.2.1)
   yaml_db
 
 BUNDLED WITH

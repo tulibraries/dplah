@@ -190,8 +190,8 @@ GEM
       activerecord
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
-    launchy (2.4.3)
-      addressable (~> 2.3)
+    launchy (2.5.0)
+      addressable (~> 2.7)
     libv8 (3.16.14.19)
     libxml-ruby (3.1.0)
     link_header (0.0.8)

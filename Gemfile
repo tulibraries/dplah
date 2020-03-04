@@ -25,7 +25,7 @@ gem 'rubydora', '~> 1.8.0'
 gem 'solrizer', '~> 3.4.1'
 gem 'rails_autolink'
 gem 'high_voltage', '~> 3.1.2'
-gem 'will_paginate', '~> 3.2.1'
+gem 'will_paginate', '~> 3.3.0'
 
 gem "resque"
 gem "resque-pool"

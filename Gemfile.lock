@@ -239,7 +239,7 @@ GEM
     nenv (0.3.0)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    nokogiri (1.10.9)
+    nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     nom-xml (0.6.0)
       activesupport (>= 3.2.18)
@@ -519,7 +519,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   libxml-ruby
-  nokogiri (~> 1.10.9)
+  nokogiri (~> 1.10.10)
   nom-xml (~> 0.6.0)
   oai!
   om (~> 3.1.0)
